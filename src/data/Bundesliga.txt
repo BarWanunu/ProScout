@@ -1,0 +1,192 @@
+Bundesliga Teams 2023: [
+  {
+    id: 157,
+    name: 'Bayern München',
+    founded: 1900,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/157.png',
+    stadium: 'Fußball Arena München',
+    stadium_capacity: 75024,
+    stadium_image: 'https://media.api-sports.io/football/venues/20732.png'
+  },
+  {
+    id: 158,
+    name: 'Fortuna Düsseldorf',
+    founded: 1895,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/158.png',
+    stadium: 'Düsseldorf Arena',
+    stadium_capacity: 54600,
+    stadium_image: 'https://media.api-sports.io/football/venues/20735.png'
+  },
+  {
+    id: 160,
+    name: 'SC Freiburg',
+    founded: 1904,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/160.png',
+    stadium: 'Europa-Park Stadion',
+    stadium_capacity: 34700,
+    stadium_image: 'https://media.api-sports.io/football/venues/12717.png'
+  },
+  {
+    id: 161,
+    name: 'VfL Wolfsburg',
+    founded: 1945,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/161.png',
+    stadium: 'Volkswagen Arena',
+    stadium_capacity: 30000,
+    stadium_image: 'https://media.api-sports.io/football/venues/752.png'
+  },
+  {
+    id: 162,
+    name: 'Werder Bremen',
+    founded: 1899,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/162.png',
+    stadium: 'wohninvest WESERSTADION',
+    stadium_capacity: 42358,
+    stadium_image: 'https://media.api-sports.io/football/venues/755.png'
+  },
+  {
+    id: 163,
+    name: 'Borussia Mönchengladbach',
+    founded: 1900,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/163.png',
+    stadium: 'BORUSSIA-PARK',
+    stadium_capacity: 54057,
+    stadium_image: 'https://media.api-sports.io/football/venues/20471.png'
+  },
+  {
+    id: 164,
+    name: 'FSV Mainz 05',
+    founded: 1905,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/164.png',
+    stadium: 'MEWA ARENA',
+    stadium_capacity: 34034,
+    stadium_image: 'https://media.api-sports.io/football/venues/11899.png'
+  },
+  {
+    id: 165,
+    name: 'Borussia Dortmund',
+    founded: 1909,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/165.png',
+    stadium: 'BVB Stadion Dortmund',
+    stadium_capacity: 81365,
+    stadium_image: 'https://media.api-sports.io/football/venues/20733.png'
+  },
+  {
+    id: 167,
+    name: '1899 Hoffenheim',
+    founded: 1899,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/167.png',
+    stadium: 'PreZero Arena',
+    stadium_capacity: 30164,
+    stadium_image: 'https://media.api-sports.io/football/venues/724.png'
+  },
+  {
+    id: 168,
+    name: 'Bayer Leverkusen',
+    founded: 1904,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/168.png',
+    stadium: 'BayArena',
+    stadium_capacity: 30210,
+    stadium_image: 'https://media.api-sports.io/football/venues/699.png'
+  },
+  {
+    id: 169,
+    name: 'Eintracht Frankfurt',
+    founded: 1899,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/169.png',
+    stadium: 'Frankfurt Arena',
+    stadium_capacity: 58000,
+    stadium_image: 'https://media.api-sports.io/football/venues/20734.png'
+  },
+  {
+    id: 170,
+    name: 'FC Augsburg',
+    founded: 1907,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/170.png',
+    stadium: 'WWK Arena',
+    stadium_capacity: 30662,
+    stadium_image: 'https://media.api-sports.io/football/venues/698.png'
+  },
+  {
+    id: 172,
+    name: 'VfB Stuttgart',
+    founded: 1893,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/172.png',
+    stadium: 'Stuttgart Arena',
+    stadium_capacity: 60469,
+    stadium_image: 'https://media.api-sports.io/football/venues/20739.png'
+  },
+  {
+    id: 173,
+    name: 'RB Leipzig',
+    founded: 2009,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/173.png',
+    stadium: 'Leipzig Stadium',
+    stadium_capacity: 47069,
+    stadium_image: 'https://media.api-sports.io/football/venues/20737.png'
+  },
+  {
+    id: 176,
+    name: 'VfL Bochum',
+    founded: 1848,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/176.png',
+    stadium: 'Vonovia Ruhrstadion',
+    stadium_capacity: 27599,
+    stadium_image: 'https://media.api-sports.io/football/venues/751.png'
+  },
+  {
+    id: 180,
+    name: '1. FC Heidenheim',
+    founded: 1946,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/180.png',
+    stadium: 'Voith-Arena',
+    stadium_capacity: 15000,
+    stadium_image: 'https://media.api-sports.io/football/venues/723.png'
+  },
+  {
+    id: 181,
+    name: 'SV Darmstadt 98',
+    founded: 1898,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/181.png',
+    stadium: 'Merck-Stadion am Böllenfalltor',
+    stadium_capacity: 17810,
+    stadium_image: 'https://media.api-sports.io/football/venues/705.png'
+  },
+  {
+    id: 182,
+    name: 'Union Berlin',
+    founded: 1966,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/182.png',
+    stadium: 'Stadion An der Alten Försterei',
+    stadium_capacity: 22467,
+    stadium_image: 'https://media.api-sports.io/football/venues/748.png'
+  },
+  {
+    id: 192,
+    name: '1.FC Köln',
+    founded: 1948,
+    country: 'Germany',
+    logo: 'https://media.api-sports.io/football/teams/192.png',
+    stadium: 'Cologne Stadium',
+    stadium_capacity: 50076,
+    stadium_image: 'https://media.api-sports.io/football/venues/20736.png'
+  }
+]
