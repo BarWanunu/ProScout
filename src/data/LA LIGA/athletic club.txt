@@ -1,0 +1,8 @@
+Team ID: 531
+Team Name: Athletic Club
+Leauge Name: Premier League
+Country: Spain
+Formation: ********
+Home Stadium: San Mamés Barria
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/531.png

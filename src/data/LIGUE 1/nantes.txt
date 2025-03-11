@@ -1,0 +1,8 @@
+Team ID: 83
+Team Name: Nantes
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Stade de la Beaujoire - Louis Fonteneau
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/83.png

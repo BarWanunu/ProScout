@@ -1,0 +1,8 @@
+Team ID: 547
+Team Name: Girona
+Leauge Name: La Liga
+Country: Spain
+Formation: ********
+Home Stadium: Estadi Municipal de Montilivi
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/547.png

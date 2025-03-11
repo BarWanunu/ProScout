@@ -1,0 +1,8 @@
+Team ID: 167
+Team Name: 1899 Hoffenheim
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: PreZero Arena
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/167.png

@@ -1,0 +1,8 @@
+Team ID: 116
+Team Name: Lens
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Stade Bollaert-Delelis
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/116.png

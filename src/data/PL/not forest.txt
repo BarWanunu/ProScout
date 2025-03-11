@@ -1,0 +1,8 @@
+Team ID: 65
+Team Name: Nottingham Forest
+Leauge Name: Premier League
+Country: England
+Formation: 4-2-3-1
+Home Stadium: The City Ground
+Trophies won: 10
+Logo URL: https://media.api-sports.io/football/teams/65.png

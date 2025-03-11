@@ -1,0 +1,8 @@
+Team ID: 162
+Team Name: Werder Bremen
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: wohninvest WESERSTADION
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/162.png

@@ -1,0 +1,8 @@
+Team ID: 170
+Team Name: FC Augsburg
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: WWK Arena
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/170.png

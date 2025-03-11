@@ -1,0 +1,8 @@
+Team ID: 157
+Team Name: Bayern München
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: Fußball Arena München
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/157.png

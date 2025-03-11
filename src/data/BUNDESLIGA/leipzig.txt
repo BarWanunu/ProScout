@@ -1,0 +1,8 @@
+Team ID: 173
+Team Name: RB Leipzig
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: Leipzig Stadium
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/173.png

@@ -1,0 +1,8 @@
+Team ID: 34
+Team Name: Newcastle
+Leauge Name: Premier League
+Country: England
+Formation: 4-3-3
+Home Stadium: St. James' Park
+Trophies won: 17
+Logo URL: https://media.api-sports.io/football/teams/34.png

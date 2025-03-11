@@ -1,0 +1,8 @@
+Team ID: 546
+Team Name: Getafe
+Leauge Name: La Liga
+Country: Spain
+Formation: ********
+Home Stadium: Estadio Coliseum
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/546.png

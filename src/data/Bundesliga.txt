@@ -10,16 +10,6 @@ Bundesliga Teams 2023: [
     stadium_image: 'https://media.api-sports.io/football/venues/20732.png'
   },
   {
-    id: 158,
-    name: 'Fortuna Düsseldorf',
-    founded: 1895,
-    country: 'Germany',
-    logo: 'https://media.api-sports.io/football/teams/158.png',
-    stadium: 'Düsseldorf Arena',
-    stadium_capacity: 54600,
-    stadium_image: 'https://media.api-sports.io/football/venues/20735.png'
-  },
-  {
     id: 160,
     name: 'SC Freiburg',
     founded: 1904,

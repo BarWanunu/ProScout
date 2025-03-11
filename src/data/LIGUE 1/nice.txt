@@ -1,0 +1,8 @@
+Team ID: 84
+Team Name: Nice
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Allianz Riviera
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/84.png

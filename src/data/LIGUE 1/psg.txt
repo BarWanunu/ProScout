@@ -1,0 +1,8 @@
+Team ID: 85
+Team Name: Paris Saint Germain
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Parc des Princes
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/85.png

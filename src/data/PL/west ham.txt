@@ -1,0 +1,8 @@
+Team ID: 48
+Team Name: West Ham
+Leauge Name: Premier League
+Country: England
+Formation: 4-2-3-1
+Home Stadium: London Stadium
+Trophies won: 8
+Logo URL: https://media.api-sports.io/football/teams/48.png

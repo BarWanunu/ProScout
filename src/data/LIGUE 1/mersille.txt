@@ -1,0 +1,8 @@
+Team ID: 81
+Team Name: Marseille
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Stade Orange Vélodrome
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/81.png

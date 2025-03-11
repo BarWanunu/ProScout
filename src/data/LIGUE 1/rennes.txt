@@ -1,0 +1,8 @@
+Team ID: 94
+Team Name: Rennes
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Roazhon Park
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/94.png

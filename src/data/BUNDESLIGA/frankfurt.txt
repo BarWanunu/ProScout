@@ -1,0 +1,8 @@
+Team ID: 169
+Team Name: Eintracht Frankfurt
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: Frankfurt Arena
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/169.png

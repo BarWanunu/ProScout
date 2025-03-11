@@ -1,0 +1,8 @@
+Team ID: 80
+Team Name: Lyon
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Groupama Stadium
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/80.png

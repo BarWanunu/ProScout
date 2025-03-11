@@ -1,0 +1,8 @@
+Team ID: 723
+Team Name: Almeria
+Leauge Name: La Liga
+Country: Spain
+Formation: ********
+Home Stadium: Power Horse Stadium – Estadio de los Juegos Mediterráneos
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/723.png

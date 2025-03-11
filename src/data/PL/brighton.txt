@@ -1,0 +1,8 @@
+Team ID: 51
+Team Name: Brighton
+Leauge Name: Premier League
+Country: England
+Formation: 4-2-3-1
+Home Stadium: The American Express Community Stadium
+Trophies won: 5
+Logo URL: https://media.api-sports.io/football/teams/51.png

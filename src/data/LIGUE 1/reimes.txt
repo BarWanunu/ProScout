@@ -1,0 +1,8 @@
+Team ID: 93
+Team Name: Reims
+Leauge Name: Premier League
+Country: France
+Formation: ********
+Home Stadium: Stade Auguste-Delaune II
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/93.png

@@ -1,0 +1,8 @@
+Team ID: 165
+Team Name: Borussia Dortmund
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: BVB Stadion Dortmund
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/165.png

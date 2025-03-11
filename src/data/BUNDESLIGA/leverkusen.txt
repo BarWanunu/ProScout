@@ -1,0 +1,8 @@
+Team ID: 168
+Team Name: Bayer Leverkusen
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: BayArena
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/168.png

@@ -1,0 +1,8 @@
+Team ID: 182
+Team Name: Union Berlin
+Leauge Name: Premier League
+Country: Germany
+Formation: ********
+Home Stadium: Stadion An der Alten Försterei
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/182.pngs
