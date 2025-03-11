@@ -1,8 +1,8 @@
 Team ID: 172
 Team Name: VfB Stuttgart
-Leauge Name: Premier League
+Leauge Name: Bundesliga
 Country: Germany
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Stuttgart Arena
-Trophies won: *********
+Trophies won: 13
 Logo URL: https://media.api-sports.io/football/teams/172.png

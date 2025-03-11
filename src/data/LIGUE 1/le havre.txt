@@ -1,8 +1,8 @@
 Team ID: 111
 Team Name: LE Havre
-Leauge Name: Premier League
+Leauge Name: Ligue 1
 Country: France
-Formation: ********
+Formation: 4-4-2
 Home Stadium: Stade Océane
-Trophies won: *********
+Trophies won: 7
 Logo URL: https://media.api-sports.io/football/teams/111.png

@@ -1,0 +1,8 @@
+Team ID: 495
+Team Name: Genoa
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Stadio Comunale Luigi Ferraris
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/495.png

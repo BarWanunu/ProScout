@@ -1,0 +1,8 @@
+Team ID: 492
+Team Name: Napoli
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Stadio Diego Armando Maradona
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/492.png

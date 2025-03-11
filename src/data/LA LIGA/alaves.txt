@@ -1,8 +1,8 @@
 Team ID: 542
 Team Name: Alaves
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Estadio de Mendizorroza
-Trophies won: *********
+Trophies won: 4
 Logo URL: https://media.api-sports.io/football/teams/542.png

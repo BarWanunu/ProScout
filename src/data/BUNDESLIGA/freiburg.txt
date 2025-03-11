@@ -1,8 +1,8 @@
 Team ID: 160
 Team Name: SC Freiburg
-Leauge Name: Premier League
+Leauge Name: Bundesliga
 Country: Germany
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Europa-Park Stadion
-Trophies won: *********
+Trophies won: 6
 Logo URL: https://media.api-sports.io/football/teams/160.png

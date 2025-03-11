@@ -1,8 +1,8 @@
 Team ID: 533
 Team Name: Villarreal
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-4-2
 Home Stadium: Estadio de la Cerámica
-Trophies won: *********
+Trophies won: 1
 Logo URL: https://media.api-sports.io/football/teams/533.png

@@ -1,8 +1,8 @@
 Team ID: 106
 Team Name: Stade Brestois 29
-Leauge Name: Premier League
+Leauge Name: Ligue 1
 Country: France
-Formation: ********
+Formation: 4-3-3
 Home Stadium: Stade Francis-Le Blé
-Trophies won: *********
+Trophies won: 0
 Logo URL: https://media.api-sports.io/football/teams/106.png

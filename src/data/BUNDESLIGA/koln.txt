@@ -1,8 +1,8 @@
 Team ID: 192
 Team Name: 1.FC Köln
-Leauge Name: Premier League
+Leauge Name: Bundesliga
 Country: Germany
-Formation: ********
+Formation: 3-4-2-1
 Home Stadium: Cologne Stadium
-Trophies won: *********
+Trophies won: 13
 Logo URL: https://media.api-sports.io/football/teams/192.png

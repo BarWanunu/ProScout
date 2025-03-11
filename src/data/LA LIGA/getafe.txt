@@ -2,7 +2,7 @@ Team ID: 546
 Team Name: Getafe
 Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-4-2
 Home Stadium: Estadio Coliseum
-Trophies won: *********
+Trophies won: 0
 Logo URL: https://media.api-sports.io/football/teams/546.png

@@ -1,8 +1,8 @@
 Team ID: 541
 Team Name: Real Madrid
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Estadio Santiago Bernabéu
-Trophies won: *********
+Trophies won: 103
 Logo URL: https://media.api-sports.io/football/teams/541.png

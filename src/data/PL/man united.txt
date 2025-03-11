@@ -4,5 +4,5 @@ Leauge Name: Premier League
 Country: England
 Formation: 3-4-2-1
 Home Stadium: Old Trafford
-Trophies won: 25
+Trophies won: 70
 Logo URL: https://media.api-sports.io/football/teams/33.png

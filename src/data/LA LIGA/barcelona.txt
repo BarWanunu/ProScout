@@ -1,8 +1,8 @@
 Team ID: 529
 Team Name: Barcelona
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Estadi Olímpic Lluís Companys
-Trophies won: *********
+Trophies won: 105
 Logo URL: https://media.api-sports.io/football/teams/529.png

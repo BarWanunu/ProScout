@@ -1,0 +1,8 @@
+Team ID: 497
+Team Name: AS Roma
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Stadio Olimpico
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/497.png

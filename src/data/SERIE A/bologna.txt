@@ -1,0 +1,8 @@
+Team ID: 500
+Team Name: Bologna
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Stadio Renato Dall'Ara
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/500.png

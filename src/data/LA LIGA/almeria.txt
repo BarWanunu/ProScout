@@ -2,7 +2,7 @@ Team ID: 723
 Team Name: Almeria
 Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Power Horse Stadium – Estadio de los Juegos Mediterráneos
-Trophies won: *********
+Trophies won: 1
 Logo URL: https://media.api-sports.io/football/teams/723.png

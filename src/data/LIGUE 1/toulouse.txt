@@ -1,8 +1,8 @@
 Team ID: 96
 Team Name: Toulouse
-Leauge Name: Premier League
+Leauge Name: Ligue 1
 Country: France
-Formation: ********
+Formation: 3-4-2-1
 Home Stadium: Stadium de Toulouse
-Trophies won: *********
+Trophies won: 4
 Logo URL: https://media.api-sports.io/football/teams/96.png

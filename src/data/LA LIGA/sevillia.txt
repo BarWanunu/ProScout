@@ -1,8 +1,8 @@
 Team ID: 536
 Team Name: Sevilla
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Estadio Ramón Sánchez Pizjuán
-Trophies won: *********
+Trophies won: 19
 Logo URL: https://media.api-sports.io/football/teams/536.png

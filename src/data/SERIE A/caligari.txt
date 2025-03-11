@@ -1,0 +1,8 @@
+Team ID: 490
+Team Name: Cagliari
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Unipol Domus
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/490.png

@@ -1,8 +1,8 @@
 Team ID: 99
 Team Name: Clermont Foot
-Leauge Name: Premier League
+Leauge Name: Ligue 1
 Country: France
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Stade Gabriel-Montpied
-Trophies won: *********
+Trophies won: 0
 Logo URL: https://media.api-sports.io/football/teams/99.png

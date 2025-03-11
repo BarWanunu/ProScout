@@ -1,8 +1,8 @@
 Team ID: 164
 Team Name: FSV Mainz 05
-Leauge Name: Premier League
+Leauge Name: Bundesliga
 Country: Germany
-Formation: ********
+Formation: 3-4-2-1
 Home Stadium: MEWA ARENA
-Trophies won: *********
+Trophies won: 4
 Logo URL: https://media.api-sports.io/football/teams/164.png

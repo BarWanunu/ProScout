@@ -1,0 +1,8 @@
+Team ID: 494
+Team Name: Udinese
+Leauge Name: Serie A
+Country: Italy
+Formation: ********
+Home Stadium: Bluenergy Stadium
+Trophies won: *********
+Logo URL: https://media.api-sports.io/football/teams/494.png

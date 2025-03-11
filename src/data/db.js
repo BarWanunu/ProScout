@@ -1,5 +1,5 @@
-const API_KEY = "22f5e301fb035d7964c542811090953f";
-const TEAM_IDS = [487, 488, 489, 490, 492, 494, 495, 496, 497, 499];
+const API_KEY = "46b0d1d12ea98445ccdd2d5d6a7d4d49";
+const TEAM_IDS = [500, 502, 503, 504, 505, 511, 512, 514, 867, 1579];
 const API_URL = "https://v3.football.api-sports.io/teams?id=";
 
 async function fetchTeams() {

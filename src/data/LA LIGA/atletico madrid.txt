@@ -1,8 +1,8 @@
 Team ID: 530
 Team Name: Atletico Madrid
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 4-4-2
 Home Stadium: Estádio Cívitas Metropolitano
-Trophies won: *********
+Trophies won: 33
 Logo URL: https://media.api-sports.io/football/teams/530.png

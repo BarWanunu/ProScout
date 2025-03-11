@@ -1,8 +1,8 @@
 Team ID: 95
 Team Name: Strasbourg
-Leauge Name: Premier League
+Leauge Name: Ligue 1
 Country: France
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Stade de la Meinau
-Trophies won: *********
+Trophies won: 8
 Logo URL: https://media.api-sports.io/football/teams/95.png

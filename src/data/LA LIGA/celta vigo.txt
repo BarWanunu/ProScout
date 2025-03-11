@@ -1,8 +1,8 @@
 Team ID: 538
 Team Name: Celta Vigo
-Leauge Name: Premier League
+Leauge Name: La Liga
 Country: Spain
-Formation: ********
+Formation: 3-4-2-1
 Home Stadium: Abanca-Balaídos
-Trophies won: *********
+Trophies won: 3
 Logo URL: https://media.api-sports.io/football/teams/538.png
