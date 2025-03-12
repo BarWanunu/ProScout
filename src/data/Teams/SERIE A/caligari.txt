@@ -2,7 +2,7 @@ Team ID: 490
 Team Name: Cagliari
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Unipol Domus
-Trophies won: *********
+Trophies won: 6
 Logo URL: https://media.api-sports.io/football/teams/490.png

@@ -2,7 +2,7 @@ Team ID: 492
 Team Name: Napoli
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 4-3-3
 Home Stadium: Stadio Diego Armando Maradona
-Trophies won: *********
+Trophies won: 14
 Logo URL: https://media.api-sports.io/football/teams/492.png

@@ -2,7 +2,7 @@ Team ID: 504
 Team Name: Verona
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 3-4-1-2
 Home Stadium: Stadio Marc'Antonio Bentegodi
-Trophies won: *********
+Trophies won: 4
 Logo URL: https://media.api-sports.io/football/teams/504.png

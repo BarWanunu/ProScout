@@ -2,7 +2,7 @@ Team ID: 489
 Team Name: AC Milan
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Stadio Giuseppe Meazza
-Trophies won: *********
+Trophies won: 53
 Logo URL: https://media.api-sports.io/football/teams/489.png

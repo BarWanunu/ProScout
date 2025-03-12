@@ -2,7 +2,7 @@ Team ID: 502
 Team Name: Fiorentina
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 4-2-3-1
 Home Stadium: Stadio Artemio Franchi
-Trophies won: *********
+Trophies won: 15
 Logo URL: https://media.api-sports.io/football/teams/502.png

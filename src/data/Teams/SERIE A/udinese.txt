@@ -2,7 +2,7 @@ Team ID: 494
 Team Name: Udinese
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 3-5-2
 Home Stadium: Bluenergy Stadium
-Trophies won: *********
+Trophies won: 6
 Logo URL: https://media.api-sports.io/football/teams/494.png

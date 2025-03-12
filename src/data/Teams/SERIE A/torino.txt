@@ -2,7 +2,7 @@ Team ID: 503
 Team Name: Torino
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 3-5-2
 Home Stadium: Stadio Olimpico Grande Torino
-Trophies won: *********
+Trophies won: 16
 Logo URL: https://media.api-sports.io/football/teams/503.png

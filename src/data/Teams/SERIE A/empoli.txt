@@ -2,7 +2,7 @@ Team ID: 511
 Team Name: Empoli
 Leauge Name: Serie A
 Country: Italy
-Formation: ********
+Formation: 3-4-2-1
 Home Stadium: Stadio Carlo Castellani – Computer Gross Arena
-Trophies won: *********
+Trophies won: 4
 Logo URL: https://media.api-sports.io/football/teams/511.png
