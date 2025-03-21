@@ -1,44 +1,33 @@
-const API_KEY = "46b0d1d12ea98445ccdd2d5d6a7d4d49";
-const TEAM_IDS = [500, 502, 503, 504, 505, 511, 512, 514, 867, 1579];
-const API_URL = "https://v3.football.api-sports.io/teams?id=";
+const API_KEY = "13bfe36622339b25026ac3582161b87e";
 
-async function fetchTeams() {
+async function fetchTeamPlayers() {
   try {
-    // Fetch all teams concurrently
-    const requests = TEAM_IDS.map((id) =>
-      fetch(API_URL + id, {
+    // Fetch data for team 33
+    const response = await fetch(
+      "https://v3.football.api-sports.io/players/squads?team=39",
+      {
         method: "GET",
         headers: {
           "x-rapidapi-host": "v3.football.api-sports.io",
           "x-rapidapi-key": API_KEY,
         },
-      }).then((response) => response.json())
+      }
     );
 
-    // Wait for all requests to resolve
-    const teamsData = await Promise.all(requests);
+    // Convert response to JSON
+    const data = await response.json();
 
-    // Extract relevant information
-    teamsData.forEach((data) => {
-      if (data.response.length > 0) {
-        const team = data.response[0].team;
-        const venue = data.response[0].venue;
+    // Extract the "players" array from the JSON
+    const players = data.response[0].players;
 
-        console.log("Team ID:", team.id);
-        console.log("Team Name:", team.name);
-        console.log("Leauge Name: Serie A");
-        console.log("Country:", team.country);
-        console.log("Formation: ********");
-        console.log("Home Stadium:", venue.name);
-        console.log("Trophies won: *********");
-        console.log("Logo URL:", team.logo);
-        console.log("-----------------------------");
-      }
-    });
+    // Map over the array to get all player IDs
+    const playerIds = players.map((player) => player.id);
+
+    console.log("Player IDs:", playerIds);
   } catch (error) {
-    console.error("Error fetching teams:", error);
+    console.error("Error fetching team players:", error);
   }
 }
 
 // Call the function
-fetchTeams();
+fetchTeamPlayers();

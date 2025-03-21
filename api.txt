@@ -1,7 +1,1 @@
-22f5e301fb035d7964c542811090953f 
-
-Bar's api key for API Football
-
-ec6ca33cad82fb29a3ab7d94bea1daf5
-
-Another account api key
+13bfe36622339b25026ac3582161b87e
