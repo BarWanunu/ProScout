@@ -29,7 +29,7 @@ async function fetchPlayerProfiles(playerIds) {
           firstname: player.firstname,
           lastname: player.lastname,
           number: player.number || "N/A",
-          club: "Wolves",
+          club: "Wolfsburg",
           photo: player.photo,
           position: player.position,
           height: player.height || "Unknown",
@@ -54,8 +54,8 @@ async function fetchPlayerProfiles(playerIds) {
 
 // Your full list of player IDs
 fetchPlayerProfiles([
-  1590, 19341, 19143, 82855, 18742, 21138, 135334, 135068, 195717, 19147, 130,
-  41606, 388777, 303322, 449245, 283272, 408893, 3080, 157912, 265784, 195103,
-  144732, 2056, 20665, 401098, 2032, 1165, 24888, 7722, 282770, 282126, 925,
-  385726, 380653, 456206, 389302, 303019,
+  15573, 25396, 1141, 129133, 177618, 1408, 162409, 15745, 30527, 1291, 1930,
+  449714, 394740, 435086, 127413, 40560, 1321, 380503, 25408, 25400, 30484,
+  431946, 126642, 149557, 15916, 200139, 19461, 265363, 148284, 25192, 1302,
+  431914,
 ]);
