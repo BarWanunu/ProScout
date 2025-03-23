@@ -1,8 +1,0 @@
-Team ID: 112
-Team Name: Metz
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-4-2
-Home Stadium: Stade Saint-Symphorien
-Trophies won: 6
-Logo URL: https://media.api-sports.io/football/teams/112.png

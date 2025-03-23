@@ -1,8 +1,0 @@
-Team ID: 84
-Team Name: Nice
-Leauge Name: Ligue 1
-Country: France
-Formation: 3-4-2-1
-Home Stadium: Allianz Riviera
-Trophies won: 11
-Logo URL: https://media.api-sports.io/football/teams/84.png

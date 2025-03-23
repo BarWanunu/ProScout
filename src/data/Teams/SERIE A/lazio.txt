@@ -1,8 +1,0 @@
-Team ID: 487
-Team Name: Lazio
-Leauge Name: Serie A
-Country: Italy
-Formation: 4-2-3-1
-Home Stadium: Stadio Olimpico
-Trophies won: 17
-Logo URL: https://media.api-sports.io/football/teams/487.png

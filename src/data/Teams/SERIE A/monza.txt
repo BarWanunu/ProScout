@@ -1,8 +1,0 @@
-Team ID: 1579
-Team Name: Monza
-Leauge Name: Serie A
-Country: Italy
-Formation: 3-4-2-1
-Home Stadium: U-Power Stadium
-Trophies won: 5
-Logo URL: https://media.api-sports.io/football/teams/1579.png

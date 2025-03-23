@@ -1,8 +1,0 @@
-Team ID: 505
-Team Name: Inter
-Leauge Name: Serie A
-Country: Italy
-Formation: 3-5-2
-Home Stadium: Stadio Giuseppe Meazza
-Trophies won: 46
-Logo URL: https://media.api-sports.io/football/teams/505.png

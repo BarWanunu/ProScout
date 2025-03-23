@@ -1,8 +1,0 @@
-Team ID: 169
-Team Name: Eintracht Frankfurt
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-4-2
-Home Stadium: Frankfurt Arena
-Trophies won: 11
-Logo URL: https://media.api-sports.io/football/teams/169.png

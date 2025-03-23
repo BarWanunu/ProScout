@@ -1,8 +1,0 @@
-Team ID: 49
-Team Name: Chelsea
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Stamford Bridge
-Trophies won: 13
-Logo URL: https://media.api-sports.io/football/teams/49.png

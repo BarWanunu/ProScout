@@ -1,8 +1,0 @@
-Team ID: 728
-Team Name: Rayo Vallecano
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-2-3-1
-Home Stadium: Estadio de Vallecas
-Trophies won: 1
-Logo URL: https://media.api-sports.io/football/teams/728.png

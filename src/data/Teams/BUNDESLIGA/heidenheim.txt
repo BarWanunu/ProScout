@@ -1,8 +1,0 @@
-Team ID: 180
-Team Name: 1. FC Heidenheim
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-2-3-1
-Home Stadium: Voith-Arena
-Trophies won: 8
-Logo URL: https://media.api-sports.io/football/teams/180.png

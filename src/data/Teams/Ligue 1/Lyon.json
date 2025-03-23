@@ -1,0 +1,10 @@
+{
+  "id": 80,
+  "name": "Lyon",
+  "league": "Ligue 1",
+  "country": "France",
+  "formation": "4-3-3",
+  "stadium": "Groupama Stadium",
+  "trophies": 20,
+  "logo": "https://media.api-sports.io/football/teams/80.png"
+}

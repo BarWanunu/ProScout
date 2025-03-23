@@ -1,8 +1,0 @@
-Team ID: 97
-Team Name: Lorient
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-1-4-1
-Home Stadium: Stade du Moustoir - Yves Allainmat
-Trophies won: 2
-Logo URL: https://media.api-sports.io/football/teams/97.png

@@ -1,8 +1,0 @@
-Team ID: 50
-Team Name: Manchester City
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Etihad Stadium
-Trophies won: 14
-Logo URL: https://media.api-sports.io/football/teams/50.png

@@ -1,8 +1,0 @@
-Team ID: 548
-Team Name: Real Sociedad
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-1-4-1
-Home Stadium: Reale Arena
-Trophies won: 12
-Logo URL: https://media.api-sports.io/football/teams/548.png

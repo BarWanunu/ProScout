@@ -1,8 +1,0 @@
-Team ID: 161
-Team Name: VfL Wolfsburg
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-4-2
-Home Stadium: Volkswagen Arena
-Trophies won: 5
-Logo URL: https://media.api-sports.io/football/teams/161.png

@@ -1,8 +1,0 @@
-Team ID: 83
-Team Name: Nantes
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-2-3-1
-Home Stadium: Stade de la Beaujoire - Louis Fonteneau
-Trophies won: 14
-Logo URL: https://media.api-sports.io/football/teams/83.png

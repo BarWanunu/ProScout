@@ -1,8 +1,0 @@
-Team ID: 798
-Team Name: Mallorca
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-4-2
-Home Stadium: Estadi Mallorca Son Moix
-Trophies won: 4
-Logo URL: https://media.api-sports.io/football/teams/798.png

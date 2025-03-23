@@ -1,8 +1,0 @@
-Team ID: 47
-Team Name: Tottenham
-Leauge Name: Premier League
-Country: England
-Formation: 4-3-3
-Home Stadium: Tottenham Hotspur Stadium
-Trophies won: 17
-Logo URL: https://media.api-sports.io/football/teams/47.png

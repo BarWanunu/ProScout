@@ -1,8 +1,0 @@
-Team ID: 170
-Team Name: FC Augsburg
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 3-4-2-1
-Home Stadium: WWK Arena
-Trophies won: 1
-Logo URL: https://media.api-sports.io/football/teams/170.png

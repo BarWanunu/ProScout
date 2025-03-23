@@ -1,8 +1,0 @@
-Team ID: 181
-Team Name: SV Darmstadt 98
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-4-2
-Home Stadium: Merck-Stadion am Böllenfalltor
-Trophies won: 9
-Logo URL: https://media.api-sports.io/football/teams/181.png

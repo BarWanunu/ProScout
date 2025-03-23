@@ -1,8 +1,0 @@
-Team ID: 55
-Team Name: Brentford
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Gtech Community Stadium
-Trophies won: 5
-Logo URL: https://media.api-sports.io/football/teams/55.png

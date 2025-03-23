@@ -1,8 +1,0 @@
-Team ID: 81
-Team Name: Marseille
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-2-3-1
-Home Stadium: Stade Orange Vélodrome
-Trophies won: 27
-Logo URL: https://media.api-sports.io/football/teams/81.png

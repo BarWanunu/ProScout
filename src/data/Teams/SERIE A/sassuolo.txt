@@ -1,8 +1,0 @@
-Team ID: 488
-Team Name: Sassuolo
-Leauge Name: Serie A
-Country: Italy
-Formation: 4-2-3-1
-Home Stadium: MAPEI Stadium - Città del Tricolore
-Trophies won: 2
-Logo URL: https://media.api-sports.io/football/teams/488.png

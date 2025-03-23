@@ -1,8 +1,0 @@
-Team ID: 176
-Team Name: VfL Bochum
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-1-2-1-2
-Home Stadium: Vonovia Ruhrstadion
-Trophies won: 5
-Logo URL: https://media.api-sports.io/football/teams/176.png

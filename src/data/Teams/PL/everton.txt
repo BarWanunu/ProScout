@@ -1,8 +1,0 @@
-Team ID: 45
-Team Name: Everton
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Goodison Park
-Trophies won: 25
-Logo URL: https://media.api-sports.io/football/teams/45.png

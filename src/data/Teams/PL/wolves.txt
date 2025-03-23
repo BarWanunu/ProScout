@@ -1,8 +1,0 @@
-Team ID: 39
-Team Name: Wolves
-Leauge Name: Premier League
-Country: England
-Formation: 3-4-2-1
-Home Stadium: Molineux Stadium
-Trophies won: 17
-Logo URL: https://media.api-sports.io/football/teams/39.png

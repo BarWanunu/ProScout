@@ -1,8 +1,0 @@
-Team ID: 80
-Team Name: Lyon
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-3-3
-Home Stadium: Groupama Stadium
-Trophies won: 20
-Logo URL: https://media.api-sports.io/football/teams/80.png

@@ -1,8 +1,0 @@
-Team ID: 715
-Team Name: Granada CF
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-4-2
-Home Stadium: Estadio Nuevo Los Cármenes
-Trophies won: 4
-Logo URL: https://media.api-sports.io/football/teams/715.png

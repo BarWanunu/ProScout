@@ -1,8 +1,0 @@
-Team ID: 532
-Team Name: Valencia
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-4-2
-Home Stadium: Estadio de Mestalla
-Trophies won: 25
-Logo URL: https://media.api-sports.io/football/teams/532.png

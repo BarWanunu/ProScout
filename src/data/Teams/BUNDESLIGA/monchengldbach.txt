@@ -1,8 +1,0 @@
-Team ID: 163
-Team Name: Borussia Mönchengladbach
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-2-3-1
-Home Stadium: BORUSSIA-PARK
-Trophies won: 12
-Logo URL: https://media.api-sports.io/football/teams/163.png

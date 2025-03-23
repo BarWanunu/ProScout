@@ -1,8 +1,0 @@
-Team ID: 514
-Team Name: Salernitana
-Leauge Name: Serie A
-Country: Italy
-Formation: 4-3-3
-Home Stadium: Stadio Arechi
-Trophies won: 7
-Logo URL: https://media.api-sports.io/football/teams/514.png

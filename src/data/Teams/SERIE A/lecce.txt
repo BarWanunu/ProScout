@@ -1,8 +1,0 @@
-Team ID: 867
-Team Name: Lecce
-Leauge Name: Serie A
-Country: Italy
-Formation: 4-2-3-1
-Home Stadium: Stadio Comunale Via del Mare
-Trophies won: 5
-Logo URL: https://media.api-sports.io/football/teams/867.png

@@ -1,8 +1,0 @@
-Team ID: 93
-Team Name: Reims
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-2-3-1
-Home Stadium: Stade Auguste-Delaune II
-Trophies won: 10
-Logo URL: https://media.api-sports.io/football/teams/93.png

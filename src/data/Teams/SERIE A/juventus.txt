@@ -1,8 +1,0 @@
-Team ID: 496
-Team Name: Juventus
-Leauge Name: Serie A
-Country: Italy
-Formation: 4-2-3-1
-Home Stadium: Allianz Stadium
-Trophies won: 71
-Logo URL: https://media.api-sports.io/football/teams/496.png

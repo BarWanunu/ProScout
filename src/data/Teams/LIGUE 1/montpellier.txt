@@ -1,8 +1,0 @@
-Team ID: 82
-Team Name: Montpellier
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-2-3-1
-Home Stadium: Stade de la Mosson-Mondial 98
-Trophies won: 3
-Logo URL: https://media.api-sports.io/football/teams/82.png

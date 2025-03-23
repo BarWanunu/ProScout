@@ -1,8 +1,0 @@
-Team ID: 85
-Team Name: Paris Saint Germain
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-3-3
-Home Stadium: Parc des Princes
-Trophies won: 51
-Logo URL: https://media.api-sports.io/football/teams/85.png

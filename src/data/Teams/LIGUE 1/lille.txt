@@ -1,8 +1,0 @@
-Team ID: 79
-Team Name: Lille
-Leauge Name: Ligue 1
-Country: France
-Formation: 4-2-3-1
-Home Stadium: Decathlon Arena – Stade Pierre-Mauroy
-Trophies won: 15
-Logo URL: https://media.api-sports.io/football/teams/79.png

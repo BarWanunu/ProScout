@@ -1,8 +1,0 @@
-Team ID: 66
-Team Name: Aston Villa
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Villa Park
-Trophies won: 21
-Logo URL: https://media.api-sports.io/football/teams/66.png

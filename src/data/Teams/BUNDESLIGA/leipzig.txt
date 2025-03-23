@@ -1,8 +1,0 @@
-Team ID: 173
-Team Name: RB Leipzig
-Leauge Name: Bundesliga
-Country: Germany
-Formation: 4-4-2
-Home Stadium: Leipzig Stadium
-Trophies won: 6
-Logo URL: https://media.api-sports.io/football/teams/173.png

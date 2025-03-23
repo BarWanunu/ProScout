@@ -1,8 +1,0 @@
-Team ID: 42
-Team Name: Arsenal
-Leauge Name: Premier League
-Country: England
-Formation: 4-3-3
-Home Stadium: Emirates Stadium
-Trophies won: 47
-Logo URL: https://media.api-sports.io/football/teams/42.png

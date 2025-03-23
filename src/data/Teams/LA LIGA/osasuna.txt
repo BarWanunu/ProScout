@@ -1,8 +1,0 @@
-Team ID: 727
-Team Name: Osasuna
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-3-3
-Home Stadium: Estadio El Sadar
-Trophies won: 4
-Logo URL: https://media.api-sports.io/football/teams/727.png

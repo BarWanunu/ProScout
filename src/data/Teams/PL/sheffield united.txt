@@ -1,8 +1,0 @@
-Team ID: 62
-Team Name: Sheffield United
-Leauge Name: Premier League
-Country: England
-Formation: 4-2-3-1
-Home Stadium: Bramall Lane
-Trophies won: 8
-Logo URL: https://media.api-sports.io/football/teams/62.png

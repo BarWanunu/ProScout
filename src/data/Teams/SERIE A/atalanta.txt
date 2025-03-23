@@ -1,8 +1,0 @@
-Team ID: 499
-Team Name: Atalanta
-Leauge Name: Serie A
-Country: Italy
-Formation: 3-4-2-1
-Home Stadium: Gewiss Stadium
-Trophies won: 8
-Logo URL: https://media.api-sports.io/football/teams/499.png

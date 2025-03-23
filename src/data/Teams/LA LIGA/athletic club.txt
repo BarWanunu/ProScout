@@ -1,8 +1,0 @@
-Team ID: 531
-Team Name: Athletic Club
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-2-3-1
-Home Stadium: San Mamés Barria
-Trophies won: 36
-Logo URL: https://media.api-sports.io/football/teams/531.png

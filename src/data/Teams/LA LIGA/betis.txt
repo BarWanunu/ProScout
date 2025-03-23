@@ -1,8 +1,0 @@
-Team ID: 543
-Team Name: Real Betis
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-2-3-1
-Home Stadium: Estadio Benito Villamarín
-Trophies won: 11
-Logo URL: https://media.api-sports.io/football/teams/543.png

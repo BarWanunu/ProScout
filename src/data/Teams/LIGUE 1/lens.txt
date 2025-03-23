@@ -1,8 +1,0 @@
-Team ID: 116
-Team Name: Lens
-Leauge Name: Ligue 1
-Country: France
-Formation: 3-4-1-2
-Home Stadium: Stade Bollaert-Delelis
-Trophies won: 9
-Logo URL: https://media.api-sports.io/football/teams/116.png

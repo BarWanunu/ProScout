@@ -1,8 +1,0 @@
-Team ID: 512
-Team Name: Frosinone
-Leauge Name: Serie A
-Country: Italy
-Formation: 3-5-2
-Home Stadium: Stadio Benito Stirpe
-Trophies won: 3
-Logo URL: https://media.api-sports.io/football/teams/512.png

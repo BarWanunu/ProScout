@@ -1,8 +1,0 @@
-Team ID: 497
-Team Name: AS Roma
-Leauge Name: Serie A
-Country: Italy
-Formation: 3-4-2-1
-Home Stadium: Stadio Olimpico
-Trophies won: 17
-Logo URL: https://media.api-sports.io/football/teams/497.png

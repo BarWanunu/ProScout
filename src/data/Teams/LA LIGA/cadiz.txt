@@ -1,8 +1,0 @@
-Team ID: 724
-Team Name: Cadiz
-Leauge Name: La Liga
-Country: Spain
-Formation: 4-4-2
-Home Stadium: Estadio Nuevo Mirandilla
-Trophies won: 2
-Logo URL: https://media.api-sports.io/football/teams/724.png
