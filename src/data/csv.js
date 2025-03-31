@@ -1,46 +1,66 @@
 import fs from "fs";
 import path from "path";
-import { Parser } from "json2csv";
+import { parse } from "json2csv";
 
-const baseFolder = "./Players";
-const leagueFolders = fs
-  .readdirSync(baseFolder)
-  .filter((folder) =>
-    fs.lstatSync(path.join(baseFolder, folder)).isDirectory()
-  );
+const statsFolder = "./Stats";
+const outputPath = "./player_stats.csv";
 
-const allPlayers = [];
+let allRows = [];
 
-for (const leagueFolder of leagueFolders) {
-  const leaguePath = path.join(baseFolder, leagueFolder);
-  const files = fs
-    .readdirSync(leaguePath)
-    .filter((file) => file.endsWith(".json"));
+try {
+  const files = fs.readdirSync(statsFolder);
 
   for (const file of files) {
-    const filePath = path.join(leaguePath, file);
-    const playerArray = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    allPlayers.push(...playerArray);
+    const fullPath = path.join(statsFolder, file);
+    const content = fs.readFileSync(fullPath, "utf-8");
+
+    let parsedJson;
+    try {
+      parsedJson = JSON.parse(content);
+    } catch (err) {
+      console.error(`❌ שגיאה בקריאת הקובץ ${file}:`, err.message);
+      continue;
+    }
+
+    // נוודא שמדובר או ברשימה של שחקנים או בשחקן יחיד
+    const players = Array.isArray(parsedJson) ? parsedJson : [parsedJson];
+
+    for (const player of players) {
+      if (!Array.isArray(player.stats)) continue;
+
+      for (const stat of player.stats) {
+        allRows.push({
+          player_id: player.player_id,
+          name: player.name,
+          season: stat.season,
+          club: stat.club,
+          goals: stat.goals,
+          assists: stat.assists,
+          yellow_cards: stat.yellow_cards,
+          red_cards: stat.red_cards,
+          passes_completed: stat.passes_completed,
+          key_passes: stat.key_passes,
+          shots_on_target: stat.shots_on_target,
+          dribbles_attempted: stat.dribbles_attempted,
+          dribbles_success: stat.dribbles_success,
+          dribble_success_rate: stat.dribble_success_rate,
+          tackles: stat.tackles,
+          interceptions: stat.interceptions,
+          duels: stat.duels,
+          duels_won: stat.duels_won,
+          rating: stat.rating,
+        });
+      }
+    }
   }
+
+  if (allRows.length > 0) {
+    const csv = parse(allRows);
+    fs.writeFileSync(outputPath, csv, "utf-8");
+    console.log(`✅ הקובץ נוצר בהצלחה: ${outputPath}`);
+  } else {
+    console.log("⚠️ לא נמצאו נתונים.");
+  }
+} catch (error) {
+  console.error("❌ שגיאה כללית:", error.message);
 }
-
-const fields = [
-  "id",
-  "name",
-  "firstname",
-  "lastname",
-  "number",
-  "club",
-  "position",
-  "height",
-  "weight",
-  "nationality",
-  "birthdate",
-  "photo",
-];
-
-const parser = new Parser({ fields });
-const csv = parser.parse(allPlayers);
-
-fs.writeFileSync("all_players.csv", csv, "utf-8");
-console.log("✅ CSV created: all_players.csv");
