@@ -4,7 +4,7 @@ async function fetchTeamPlayers() {
   try {
     // Fetch data for team 33
     const response = await fetch(
-      "https://v3.football.api-sports.io/players/squads?team=84",
+      "https://v3.football.api-sports.io/players/squads?team=39",
       {
         method: "GET",
         headers: {
