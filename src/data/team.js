@@ -4,7 +4,7 @@ const API_KEY = "13bfe36622339b25026ac3582161b87e";
 
 async function fetchPlayerStats(playerIds) {
   const results = [];
-  const club = "Augsburg";
+  const club = "Nice";
 
   for (const id of playerIds) {
     try {
@@ -30,7 +30,7 @@ async function fetchPlayerStats(playerIds) {
         firstname: player.firstname,
         lastname: player.lastname,
         age: player.age,
-        club: "",
+        club: club,
         number: player.number,
         photo: player.photo,
         position: player.position,
@@ -52,8 +52,8 @@ async function fetchPlayerStats(playerIds) {
 
 // Example: Run for multiple players
 fetchPlayerStats([
-  119113, 21565, 21566, 193501, 22141, 3335, 20661, 22138, 21434, 333118, 999,
-  179399, 486620, 350388, 451955, 320, 3336, 21443, 21439, 128287, 387120,
-  326088, 369676, 342228, 490138, 113581, 21591, 22102, 399906, 349616, 459711,
-  355076, 395760, 361383, 368812,
+  2274, 21079, 175171, 401493, 49583, 22163, 196343, 162465, 313937, 462277,
+  482467, 444562, 437498, 339620, 407017, 25008, 4399, 240, 107, 1914, 334879,
+  193617, 662, 21153, 442866, 3099, 504157, 30531, 69971, 161919, 21592, 274312,
+  137303, 502387, 477124, 503702,
 ]);
