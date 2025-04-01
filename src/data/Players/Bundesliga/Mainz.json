@@ -13,6 +13,7 @@
     "height": "191 cm",
     "weight": "88 kg",
     "nationality": "Germany",
+    "birthdate": "2001-07-27",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "194 cm",
     "weight": "96 kg",
     "nationality": "Germany",
+    "birthdate": "1994-10-28",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "191 cm",
     "weight": "87 kg",
     "nationality": "Germany",
+    "birthdate": "1991-01-12",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "170 cm",
     "weight": "68 kg",
     "nationality": "Austria",
+    "birthdate": "1994-01-29",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "190 cm",
     "weight": "86 kg",
     "nationality": "Germany",
+    "birthdate": "1999-04-30",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "188 cm",
     "weight": "75 kg",
     "nationality": "Germany",
+    "birthdate": "1998-05-18",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "192 cm",
     "weight": "88 kg",
     "nationality": "Germany",
+    "birthdate": "1991-08-24",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "184 cm",
     "weight": "76 kg",
     "nationality": "France",
+    "birthdate": "1997-07-01",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "187 cm",
     "weight": "87 kg",
     "nationality": "Germany",
+    "birthdate": "1993-07-13",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "180 cm",
     "weight": "75 kg",
     "nationality": "Austria",
+    "birthdate": "2003-01-24",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "185 cm",
     "weight": "79 kg",
     "nationality": "Norway",
+    "birthdate": "1997-01-17",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "183 cm",
     "weight": "77 kg",
     "nationality": "Switzerland",
+    "birthdate": "1993-03-05",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "189 cm",
     "weight": "85 kg",
     "nationality": "Germany",
+    "birthdate": "2006-01-26",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "176 cm",
     "weight": "67 kg",
     "nationality": "Japan",
+    "birthdate": "2000-12-30",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "180 cm",
     "weight": "70 kg",
     "nationality": "Korea Republic",
+    "birthdate": "1992-08-10",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "169 cm",
     "weight": "66 kg",
     "nationality": "Germany",
+    "birthdate": "2002-10-10",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "175 cm",
     "weight": "66 kg",
     "nationality": "Korea Republic",
+    "birthdate": "1999-06-16",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "187 cm",
     "weight": "89 kg",
     "nationality": "USA",
+    "birthdate": "1999-10-08",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "180 cm",
     "weight": "75 kg",
     "nationality": "Germany",
+    "birthdate": "1996-10-27",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "183 cm",
     "weight": "77 kg",
     "nationality": "Germany",
+    "birthdate": "1994-01-31",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "177 cm",
     "weight": "69 kg",
     "nationality": "Germany",
+    "birthdate": "2005-02-01",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "170 cm",
     "weight": "70 kg",
     "nationality": "France",
+    "birthdate": "1998-06-17",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "175 cm",
     "weight": "75 kg",
     "nationality": "Germany",
+    "birthdate": "2003-02-17",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "181 cm",
     "weight": "76 kg",
     "nationality": "Germany",
+    "birthdate": "2000-07-11",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "191 cm",
     "weight": "82 kg",
     "nationality": "Germany",
+    "birthdate": "2005-03-17",
     "video": "----"
   }
 ]

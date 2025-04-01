@@ -13,6 +13,7 @@
     "height": "184 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "1989-04-07",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "202 cm",
     "weight": null,
     "nationality": "France",
+    "birthdate": "2001-04-27",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "190 cm",
     "weight": "88 kg",
     "nationality": "Switzerland",
+    "birthdate": "1994-06-06",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "173 cm",
     "weight": "66 kg",
     "nationality": "Brazil",
+    "birthdate": "1996-08-21",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "190 cm",
     "weight": "81 kg",
     "nationality": "Tunisia",
+    "birthdate": "1998-05-26",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "191 cm",
     "weight": "76 kg",
     "nationality": "Senegal",
+    "birthdate": "2001-01-02",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "185 cm",
     "weight": "82 kg",
     "nationality": "France",
+    "birthdate": "1993-11-04",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "178 cm",
     "weight": "78 kg",
     "nationality": "Congo DR",
+    "birthdate": "1997-08-29",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "191 cm",
     "weight": null,
     "nationality": "Ghana",
+    "birthdate": "2002-08-21",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "177 cm",
     "weight": "65 kg",
     "nationality": "Cameroon",
+    "birthdate": "2000-09-22",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "188 cm",
     "weight": null,
     "nationality": "France",
+    "birthdate": "2006-03-31",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "175 cm",
     "weight": "69 kg",
     "nationality": "Nigeria",
+    "birthdate": "2004-08-28",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "187 cm",
     "weight": null,
     "nationality": "Greece",
+    "birthdate": "2001-07-05",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": null,
     "weight": null,
     "nationality": "Guadeloupe",
+    "birthdate": "2004-10-16",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": null,
     "weight": null,
     "nationality": "Mauritania",
+    "birthdate": "2002-06-08",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "170 cm",
     "weight": "65 kg",
     "nationality": "France",
+    "birthdate": "1993-02-01",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "177 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "1998-06-12",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "170 cm",
     "weight": "62 kg",
     "nationality": "France",
+    "birthdate": "2000-11-28",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "173 cm",
     "weight": "58 kg",
     "nationality": "Côte d'Ivoire",
+    "birthdate": "1998-12-09",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "185 cm",
     "weight": null,
     "nationality": "Cameroon",
+    "birthdate": "2004-12-15",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "178 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "2001-01-15",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "176 cm",
     "weight": "66 kg",
     "nationality": "Norway",
+    "birthdate": "2002-11-12",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "175 cm",
     "weight": null,
     "nationality": "France",
+    "birthdate": "2005-04-18",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": null,
     "weight": null,
     "nationality": "France",
+    "birthdate": "2002-05-15",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "185 cm",
     "weight": "75 kg",
     "nationality": "Côte d'Ivoire",
+    "birthdate": "2001-12-10",
     "video": "----"
   },
   {
@@ -413,6 +438,7 @@
     "height": "181 cm",
     "weight": "70 kg",
     "nationality": "France",
+    "birthdate": "2002-12-29",
     "video": "----"
   },
   {
@@ -429,6 +455,7 @@
     "height": "179 cm",
     "weight": "70 kg",
     "nationality": "France",
+    "birthdate": "2006-06-23",
     "video": "----"
   },
   {
@@ -445,6 +472,7 @@
     "height": "179 cm",
     "weight": "75 kg",
     "nationality": "Benin",
+    "birthdate": "1998-06-26",
     "video": "----"
   },
   {
@@ -461,6 +489,7 @@
     "height": "182 cm",
     "weight": "69 kg",
     "nationality": "Senegal",
+    "birthdate": "2001-01-13",
     "video": "----"
   },
   {
@@ -477,6 +506,7 @@
     "height": "178 cm",
     "weight": null,
     "nationality": "Guadeloupe",
+    "birthdate": "2005-06-13",
     "video": "----"
   },
   {
@@ -493,6 +523,7 @@
     "height": null,
     "weight": null,
     "nationality": "France",
+    "birthdate": "2003-12-03",
     "video": "----"
   },
   {
@@ -509,6 +540,7 @@
     "height": null,
     "weight": null,
     "nationality": "France",
+    "birthdate": "2003-08-08",
     "video": "----"
   }
 ]

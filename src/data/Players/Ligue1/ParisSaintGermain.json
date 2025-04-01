@@ -13,6 +13,7 @@
     "height": "196 cm",
     "weight": "90 kg",
     "nationality": "Italy",
+    "birthdate": "1999-02-25",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "192 cm",
     "weight": "82 kg",
     "nationality": "Russia",
+    "birthdate": "1999-02-25",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "187 cm",
     "weight": "79 kg",
     "nationality": "France",
+    "birthdate": "2004-07-21",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "185 cm",
     "weight": "85 kg",
     "nationality": "Spain",
+    "birthdate": "2001-05-30",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "181 cm",
     "weight": "73 kg",
     "nationality": "Morocco",
+    "birthdate": "1998-11-04",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "182 cm",
     "weight": "79 kg",
     "nationality": "France",
+    "birthdate": "1995-08-13",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "183 cm",
     "weight": "75 kg",
     "nationality": "Brazil",
+    "birthdate": "1994-05-14",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "184 cm",
     "weight": "79 kg",
     "nationality": "France",
+    "birthdate": "1996-02-14",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "180 cm",
     "weight": "70 kg",
     "nationality": "Portugal",
+    "birthdate": "2002-06-19",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "186 cm",
     "weight": "78 kg",
     "nationality": "Brazil",
+    "birthdate": "2003-11-24",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "168 cm",
     "weight": "58 kg",
     "nationality": "France",
+    "birthdate": "2006-05-15",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "183 cm",
     "weight": "75 kg",
     "nationality": "Morocco",
+    "birthdate": "2006-12-07",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "188 cm",
     "weight": "81 kg",
     "nationality": "Ecuador",
+    "birthdate": "2001-10-16",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "189 cm",
     "weight": "70 kg",
     "nationality": "Spain",
+    "birthdate": "1996-04-03",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "172 cm",
     "weight": "64 kg",
     "nationality": "Portugal",
+    "birthdate": "2000-02-13",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "173 cm",
     "weight": "66 kg",
     "nationality": "Korea Republic",
+    "birthdate": "2001-02-19",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "183 cm",
     "weight": "69 kg",
     "nationality": "France",
+    "birthdate": "2006-05-17",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "178 cm",
     "weight": "68 kg",
     "nationality": "France",
+    "birthdate": "2006-03-08",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "180 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "2007-08-10",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "174 cm",
     "weight": "66 kg",
     "nationality": "Portugal",
+    "birthdate": "2004-09-27",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "183 cm",
     "weight": "76 kg",
     "nationality": "Georgia",
+    "birthdate": "2001-02-12",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "185 cm",
     "weight": "79 kg",
     "nationality": "Portugal",
+    "birthdate": "2001-06-20",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "178 cm",
     "weight": "67 kg",
     "nationality": "France",
+    "birthdate": "1997-05-15",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "181 cm",
     "weight": "79 kg",
     "nationality": "France",
+    "birthdate": "2005-06-03",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "182 cm",
     "weight": "73 kg",
     "nationality": "France",
+    "birthdate": "2002-09-02",
     "video": "----"
   },
   {
@@ -413,6 +438,7 @@
     "height": "185 cm",
     "weight": "65 kg",
     "nationality": "France",
+    "birthdate": "2008-01-24",
     "video": "----"
   }
 ]

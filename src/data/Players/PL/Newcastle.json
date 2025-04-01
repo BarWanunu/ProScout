@@ -13,6 +13,7 @@
     "height": "190 cm",
     "weight": "83 kg",
     "nationality": "Slovakia",
+    "birthdate": "1989-01-15",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "188 cm",
     "weight": "78 kg",
     "nationality": "Greece",
+    "birthdate": "1994-04-26",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "191 cm",
     "weight": "76 kg",
     "nationality": "England",
+    "birthdate": "1992-04-19",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "192 cm",
     "weight": "96 kg",
     "nationality": "England",
+    "birthdate": "1986-10-24",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "192 cm",
     "weight": "83 kg",
     "nationality": "England",
+    "birthdate": "1992-03-27",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "178 cm",
     "weight": "71 kg",
     "nationality": "England",
+    "birthdate": "1990-09-19",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "193 cm",
     "weight": "81 kg",
     "nationality": "Netherlands",
+    "birthdate": "2000-01-12",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "186 cm",
     "weight": "84 kg",
     "nationality": "Switzerland",
+    "birthdate": "1991-12-20",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "188 cm",
     "weight": "89 kg",
     "nationality": "England",
+    "birthdate": "1993-11-11",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "183 cm",
     "weight": "70 kg",
     "nationality": "England",
+    "birthdate": "1995-09-18",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "184 cm",
     "weight": "83 kg",
     "nationality": "Sweden",
+    "birthdate": "1994-08-02",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "179 cm",
     "weight": "73 kg",
     "nationality": "England",
+    "birthdate": "2004-09-08",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "182 cm",
     "weight": "65 kg",
     "nationality": "England",
+    "birthdate": "2002-11-12",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "198 cm",
     "weight": "87 kg",
     "nationality": "England",
+    "birthdate": "1992-05-09",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "178 cm",
     "weight": "70 kg",
     "nationality": "Northern Ireland",
+    "birthdate": "1998-01-25",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "181 cm",
     "weight": "79 kg",
     "nationality": "Italy",
+    "birthdate": "2000-05-08",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "174 cm",
     "weight": "66 kg",
     "nationality": "England",
+    "birthdate": "1997-12-09",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "179 cm",
     "weight": "74 kg",
     "nationality": "England",
+    "birthdate": "1995-02-24",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "179 cm",
     "weight": "71 kg",
     "nationality": "England",
+    "birthdate": "1999-08-20",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "180 cm",
     "weight": "65 kg",
     "nationality": "England",
+    "birthdate": "1997-10-30",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "182 cm",
     "weight": "74 kg",
     "nationality": "Brazil",
+    "birthdate": "1997-11-16",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "185 cm",
     "weight": "72 kg",
     "nationality": "England",
+    "birthdate": "2006-05-01",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "186 cm",
     "weight": "81 kg",
     "nationality": "Brazil",
+    "birthdate": "1996-08-14",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "180 cm",
     "weight": "66 kg",
     "nationality": "England",
+    "birthdate": "1992-02-27",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "183 cm",
     "weight": "72 kg",
     "nationality": "England",
+    "birthdate": "2001-02-24",
     "video": "----"
   },
   {
@@ -413,6 +438,7 @@
     "height": "192 cm",
     "weight": "77 kg",
     "nationality": "Sweden",
+    "birthdate": "1999-09-21",
     "video": "----"
   },
   {
@@ -429,6 +455,7 @@
     "height": "180 cm",
     "weight": "81 kg",
     "nationality": "Denmark",
+    "birthdate": "2003-08-04",
     "video": "----"
   },
   {
@@ -445,6 +472,7 @@
     "height": "178 cm",
     "weight": "60 kg",
     "nationality": "England",
+    "birthdate": "2007-04-25",
     "video": "----"
   },
   {
@@ -461,6 +489,7 @@
     "height": null,
     "weight": null,
     "nationality": "England",
+    "birthdate": "2007-05-27",
     "video": "----"
   }
 ]

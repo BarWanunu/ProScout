@@ -13,6 +13,7 @@
     "height": "193 cm",
     "weight": "84 kg",
     "nationality": "Germany",
+    "birthdate": "2000-01-28",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "195 cm",
     "weight": "85 kg",
     "nationality": "Italy",
+    "birthdate": "1995-04-12",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "190 cm",
     "weight": "85 kg",
     "nationality": "Finland",
+    "birthdate": "2003-07-21",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "177 cm",
     "weight": "83 kg",
     "nationality": "Germany",
+    "birthdate": "2006-02-03",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "193 cm",
     "weight": "90 kg",
     "nationality": "Angola",
+    "birthdate": "1997-09-27",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "184 cm",
     "weight": "90 kg",
     "nationality": "Italy",
+    "birthdate": "1996-09-20",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "178 cm",
     "weight": "70 kg",
     "nationality": "France",
+    "birthdate": "1994-12-24",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "183 cm",
     "weight": "78 kg",
     "nationality": "Portugal",
+    "birthdate": "2002-09-25",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "191 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "2000-02-19",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "183 cm",
     "weight": "69 kg",
     "nationality": "Italy",
+    "birthdate": "2000-01-05",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "197 cm",
     "weight": "78 kg",
     "nationality": "Bulgaria",
+    "birthdate": "2006-11-01",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "187 cm",
     "weight": "79 kg",
     "nationality": "Australia",
+    "birthdate": "2005-04-21",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "188 cm",
     "weight": "80 kg",
     "nationality": "Netherlands",
+    "birthdate": "2005-05-24",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "196 cm",
     "weight": "88 kg",
     "nationality": "Portugal",
+    "birthdate": "2004-12-26",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "182 cm",
     "weight": "72 kg",
     "nationality": "Italy",
+    "birthdate": "1999-06-04",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "186 cm",
     "weight": "81 kg",
     "nationality": "Albania",
+    "birthdate": "2003-10-21",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "180 cm",
     "weight": "75 kg",
     "nationality": "Tunisia",
+    "birthdate": "1999-04-02",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "187 cm",
     "weight": "66 kg",
     "nationality": "Iceland",
+    "birthdate": "2000-09-28",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "185 cm",
     "weight": "80 kg",
     "nationality": "Albania",
+    "birthdate": "1996-04-12",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "169 cm",
     "weight": "69 kg",
     "nationality": "Zambia",
+    "birthdate": "2001-01-29",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "183 cm",
     "weight": "77 kg",
     "nationality": "Mali",
+    "birthdate": "1996-04-10",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "187 cm",
     "weight": "72 kg",
     "nationality": "Poland",
+    "birthdate": "2002-01-10",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "186 cm",
     "weight": "82 kg",
     "nationality": "France",
+    "birthdate": "2000-05-15",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "185 cm",
     "weight": "71 kg",
     "nationality": "France",
+    "birthdate": "2001-10-27",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "185 cm",
     "weight": "78 kg",
     "nationality": "Croatia",
+    "birthdate": "1993-09-21",
     "video": "----"
   },
   {
@@ -413,6 +438,7 @@
     "height": "180 cm",
     "weight": "76 kg",
     "nationality": "Spain",
+    "birthdate": "1996-12-04",
     "video": "----"
   },
   {
@@ -429,6 +455,7 @@
     "height": "185 cm",
     "weight": "83 kg",
     "nationality": "Montenegro",
+    "birthdate": "2000-04-05",
     "video": "----"
   },
   {
@@ -445,6 +472,7 @@
     "height": "174 cm",
     "weight": "73 kg",
     "nationality": "Côte d'Ivoire",
+    "birthdate": "2000-10-27",
     "video": "----"
   },
   {
@@ -461,6 +489,7 @@
     "height": "175 cm",
     "weight": "68 kg",
     "nationality": "Italy",
+    "birthdate": "1991-09-10",
     "video": "----"
   },
   {
@@ -477,6 +506,7 @@
     "height": "185 cm",
     "weight": "77 kg",
     "nationality": "Romania",
+    "birthdate": "2004-01-31",
     "video": "----"
   },
   {
@@ -493,6 +523,7 @@
     "height": "194 cm",
     "weight": "85 kg",
     "nationality": "Sweden",
+    "birthdate": "2003-01-15",
     "video": "----"
   },
   {
@@ -509,6 +540,7 @@
     "height": "171 cm",
     "weight": "70 kg",
     "nationality": "Sweden",
+    "birthdate": "1998-07-25",
     "video": "----"
   },
   {
@@ -525,6 +557,7 @@
     "height": "189 cm",
     "weight": "69 kg",
     "nationality": "Argentina",
+    "birthdate": "2001-04-03",
     "video": "----"
   }
 ]

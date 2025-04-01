@@ -13,6 +13,7 @@
     "height": "184 cm",
     "weight": "79 kg",
     "nationality": "Algeria",
+    "birthdate": "1988-07-19",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "186 cm",
     "weight": "80 kg",
     "nationality": "Belgium",
+    "birthdate": "1998-03-11",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": null,
     "weight": null,
     "nationality": "France",
+    "birthdate": "2006-03-29",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": null,
     "weight": null,
     "nationality": "France",
+    "birthdate": "2005-03-04",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "193 cm",
     "weight": null,
     "nationality": "Senegal",
+    "birthdate": "1997-05-02",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "179 cm",
     "weight": "77 kg",
     "nationality": "France",
+    "birthdate": "1991-11-15",
     "video": "----"
   },
   {
@@ -109,6 +115,7 @@
     "height": "178 cm",
     "weight": "79 kg",
     "nationality": "France",
+    "birthdate": "1996-03-20",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "185 cm",
     "weight": null,
     "nationality": "Gabon",
+    "birthdate": "2003-04-30",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "184 cm",
     "weight": "87 kg",
     "nationality": "Côte d'Ivoire",
+    "birthdate": "1986-08-18",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "183 cm",
     "weight": "76 kg",
     "nationality": "Senegal",
+    "birthdate": "2000-01-02",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "190 cm",
     "weight": "76 kg",
     "nationality": "Algeria",
+    "birthdate": "1996-03-14",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "185 cm",
     "weight": null,
     "nationality": "Senegal",
+    "birthdate": "2004-06-10",
     "video": "----"
   },
   {
@@ -205,6 +217,7 @@
     "height": "173 cm",
     "weight": "65 kg",
     "nationality": "Côte d'Ivoire",
+    "birthdate": "1998-05-20",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "187 cm",
     "weight": "74 kg",
     "nationality": "France",
+    "birthdate": "2004-10-31",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "180 cm",
     "weight": null,
     "nationality": "Senegal",
+    "birthdate": "2006-01-25",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "178 cm",
     "weight": "74 kg",
     "nationality": "France",
+    "birthdate": "1998-01-07",
     "video": "----"
   },
   {
@@ -269,6 +285,7 @@
     "height": "180 cm",
     "weight": "82 kg",
     "nationality": "France",
+    "birthdate": "1990-08-13",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "166 cm",
     "weight": "62 kg",
     "nationality": "Gambia",
+    "birthdate": "1998-11-14",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "185 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "2004-02-09",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "170 cm",
     "weight": "65 kg",
     "nationality": "France",
+    "birthdate": "1996-08-07",
     "video": "----"
   },
   {
@@ -333,6 +353,7 @@
     "height": "182 cm",
     "weight": "67 kg",
     "nationality": "Senegal",
+    "birthdate": "2004-06-25",
     "video": "----"
   },
   {
@@ -349,6 +370,7 @@
     "height": "168 cm",
     "weight": "56 kg",
     "nationality": "Senegal",
+    "birthdate": "1999-03-04",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": null,
     "weight": null,
     "nationality": "Senegal",
+    "birthdate": "2003-09-16",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "175 cm",
     "weight": null,
     "nationality": "France",
+    "birthdate": "2004-03-13",
     "video": "----"
   },
   {
@@ -397,6 +421,7 @@
     "height": "179 cm",
     "weight": null,
     "nationality": "France",
+    "birthdate": "2005-08-06",
     "video": "----"
   },
   {
@@ -413,6 +438,7 @@
     "height": "179 cm",
     "weight": null,
     "nationality": "Senegal",
+    "birthdate": "2005-03-28",
     "video": "----"
   },
   {
@@ -429,6 +455,7 @@
     "height": "175 cm",
     "weight": "75 kg",
     "nationality": "Sweden",
+    "birthdate": "1999-04-27",
     "video": "----"
   }
 ]

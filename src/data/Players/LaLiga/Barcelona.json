@@ -13,6 +13,7 @@
     "height": "187 cm",
     "weight": "85 kg",
     "nationality": "Germany",
+    "birthdate": "1992-04-30",
     "video": "----"
   },
   {
@@ -29,6 +30,7 @@
     "height": "184 cm",
     "weight": "78 kg",
     "nationality": "Spain",
+    "birthdate": "1999-03-02",
     "video": "----"
   },
   {
@@ -45,6 +47,7 @@
     "height": "195 cm",
     "weight": "90 kg",
     "nationality": "Poland",
+    "birthdate": "1990-04-18",
     "video": "----"
   },
   {
@@ -61,6 +64,7 @@
     "height": "190 cm",
     "weight": "77 kg",
     "nationality": "Spain",
+    "birthdate": "2004-03-03",
     "video": "----"
   },
   {
@@ -77,6 +81,7 @@
     "height": "188 cm",
     "weight": "80 kg",
     "nationality": "USA",
+    "birthdate": "2006-03-19",
     "video": "----"
   },
   {
@@ -93,6 +98,7 @@
     "height": "185 cm",
     "weight": "78 kg",
     "nationality": "Hungary",
+    "birthdate": "2006-03-06",
     "video": "----"
   },
   {
@@ -103,12 +109,13 @@
     "lastname": "Cubarsí Paredes",
     "age": 18,
     "club": "Barcelona",
-    "number": 2,
+    "number": 5,
     "photo": "https://media.api-sports.io/football/players/396623.png",
     "position": "Defender",
     "height": "184 cm",
     "weight": "75 kg",
     "nationality": "Spain",
+    "birthdate": "2007-01-22",
     "video": "----"
   },
   {
@@ -125,6 +132,7 @@
     "height": "175 cm",
     "weight": "69 kg",
     "nationality": "Spain",
+    "birthdate": "2003-10-18",
     "video": "----"
   },
   {
@@ -141,6 +149,7 @@
     "height": "188 cm",
     "weight": "79 kg",
     "nationality": "Uruguay",
+    "birthdate": "1999-03-07",
     "video": "----"
   },
   {
@@ -157,6 +166,7 @@
     "height": "182 cm",
     "weight": "76 kg",
     "nationality": "Spain",
+    "birthdate": "1991-05-17",
     "video": "----"
   },
   {
@@ -173,6 +183,7 @@
     "height": "187 cm",
     "weight": "82 kg",
     "nationality": "Denmark",
+    "birthdate": "1996-04-10",
     "video": "----"
   },
   {
@@ -189,6 +200,7 @@
     "height": "180 cm",
     "weight": "75 kg",
     "nationality": "France",
+    "birthdate": "1998-11-12",
     "video": "----"
   },
   {
@@ -199,12 +211,13 @@
     "lastname": "García Martret",
     "age": 24,
     "club": "Barcelona",
-    "number":24,
+    "number": 12,
     "photo": "https://media.api-sports.io/football/players/619.png",
     "position": "Defender",
     "height": "182 cm",
     "weight": "76 kg",
     "nationality": "Spain",
+    "birthdate": "2001-01-09",
     "video": "----"
   },
   {
@@ -221,6 +234,7 @@
     "height": "185 cm",
     "weight": "78 kg",
     "nationality": "Spain",
+    "birthdate": "2006-08-02",
     "video": "----"
   },
   {
@@ -237,6 +251,7 @@
     "height": "186 cm",
     "weight": "76 kg",
     "nationality": "Spain",
+    "birthdate": "2002-02-26",
     "video": "----"
   },
   {
@@ -253,6 +268,7 @@
     "height": "188 cm",
     "weight": "78 kg",
     "nationality": "Spain",
+    "birthdate": "2005-04-01",
     "video": "----"
   },
   {
@@ -263,12 +279,13 @@
     "lastname": "Cuenca Cejudo",
     "age": 18,
     "club": "Barcelona",
-    "number": 85,
+    "number": 5,
     "photo": "https://media.api-sports.io/football/players/441244.png",
     "position": "Defender",
     "height": "181 cm",
     "weight": "74 kg",
     "nationality": "Spain",
+    "birthdate": "2007-06-11",
     "video": "----"
   },
   {
@@ -285,6 +302,7 @@
     "height": "189 cm",
     "weight": "82 kg",
     "nationality": "Spain",
+    "birthdate": "2005-03-17",
     "video": "----"
   },
   {
@@ -301,6 +319,7 @@
     "height": "173 cm",
     "weight": "70 kg",
     "nationality": "Spain",
+    "birthdate": "2004-08-05",
     "video": "----"
   },
   {
@@ -317,6 +336,7 @@
     "height": "174 cm",
     "weight": "60 kg",
     "nationality": "Spain",
+    "birthdate": "2002-11-25",
     "video": "----"
   },
   {
@@ -327,12 +347,13 @@
     "lastname": "Torre Carral",
     "age": 22,
     "club": "Barcelona",
-    "number": 14,
+    "number": 18,
     "photo": "https://media.api-sports.io/football/players/285909.png",
     "position": "Midfielder",
     "height": "173 cm",
     "weight": "65 kg",
     "nationality": "Spain",
+    "birthdate": "2003-04-03",
     "video": "----"
   },
   {
@@ -343,12 +364,13 @@
     "lastname": "López Martín",
     "age": 22,
     "club": "Barcelona",
-    "number": 16,
+    "number": 32,
     "photo": "https://media.api-sports.io/football/players/340626.png",
     "position": "Midfielder",
     "height": "174 cm",
     "weight": "64 kg",
     "nationality": "Spain",
+    "birthdate": "2003-05-11",
     "video": "----"
   },
   {
@@ -365,6 +387,7 @@
     "height": "172 cm",
     "weight": "66 kg",
     "nationality": "Spain",
+    "birthdate": "2003-09-14",
     "video": "----"
   },
   {
@@ -381,6 +404,7 @@
     "height": "179 cm",
     "weight": "72 kg",
     "nationality": "Spain",
+    "birthdate": "1998-05-07",
     "video": "----"
   },
   {
@@ -391,12 +415,13 @@
     "lastname": "de Jong",
     "age": 28,
     "club": "Barcelona",
-    "number": 21,
+    "number": 7,
     "photo": "https://media.api-sports.io/football/players/538.png",
     "position": "Midfielder",
     "height": "181 cm",
     "weight": "74 kg",
     "nationality": "Netherlands",
+    "birthdate": "1997-05-12",
     "video": "----"
   },
   {
@@ -407,12 +432,13 @@
     "lastname": "Bernal Casas",
     "age": 18,
     "club": "Barcelona",
-    "number": 38,
+    "number": 6,
     "photo": "https://media.api-sports.io/football/players/433396.png",
     "position": "Midfielder",
     "height": "191 cm",
     "weight": "84 kg",
     "nationality": "Spain",
+    "birthdate": "2007-05-26",
     "video": "----"
   },
   {
@@ -429,6 +455,7 @@
     "height": "184 cm",
     "weight": "74 kg",
     "nationality": "Germany",
+    "birthdate": "2006-09-25",
     "video": "----"
   },
   {
@@ -439,12 +466,13 @@
     "lastname": "Fernández Casino",
     "age": 17,
     "club": "Barcelona",
-    "number": 77,
+    "number": 17,
     "photo": "https://media.api-sports.io/football/players/441232.png",
     "position": "Midfielder",
     "height": "181 cm",
     "weight": "74 kg",
     "nationality": "Spain",
+    "birthdate": "2008-06-18",
     "video": "----"
   },
   {
@@ -461,6 +489,7 @@
     "height": "184 cm",
     "weight": "77 kg",
     "nationality": "Spain",
+    "birthdate": "2000-02-29",
     "video": "----"
   },
   {
@@ -477,6 +506,7 @@
     "height": "185 cm",
     "weight": "81 kg",
     "nationality": "Poland",
+    "birthdate": "1988-08-21",
     "video": "----"
   },
   {
@@ -493,6 +523,7 @@
     "height": "178 cm",
     "weight": "66 kg",
     "nationality": "Spain",
+    "birthdate": "2002-10-31",
     "video": "----"
   },
   {
@@ -509,6 +540,7 @@
     "height": "176 cm",
     "weight": "68 kg",
     "nationality": "Brazil",
+    "birthdate": "1996-12-14",
     "video": "----"
   },
   {
@@ -525,6 +557,7 @@
     "height": "184 cm",
     "weight": "77 kg",
     "nationality": "Spain",
+    "birthdate": "2001-11-26",
     "video": "----"
   },
   {
@@ -541,6 +574,7 @@
     "height": "180 cm",
     "weight": "72 kg",
     "nationality": "Spain",
+    "birthdate": "2007-07-13",
     "video": "----"
   },
   {
@@ -557,6 +591,7 @@
     "height": "175 cm",
     "weight": "75 kg",
     "nationality": "Spain",
+    "birthdate": "2008-07-15",
     "video": "----"
   }
 ]

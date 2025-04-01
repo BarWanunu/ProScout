@@ -37,7 +37,7 @@ async function fetchPlayerStats(playerIds) {
         height: player.height,
         weight: player.weight,
         nationality: player.nationality,
-        birthdate: player.birthdate?.date,
+        birthdate: player.birth.date,
         video: "----",
       };
       results.push(playerData);
