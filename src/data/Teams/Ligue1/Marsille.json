@@ -1,0 +1,10 @@
+{
+  "id": 81,
+  "name": "Marseille",
+  "league": "Ligue 1",
+  "country": "France",
+  "formation": "4-2-3-1",
+  "stadium": "Stade Orange Vélodrome",
+  "trophies": 27,
+  "logo": "https://media.api-sports.io/football/teams/81.png"
+}
