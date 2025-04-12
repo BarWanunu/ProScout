@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UserIcon, ArrowLeftIcon } from "lucide-react"
-import landingVideo from "../../assets/landing.mp4"
 import Logo from "./Logo"
 
 const PlayerLogin = () => {
@@ -13,13 +12,15 @@ const PlayerLogin = () => {
     e.preventDefault()
     // Handle login logic here
     console.log("Player login with:", email, password)
+    // Redirect to player dashboard after successful login
+    navigate("/player-dashboard")
   }
 
   return (
     <div className="flex justify-start items-center flex-col min-h-screen">
       <div className="relative w-full h-full min-h-screen">
         <video
-          src={landingVideo}
+          src="/landing.mp4"
           type="video/mp4"
           loop
           controls={false}
@@ -103,7 +104,7 @@ const PlayerLogin = () => {
               <div className="mt-6 text-center">
                 <p className="text-gray-300 text-sm">
                   Don't have an account?{" "}
-                  <a href="/signup/player" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  <a href="/signup" className="text-blue-400 hover:text-blue-300 transition-colors">
                     Sign up now
                   </a>
                 </p>
@@ -122,4 +123,3 @@ const PlayerLogin = () => {
 }
 
 export default PlayerLogin
-

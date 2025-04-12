@@ -3,7 +3,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { UsersIcon, ArrowLeftIcon } from "lucide-react"
-import landingVideo from "../../assets/landing.mp4"
 import Logo from "./Logo"
 
 const TeamLogin = () => {
@@ -15,13 +14,15 @@ const TeamLogin = () => {
     e.preventDefault()
     // Handle login logic here
     console.log("Team login with:", email, password)
+    // Redirect to team dashboard after successful login
+    navigate("/team-dashboard")
   }
 
   return (
     <div className="flex justify-start items-center flex-col min-h-screen">
       <div className="relative w-full h-full min-h-screen">
         <video
-          src={landingVideo}
+          src="/landing.mp4"
           type="video/mp4"
           loop
           controls={false}
@@ -105,7 +106,7 @@ const TeamLogin = () => {
               <div className="mt-6 text-center">
                 <p className="text-gray-300 text-sm">
                   Don't have an account?{" "}
-                  <a href="/signup/team" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  <a href="/signup" className="text-blue-400 hover:text-blue-300 transition-colors">
                     Sign up now
                   </a>
                 </p>
@@ -124,4 +125,3 @@ const TeamLogin = () => {
 }
 
 export default TeamLogin
-

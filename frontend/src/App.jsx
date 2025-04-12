@@ -1,10 +1,11 @@
 import React from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import LandingPage from './container/LandingPage';
 import { PlayerLogin, ScoutLogin, TeamLogin } from './components/loginPages';
 import PlayerDashboard from './container/PlayerDashboard';
 import ScoutDashboard from './container/ScoutDashboard';
 import TeamDashboard from './container/TeamDashboard';
+import SignupPage from './container/SignupPage'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/player-dashboard" element={<PlayerDashboard />}/>
       <Route path="/scout-dashboard" element={<ScoutDashboard />}/>
       <Route path="/team-dashboard" element={<TeamDashboard />}/>
+      <Route path="/signup" element={<SignupPage />} />
     </Routes>
   )
 }

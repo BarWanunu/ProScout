@@ -1,9 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { EyeIcon, ArrowLeftIcon } from "lucide-react"
-import landingVideo from "../../assets/landing.mp4"
 import Logo from "./Logo"
 
 const ScoutLogin = () => {
@@ -15,13 +12,15 @@ const ScoutLogin = () => {
     e.preventDefault()
     // Handle login logic here
     console.log("Scout login with:", email, password)
+    // Redirect to scout dashboard after successful login
+    navigate("/scout-dashboard")
   }
 
   return (
     <div className="flex justify-start items-center flex-col min-h-screen">
       <div className="relative w-full h-full min-h-screen">
         <video
-          src={landingVideo}
+          src="/landing.mp4"
           type="video/mp4"
           loop
           controls={false}
@@ -105,7 +104,7 @@ const ScoutLogin = () => {
               <div className="mt-6 text-center">
                 <p className="text-gray-300 text-sm">
                   Don't have an account?{" "}
-                  <a href="/signup/scout" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  <a href="/signup" className="text-blue-400 hover:text-blue-300 transition-colors">
                     Sign up now
                   </a>
                 </p>
@@ -124,4 +123,3 @@ const ScoutLogin = () => {
 }
 
 export default ScoutLogin
-
