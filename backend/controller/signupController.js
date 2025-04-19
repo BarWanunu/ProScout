@@ -25,6 +25,7 @@ exports.signupUser = async (req, res) => {
       password,
       role,
     });
+
     res
       .status(201)
       .json({ message: "User Created Successfully", user: newUser });
