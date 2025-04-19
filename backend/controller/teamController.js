@@ -1,7 +1,12 @@
 const teamModel = require("../models/teamModel");
 const userModel = require("../models/userModel");
+const { registerTeamSchema } = require("../validations/teamValidation");
 
 exports.registerTeam = async (req, res) => {
+  const { error } = registerTeamSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
   const {
     username,
     team_name,

@@ -24,7 +24,7 @@ exports.createTeam = async (team) => {
       country,
       formation,
       stadium,
-      trophies || 0,
+      trophies,
       logo || null,
     ]
   );
