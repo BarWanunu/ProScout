@@ -1,6 +1,12 @@
 const userModel = require("../models/userModel");
+const { createUserSchema } = require("../validations/userValidation");
 
 exports.signupUser = async (req, res) => {
+  const { error } = createUserSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
   const { email, username, password, role } = req.body;
 
   const allowedRoles = ["scout", "player", "team"];
