@@ -24,7 +24,7 @@ exports.registerScout = async (req, res) => {
     if (exsitingScout) {
       return res.status(409).json({ message: "User already exists." });
     }
-    const exsitingPhone = await scoutModel.findScoutBy("user_id", user_id);
+    const exsitingPhone = await scoutModel.findScoutBy("phone", phone);
 
     if (exsitingPhone) {
       return res.status(409).json({ message: "Phone numebr akready in use." });

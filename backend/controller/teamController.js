@@ -12,7 +12,7 @@ exports.registerTeam = async (req, res) => {
   const {username, team_name, league, country, formation, stadium, trophies, logo,} = req.body;
 
   try {
-    const user = await userModel.findUserByUser("username", username);
+    const user = await userModel.findUserBy("username", username);
     if (!user) {
       return res.status(404).json({ message: "User not found." });
     }

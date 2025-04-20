@@ -30,7 +30,7 @@ exports.findScoutBy = async (field, value) => {
     throw new Error("Invalid field for user lookup");
   }
 
-  const query = `SELECT * FROM users WHERE ${field} = $1`;
+  const query = `SELECT * FROM scouts WHERE ${field} = $1`;
   const result = await db.query(query, [value]);
   return result.rows[0];
 };
