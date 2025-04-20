@@ -11,17 +11,15 @@ exports.createUser = async ({ email, username, password, role }) => {
   return result.rows[0];
 };
 
-exports.findUserByEmail = async (email) => {
-  const result = await db.query("SELECT * FROM users where email = $1", [
-    email,
-  ]);
-  return result.rows[0];
-};
+exports.findUserBy = async (field, value) => {
+  const allowedFields = ["id", "email", "username"];
 
-exports.findUserByUsername = async (username) => {
-  const result = await db.query("SELECT * FROM users WHERE username = $1", [
-    username,
-  ]);
+  if (!allowedFields.includes(field)) {
+    throw new Error("Invalid field for user lookup");
+  }
+
+  const query = `SELECT * FROM users WHERE ${field} = $1`;
+  const result = await db.query(query, [value]);
   return result.rows[0];
 };
 

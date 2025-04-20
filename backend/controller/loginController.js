@@ -4,15 +4,17 @@ exports.loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await userModel.findUserByEmail(email);
+    const user = await userModel.findUserBy("email", email);
     const passwordCheck =
       user && userModel.checkPassword(password, user.password);
     if (!user || !passwordCheck) {
-      return res.status(401).json({ message: "Email or Password are invalid" });
+      return res
+        .status(401)
+        .json({ message: "Email or Password are invalid." });
     }
 
     res.json({
-      message: "Login Successful",
+      message: "Login Successful.",
       user: {
         id: user.id,
         email: user.email,

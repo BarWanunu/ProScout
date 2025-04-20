@@ -3,6 +3,7 @@ const express = require("express");
 const login = require("../routes/login");
 const signup = require("../routes/signup");
 const team = require("../routes/team");
+const scout = require("../routes/scout");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -10,4 +11,5 @@ module.exports = function (app) {
   app.use("/api/login", login);
   app.use("/api/signup", signup);
   app.use("/api/team", team);
+  app.use("/api/scout", scout);
 };

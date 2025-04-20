@@ -15,14 +15,14 @@ exports.signupUser = async (req, res) => {
   }
 
   try {
-    const existingEmail = await userModel.findUserByEmail(email);
+    const existingEmail = await userModel.findUserBy("email", email);
     if (existingEmail) {
-      return res.status(409).json({ message: "Email already in use" });
+      return res.status(409).json({ message: "Email already in use." });
     }
 
-    const exisitingUsername = await userModel.findUserByUsername(username);
+    const exisitingUsername = await userModel.findUserBy("username", username);
     if (exisitingUsername) {
-      return res.status(409).json({ message: "username already in use" });
+      return res.status(409).json({ message: "username already in use." });
     }
 
     const newUser = await userModel.createUser({
@@ -34,7 +34,7 @@ exports.signupUser = async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "User Created Successfully", user: newUser });
+      .json({ message: "User Created Successfully.", user: newUser });
   } catch (err) {
     res.status(500).json({ message: " Server error", error: err.message });
   }
