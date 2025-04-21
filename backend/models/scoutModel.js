@@ -34,3 +34,14 @@ exports.findScoutBy = async (field, value) => {
   const result = await db.query(query, [value]);
   return result.rows[0];
 };
+
+exports.updateScoutField = async (user_id, field, value) => {
+  const allowedFields = ["image", "experience_years"];
+  if (!allowedFields.includes(field)) {
+    throw new Error("Field not allowed to be updated");
+  }
+
+  const query = `UPDATE scouts set ${field} = $1 WHERE user_id = $2 RETURNING *`;
+  const result = await db.query(query, [value, user_id]);
+  return result.rows[0];
+};

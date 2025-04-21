@@ -1,29 +1,19 @@
 const userModel = require("../models/userModel");
 const { createUserSchema } = require("../validations/userValidation");
+const { checkFieldExists } = require("../utils/existsUtils");
+const { validateRequest } = require("../utils/validationUtils");
 
 exports.signupUser = async (req, res) => {
-  const { error } = createUserSchema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
-  }
+  const value = validateRequest(createUserSchema, req, res);
+  if (!value) return;
 
-  const { email, username, password, role } = req.body;
-
-  const allowedRoles = ["scout", "player", "team"];
-  if (!allowedRoles.includes(role)) {
-    return res.status(400).json({ message: "Invalid Role" });
-  }
+  const { email, username, password, role } = value;
 
   try {
-    const existingEmail = await userModel.findUserBy("email", email);
-    if (existingEmail) {
-      return res.status(409).json({ message: "Email already in use." });
-    }
-
-    const exisitingUsername = await userModel.findUserBy("username", username);
-    if (exisitingUsername) {
-      return res.status(409).json({ message: "username already in use." });
-    }
+    if (await checkFieldExists(res, userModel.findUserBy, "email", email))
+      return;
+    if (await checkFieldExists(res, userModel.findUserBy, "username", username))
+      return;
 
     const newUser = await userModel.createUser({
       email,
@@ -34,7 +24,7 @@ exports.signupUser = async (req, res) => {
 
     res
       .status(201)
-      .json({ message: "User Created Successfully.", user: newUser });
+      .json({ message: "User created successfully.", user: newUser });
   } catch (err) {
     res.status(500).json({ message: " Server error", error: err.message });
   }

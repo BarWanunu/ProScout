@@ -36,7 +36,7 @@ const registerTeamSchema = Joi.object({
     "number.integer": "Trophies must be an integer",
     "number.min": "Trophies must be 0 or more",
   }),
-  logo: Joi.string().optional().default("").messages({
+  logo: Joi.string().trim().allow("").optional().default("").messages({
     "string.base": "Logo must be a string",
   }),
 });

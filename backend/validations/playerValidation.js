@@ -1,16 +1,21 @@
 const Joi = require("joi");
 
 const createPlayerSchema = Joi.object({
+  username: Joi.string().trim().max(100).required().messages({
+    "any.required": "Username is required",
+    "string.empty": "Username cannot be empty",
+    "string.max": "Username must be at most 100 characters",
+  }),
   name: Joi.string().trim().max(100).required().messages({
     "string.empty": "Player name is required",
     "string.max": "Player name must be at most 100 characters",
   }),
 
-  first_name: Joi.string().trim.max(100).required().messages({
-    "string.empty": "Last name is required",
-    "string.max": "Last name must be at most 100 characters",
+  first_name: Joi.string().trim().max(100).required().messages({
+    "string.empty": "First name is required",
+    "string.max": "First name must be at most 100 characters",
   }),
-  last_name: Joi.string().trim.max(100).required().messages({
+  last_name: Joi.string().trim().max(100).required().messages({
     "string.empty": "Last name is required",
     "string.max": "Last name must be at most 100 characters",
   }),
@@ -20,7 +25,7 @@ const createPlayerSchema = Joi.object({
     "number.max": "Age seems too high",
     "any.required": "Age is required",
   }),
-  club: Joi.string().trim().max(100).required().default("Free Agent").messages({
+  club: Joi.string().trim().max(100).empty("").default("Free Agent").messages({
     "string.max": "Club must be at most 100 characters",
   }),
   number: Joi.number().integer().min(0).max(99).required().messages({
@@ -29,7 +34,7 @@ const createPlayerSchema = Joi.object({
     "number.max": "Number must be at most 99",
     "any.required": "Jersey number is required",
   }),
-  photo: Joi.string().trim().default("").messages({
+  photo: Joi.string().trim().allow("").optional().default("").messages({
     "string.base": "Image must be a string",
   }),
   // prettier-ignore

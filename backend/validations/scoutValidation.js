@@ -35,7 +35,7 @@ const createScoutSchema = Joi.object({
     "any.required": "Nationality is required",
   }),
 
-  image: Joi.string().trim().default("").messages({
+  image: Joi.string().trim().allow("").optional().default("").messages({
     "string.base": "Image must be a string",
   }),
 
@@ -52,4 +52,20 @@ const createScoutSchema = Joi.object({
     }),
 });
 
-module.exports = { createScoutSchema };
+const allowedFields = ["image", "experience_years"];
+
+// prettier-ignore
+const updateScoutFieldSchema = Joi.object({
+  username: createScoutSchema.extract("username"),
+  field: Joi.string().valid(...allowedFields).required(),
+  value: Joi.alternatives().conditional("field", [
+    {
+      is: "image", then: createScoutSchema.extract("image"),
+    },
+    {
+      is: "experience_years",then: createScoutSchema.extract("experience_years"),
+    },
+  ]),
+});
+
+module.exports = { createScoutSchema, updateScoutFieldSchema };

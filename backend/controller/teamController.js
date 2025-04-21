@@ -1,37 +1,25 @@
 const teamModel = require("../models/teamModel");
-const userModel = require("../models/userModel");
 const { registerTeamSchema } = require("../validations/teamValidation");
+const { validateAndFetchUser } = require("../utils/controllerUtils");
+const { checkFieldExists } = require("../utils/existsUtils");
+const { checkUserRole } = require("../utils/roleUtils");
 
 exports.registerTeam = async (req, res) => {
-  const { error } = registerTeamSchema.validate(req.body);
-  if (error) {
-    return res.status(400).json({ message: error.details[0].message });
-  }
+  const result = await validateAndFetchUser(req, res, registerTeamSchema);
+  if (!result) return;
 
-  // prettier-ignore
-  const {username, team_name, league, country, formation, stadium, trophies, logo,} = req.body;
+  const { value, user } = result;
+  const user_id = user.id;
 
   try {
-    const user = await userModel.findUserBy("username", username);
-    if (!user) {
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    const user_id = user.id;
-
-    const existingTeam = await teamModel.findTeamByUserIdOrName(
-      user_id,
-      team_name
-    );
-    if (existingTeam) {
-      return res
-        .status(409)
-        .json({ message: "Team name or user already exists." });
-    }
+    // prettier-ignore
+    if (await checkFieldExists(res, teamModel.findTeamBy, "user_id", user_id)) return;
+    // prettier-ignore
+    if (await checkFieldExists(res, teamModel.findTeamBy, "team_name", value.team_name)) return;
+    if (!checkUserRole(res, user, "team")) return;
 
     // prettier-ignore
-    const newTeam = await teamModel.createTeam({user_id, team_name, league, country,
-      formation, stadium, trophies, logo,});
+    const newTeam = await teamModel.createTeam({user_id, ...value});
     res
       .status(201)
       .json({ message: "Team created successfully.", team: newTeam });

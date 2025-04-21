@@ -32,10 +32,13 @@ exports.createTeam = async (team) => {
   return result.rows[0];
 };
 
-exports.findTeamByUserIdOrName = async (user_id, team_name) => {
-  const result = await db.query(
-    `SELECT * FROM teams WHERE user_id = $1 OR team_name = $2`,
-    [user_id, team_name]
-  );
+exports.findTeamBy = async (field, value) => {
+  const allowedFields = ["user_id", "team_name"];
+  if (!allowedFields.includes(field)) {
+    throw new Error("Invalid field for team lookup");
+  }
+
+  const query = `SELECT * FROM teams WHERE ${field} = $1`;
+  const result = await db.query(query, [value]);
   return result.rows[0];
 };
