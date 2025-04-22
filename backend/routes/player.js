@@ -5,5 +5,6 @@ const auth = require("../middleware/auth");
 
 router.post("/", auth, playerController.registerPlayer);
 router.patch("/", auth, playerController.updatePlayerProfile);
+router.delete("/", auth, playerController.deletePlayer);
 
 module.exports = router;

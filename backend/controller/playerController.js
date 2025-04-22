@@ -51,3 +51,21 @@ exports.updatePlayerProfile = async (req, res) => {
       .json({ message: "Server error", error: err.message });
   }
 };
+
+exports.deletePlayer = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const deletedPlayer = await playerModel.deletePlayerByUserId(userId);
+
+    if (!deletedPlayer) {
+      return res.status(404).json({ message: "Player profile not found." });
+    }
+
+    res.status(200).json({
+      message: "Player profile deleted successfully.",
+      player: deletedPlayer,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};

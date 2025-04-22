@@ -33,19 +33,6 @@ exports.findPlayerBy = async (field, value) => {
   ]);
   return result.rows[0];
 };
-exports.updatePlayerProfile = async (user_id, updates) => {
-  const fields = Object.keys(updates);
-  const values = Object.values(updates);
-
-  if (fields.length === 0) return null;
-
-  const setClause = fields.map((field, i) => `${field} = $${i + 1}`).join(", ");
-  const query = `UPDATE players SET ${setClause} WHERE user_id = $$
-    {fields.length + 1} RETURNING *`;
-
-  const result = await db.query(query, [...values, user_id]);
-  return result.rows[0];
-};
 
 exports.updatePlayerProfile = async (user_id, updates) => {
   const { username, ...filterUpdates } = updates;
@@ -61,4 +48,10 @@ exports.updatePlayerProfile = async (user_id, updates) => {
 
   const result = await db.query(query, [...values, user_id]);
   return result.rows[0];
+};
+
+exports.deletePlayerByUserId = async (userId) => {
+  const query = "DELETE FROM players WHERE user_id = $1 RETURNING *";
+  const { rows } = await db.query(query, [userId]);
+  return rows[0];
 };
