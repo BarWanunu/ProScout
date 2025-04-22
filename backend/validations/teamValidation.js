@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const { validateRequest } = require("../utils/validationUtils");
 
 const registerTeamSchema = Joi.object({
   username: Joi.string().trim().max(100).required().messages({
@@ -41,6 +42,25 @@ const registerTeamSchema = Joi.object({
   }),
 });
 
+const allowedFields = ["formation", "stadium", "trophies", "logo"];
+const updateTeamFieldSchema = Joi.object({
+  username: registerTeamSchema.extract("username"),
+  field: Joi.string()
+    .valid(...allowedFields)
+    .required()
+    .messages({
+      "any.only": `field must be one of: ${allowedFields.join(", ")}`,
+      "any.required": `field is required`,
+    }),
+  value: Joi.alternatives().conditional("field", [
+    { is: "formation", then: registerTeamSchema.extract("formation") },
+    { is: "stadium", then: registerTeamSchema.extract("stadium") },
+    { is: "trophies", then: registerTeamSchema.extract("trophies") },
+    { is: "logo", then: registerTeamSchema.extract("logo") },
+  ]),
+});
+
 module.exports = {
   registerTeamSchema,
+  updateTeamFieldSchema,
 };

@@ -13,13 +13,13 @@ exports.registerScout = async (req, res) => {
 
   const user_id = user.id;
   try {
+    if (!checkUserRole(res, user, "scout")) return;
     if (await checkFieldExists(res, scoutModel.findScoutBy, "user_id", user_id))
       return;
     if (
       await checkFieldExists(res, scoutModel.findScoutBy, "phone", value.phone)
     )
       return;
-    if (!checkUserRole(res, user, "scout")) return;
 
     // prettier-ignore
     const newScout = await scoutModel.createScout({user_id, ...value,});

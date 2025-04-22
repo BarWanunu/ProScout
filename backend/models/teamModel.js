@@ -42,3 +42,9 @@ exports.findTeamBy = async (field, value) => {
   const result = await db.query(query, [value]);
   return result.rows[0];
 };
+
+exports.updateTeamField = async (user_id, field, value) => {
+  const query = `UPDATE teams SET ${field} = $1 WHERE user_id = $2 RETURNING *`;
+  const result = await db.query(query, [value, user_id]);
+  return result.rows[0];
+};

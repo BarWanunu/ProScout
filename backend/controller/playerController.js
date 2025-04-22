@@ -12,10 +12,10 @@ exports.registerPlayer = async (req, res) => {
   const user_id = user.id;
 
   try {
+    if (!checkUserRole(res, user, "player")) return;
     // prettier-ignore
     if (await checkFieldExists(res, playerModel.findPlayerBy, "user_id", user_id))
       return;
-    if (!checkUserRole(res, user, "player")) return;
 
     // prettier-ignore
     const newPlayer = await playerModel.createPlayer({

@@ -57,7 +57,10 @@ const allowedFields = ["image", "experience_years"];
 // prettier-ignore
 const updateScoutFieldSchema = Joi.object({
   username: createScoutSchema.extract("username"),
-  field: Joi.string().valid(...allowedFields).required(),
+  field: Joi.string().valid(...allowedFields).required().messages({
+    "any.only": `field must be one of: ${allowedFields.join(", ")}`,
+    "any.required": `field is required`,
+  }),
   value: Joi.alternatives().conditional("field", [
     {
       is: "image", then: createScoutSchema.extract("image"),
