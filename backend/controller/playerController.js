@@ -1,5 +1,8 @@
 const playerModel = require("../models/playerModel");
-const { createPlayerSchema } = require("../validations/playerValidation");
+const {
+  createPlayerSchema,
+  updatePlayerSchema,
+} = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
@@ -26,5 +29,25 @@ exports.registerPlayer = async (req, res) => {
       .json({ message: "Player created successfully", player: newPlayer });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+exports.updatePlayerProfile = async (req, res) => {
+  const result = await validateAndFetchUser(req, res, updatePlayerSchema);
+  if (!result) return;
+
+  const { value, user } = result;
+
+  try {
+    const updatedPlayer = await playerModel.updatePlayerProfile(user.id, value);
+
+    res.status(200).json({
+      message: "Player profile updated successfully.",
+      player: updatedPlayer,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
   }
 };

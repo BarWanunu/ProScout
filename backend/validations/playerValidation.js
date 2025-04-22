@@ -67,4 +67,40 @@ const createPlayerSchema = Joi.object({
   }),
 });
 
-module.exports = { createPlayerSchema };
+// prettier-ignore
+const allowedUpdateFields  = [
+  "age", "club", "number", "photo", "position", "height", "weight", "video",
+];
+
+const updatePlayerSchema = Joi.object({
+  username: createPlayerSchema.extract("username").required(),
+
+  age: createPlayerSchema.extract("age").optional(),
+  number: createPlayerSchema.extract("number").optional(),
+  position: createPlayerSchema.extract("position").optional(),
+  height: createPlayerSchema.extract("height").optional(),
+  weight: createPlayerSchema.extract("weight").optional(),
+  nationality: createPlayerSchema.extract("nationality").optional(),
+  birthdate: createPlayerSchema.extract("birthdate").optional(),
+
+  // לשדות עם default – הסרה ידנית של default
+  club: Joi.string().trim().max(100).optional().messages({
+    "string.max": "Club must be at most 100 characters",
+  }),
+  photo: Joi.string().trim().allow("").optional().messages({
+    "string.base": "Image must be a string",
+  }),
+  video: Joi.string().trim().allow("").optional().messages({
+    "string.base": "Video must be a string",
+  }),
+}).custom((value, helpers) => {
+  const keys = Object.keys(value);
+  const onlyUsername = keys.length === 1 && keys[0] === "username";
+
+  if (onlyUsername) {
+    return helpers.message("At least one field to update must be provided.");
+  }
+
+  return value;
+});
+module.exports = { createPlayerSchema, updatePlayerSchema };

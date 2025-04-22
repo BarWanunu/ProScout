@@ -33,3 +33,32 @@ exports.findPlayerBy = async (field, value) => {
   ]);
   return result.rows[0];
 };
+exports.updatePlayerProfile = async (user_id, updates) => {
+  const fields = Object.keys(updates);
+  const values = Object.values(updates);
+
+  if (fields.length === 0) return null;
+
+  const setClause = fields.map((field, i) => `${field} = $${i + 1}`).join(", ");
+  const query = `UPDATE players SET ${setClause} WHERE user_id = $$
+    {fields.length + 1} RETURNING *`;
+
+  const result = await db.query(query, [...values, user_id]);
+  return result.rows[0];
+};
+
+exports.updatePlayerProfile = async (user_id, updates) => {
+  const { username, ...filterUpdates } = updates;
+  const fields = Object.keys(filterUpdates);
+  const values = Object.values(filterUpdates);
+
+  if (fields.length === 0) return null;
+
+  const setClause = fields.map((field, i) => `${field} = $${i + 1}`).join(", ");
+  const query = `UPDATE players SET ${setClause} WHERE user_id = $${
+    fields.length + 1
+  } RETURNING *`;
+
+  const result = await db.query(query, [...values, user_id]);
+  return result.rows[0];
+};
