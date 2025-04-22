@@ -2,11 +2,6 @@ const Joi = require("joi");
 const { validateRequest } = require("../utils/validationUtils");
 
 const registerTeamSchema = Joi.object({
-  username: Joi.string().trim().max(100).required().messages({
-    "any.required": "Username is required",
-    "string.empty": "Username cannot be empty",
-    "string.max": "Username must be at most 100 characters",
-  }),
   team_name: Joi.string().trim().max(100).required().messages({
     "any.required": "Team name is required",
     "string.empty": "Team name cannot be empty",
@@ -44,7 +39,6 @@ const registerTeamSchema = Joi.object({
 
 const allowedFields = ["formation", "stadium", "trophies", "logo"];
 const updateTeamFieldSchema = Joi.object({
-  username: registerTeamSchema.extract("username"),
   field: Joi.string()
     .valid(...allowedFields)
     .required()

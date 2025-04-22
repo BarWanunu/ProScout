@@ -8,8 +8,12 @@ async function validateAndFetchUser(req, res, schema) {
   let user;
   if (req.user?.id) {
     user = await getUserById(req.user.id, res);
-  } else {
+  } else if (value.username) {
     user = await getUser(value.username, res);
+  } else {
+    return res.status(400).json({
+      message: "Token or username is required.",
+    });
   }
   if (!user) return null;
 

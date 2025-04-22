@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
 const createPlayerSchema = Joi.object({
-  username: Joi.string().trim().max(100).required().messages({
-    "any.required": "Username is required",
-    "string.empty": "Username cannot be empty",
-    "string.max": "Username must be at most 100 characters",
-  }),
   name: Joi.string().trim().max(100).required().messages({
     "string.empty": "Player name is required",
     "string.max": "Player name must be at most 100 characters",
@@ -67,14 +62,7 @@ const createPlayerSchema = Joi.object({
   }),
 });
 
-// prettier-ignore
-const allowedUpdateFields  = [
-  "age", "club", "number", "photo", "position", "height", "weight", "video",
-];
-
 const updatePlayerSchema = Joi.object({
-  username: createPlayerSchema.extract("username").required(),
-
   age: createPlayerSchema.extract("age").optional(),
   number: createPlayerSchema.extract("number").optional(),
   position: createPlayerSchema.extract("position").optional(),
@@ -83,7 +71,6 @@ const updatePlayerSchema = Joi.object({
   nationality: createPlayerSchema.extract("nationality").optional(),
   birthdate: createPlayerSchema.extract("birthdate").optional(),
 
-  // לשדות עם default – הסרה ידנית של default
   club: Joi.string().trim().max(100).optional().messages({
     "string.max": "Club must be at most 100 characters",
   }),
@@ -94,10 +81,7 @@ const updatePlayerSchema = Joi.object({
     "string.base": "Video must be a string",
   }),
 }).custom((value, helpers) => {
-  const keys = Object.keys(value);
-  const onlyUsername = keys.length === 1 && keys[0] === "username";
-
-  if (onlyUsername) {
+  if (Object.keys(value).length === 0) {
     return helpers.message("At least one field to update must be provided.");
   }
 

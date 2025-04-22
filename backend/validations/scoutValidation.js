@@ -1,11 +1,6 @@
 const Joi = require("joi");
 
 const createScoutSchema = Joi.object({
-  username: Joi.string().required().messages({
-    "string.empty": "Username is required",
-    "any.required": "Username is required",
-  }),
-
   first_name: Joi.string().trim().max(100).required().messages({
     "string.empty": "First name is required",
     "string.max": "First name must be at most 100 characters",
@@ -56,7 +51,6 @@ const allowedFields = ["image", "experience_years"];
 
 // prettier-ignore
 const updateScoutFieldSchema = Joi.object({
-  username: createScoutSchema.extract("username"),
   field: Joi.string().valid(...allowedFields).required().messages({
     "any.only": `field must be one of: ${allowedFields.join(", ")}`,
     "any.required": `field is required`,
