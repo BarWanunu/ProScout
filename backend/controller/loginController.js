@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
 exports.loginUser = async (req, res) => {
@@ -13,6 +14,8 @@ exports.loginUser = async (req, res) => {
         .json({ message: "Email or Password are invalid." });
     }
 
+    const token = jwt.sign({ id: user.id }, process.env.TOKEN_SECRET);
+
     res.json({
       message: "Login Successful.",
       user: {
@@ -21,6 +24,7 @@ exports.loginUser = async (req, res) => {
         role: user.role,
         name: user.username,
       },
+      token,
     });
   } catch (err) {
     res.status(500).json({ message: "Server error", error: err.message });

@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const { createUserSchema } = require("../validations/userValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
@@ -22,9 +23,11 @@ exports.signupUser = async (req, res) => {
       role,
     });
 
+    const token = jwt.sign({ id: newUser.id }, process.env.TOKEN_SECRET);
+
     res
       .status(201)
-      .json({ message: "User created successfully.", user: newUser });
+      .json({ message: "User created successfully.", user: newUser, token });
   } catch (err) {
     res.status(500).json({ message: " Server error", error: err.message });
   }

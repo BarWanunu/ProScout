@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const playerController = require("../controller/playerController.js");
+const auth = require("../middleware/auth");
 
-router.post("/", playerController.registerPlayer);
-router.patch("/", playerController.updatePlayerProfile);
+router.post("/", auth, playerController.registerPlayer);
+router.patch("/", auth, playerController.updatePlayerProfile);
 
 module.exports = router;

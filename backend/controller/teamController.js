@@ -35,9 +35,7 @@ exports.registerTeam = async (req, res) => {
 
 exports.updateTeamField = async (req, res) => {
   // prettier-ignore
-  const result = await validateAndFetchUser(
-    req, res, updateTeamFieldSchema
-  );
+  const result = await validateAndFetchUser(req, res, updateTeamFieldSchema);
   if (!result) return;
 
   const {
