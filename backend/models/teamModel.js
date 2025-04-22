@@ -48,3 +48,9 @@ exports.updateTeamField = async (user_id, field, value) => {
   const result = await db.query(query, [value, user_id]);
   return result.rows[0];
 };
+
+exports.deleteTeamByUserId = async (userId) => {
+  const query = "DELETE FROM teams WHERE user_id = $1 RETURNING *";
+  const { rows } = await db.query(query, [userId]);
+  return rows[0];
+};

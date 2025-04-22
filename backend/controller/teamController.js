@@ -59,3 +59,24 @@ exports.updateTeamField = async (req, res) => {
       .json({ message: "Server error", error: err.message });
   }
 };
+
+exports.deleteTeam = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const deletedTeam = await teamModel.deleteTeamByUserId(userId);
+
+    if (!deletedTeam) {
+      return res.status(404).json({ message: "Team profile not found." });
+    }
+
+    res.status(200).json({
+      message: "Team profile deleted successfully.",
+      team: deletedTeam,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
+  }
+};

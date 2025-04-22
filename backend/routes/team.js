@@ -5,5 +5,6 @@ const auth = require("../middleware/auth");
 
 router.post("/", auth, teamController.registerTeam);
 router.patch("/", auth, teamController.updateTeamField);
+router.delete("/", auth, teamController.deleteTeam);
 
 module.exports = router;
