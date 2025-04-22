@@ -45,3 +45,9 @@ exports.updateScoutField = async (user_id, field, value) => {
   const result = await db.query(query, [value, user_id]);
   return result.rows[0];
 };
+
+exports.deleteScoutByUserId = async (userId) => {
+  const query = "DELETE FROM scouts WHERE user_id = $1 RETURNING *";
+  const { rows } = await db.query(query, [userId]);
+  return rows[0];
+};

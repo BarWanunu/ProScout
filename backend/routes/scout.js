@@ -5,5 +5,6 @@ const auth = require("../middleware/auth");
 
 router.post("/", auth, scoutController.registerScout);
 router.patch("/", auth, scoutController.updateScoutField);
+router.delete("/", auth, scoutController.deleteScout);
 
 module.exports = router;

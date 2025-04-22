@@ -57,3 +57,24 @@ exports.updateScoutField = async (req, res) => {
       .json({ message: "Server error", error: err.message });
   }
 };
+
+exports.deleteScout = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const deletedScout = await scoutModel.deleteScoutByUserId(userId);
+
+    if (!deletedScout) {
+      return res.status(404).json({ message: "Scout profile not found." });
+    }
+
+    res.status(200).json({
+      message: "Scout profile deleted successfully.",
+      scout: deletedScout,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
+  }
+};
