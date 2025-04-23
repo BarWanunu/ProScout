@@ -1,11 +1,11 @@
 import React from 'react';
 import { Routes, Route} from 'react-router-dom';
-import LandingPage from './container/LandingPage';
+import LandingPage from './pages/LandingPage';
 import { PlayerLogin, ScoutLogin, TeamLogin } from './components/loginPages';
 import PlayerDashboard from './container/PlayerDashboard';
 import ScoutDashboard from './container/ScoutDashboard';
 import TeamDashboard from './container/TeamDashboard';
-import SignupPage from './container/SignupPage'
+import SignupPage from './pages/SignupPages/SignupPage'
 
 function App() {
   return (
