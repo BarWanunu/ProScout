@@ -38,6 +38,7 @@ const registerTeamSchema = Joi.object({
 });
 
 const allowedFields = ["formation", "stadium", "trophies", "logo"];
+
 const updateTeamFieldSchema = Joi.object({
   field: Joi.string()
     .valid(...allowedFields)
