@@ -26,3 +26,9 @@ exports.findUserBy = async (field, value) => {
 exports.checkPassword = (inputPassword, userPassword) => {
   return inputPassword == userPassword;
 };
+
+exports.deleteUserById = async (userId) => {
+  const query = "DELETE FROM users WHERE id = $1 RETURNING *";
+  const { rows } = await db.query(query, [userId]);
+  return rows[0];
+};

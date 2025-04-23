@@ -16,12 +16,9 @@ exports.signupUser = async (req, res) => {
     if (await checkFieldExists(res, userModel.findUserBy, "username", username))
       return;
 
+    // prettier-ignore
     const newUser = await userModel.createUser({
-      email,
-      username,
-      password,
-      role,
-    });
+      email,username,password,role,});
 
     const token = jwt.sign({ id: newUser.id }, process.env.TOKEN_SECRET);
 
@@ -30,5 +27,25 @@ exports.signupUser = async (req, res) => {
       .json({ message: "User created successfully.", user: newUser, token });
   } catch (err) {
     res.status(500).json({ message: " Server error", error: err.message });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  const userId = req.user.id;
+
+  try {
+    const deletedUser = await userModel.deleteUserById(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({
+      message: "User deleted successfully.",
+      user: deletedUser,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Server error", error: err.message });
   }
 };
