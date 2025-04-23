@@ -1,7 +1,7 @@
 const playerModel = require("../models/playerModel");
-const {
-  createPlayerSchema,
-  updatePlayerSchema,
+const statsModel = require("../models/statsModel");
+// prettier-ignore
+const {createPlayerSchema, updatePlayerSchema,
 } = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
@@ -24,6 +24,9 @@ exports.registerPlayer = async (req, res) => {
     const newPlayer = await playerModel.createPlayer({
         user_id, ...value
     })
+
+    await statsModel.insertRandomStatsForPlayer(newPlayer);
+
     res
       .status(201)
       .json({ message: "Player created successfully", player: newPlayer });
