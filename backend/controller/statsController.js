@@ -12,6 +12,8 @@ exports.getPlayerStats = async (req, res) => {
         .json({ message: "Stats not found for this player." });
     }
 
+    stats.sort((a, b) => b.season - a.season);
+
     res.status(200).json({ stats });
   } catch (err) {
     return res
