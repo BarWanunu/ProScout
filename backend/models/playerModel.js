@@ -55,3 +55,11 @@ exports.deletePlayerByUserId = async (userId) => {
   const { rows } = await db.query(query, [userId]);
   return rows[0];
 };
+
+exports.getPlayerById = async (playerId) => {
+  const query = `SELECT * FROM players
+    WHERE id = $1`;
+
+  const result = await db.query(query, [playerId]);
+  return result.rows;
+};

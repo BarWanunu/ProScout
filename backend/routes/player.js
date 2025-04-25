@@ -4,6 +4,7 @@ const playerController = require("../controller/playerController.js");
 const statsController = require("../controller/statsController");
 const auth = require("../middleware/auth");
 
+router.get("/:id", playerController.getPlayer);
 router.post("/", auth, playerController.registerPlayer);
 router.patch("/", auth, playerController.updatePlayerProfile);
 router.delete("/", auth, playerController.deletePlayer);
