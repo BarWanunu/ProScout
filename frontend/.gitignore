@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Jest & coverage
+coverage/
+.jest/
+jest-cache/

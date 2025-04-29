@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserIcon, UsersIcon, EyeIcon, ArrowLeftIcon } from "lucide-react";
-import Logo from "../../components/loginPages/Logo";
-import "./SignupPage.css";
+import Logo from "../../../assets/Logo";
+import "../styles/SignupPage.css";
 
 const SignupPage = () => {
   const navigate = useNavigate();

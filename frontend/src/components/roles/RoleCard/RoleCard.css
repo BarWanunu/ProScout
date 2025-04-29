@@ -1,0 +1,14 @@
+/* --- Cards --- */
+.card                  { background:rgba(0,0,0,.5); border:1px solid #4b5563; border-radius:.75rem;
+                         padding:1.5rem; display:flex; flex-direction:column; align-items:center;
+                         cursor:pointer; transition:background .2s ease, transform .2s ease; backdrop-filter:blur(4px);}
+.card:hover            { background:rgba(0,0,0,.7); transform:translateY(-4px); }
+
+.card__icon            { width:4rem; height:4rem; border-radius:50%; display:flex;
+                         align-items:center; justify-content:center; margin-bottom:1rem; }
+.icon--player          { background:#2563eb; }   /* blue-600  */
+.icon--team            { background:#059669; }   /* green-600 */
+.icon--scout           { background:#7c3aed; }   /* purple-600 */
+
+.card__title           { color:#fff; font-size:1.25rem; font-weight:600; margin-bottom:.5rem; }
+.card__text            { color:#d1d5db; text-align:center; }
