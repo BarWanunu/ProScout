@@ -1,7 +1,7 @@
 "use client"
 import { useNavigate } from "react-router-dom"
 import { UsersIcon, LogOutIcon, UserSearchIcon, ClipboardIcon, CalendarIcon, BarChart3Icon } from "lucide-react"
-import Logo from "../components/loginPages/Logo"
+import Logo from "../../../assets/Logo";
 
 const TeamDashboard = () => {
   const navigate = useNavigate()

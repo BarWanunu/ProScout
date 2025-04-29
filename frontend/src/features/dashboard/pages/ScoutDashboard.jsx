@@ -1,7 +1,7 @@
 "use client"
 import { useNavigate } from "react-router-dom"
 import { EyeIcon, LogOutIcon, UserSearchIcon, ClipboardIcon, CalendarIcon, BarChart3Icon } from "lucide-react"
-import Logo from "../components/loginPages/Logo"
+import Logo from "../../../assets/Logo";
 
 const ScoutDashboard = () => {
   const navigate = useNavigate()

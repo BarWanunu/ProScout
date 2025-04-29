@@ -1,10 +1,14 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import jest from 'eslint-plugin-jest';          
 
 export default [
-  { ignores: ['dist'] },
+  /* 1.  Ignore build artefacts */
+  { ignores: ['dist', 'coverage'] },
+
+  /* 2.  Base rules for every JS / JSX file */
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -30,4 +34,19 @@ export default [
       ],
     },
   },
-]
+
+  /* 3.  **Override for Jest test files**  */
+  {
+    files: [
+      '**/*.test.{js,jsx,ts,tsx}',
+      '**/__tests__/**/*.{js,jsx,ts,tsx}',
+    ],
+    plugins: { jest },                         // registers eslint-plugin-jest
+    languageOptions: {
+      globals: jest.environments.globals,      // adds test/expect/jest globals
+    },
+    rules: {
+      ...jest.configs.recommended.rules,       // sensible defaults from the plugin
+    },
+  },
+];
