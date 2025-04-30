@@ -1,4 +1,5 @@
-import "../../features/auth/styles/LandingPage.css"
+// Footer component for the application
+import "./Footer.css"; 
 
 const Footer = () => (
     <footer className="footer">

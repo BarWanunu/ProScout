@@ -1,5 +1,7 @@
-import Logo from "../../assets/Logo";
-import "../../features/auth/styles/LandingPage.css"
+// Description: Header component for the ProScout application
+
+import { Logo } from "../../assets";
+import "./Header.css";
 
 const Header = () => (
   <header className="header">
