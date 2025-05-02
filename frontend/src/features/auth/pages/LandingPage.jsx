@@ -1,8 +1,8 @@
+// Description: Landing page component for the application.
+// It includes a full-screen video background, a header, a role selection grid, and a footer.
 
 import React from "react";
-import FullScreenVideo from "../../../components/layout/FullScreenVideo";
-import Header from "../../../components/layout/Header";
-import Footer from "../../../components/layout/Footer";
+import { FullScreenVideo, Header, Footer } from "../../../components/layout";
 import useRoleNavigation from "../hooks/useRoleNavigation";
 import RoleGrid from "../../../components/roles/RoleGrid";
 import landingVideo from "../../../assets/landing.mp4";
@@ -10,8 +10,7 @@ import "../styles/LandingPage.css";
 
 const LandingPage = () => {
   const handleCardClick = useRoleNavigation();
-  console.log("LandingPage component loaded");
-
+ 
   return (
     <div className="landing-page">
       <div className="background-wrapper">

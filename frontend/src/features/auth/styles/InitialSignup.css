@@ -1,0 +1,428 @@
+/* ------------------------------------------------------------------
+   GLOBAL LAYOUT & ANIMATIONS
+------------------------------------------------------------------ */
+.si-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    background: radial-gradient(ellipse at top,
+      rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .fade-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .si-headline {
+    color: #fff;
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    animation: fadeInDown 0.6s ease-out;
+  }
+  
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ------------------------------------------------------------------
+     FORM WRAPPER
+  ------------------------------------------------------------------ */
+  .si-form {
+    width: 100%;
+    max-width: 32rem;
+    display: grid;
+    gap: 1.25rem;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #374151;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s ease-out 0.2s both;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  /* ------------------------------------------------------------------
+     FORM FIELDS
+  ------------------------------------------------------------------ */
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .form-field label {
+    color: #d1d5db;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+  
+  .input-container input {
+    width: 100%;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    padding-right: 2.5rem;
+    color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .input-container input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+  }
+  
+  .input-container.success input {
+    border-color: #10b981;
+  }
+  
+  .input-container.error input {
+    border-color: #ef4444;
+  }
+  
+  .icon-success,
+  .icon-error {
+    position: absolute;
+    right: 0.75rem;
+  }
+  
+  .icon-success {
+    color: #10b981;
+  }
+  
+  .icon-error {
+    color: #ef4444;
+  }
+  
+  .error-message {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .toggle-visibility {
+    position: absolute;
+    right: 2.5rem;
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .toggle-visibility:hover {
+    color: #d1d5db;
+  }
+  
+  /* ------------------------------------------------------------------
+     PASSWORD STRENGTH INDICATOR
+  ------------------------------------------------------------------ */
+  .password-strength {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .strength-meter {
+    flex: 1;
+    height: 4px;
+    background: #374151;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  
+  .strength-value {
+    height: 100%;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+  
+  .strength-value.weak {
+    width: 33%;
+    background-color: #ef4444;
+  }
+  
+  .strength-value.medium {
+    width: 66%;
+    background-color: #f59e0b;
+  }
+  
+  .strength-value.strong {
+    width: 100%;
+    background-color: #10b981;
+  }
+  
+  .strength-text {
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+  
+  /* ------------------------------------------------------------------
+     ROLE DROPDOWN
+  ------------------------------------------------------------------ */
+  .role-dropdown {
+    position: relative;
+  }
+  
+  .role-dropdown-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: #d1d5db;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .role-dropdown-toggle:hover {
+    background: #1f2937;
+  }
+  
+  .role-dropdown-toggle.selected {
+    color: #fff;
+  }
+  
+  .role-dropdown-toggle.player {
+    border-color: #2563eb;
+  }
+  
+  .role-dropdown-toggle.team {
+    border-color: #059669;
+  }
+  
+  .role-dropdown-toggle.scout {
+    border-color: #7c3aed;
+  }
+  
+  .dropdown-arrow {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+  }
+  
+  .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .role-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.3s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .role-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #374151;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .role-option:last-child {
+    border-bottom: none;
+  }
+  
+  .role-option:hover {
+    background: #374151;
+  }
+  
+  .role-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .player .role-icon {
+    background: #2563eb;
+  }
+  
+  .team .role-icon {
+    background: #059669;
+  }
+  
+  .scout .role-icon {
+    background: #7c3aed;
+  }
+  
+  .role-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .role-label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .role-description {
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+  
+  .role-dropdown-toggle.selected.player { border-color:#2563eb; }
+  .role-dropdown-toggle.selected.team   { border-color:#059669; }
+  .role-dropdown-toggle.selected.scout  { border-color:#7c3aed; }
+  /* ------------------------------------------------------------------
+     SUBMIT BUTTON
+  ------------------------------------------------------------------ */
+  .si-submit {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-top: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .si-submit.active {
+    background: #2563eb;
+    color: #fff;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
+  }
+  
+  .si-submit.active:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+  }
+  
+  .si-submit.disabled {
+    background: rgba(37, 99, 235, 0.3);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+  }
+  
+  /* ------------------------------------------------------------------
+     FORM PROGRESS INDICATOR
+  ------------------------------------------------------------------ */
+  .form-progress {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+  }
+  
+  .progress-step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5rem;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    position: relative;
+  }
+  
+  .progress-step.active {
+    color: #2563eb;
+    font-weight: 600;
+  }
+  
+  .progress-step.active::before {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    width: 100%;
+    height: 2px;
+    background: #2563eb;
+    border-radius: 1px;
+  }
+  
+  .progress-connector {
+    flex: 1;
+    height: 1px;
+    background: #374151;
+  }
+  
+  /* ------------------------------------------------------------------
+     RESPONSIVE ADJUSTMENTS
+  ------------------------------------------------------------------ */
+  @media (max-width: 480px) {
+    .si-headline {
+      font-size: 1.5rem;
+    }
+    
+    .si-form {
+      padding: 1.5rem;
+    }
+    
+    .form-progress {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .progress-connector {
+      width: 1px;
+      height: 1rem;
+    }
+  }
