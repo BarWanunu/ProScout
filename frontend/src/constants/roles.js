@@ -3,6 +3,8 @@
 import { UserIcon, UsersIcon, EyeIcon } from "lucide-react";
 import "../features/auth/styles/LandingPage.css" 
 
+// This file contains the constants for the landing page, including the roles and their properties.
+// Each role has an id, title, description, icon, and a color class for styling.
 export const ROLES = [
   {
     id: "player",
