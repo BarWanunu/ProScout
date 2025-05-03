@@ -1,0 +1,137 @@
+  /* ------------------------------------------------------------------
+     ROLE DROPDOWN
+  ------------------------------------------------------------------ */
+  .role-dropdown {
+    position: relative;
+  }
+  
+  .role-dropdown-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #111827;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: #d1d5db;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .role-dropdown-toggle:hover {
+    background: #1f2937;
+  }
+  
+  .role-dropdown-toggle.selected {
+    color: #fff;
+  }
+  
+  .role-dropdown-toggle.player {
+    border-color: #2563eb;
+  }
+  
+  .role-dropdown-toggle.team {
+    border-color: #059669;
+  }
+  
+  .role-dropdown-toggle.scout {
+    border-color: #7c3aed;
+  }
+  
+  .dropdown-arrow {
+    margin-left: auto;
+    transition: transform 0.2s ease;
+  }
+  
+  .dropdown-arrow.open {
+    transform: rotate(180deg);
+  }
+  
+  .role-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    background: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    animation: fadeInUp 0.3s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .role-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1rem;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #374151;
+    color: #fff;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .role-option:last-child {
+    border-bottom: none;
+  }
+  
+  .role-option:hover {
+    background: #374151;
+  }
+  
+  .role-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  
+  .player .role-icon {
+    background: #2563eb;
+  }
+  
+  .team .role-icon {
+    background: #059669;
+  }
+  
+  .scout .role-icon {
+    background: #7c3aed;
+  }
+  
+  .role-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .role-label {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .role-description {
+    font-size: 0.8rem;
+    color: #9ca3af;
+  }
+  
+  .role-dropdown-toggle.selected.player { border-color:#2563eb; }
+  .role-dropdown-toggle.selected.team   { border-color:#059669; }
+  .role-dropdown-toggle.selected.scout  { border-color:#7c3aed; }

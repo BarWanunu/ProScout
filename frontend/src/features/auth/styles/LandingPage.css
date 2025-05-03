@@ -1,42 +1,16 @@
 /* --- Layout wrappers --- */
 .landing-page          { display:flex; flex-direction:column; min-height:100vh; }
 .background-wrapper    { position:relative; width:100%; min-height:100vh; }
-.background-video      { position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
-
 .overlay               { position:absolute; inset:0; display:flex;
                          flex-direction:column; justify-content:space-between; align-items:center;
                          background:rgba(0,0,0,.5); min-height:100vh; z-index:10; }
-
-/* --- Header --- */
-.header                { width:100%; display:flex; justify-content:center; align-items:center; padding:1.5rem 0; }
-.header__title         { margin-left:.5rem; font-size:1.25rem; font-weight:700; color:#fff; }
 
 /* --- Main section --- */
 .main                  { flex:1; display:flex; flex-direction:column; justify-content:center;
                          align-items:center; width:100%; padding:2rem 1rem; }
 .main__headline        { color:#fff; font-size:1.875rem; font-weight:700; text-align:center; margin-bottom:2rem; }
-
 .card-grid             { display:grid; gap:1.5rem; width:100%; max-width:80rem; }
 @media (min-width:768px){ .card-grid{ grid-template-columns:repeat(3,1fr);} }
-
-/* --- Cards --- */
-.card                  { background:rgba(0,0,0,.5); border:1px solid #4b5563; border-radius:.75rem;
-                         padding:1.5rem; display:flex; flex-direction:column; align-items:center;
-                         cursor:pointer; transition:background .2s ease, transform .2s ease; backdrop-filter:blur(4px);}
-.card:hover            { background:rgba(0,0,0,.7); transform:translateY(-4px); }
-
-.card__icon            { width:4rem; height:4rem; border-radius:50%; display:flex;
-                         align-items:center; justify-content:center; margin-bottom:1rem; }
-.icon--player          { background:#2563eb; }   /* blue-600  */
-.icon--team            { background:#059669; }   /* green-600 */
-.icon--scout           { background:#7c3aed; }   /* purple-600 */
-
-.card__title           { color:#fff; font-size:1.25rem; font-weight:600; margin-bottom:.5rem; }
-.card__text            { color:#d1d5db; text-align:center; }
-
-/* --- Footer --- */
-.footer                { width:100%; text-align:center; padding:1rem 0; }
-.footer__text          { font-size:.875rem; color:#9ca3af; }
 
 /* --- Links --- */
 .link                  { color:#60a5fa; transition:color .15s ease; }

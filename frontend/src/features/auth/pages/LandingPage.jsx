@@ -15,21 +15,14 @@ const LandingPage = () => {
     <div className="landing-page">
       <div className="background-wrapper">
         <FullScreenVideo src={landingVideo} />
-
         <div className="overlay">
-          <Header />
-
           <main className="main">
             <h2 className="main__headline">Choose how to connect</h2>
-
             <RoleGrid onSelect={handleCardClick} />
-
             <p className="card__text" style={{ marginTop: "2.5rem", textAlign: "center" }}>
               Don&apos;t have an account? <a href="/signup" className="link">Sign up now</a>
             </p>
           </main>
-
-          <Footer />
         </div>
       </div>
     </div>
