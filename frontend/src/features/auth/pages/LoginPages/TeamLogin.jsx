@@ -109,13 +109,6 @@ const TeamLogin = () => {
               </div>
             </div>
           </main>
-
-          {/* ----- footer ----- */}
-          <footer className="footer">
-            <p className="footer__text">
-              &copy; {new Date().getFullYear()} ProScout. All rights reserved.
-            </p>
-          </footer>
         </div>
       </div>
     </div>
