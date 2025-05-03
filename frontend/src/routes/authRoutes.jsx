@@ -1,11 +1,8 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from '../features/auth/pages/LandingPage';
-import { PlayerLogin, ScoutLogin, TeamLogin } from '../features/auth/pages';
-import InitialSignup from '../features/auth/pages/InitialSignup';
-import PlayerSignup from '../features/auth/pages/PlayerSignup';
-import ScoutSignup from '../features/auth/pages/ScoutSignup';
-import TeamSignup from '../features/auth/pages/TeamSignup';
+import { PlayerLogin, ScoutLogin, TeamLogin } from '../features/auth/pages/LoginPages';
+import { InitialSignup, PlayerSignup, ScoutSignup, TeamSignup } from '../features/auth/pages/SignupPages'
 
 function AuthRoutes() {
   return (
@@ -18,8 +15,6 @@ function AuthRoutes() {
       <Route path="/login/player" element={<PlayerLogin />} />
       <Route path="/login/scout" element={<ScoutLogin />} />
       <Route path="/login/team" element={<TeamLogin />} />
-      
-
     </Routes>
   )
 }

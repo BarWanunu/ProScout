@@ -1,0 +1,22 @@
+/* ---------- WRAPPER ---------- */
+.ss-wrapper { display:flex; flex-direction:column; align-items:center;
+    min-height:100vh; padding:2rem 1rem;
+    background:rgba(0,0,0,.7); backdrop-filter:blur(4px); }
+
+/* headline */
+.ss-headline { color:#fff; font-size:1.875rem; font-weight:700;
+     margin-bottom:2rem; text-align:center; }
+
+/* ---------- FORM ---------- */
+.ss-form   { width:100%; max-width:40rem; display:grid; gap:1.25rem;
+   background:rgba(0,0,0,.5); border:1px solid #374151;
+   border-radius:.75rem; padding:2rem; }
+
+/* field + inputs (reuse same rules) */
+@import "../SignupStyles/PlayerSignup.css";   /* pulls in .form-field etc. */
+
+/* ---------- SUBMIT ---------- */
+.ss-submit { width:100%; padding:.75rem 1rem; margin-top:.5rem;
+   background:#7c3aed; color:#fff; font-weight:600; border:none;
+   border-radius:.5rem; cursor:pointer; transition:background .2s ease; }
+.ss-submit:hover { background:#6937d8; }
