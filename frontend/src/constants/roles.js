@@ -31,3 +31,25 @@ export const ROLES = [
     colorClass: "icon--scout",
   },
 ];
+
+
+export const ROLE_META = {
+  player: {
+    label: "Player",
+    icon: UserIcon,
+    color: "blue",
+    description: "Join as a player to showcase your skills", 
+  },
+  team: {
+    label: "Team",
+    icon: UsersIcon,
+    color: "green",
+    description: "Join as a team to find talented players",
+  },
+  scout: {
+    label: "Scout",
+    icon: EyeIcon,
+    color: "purple",
+    description: "Join as a scout to discover new talent",
+  },
+};
