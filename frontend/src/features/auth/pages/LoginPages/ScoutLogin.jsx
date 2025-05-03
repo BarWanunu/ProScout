@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { EyeIcon, ArrowLeftIcon } from "lucide-react";
-import Logo from "../../../assets/Logo";
-import "../styles/ScoutLogin.css";
+import Logo from "../../../../assets/Logo";
+import "../../styles/LoginStyles/ScoutLogin.css";
 
 const ScoutLogin = () => {
   const navigate = useNavigate();

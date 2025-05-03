@@ -1,20 +1,18 @@
-"use client";
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UsersIcon, ArrowLeftIcon } from "lucide-react";
-import Logo from "../../../assets/Logo";
-import "../styles/TeamLogin.css";
+import { UserIcon, ArrowLeftIcon } from "lucide-react";
+import Logo from "../../../../assets/Logo";
+import "../../styles/LoginStyles/PlayerLogin.css";
 
-const TeamLogin = () => {
+const PlayerLogin = () => {
   const navigate = useNavigate();
-  const [email, setEmail]   = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Team login with:", email, password);
-    navigate("/team-dashboard");
+    console.log("Player login with:", email, password);
+    navigate("/player-dashboard");
   };
 
   return (
@@ -53,9 +51,9 @@ const TeamLogin = () => {
           <main className="main">
             <div className="form-wrap">
               <div className="form-icon">
-                <UsersIcon className="text-white h-8 w-8" />
+                <UserIcon className="text-white h-8 w-8" />
               </div>
-              <h2 className="form-title">Team Login</h2>
+              <h2 className="form-title">Player Login</h2>
 
               <form onSubmit={handleSubmit} style={{ display: "grid", gap: "1rem" }}>
                 <div>
@@ -122,4 +120,4 @@ const TeamLogin = () => {
   );
 };
 
-export default TeamLogin;
+export default PlayerLogin;
