@@ -4,11 +4,11 @@ const {
   addShortlistedPlayer,
   removeShortlistedPlayer,
   getShortlistedPlayers,
-} = require("../controllers/shortlistController");
+} = require("../controller/shortlistController");
 const auth = require("../middleware/auth");
 
-router.post("/shortlist", auth, addShortlistedPlayer);
-router.delete("/shortlist/:team_id/:player_id", auth, removeShortlistedPlayer);
-router.get("/shortlist/:team_id", auth, getShortlistedPlayers);
+router.post("/", auth, addShortlistedPlayer);
+router.delete("/:team_id/:player_id", auth, removeShortlistedPlayer);
+router.get("/:team_id", auth, getShortlistedPlayers);
 
 module.exports = router;
