@@ -1,10 +1,10 @@
 const statsModel = require("../models/statsModel");
 
 exports.getPlayerStats = async (req, res) => {
-  const playerId = req.params.id;
+  const player_id = req.params.id;
 
   try {
-    const stats = await statsModel.getStatsByPlayerId(playerId);
+    const stats = await statsModel.getStatsByPlayerId(player_id);
 
     if (!stats || stats.length === 0) {
       return res
@@ -16,8 +16,6 @@ exports.getPlayerStats = async (req, res) => {
 
     res.status(200).json({ stats });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };

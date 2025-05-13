@@ -8,7 +8,7 @@ const {
 const auth = require("../middleware/auth");
 
 router.post("/", auth, addShortlistedPlayer);
-router.delete("/:team_id/:player_id", auth, removeShortlistedPlayer);
-router.get("/:team_id", auth, getShortlistedPlayers);
+router.delete("/:player_id", auth, removeShortlistedPlayer);
+router.get("/", auth, getShortlistedPlayers);
 
 module.exports = router;

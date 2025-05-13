@@ -1,34 +1,28 @@
 const playerModel = require("../models/playerModel");
 const statsModel = require("../models/statsModel");
-// prettier-ignore
-const {createPlayerSchema, updatePlayerSchema,
+const {
+  createPlayerSchema,
+  updatePlayerSchema,
 } = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
-
-const formatDateOnly = (date) => {
-  return date ? new Date(date).toISOString().split("T")[0] : null;
-};
 
 exports.registerPlayer = async (req, res) => {
   const result = await validateAndFetchUser(req, res, createPlayerSchema);
   if (!result) return;
 
   const { value, user } = result;
-  const user_id = user.id;
+  const user_id = req.user.id;
 
   try {
     if (!checkUserRole(res, user, "player")) return;
-    // prettier-ignore
-    if (await checkFieldExists(res, playerModel.findPlayerBy, "user_id", user_id))
+
+    if (
+      await checkFieldExists(res, playerModel.findPlayerBy, "user_id", user_id)
+    )
       return;
-
-    // prettier-ignore
-    const newPlayer = await playerModel.createPlayer({
-        user_id, ...value
-    })
-
+    const newPlayer = await playerModel.createPlayer({ user_id, ...value });
     await statsModel.insertRandomStatsForPlayer(newPlayer);
 
     res
@@ -43,26 +37,29 @@ exports.updatePlayerProfile = async (req, res) => {
   const result = await validateAndFetchUser(req, res, updatePlayerSchema);
   if (!result) return;
 
-  const { value, user } = result;
+  const { value } = result;
+  const user_id = req.user.id;
 
   try {
-    const updatedPlayer = await playerModel.updatePlayerProfile(user.id, value);
+    if (!checkUserRole(res, req.user, "player", "update player profile"))
+      return;
+
+    const updatedPlayer = await playerModel.updatePlayerProfile(user_id, value);
 
     res.status(200).json({
       message: "Player profile updated successfully.",
       player: updatedPlayer,
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
 exports.deletePlayer = async (req, res) => {
-  const userId = req.user.id;
+  const user_id = req.user.id;
+
   try {
-    const deletedPlayer = await playerModel.deletePlayerByUserId(userId);
+    const deletedPlayer = await playerModel.deletePlayerByUserId(user_id);
 
     if (!deletedPlayer) {
       return res.status(404).json({ message: "Player profile not found." });
@@ -89,8 +86,6 @@ exports.getPlayer = async (req, res) => {
 
     res.status(200).json({ player });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };

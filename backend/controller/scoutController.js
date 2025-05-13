@@ -1,6 +1,8 @@
-// prettier-ignore
-const {createScoutSchema,updateScoutFieldSchema,} = require("../validations/scoutValidation");
 const scoutModel = require("../models/scoutModel");
+const {
+  createScoutSchema,
+  updateScoutFieldSchema,
+} = require("../validations/scoutValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
@@ -10,26 +12,21 @@ exports.registerScout = async (req, res) => {
   if (!result) return;
 
   const { value, user } = result;
+  const user_id = req.user.id;
 
-  const user_id = user.id;
   try {
     if (!checkUserRole(res, user, "scout")) return;
+
     if (await checkFieldExists(res, scoutModel.findScoutBy, "user_id", user_id))
       return;
-    if (
-      await checkFieldExists(res, scoutModel.findScoutBy, "phone", value.phone)
-    )
-      return;
 
-    // prettier-ignore
-    const newScout = await scoutModel.createScout({user_id, ...value,});
+    const newScout = await scoutModel.createScout({ user_id, ...value });
+
     res
       .status(201)
       .json({ message: "Scout created successfully", scout: newScout });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
@@ -37,12 +34,12 @@ exports.updateScoutField = async (req, res) => {
   const result = await validateAndFetchUser(req, res, updateScoutFieldSchema);
   if (!result) return;
 
-  // prettier-ignore
-  const { value: {field, value: newValue}, user } = result;
+  const { field, value: newValue } = result.value;
+  const user_id = req.user.id;
 
   try {
     const updatedScout = await scoutModel.updateScoutField(
-      user.id,
+      user_id,
       field,
       newValue
     );
@@ -52,17 +49,15 @@ exports.updateScoutField = async (req, res) => {
       scout: updatedScout,
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
 exports.deleteScout = async (req, res) => {
-  const userId = req.user.id;
+  const user_id = req.user.id;
 
   try {
-    const deletedScout = await scoutModel.deleteScoutByUserId(userId);
+    const deletedScout = await scoutModel.deleteScoutByUserId(user_id);
 
     if (!deletedScout) {
       return res.status(404).json({ message: "Scout profile not found." });
@@ -73,8 +68,6 @@ exports.deleteScout = async (req, res) => {
       scout: deletedScout,
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };

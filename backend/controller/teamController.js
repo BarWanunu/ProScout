@@ -12,59 +12,54 @@ exports.registerTeam = async (req, res) => {
   if (!result) return;
 
   const { value, user } = result;
-  const user_id = user.id;
+  const user_id = req.user.id;
 
   try {
     if (!checkUserRole(res, user, "team")) return;
-    // prettier-ignore
-    if (await checkFieldExists(res, teamModel.findTeamBy, "user_id", user_id)) return;
-    // prettier-ignore
-    if (await checkFieldExists(res, teamModel.findTeamBy, "team_name", value.team_name)) return;
 
-    // prettier-ignore
-    const newTeam = await teamModel.createTeam({user_id, ...value});
+    if (await checkFieldExists(res, teamModel.findTeamBy, "user_id", user_id))
+      return;
+
+    const newTeam = await teamModel.createTeam({ user_id, ...value });
+
     res
       .status(201)
       .json({ message: "Team created successfully.", team: newTeam });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
 exports.updateTeamField = async (req, res) => {
-  // prettier-ignore
   const result = await validateAndFetchUser(req, res, updateTeamFieldSchema);
   if (!result) return;
 
-  const {
-    value: { field, value: newValue },
-    user,
-  } = result;
+  const { field, value: newValue } = result.value;
+  const user_id = req.user.id;
 
   try {
-    // prettier-ignore
-    const updatedTeam = await teamModel.updateTeamField(
-      user.id,field,newValue);
+    if (!checkUserRole(res, req.user, "team", "update team field")) return;
 
-    // prettier-ignore
+    const updatedTeam = await teamModel.updateTeamField(
+      user_id,
+      field,
+      newValue
+    );
+
     res.status(200).json({
-        message: `Team ${field} updated successfully.`,
-        team: updatedTeam,
-      });
+      message: `Team ${field} updated successfully.`,
+      team: updatedTeam,
+    });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
 exports.deleteTeam = async (req, res) => {
-  const userId = req.user.id;
+  const user_id = req.user.id;
 
   try {
-    const deletedTeam = await teamModel.deleteTeamByUserId(userId);
+    const deletedTeam = await teamModel.deleteTeamByUserId(user_id);
 
     if (!deletedTeam) {
       return res.status(404).json({ message: "Team profile not found." });
@@ -75,8 +70,22 @@ exports.deleteTeam = async (req, res) => {
       team: deletedTeam,
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+exports.getTeam = async (req, res) => {
+  const teamId = req.params.id;
+
+  try {
+    const team = await teamModel.getTeamById(teamId);
+
+    if (!team) {
+      return res.status(404).json({ message: "Team profile wasn't found." });
+    }
+
+    res.status(200).json({ team });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };

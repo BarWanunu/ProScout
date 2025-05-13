@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 const { createUserSchema } = require("../validations/userValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateRequest } = require("../utils/validationUtils");
+const { generateAuthToken } = require("../utils/token");
 
 exports.signupUser = async (req, res) => {
   const value = validateRequest(createUserSchema, req, res);
@@ -16,17 +16,19 @@ exports.signupUser = async (req, res) => {
     if (await checkFieldExists(res, userModel.findUserBy, "username", username))
       return;
 
-    // prettier-ignore
     const newUser = await userModel.createUser({
-      email,username,password,role,});
+      email,
+      username,
+      password,
+      role,
+    });
 
-    const token = jwt.sign({ id: newUser.id }, process.env.TOKEN_SECRET);
-
+    const token = generateAuthToken(newUser);
     res
       .status(201)
       .json({ message: "User created successfully.", user: newUser, token });
   } catch (err) {
-    res.status(500).json({ message: " Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
 
@@ -44,8 +46,6 @@ exports.deleteUser = async (req, res) => {
       user: deletedUser,
     });
   } catch (err) {
-    return res
-      .status(500)
-      .json({ message: "Server error", error: err.message });
+    res.status(500).json({ message: "Server error", error: err.message });
   }
 };
