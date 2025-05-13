@@ -7,6 +7,10 @@ const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
 
+const formatDateOnly = (date) => {
+  return date ? new Date(date).toISOString().split("T")[0] : null;
+};
+
 exports.registerPlayer = async (req, res) => {
   const result = await validateAndFetchUser(req, res, createPlayerSchema);
   if (!result) return;
