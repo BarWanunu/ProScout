@@ -5,6 +5,7 @@ const user = require("../routes/user");
 const team = require("../routes/team");
 const scout = require("../routes/scout");
 const player = require("../routes/player");
+const shortlist = require("../routes/shortlist");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -14,4 +15,5 @@ module.exports = function (app) {
   app.use("/api/team", team);
   app.use("/api/scout", scout);
   app.use("/api/player", player);
+  app.use("/api/shortlist", shortlist);
 };
