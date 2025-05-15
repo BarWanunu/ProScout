@@ -1,11 +1,16 @@
 const messagesModel = require("../models/messageModel");
-const { use } = require("../routes/message");
 
 exports.createMessage = async (req, res) => {
   const { receiver_id, message } = req.body;
   const sender_id = req.user.id;
 
   try {
+    if (sender_id === receiver_id) {
+      return res
+        .status(400)
+        .json({ message: "You cannot send a message to yourself." });
+    }
+
     const newMessage = await messagesModel.createMessage({
       sender_id,
       receiver_id,
