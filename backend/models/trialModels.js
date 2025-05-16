@@ -40,13 +40,13 @@ exports.updateTrialStatus = async (trial_id, status) => {
   return result.rows[0];
 };
 
-exports.deleteTrial = async (trial_id, sender_id) => {
+exports.deleteTrial = async (trial_id) => {
   const query = `
         DELETE FROM trials
-        WHERE id = $1 AND (team_id = $2 OR player_id = $2 OR scout_id = $2)
+        WHERE id = $1
         RETURNING *;
     `;
-  const values = [trial_id, sender_id];
+  const values = [trial_id];
   const result = await db.query(query, values);
   return result.rows[0];
 };

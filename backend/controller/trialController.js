@@ -20,11 +20,11 @@ exports.createTrial = async (req, res) => {
       trial_date,
       sender_role
     );
-    res
-      .status(201)
-      .json({ message: "Trial invitation created successfully.", trial });
+    //prettier-ignore
+    res.status(201).json({ message: "Trial invitation created successfully.", trial });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Server error while creating trial.", error: err.message });
   }
 };
 
@@ -40,7 +40,8 @@ exports.updateTrialStatus = async (req, res) => {
 
     if (!validStatuses.includes(status)) {
       return res.status(400).json({
-        message: "Invalid status value. Must be declined/ pending/ accepted.",
+        message:
+          "Invalid status value. Must be one of: pending, accepted, declined.",
       });
     }
 
@@ -66,17 +67,15 @@ exports.updateTrialStatus = async (req, res) => {
 
     if (isPlayerUpdating || isTeamUpdating) {
       const updatedTrial = await trialModel.updateTrialStatus(id, status);
-      return res.json({
-        message: "Trial updated successfully",
-        trial: updatedTrial,
-      });
+      //prettier-ignore
+      return res.json({message: "Trial updated successfully",trial: updatedTrial});
     }
 
-    return res
-      .status(403)
-      .json({ message: "Unauthorized to update trial status." });
+    //prettier-ignore
+    return res.status(403).json({ message: "Unauthorized to update trial status." });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Server error while updating trial status.", error: err.message });
   }
 };
 
@@ -85,10 +84,11 @@ exports.deleteTrial = async (req, res) => {
     const { id } = req.params;
 
     const trial = await trialModel.getTrialById(id);
-    if (!trial) return res.status(404).json({ message: "Trial not found" });
+    if (!trial) return res.status(404).json({ message: "Trial not found." });
 
     const profile = await fetchUserProfile(req.user);
-    if (!profile) return res.status(403).json({ message: "Profile not found" });
+    if (!profile)
+      return res.status(403).json({ message: "Profile not found." });
 
     const isPlayerDeleting =
       req.user.role === "player" && trial.player_id === profile.id;
@@ -98,13 +98,14 @@ exports.deleteTrial = async (req, res) => {
       req.user.role === "scout" && trial.scout_id === profile.id;
 
     if (isPlayerDeleting || isTeamDeleting || isScoutDeleting) {
-      await trialModel.deleteTrial(id, profile.id);
-      return res.json({ message: "Trial deleted successfully" });
+      await trialModel.deleteTrial(id);
+      return res.status(200).json({ message: "Trial deleted successfully" });
     }
 
     return res.status(403).json({ message: "Unauthorized to delete trial" });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Server error while deleting trial.", error: err.message });
   }
 };
 
@@ -126,12 +127,17 @@ exports.getTrialById = async (req, res) => {
     const isScoutViewing = req.user.role === "scout";
 
     if (isPlayerViewing || isTeamViewing || isScoutViewing) {
-      return res.json(trial);
+      return res.status(200).json({
+        message: "Trial retrieved successfully.",
+        trial,
+      });
     }
 
-    return res.status(403).json({ message: "Unauthorized to view." });
+    //prettier-ignore
+    return res.status(403).json({ message: "Unauthorized to view this trial." });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    //prettier-ignore
+    res.status(500).json({message: "Server error while retrieving trial.",error: error.message});
   }
 };
 
@@ -158,12 +164,18 @@ exports.getTrials = async (req, res) => {
 
       if (isPlayerViewing || isScoutViewing) {
         const trials = await trialModel.getTrialsByPlayerId(id);
-        return res.json(trials);
-      }
 
-      return res
-        .status(403)
-        .json({ message: "Unauthorized to view this player trials." });
+        if (!trials || trials.length === 0) {
+          //prettier-ignore
+          return res.status(404).json({ message: "No trials found for this player." });
+        }
+        return res.status(200).json({
+          message: "Player trials retrieved successfully.",
+          trials,
+        });
+      }
+      //prettier-ignore
+      return res.status(403).json({ message: "Unauthorized to view this player's trials." });
     } else if (type === "team") {
       exists = await trialModel.playerExists(id);
       if (!exists) return res.status(404).json({ message: "Team not found." });
@@ -175,18 +187,25 @@ exports.getTrials = async (req, res) => {
 
       if (isTeamViewing) {
         const trials = await trialModel.getTrialsByTeamId(id);
-        return res.json(trials);
+
+        if (!trials || trials.length === 0) {
+          //prettier-ignore
+          return res.status(404).json({ message: "No trials found for this team." });
+        }
+        return res.status(200).json({
+          message: "Team trials retrieved successfully.",
+          trials,
+        });
       }
 
-      return res
-        .status(403)
-        .json({ message: "Unauthorized to view this team trials." });
+      //prettier-ignore
+      return res.status(403).json({ message: "Unauthorized to view this team trials." });
     }
 
-    return res
-      .status(400)
-      .json({ message: "Invalid type parameter. Use 'player' or 'team'." });
+    //prettier-ignore
+    return res.status(400).json({ message: "Invalid type parameter. Use 'player' or 'team'." });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Server error while retrieving trials.", error: err.message });
   }
 };

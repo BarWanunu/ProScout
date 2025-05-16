@@ -14,18 +14,18 @@ exports.addShortlistedPlayer = async (req, res) => {
 
     const exists = await shortlistModel.isPlayerShortlisted(team_id, player_id);
     if (exists) {
-      return res.status(400).json({ message: "Player already shortlisted" });
+      //prettier-ignore
+      return res.status(400).json({ message: "Player is already in the shortlist." });
     }
 
-    const newShortlist = await shortlistModel.addShortlistedPlayer(
-      team_id,
-      player_id
-    );
-    res
-      .status(201)
-      .json({ message: "Player added to shortlist", shortlist: newShortlist });
+    //prettier-ignore
+    const newShortlist = await shortlistModel.addShortlistedPlayer(team_id, player_id);
+
+    //prettier-ignore
+    res.status(201).json({ message: "Player successfully added to shortlist", shortlist: newShortlist });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while adding player to shortlist.", error: err.message });
   }
 };
 
@@ -33,30 +33,27 @@ exports.removeShortlistedPlayer = async (req, res) => {
   const { player_id } = req.params;
 
   try {
-    if (
-      !checkUserRole(
-        res,
-        req.user,
-        "team",
-        "remove a player from the shortlist"
-      )
-    )
+    //prettier-ignore
+    if (!checkUserRole(res, req.user, "team","remove a player from the shortlist"))
       return;
 
     const profile = await fetchUserProfile(req.user);
     const team_id = profile.id;
 
-    const deleted = await shortlistModel.removeShortlistedPlayer(
-      team_id,
-      player_id
-    );
+    //prettier-ignore
+    const deleted = await shortlistModel.removeShortlistedPlayer(team_id,player_id);
     if (!deleted.length) {
-      return res.status(404).json({ message: "Player not found in shortlist" });
+      return res.status(404).json({
+        message: "Player not found in the shortlist",
+      });
     }
 
-    res.status(200).json({ message: "Player removed from shortlist" });
+    res.status(200).json({
+      message: "Player successfully removed from shortlist",
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while removing player from shortlist.", error: err.message });
   }
 };
 
@@ -65,16 +62,21 @@ exports.getShortlistedPlayers = async (req, res) => {
     const profile = await fetchUserProfile(req.user);
     const team_id = profile.id;
 
-    const shortlistedPlayers = await shortlistModel.getShortlistedPlayers(
-      team_id
-    );
+    //prettier-ignore
+    const shortlistedPlayers = await shortlistModel.getShortlistedPlayers(team_id);
 
     if (shortlistedPlayers.length === 0) {
-      return res.status(404).json({ message: "No players found in shortlist" });
+      return res.status(404).json({
+        message: "No players found in the shortlist.",
+      });
     }
 
-    res.status(200).json({ players: shortlistedPlayers });
+    res.status(200).json({
+      message: "Shortlisted players retrieved successfully.",
+      players: shortlistedPlayers,
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while retrieving shortlisted players.", error: err.message });
   }
 };

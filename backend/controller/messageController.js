@@ -6,21 +6,25 @@ exports.createMessage = async (req, res) => {
 
   try {
     if (sender_id === receiver_id) {
-      return res
-        .status(400)
-        .json({ message: "You cannot send a message to yourself." });
+      //prettier-ignore
+      return res.status(400).json({ message: "You cannot send a message to yourself." });
     }
 
-    const newMessage = await messagesModel.createMessage({
-      sender_id,
-      receiver_id,
-      message,
+    //prettier-ignore
+    const newMessage = await messagesModel.createMessage({sender_id,receiver_id,message});
+    res.status(201).json({
+      message: "Message sent successfully",
+      data: {
+        message_id: newMessage.id,
+        sender_id: newMessage.sender_id,
+        receiver_id: newMessage.receiver_id,
+        content: newMessage.message,
+        sent_at: newMessage.created_at,
+      },
     });
-    res
-      .status(201)
-      .json({ message: "Message sent successfully", data: newMessage });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while sending the message.", error: err.message });
   }
 };
 
@@ -29,13 +33,22 @@ exports.getMessagesBetweenUsers = async (req, res) => {
   const user_id = req.user.id;
 
   try {
-    const messages = await messagesModel.getMessagesBetweenUsers(
-      user_id,
-      other_user_id
-    );
-    res.status(200).json({ messages });
+    //prettier-ignore
+    const messages = await messagesModel.getMessagesBetweenUsers(user_id,other_user_id);
+
+    if (!messages || messages.length === 0) {
+      return res.status(404).json({
+        message: "No messages found between the users.",
+      });
+    }
+
+    res.status(200).json({
+      message: "Messages retrieved successfully.",
+      messages,
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while retrieving messages.", error: err.message });
   }
 };
 
@@ -45,13 +58,16 @@ exports.markMessageAsRead = async (req, res) => {
   try {
     const updatedMessage = await messagesModel.markMessageAsRead(message_id);
     if (!updatedMessage) {
-      return res.status(404).json({ message: "Message not found" });
+      //prettier-ignore
+      return res.status(404).json({ message: "Message not found or already marked as read." });
     }
-    res
-      .status(200)
-      .json({ message: "Message marked as read", data: updatedMessage });
+    res.status(200).json({
+      message: "Message marked as read",
+      data: updatedMessage,
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while marking message as read.", error: err.message });
   }
 };
 
@@ -64,7 +80,8 @@ exports.deleteMessage = async (req, res) => {
     if (!message) {
       return res.status(404).json({ message: "Message not found" });
     }
-    if (message.sender_id !== req.user.id) {
+
+    if (message.sender_id !== user_id) {
       return res.status(403).json({
         message: "Forbidden: Only the sender can delete this message",
       });
@@ -72,10 +89,15 @@ exports.deleteMessage = async (req, res) => {
 
     const deletedMessage = await messagesModel.deleteMessage(message_id);
     if (!deletedMessage) {
-      return res.status(404).json({ message: "Message not found" });
+      //prettier-ignore
+      return res.status(404).json({ message: "Message not found or already deleted." });
     }
-    res.status(200).json({ message: "Message deleted successfully" });
+    res.status(200).json({
+      message: "Message deleted successfully",
+      deleted_message_id: message_id,
+    });
   } catch (err) {
-    res.status(500).json({ message: "Server error", error: err.message });
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while deleting message.", error: err.message });
   }
 };

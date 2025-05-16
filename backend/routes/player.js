@@ -8,6 +8,6 @@ router.get("/:id", playerController.getPlayer);
 router.post("/", auth, playerController.registerPlayer);
 router.patch("/", auth, playerController.updatePlayerProfile);
 router.delete("/", auth, playerController.deletePlayer);
-router.get("/:id/stats", statsController.getPlayerStats);
+router.get("/stats/:id", statsController.getPlayerStats);
 
 module.exports = router;
