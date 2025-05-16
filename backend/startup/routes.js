@@ -8,6 +8,7 @@ const player = require("../routes/player");
 const shortlist = require("../routes/shortlist");
 const message = require("../routes/message");
 const trial = require("../routes/trial");
+const recommendation = require("../routes/recommendation");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -20,4 +21,5 @@ module.exports = function (app) {
   app.use("/api/shortlist", shortlist);
   app.use("/api/message", message);
   app.use("/api/trial", trial);
+  app.use("/api/recommendation", recommendation);
 };

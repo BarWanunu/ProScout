@@ -23,7 +23,7 @@ exports.createPlayer = async (player) => {
 };
 
 exports.findPlayerBy = async (field, value) => {
-  const allowedFields = ["user_id"];
+  const allowedFields = ["user_id", "id"];
   if (!allowedFields.includes(field)) {
     throw new Error("Invalid field for player lookup");
   }
