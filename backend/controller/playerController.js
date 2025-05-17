@@ -1,9 +1,7 @@
 const playerModel = require("../models/playerModel");
 const statsModel = require("../models/statsModel");
-const {
-  createPlayerSchema,
-  updatePlayerSchema,
-} = require("../validations/playerValidation");
+//prettier-ignore
+const {createPlayerSchema,updatePlayerSchema,} = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
@@ -17,6 +15,10 @@ exports.registerPlayer = async (req, res) => {
     const user_id = req.user.id;
 
     if (!checkUserRole(res, user.data, "player", "register player")) return;
+
+    if (req.file) {
+      value.photo = req.file.path;
+    }
 
     //prettier-ignore
     if (await checkFieldExists(playerModel.findPlayerBy, "user_id", user_id)) {
@@ -54,6 +56,10 @@ exports.updatePlayerProfile = async (req, res) => {
 
     if (!checkUserRole(res, req.user, "player", "update player profile"))
       return;
+
+    if (req.file) {
+      value.photo = req.file.path;
+    }
 
     const updatedPlayer = await playerModel.updatePlayerProfile(user_id, value);
 

@@ -1,8 +1,6 @@
 const scoutModel = require("../models/scoutModel");
-const {
-  createScoutSchema,
-  updateScoutFieldSchema,
-} = require("../validations/scoutValidation");
+//prettier-ignore
+const {createScoutSchema,updateScoutFieldSchema,} = require("../validations/scoutValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
@@ -16,6 +14,10 @@ exports.registerScout = async (req, res) => {
     const user_id = req.user.id;
 
     if (!checkUserRole(res, user.data, "scout", "register scout")) return;
+
+    if (req.file) {
+      value.image = req.file.path;
+    }
 
     //prettier-ignore
     if( await checkFieldExists(scoutModel.findScoutBy, "user_id", user_id)) {
@@ -48,6 +50,10 @@ exports.updateScoutField = async (req, res) => {
 
     const { field, value: newValue } = result.value;
     const user_id = req.user.id;
+
+    if (req.file) {
+      newValue = req.file.path;
+    }
 
     //prettier-ignore
     const updatedScout = await scoutModel.updateScoutField(user_id, field, newValue);

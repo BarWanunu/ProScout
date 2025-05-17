@@ -1,8 +1,6 @@
 const teamModel = require("../models/teamModel");
-const {
-  registerTeamSchema,
-  updateTeamFieldSchema,
-} = require("../validations/teamValidation");
+//prettier-ignore
+const {registerTeamSchema,updateTeamFieldSchema,} = require("../validations/teamValidation");
 const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
@@ -16,6 +14,10 @@ exports.registerTeam = async (req, res) => {
     const user_id = req.user.id;
 
     if (!checkUserRole(res, user.data, "team", "register team")) return;
+
+    if (req.file) {
+      value.logo = req.file.path;
+    }
 
     if (await checkFieldExists(teamModel.findTeamBy, "user_id", user_id))
       //prettier-ignore
@@ -41,16 +43,28 @@ exports.registerTeam = async (req, res) => {
 
 exports.updateTeamField = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updateTeamFieldSchema);
-    if (!result) return;
-
-    const { field, value: newValue } = result.value;
     const user_id = req.user.id;
+    let field, newValue;
+
+    if (req.file) {
+      field = "logo";
+      newValue = req.file.path;
+    } else {
+      const result = await validateAndFetchUser(
+        req,
+        res,
+        updateTeamFieldSchema
+      );
+      if (!result) return;
+
+      field = result.value.field;
+      newValue = result.value.value;
+    }
 
     if (!checkUserRole(res, req.user, "team", "update team field")) return;
 
     //prettier-ignore
-    const updatedTeam = await teamModel.updateTeamField(user_id, field,newValue);
+    const updatedTeam = await teamModel.updateTeamField(user_id, field, newValue);
 
     if (!updatedTeam.success) {
       return res.status(500).json({
