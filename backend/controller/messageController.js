@@ -53,14 +53,22 @@ exports.getMessagesBetweenUsers = async (req, res) => {
 
 exports.markMessageAsRead = async (req, res) => {
   const { message_id } = req.params;
+  const user_id = req.user.id;
 
   try {
     const updatedMessage = await messagesModel.markMessageAsRead(message_id);
 
-    if (!updatedMessage.success) {
+    if (!updatedMessage.success || !updatedMessage.data) {
       //prettier-ignore
       return res.status(404).json({ message: "Message not found or already marked as read." });
     }
+
+    if (updatedMessage.data.receiver_id !== user_id) {
+      return res.status(403).json({
+        message: "You are not authorized to mark this message as read.",
+      });
+    }
+
     res.status(200).json({
       message: "Message marked as read",
       data: updatedMessage.data,
