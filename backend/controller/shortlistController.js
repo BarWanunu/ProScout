@@ -39,7 +39,7 @@ exports.removeShortlistedPlayer = async (req, res) => {
 
   try {
     //prettier-ignore
-    if (!checkUserRole(res, req.user, "team","remove a player from the shortlist"))
+    if (!checkUserRole(res, req.user, "team","remove a player from the shortlist."))
       return;
 
     const profile = await fetchUserProfile(req.user);
@@ -62,6 +62,8 @@ exports.removeShortlistedPlayer = async (req, res) => {
 
 exports.getShortlistedPlayers = async (req, res) => {
   try {
+    if (!checkUserRole(res, req.user, "team", "get the shortlist.")) return;
+
     const profile = await fetchUserProfile(req.user);
     const team_id = profile.id;
 

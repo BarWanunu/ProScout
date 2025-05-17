@@ -4,7 +4,9 @@ const { fetchUserProfile } = require("../utils/fetchUserProfile");
 exports.createTrial = async (req, res) => {
   try {
     //prettier-ignore
-    const {player_id, team_id,scout_id,invitation_message,trial_date,sender_role,} = req.body;
+    const {player_id, team_id,scout_id,invitation_message,trial_date} = req.body;
+
+    const sender_role = req.user.role;
 
     //prettier-ignore
     const trial = await trialModel.createTrial(player_id,team_id,scout_id,invitation_message,trial_date,sender_role);
@@ -47,18 +49,20 @@ exports.updateTrialStatus = async (req, res) => {
     if (!trial.success || !trial.data)
       return res.status(404).json({ message: "Trial not found." });
 
+    const trialData = trial.data;
+
     const playerId = req.user.role === "player" ? profile.id : 0;
     const teamId = req.user.role === "team" ? profile.id : 0;
 
     const isPlayerUpdating =
       req.user.role === "player" &&
-      trial.sender_role === "team" &&
-      trial.player_id === playerId;
+      trialData.sender_role === "team" &&
+      trialData.player_id === playerId;
 
     const isTeamUpdating =
       req.user.role === "team" &&
-      ["player", "scout"].includes(trial.sender_role) &&
-      trial.team_id === teamId;
+      ["player", "scout"].includes(trialData.sender_role) &&
+      trialData.team_id === teamId;
 
     if (isPlayerUpdating || isTeamUpdating) {
       const updatedTrial = await trialModel.updateTrialStatus(id, status);
@@ -92,22 +96,24 @@ exports.deleteTrial = async (req, res) => {
     if (!trial.success || !trial.data)
       return res.status(404).json({ message: "Trial not found." });
 
+    const trialsData = trial.data;
+
     const isPlayerDeleting =
-      req.user.role === "player" && trial.player_id === profile.id;
+      req.user.role === "player" && trialsData.player_id === profile.id;
     const isTeamDeleting =
-      req.user.role === "team" && trial.team_id === profile.id;
+      req.user.role === "team" && trialsData.team_id === profile.id;
     const isScoutDeleting =
-      req.user.role === "scout" && trial.scout_id === profile.id;
+      req.user.role === "scout" && trialsData.scout_id === profile.id;
 
     if (isPlayerDeleting || isTeamDeleting || isScoutDeleting) {
-      await trialModel.deleteTrial(id);
+      const deletedTrial = await trialModel.deleteTrial(id);
 
       if (!deletedTrial.success) {
         return res.status(500).json({ message: "Failed to delete trial." });
       }
 
       //prettier-ignore
-      return res.status(200).json({ message: "Trial deleted successfully", trial : this.deleteTrial.data });
+      return res.status(200).json({ message: "Trial deleted successfully", trial : deletedTrial.data });
     }
 
     return res.status(403).json({ message: "Unauthorized to delete trial" });
@@ -129,16 +135,18 @@ exports.getTrialById = async (req, res) => {
     if (!trial.success || !trial.data)
       return res.status(404).json({ message: "Trial not found." });
 
+    const trialData = trial.data;
+
     const isPlayerViewing =
-      req.user.role === "player" && trial.player_id === profile.id;
+      req.user.role === "player" && trialData.player_id === profile.id;
     const isTeamViewing =
-      req.user.role === "team" && trial.team_id === profile.id;
+      req.user.role === "team" && trialData.team_id === profile.id;
     const isScoutViewing = req.user.role === "scout";
 
     if (isPlayerViewing || isTeamViewing || isScoutViewing) {
       return res.status(200).json({
         message: "Trial retrieved successfully.",
-        trial: trial.data,
+        trial: trialData,
       });
     }
 
