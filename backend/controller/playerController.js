@@ -27,17 +27,16 @@ exports.registerPlayer = async (req, res) => {
 
     const newPlayer = await playerModel.createPlayer({ user_id, ...value });
 
-    await statsModel.insertRandomStatsForPlayer(newPlayer);
+    if (!newPlayer.success) {
+      //prettier-ignore
+      return res.status(500).json({message: "Failed to create player profile."});
+    }
+
+    await statsModel.insertRandomStatsForPlayer(newPlayer.data);
 
     res.status(201).json({
       message: "Player profile created successfully",
-      player: {
-        user_id: newPlayer.user_id,
-        id: newPlayer.id,
-        name: newPlayer.name,
-        position: newPlayer.position,
-        created_at: newPlayer.created_at,
-      },
+      player: newPlayer.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -58,19 +57,14 @@ exports.updatePlayerProfile = async (req, res) => {
 
     const updatedPlayer = await playerModel.updatePlayerProfile(user_id, value);
 
-    if (!updatedPlayer) {
+    if (!updatedPlayer.success) {
       //prettier-ignore
       return res.status(404).json({message: 'Player profile not found. Update failed.'})
     }
 
     res.status(200).json({
       message: "Player profile updated successfully.",
-      player: {
-        user_id: updatedPlayer.user_id,
-        id: updatedPlayer.id,
-        name: updatedPlayer.name,
-        ...value,
-      },
+      player: updatedPlayer.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -84,19 +78,14 @@ exports.deletePlayer = async (req, res) => {
   try {
     const deletedPlayer = await playerModel.deletePlayerByUserId(user_id);
 
-    if (!deletedPlayer) {
-      return res
-        .status(404)
-        .json({ message: "Player profile not found. Deletion failed." });
+    if (!deletedPlayer.success) {
+      //prettier-ignore
+      return res.status(404).json({ message: "Player profile not found. Deletion failed." });
     }
 
     res.status(200).json({
       message: "Player profile deleted successfully.",
-      player: {
-        user_id: deletedPlayer.user_id,
-        id: deletedPlayer.id,
-        name: deletedPlayer.name,
-      },
+      player: deletedPlayer.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -110,12 +99,12 @@ exports.getPlayer = async (req, res) => {
   try {
     const player = await playerModel.getPlayerById(playerId);
 
-    if (!player) {
+    if (!player.success || !player.data) {
       return res.status(404).json({ message: "Player profile wasn't found." });
     }
 
     //prettier-ignore
-    res.status(200).json({message: 'Player profile retrieved successfully.', player });
+    res.status(200).json({message: 'Player profile retrieved successfully.', player: player.data });
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error during player profile retrieval.", error: err.message });

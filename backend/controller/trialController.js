@@ -3,25 +3,19 @@ const { fetchUserProfile } = require("../utils/fetchUserProfile");
 
 exports.createTrial = async (req, res) => {
   try {
-    const {
-      player_id,
-      team_id,
-      scout_id,
-      invitation_message,
-      trial_date,
-      sender_role,
-    } = req.body;
-
-    const trial = await trialModel.createTrial(
-      player_id,
-      team_id,
-      scout_id,
-      invitation_message,
-      trial_date,
-      sender_role
-    );
     //prettier-ignore
-    res.status(201).json({ message: "Trial invitation created successfully.", trial });
+    const {player_id, team_id,scout_id,invitation_message,trial_date,sender_role,} = req.body;
+
+    //prettier-ignore
+    const trial = await trialModel.createTrial(player_id,team_id,scout_id,invitation_message,trial_date,sender_role);
+
+    //prettier-ignore
+    if (!trial.success) {
+      return res.status(500).json({ message: "Failed to create trial." });
+    }
+
+    //prettier-ignore
+    res.status(201).json({ message: "Trial invitation created successfully.", trial: trial.data });
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Server error while creating trial.", error: err.message });
@@ -33,6 +27,10 @@ exports.updateTrialStatus = async (req, res) => {
     const validStatuses = ["pending", "accepted", "declined"];
     const { id } = req.params;
     const { status } = req.body;
+
+    const profile = await fetchUserProfile(req.user);
+    if (!profile)
+      return res.status(403).json({ message: "Profile not found." });
 
     if (!status) {
       return res.status(400).json({ message: "Status is required." });
@@ -46,11 +44,8 @@ exports.updateTrialStatus = async (req, res) => {
     }
 
     const trial = await trialModel.getTrialById(id);
-    if (!trial) return res.status(404).json({ message: "Trial not found." });
-
-    const profile = await fetchUserProfile(req.user);
-    if (!profile)
-      return res.status(403).json({ message: "Profile not found." });
+    if (!trial.success || !trial.data)
+      return res.status(404).json({ message: "Trial not found." });
 
     const playerId = req.user.role === "player" ? profile.id : 0;
     const teamId = req.user.role === "team" ? profile.id : 0;
@@ -67,8 +62,14 @@ exports.updateTrialStatus = async (req, res) => {
 
     if (isPlayerUpdating || isTeamUpdating) {
       const updatedTrial = await trialModel.updateTrialStatus(id, status);
+
       //prettier-ignore
-      return res.json({message: "Trial updated successfully",trial: updatedTrial});
+      if(!updatedTrial.success) {
+        return res.status(500).json({message: 'Failed to update trial status.'})
+      }
+
+      //prettier-ignore
+      return res.json({message: "Trial updated successfully",trial: updatedTrial.data});
     }
 
     //prettier-ignore
@@ -83,12 +84,13 @@ exports.deleteTrial = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const trial = await trialModel.getTrialById(id);
-    if (!trial) return res.status(404).json({ message: "Trial not found." });
-
     const profile = await fetchUserProfile(req.user);
     if (!profile)
       return res.status(403).json({ message: "Profile not found." });
+
+    const trial = await trialModel.getTrialById(id);
+    if (!trial.success || !trial.data)
+      return res.status(404).json({ message: "Trial not found." });
 
     const isPlayerDeleting =
       req.user.role === "player" && trial.player_id === profile.id;
@@ -99,7 +101,13 @@ exports.deleteTrial = async (req, res) => {
 
     if (isPlayerDeleting || isTeamDeleting || isScoutDeleting) {
       await trialModel.deleteTrial(id);
-      return res.status(200).json({ message: "Trial deleted successfully" });
+
+      if (!deletedTrial.success) {
+        return res.status(500).json({ message: "Failed to delete trial." });
+      }
+
+      //prettier-ignore
+      return res.status(200).json({ message: "Trial deleted successfully", trial : this.deleteTrial.data });
     }
 
     return res.status(403).json({ message: "Unauthorized to delete trial" });
@@ -113,12 +121,13 @@ exports.getTrialById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const trial = await trialModel.getTrialById(id);
-    if (!trial) return res.status(404).json({ message: "Trial not found." });
-
     const profile = await fetchUserProfile(req.user);
     if (!profile)
       return res.status(403).json({ message: "Profile not found." });
+
+    const trial = await trialModel.getTrialById(id);
+    if (!trial.success || !trial.data)
+      return res.status(404).json({ message: "Trial not found." });
 
     const isPlayerViewing =
       req.user.role === "player" && trial.player_id === profile.id;
@@ -129,7 +138,7 @@ exports.getTrialById = async (req, res) => {
     if (isPlayerViewing || isTeamViewing || isScoutViewing) {
       return res.status(200).json({
         message: "Trial retrieved successfully.",
-        trial,
+        trial: trial.data,
       });
     }
 
@@ -165,13 +174,13 @@ exports.getTrials = async (req, res) => {
       if (isPlayerViewing || isScoutViewing) {
         const trials = await trialModel.getTrialsByPlayerId(id);
 
-        if (!trials || trials.length === 0) {
+        if (!trials.success || trials.data.length === 0) {
           //prettier-ignore
           return res.status(404).json({ message: "No trials found for this player." });
         }
         return res.status(200).json({
           message: "Player trials retrieved successfully.",
-          trials,
+          trials: trials.data,
         });
       }
       //prettier-ignore
@@ -188,13 +197,13 @@ exports.getTrials = async (req, res) => {
       if (isTeamViewing) {
         const trials = await trialModel.getTrialsByTeamId(id);
 
-        if (!trials || trials.length === 0) {
+        if (!trials.success || trials.data.length === 0) {
           //prettier-ignore
           return res.status(404).json({ message: "No trials found for this team." });
         }
         return res.status(200).json({
           message: "Team trials retrieved successfully.",
-          trials,
+          trials: trials.data,
         });
       }
 

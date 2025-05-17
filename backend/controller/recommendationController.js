@@ -17,12 +17,15 @@ exports.createRecommendation = async (req, res) => {
 
     const scout_id = profile.id;
 
-    const isDuplicate = await recommendationModel.checkDuplicateRecommendation(
-      player_id,
-      teams_id
-    );
-    if (isDuplicate)
-      //prettier-ignore
+    //prettier-ignore
+    const isDuplicate = await recommendationModel.checkDuplicateRecommendation(player_id,teams_id);
+
+    //prettier-ignore
+    if (!isDuplicate.success)
+      return res.status(500).json({message: "Error checking duplicate recommendation."});
+
+    //prettier-ignore
+    if (isDuplicate.data)
       return res.status(400).json({message: "This player is already been recommended to this team."});
 
     const newRecommendation = await recommendationModel.createRecommendation(
@@ -31,9 +34,15 @@ exports.createRecommendation = async (req, res) => {
       teams_id,
       recommendation_note
     );
+
+    //prettier-ignore
+    if (!newRecommendation.success) {
+      return res.status(500).json({ message: "Failed to create recommendation." });
+    }
+
     res.status(201).json({
       message: "Recommendation created successfully.",
-      recommendation: newRecommendation,
+      recommendation: newRecommendation.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -48,14 +57,13 @@ exports.deleteRecommendation = async (req, res) => {
     if (!profile)
       return res.status(403).json({ message: "Profile not found." });
 
+    //prettier-ignore
     if (!["scout", "team"].includes(req.user.role)) {
-      return res.status(403).json({
-        message: "Only scouts and teams are able to delete recommendations.",
-      });
+      return res.status(403).json({message: "Only scouts and teams are able to delete recommendations.",});
     }
 
     const recommendation = await recommendationModel.getRecommendationsById(id);
-    if (!recommendation)
+    if (!recommendation.success || !recommendation.data)
       return res.status(404).json({ message: "Recommendation not found." });
 
     const isScoutDeleting =
@@ -63,21 +71,19 @@ exports.deleteRecommendation = async (req, res) => {
     const isTeamDeleting =
       req.user.role === "team" && recommendation.teams_id === profile.id;
 
+    //prettier-ignore
     if (!isScoutDeleting && !isTeamDeleting) {
-      //prettier-ignore
       return res.status(403).json({ message: "Unauthorized to delete this recommendation." });
     }
 
     //prettier-ignore
     const deleted = await recommendationModel.deleteRecommendation(id, profile.id);
-    if (!deleted)
+    if (!deleted.success || !deleted.data)
       //prettier-ignore
       return res.status(404).json({ message: "Failed to delete recommendation." });
 
-    return res.status(200).json({
-      message: "Recommendation deleted successfully.",
-      recommendation: deleted,
-    });
+    //prettier-ignore
+    return res.status(200).json({message: "Recommendation deleted successfully.",recommendation: deleted.data});
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Server error during recommendation deletion.", error: err.message });
@@ -93,7 +99,7 @@ exports.getRecommendationByPlayerId = async (req, res) => {
       return res.status(403).json({ message: "Profile not found." });
 
     const player = await playerModel.findPlayerBy("id", player_id);
-    if (!player) {
+    if (!player.success || !player.data) {
       //prettier-ignore
       return res.status(403).json({ message: "No player with this id exists." });
     }
@@ -109,9 +115,14 @@ exports.getRecommendationByPlayerId = async (req, res) => {
     //prettier-ignore
     const recommendations =await recommendationModel.getRecommendationsByPlayerId(player_id);
 
+    //prettier-ignore
+    if (!recommendations.success) {
+      return res.status(404).json({ message: "No recommendations found for this player." });
+    }
+
     res.status(200).json({
       message: "Player recommendations retrieved successfully.",
-      recommendations,
+      recommendations: recommendations.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -132,9 +143,15 @@ exports.getRecommendationsByTeam = async (req, res) => {
 
     //prettier-ignore
     const recommendations = await recommendationModel.getRecommendationsByTeamId(profile.id);
+
+    //prettier-ignore
+    if (!recommendations.success) {
+      return res.status(404).json({ message: "No recommendations found for this team." });
+    }
+
     res.status(200).json({
       message: "Team recommendations retrieved successfully.",
-      recommendations,
+      recommendations: recommendations.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -155,9 +172,15 @@ exports.getRecommendationsByScout = async (req, res) => {
 
     //prettier-ignore
     const recommendations = await recommendationModel.getRecommendationsByScoutId(profile.id);
+
+    //prettier-ignore
+    if (!recommendations.success) {
+      return res.status(404).json({ message: "No recommendations found for this scout." });
+    }
+
     res.status(200).json({
       message: "Scout recommendations retrieved successfully.",
-      recommendations,
+      recommendations: recommendations.data,
     });
   } catch (err) {
     //prettier-ignore

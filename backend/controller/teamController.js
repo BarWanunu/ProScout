@@ -23,14 +23,15 @@ exports.registerTeam = async (req, res) => {
 
     const newTeam = await teamModel.createTeam({ user_id, ...value });
 
+    if (!newTeam.success) {
+      return res.status(500).json({
+        message: "Failed to create team profile.",
+      });
+    }
+
     res.status(201).json({
       message: "Team profile created successfully.",
-      team: {
-        user_id: newTeam.user_id,
-        id: newTeam.id,
-        name: newTeam.team_name,
-        created_at: newTeam.create_at,
-      },
+      team: newTeam.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -51,20 +52,15 @@ exports.updateTeamField = async (req, res) => {
     //prettier-ignore
     const updatedTeam = await teamModel.updateTeamField(user_id, field,newValue);
 
-    if (!updatedTeam) {
-      //prettier-ignore
-      return res.status(404).json(
-        {message: `Failed to update ${field}. Team profile not found`})
+    if (!updatedTeam.success) {
+      return res.status(500).json({
+        message: "Failed to update team profile.",
+      });
     }
 
     res.status(200).json({
       message: `Team ${field} updated successfully.`,
-      team: {
-        user_id: updatedTeam.user_id,
-        id: updatedTeam.id,
-        name: updatedTeam.team_name,
-        [field]: updatedTeam[field],
-      },
+      team: updatedTeam.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -78,18 +74,14 @@ exports.deleteTeam = async (req, res) => {
   try {
     const deletedTeam = await teamModel.deleteTeamByUserId(user_id);
 
-    if (!deletedTeam) {
+    if (!deletedTeam.success) {
       //prettier-ignore
       return res.status(404).json({ message: "Team profile not found. Deletion failed" });
     }
 
     res.status(200).json({
       message: "Team profile deleted successfully.",
-      team: {
-        user_id: deletedTeam.user_id,
-        id: deletedTeam.id,
-        name: deletedTeam.team_name,
-      },
+      team: deletedTeam.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -101,14 +93,15 @@ exports.getTeam = async (req, res) => {
   const teamId = req.params.id;
 
   try {
-    const team = await teamModel.getTeamById(teamId);
+    const team = await teamModel.findTeamBy("id", teamId);
 
-    if (!team) {
+    if (!team.success) {
+      //prettier-ignore
       return res.status(404).json({ message: "Team profile not found." });
     }
 
     //prettier-ignore
-    res.status(200).json({ message: "Team profile retrieved successfully.", team: team });
+    res.status(200).json({ message: "Team profile retrieved successfully.", team: team.data });
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error during team retrieval.", error: err.message });

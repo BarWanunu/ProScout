@@ -13,13 +13,18 @@ exports.addShortlistedPlayer = async (req, res) => {
     const team_id = profile.id;
 
     const exists = await shortlistModel.isPlayerShortlisted(team_id, player_id);
-    if (exists) {
+    if (!exists.success || exists.data) {
       //prettier-ignore
       return res.status(400).json({ message: "Player is already in the shortlist." });
     }
 
     //prettier-ignore
     const newShortlist = await shortlistModel.addShortlistedPlayer(team_id, player_id);
+
+    if (!newShortlist.success) {
+      //prettier-ignore
+      return res.status(500).json({message: 'Failed to add player to shortlist.'})
+    }
 
     //prettier-ignore
     res.status(201).json({ message: "Player successfully added to shortlist", shortlist: newShortlist });
@@ -42,15 +47,13 @@ exports.removeShortlistedPlayer = async (req, res) => {
 
     //prettier-ignore
     const deleted = await shortlistModel.removeShortlistedPlayer(team_id,player_id);
-    if (!deleted.length) {
-      return res.status(404).json({
-        message: "Player not found in the shortlist",
-      });
+    if (!deleted.success || deleted.data.length === 0) {
+      //prettier-ignore
+      return res.status(404).json({message: "Player not found in the shortlist",});
     }
 
-    res.status(200).json({
-      message: "Player successfully removed from shortlist",
-    });
+    //prettier-ignore
+    res.status(200).json({message: "Player successfully removed from shortlist",});
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error while removing player from shortlist.", error: err.message });
@@ -65,15 +68,14 @@ exports.getShortlistedPlayers = async (req, res) => {
     //prettier-ignore
     const shortlistedPlayers = await shortlistModel.getShortlistedPlayers(team_id);
 
-    if (shortlistedPlayers.length === 0) {
-      return res.status(404).json({
-        message: "No players found in the shortlist.",
-      });
+    if (!shortlistedPlayers.success || shortlistedPlayers.data.length === 0) {
+      //prettier-ignore
+      return res.status(404).json({message: "No players found in the shortlist.",});
     }
 
     res.status(200).json({
       message: "Shortlisted players retrieved successfully.",
-      players: shortlistedPlayers,
+      players: shortlistedPlayers.data,
     });
   } catch (err) {
     //prettier-ignore

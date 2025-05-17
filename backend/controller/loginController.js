@@ -8,27 +8,36 @@ exports.loginUser = async (req, res) => {
   try {
     const user = await userModel.findUserBy("email", email);
 
+    if (!user.success) {
+      return res.status(500).json({
+        message: "Internal server error during user lookup.",
+        error: user.error,
+      });
+    }
+
+    const userData = user.data;
+
     //prettier-ignore
-    const passwordCheck = user && userModel.checkPassword(password, user.password);
+    const passwordCheck = userData && userModel.checkPassword(password, userData.password);
     //prettier-ignore
-    if (!user || !passwordCheck) {
+    if (!userData || !passwordCheck) {
       return res.status(401).json({ message: "Email or Password are invalid. Please try again." });
     }
 
     try {
-      const profile = await fetchUserProfile(user);
+      const profile = await fetchUserProfile(userData);
 
       if (!profile) {
         return res.status(403).json({
-          message: `User must complete ${user.role} profile before logging in.`,
+          message: `User must complete ${userData.role} profile before logging in.`,
         });
       }
 
-      const token = generateAuthToken(user);
+      const token = generateAuthToken(userData);
 
       res.status(200).json({
         message: "Login Successful.",
-        user: user,
+        user: userData,
         token,
       });
     } catch (err) {

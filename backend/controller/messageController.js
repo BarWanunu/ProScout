@@ -11,16 +11,15 @@ exports.createMessage = async (req, res) => {
     }
 
     //prettier-ignore
-    const newMessage = await messagesModel.createMessage({sender_id,receiver_id,message});
+    const newMessage = await messagesModel.createMessage(sender_id,receiver_id,message);
+
+    if (!newMessage.success) {
+      return res.status(500).json({ message: "Failed to send message." });
+    }
+
     res.status(201).json({
       message: "Message sent successfully",
-      data: {
-        message_id: newMessage.id,
-        sender_id: newMessage.sender_id,
-        receiver_id: newMessage.receiver_id,
-        content: newMessage.message,
-        sent_at: newMessage.created_at,
-      },
+      data: newMessage.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -36,7 +35,7 @@ exports.getMessagesBetweenUsers = async (req, res) => {
     //prettier-ignore
     const messages = await messagesModel.getMessagesBetweenUsers(user_id,other_user_id);
 
-    if (!messages || messages.length === 0) {
+    if (!messages.success || messages.data.length === 0) {
       return res.status(404).json({
         message: "No messages found between the users.",
       });
@@ -44,7 +43,7 @@ exports.getMessagesBetweenUsers = async (req, res) => {
 
     res.status(200).json({
       message: "Messages retrieved successfully.",
-      messages,
+      messages: messages.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -57,13 +56,14 @@ exports.markMessageAsRead = async (req, res) => {
 
   try {
     const updatedMessage = await messagesModel.markMessageAsRead(message_id);
-    if (!updatedMessage) {
+
+    if (!updatedMessage.success) {
       //prettier-ignore
       return res.status(404).json({ message: "Message not found or already marked as read." });
     }
     res.status(200).json({
       message: "Message marked as read",
-      data: updatedMessage,
+      data: updatedMessage.data,
     });
   } catch (err) {
     //prettier-ignore
@@ -77,24 +77,25 @@ exports.deleteMessage = async (req, res) => {
 
   try {
     const message = await messagesModel.getMessageById(message_id);
-    if (!message) {
+
+    if (!message.success) {
       return res.status(404).json({ message: "Message not found" });
     }
 
-    if (message.sender_id !== user_id) {
+    if (message.data.sender_id !== user_id) {
       return res.status(403).json({
         message: "Forbidden: Only the sender can delete this message",
       });
     }
 
     const deletedMessage = await messagesModel.deleteMessage(message_id);
-    if (!deletedMessage) {
+    if (!deletedMessage.success) {
       //prettier-ignore
       return res.status(404).json({ message: "Message not found or already deleted." });
     }
     res.status(200).json({
       message: "Message deleted successfully",
-      deleted_message_id: message_id,
+      deleted_message: deletedMessage.data,
     });
   } catch (err) {
     //prettier-ignore

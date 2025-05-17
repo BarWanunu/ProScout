@@ -17,26 +17,27 @@ exports.registerScout = async (req, res) => {
 
     if (!checkUserRole(res, user, "scout", "register scout")) return;
 
-    if (await checkFieldExists(res, scoutModel.findScoutBy, "user_id", user_id))
+    //prettier-ignore
+    if( await checkFieldExists(res, scoutModel.findScoutBy, "user_id", user_id)) {
       //prettier-ignore
-      return res.status(400).json({message: 'A scout profile already exists for this user.'});
+      return res.status(400).json({ message: 'A scout profile already exists for this user.' });
+    }
 
     const newScout = await scoutModel.createScout({ user_id, ...value });
 
+    if (!newScout.success) {
+      return res.status(500).json({
+        message: "Failed to create scout profile.",
+      });
+    }
+
     res.status(201).json({
       message: "Scout created successfully",
-      scout: {
-        user_id: newScout.user_id,
-        id: newScout.id,
-        first_name: newScout.first_name,
-        last_name: newScout.last_name,
-        experience_years: newScout.experience_years,
-        created_at: newScout.created_at,
-      },
+      scout: newScout.data,
     });
   } catch (err) {
     //prettier-ignore
-    res.status(500).json({ message: "Internal server error during scout registration.", error: err.message });
+    res.status(500).json({ message: "Internal server error during scout registration." });
   }
 };
 
@@ -51,24 +52,18 @@ exports.updateScoutField = async (req, res) => {
     //prettier-ignore
     const updatedScout = await scoutModel.updateScoutField(user_id, field, newValue);
 
-    if (!updatedScout) {
+    if (!updatedScout.success) {
       return res.status(404).json({
         message: `Failed to update ${field}. Scout profile not found.`,
       });
     }
     res.status(200).json({
       message: `Scout ${field} updated successfully.`,
-      scout: {
-        user_id: updatedScout.user_id,
-        id: updatedScout.id,
-        first_name: newScout.first_name,
-        last_name: newScout.last_name,
-        [field]: updatedScout[field],
-      },
+      scout: updatedScout.data,
     });
   } catch (err) {
     //prettier-ignore
-    res.status(500).json({ message: "Internal server error during scout field update.", error: err.message });
+    res.status(500).json({ message: "Internal server error during scout field update." });
   }
 };
 
@@ -78,18 +73,17 @@ exports.deleteScout = async (req, res) => {
   try {
     const deletedScout = await scoutModel.deleteScoutByUserId(user_id);
 
-    if (!deletedScout) {
-      return res
-        .status(404)
-        .json({ message: "Scout profile not found. Deletion failed." });
+    if (!deletedScout.success) {
+      //prettier-ignore
+      return res.status(404).json({ message: "Scout profile not found. Deletion failed." });
     }
 
     res.status(200).json({
       message: "Scout profile deleted successfully.",
-      scout: deletedScout,
+      scout: deletedScout.data,
     });
   } catch (err) {
     //prettier-ignore
-    res.status(500).json({ message: "Internal server error during scout deletion.", error: err.message });
+    res.status(500).json({ message: "Internal server error during scout deletion." });
   }
 };

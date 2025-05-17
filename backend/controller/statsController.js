@@ -6,7 +6,7 @@ exports.getPlayerStats = async (req, res) => {
   try {
     const stats = await statsModel.getStatsByPlayerId(player_id);
 
-    if (!stats || stats.length === 0) {
+    if (!stats.success || stats.data.length === 0) {
       return res.status(404).json({
         message: "No statistics found for this player.",
       });
@@ -17,7 +17,7 @@ exports.getPlayerStats = async (req, res) => {
     res.status(200).json({
       message: "Player statistics retrieved successfully.",
       player_id,
-      stats,
+      stats: stats.data,
     });
   } catch (err) {
     //prettier-ignore

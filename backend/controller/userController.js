@@ -18,16 +18,19 @@ exports.signupUser = async (req, res) => {
     if (await checkFieldExists(res, userModel.findUserBy, "username", username))
       return res.status(400).json({message: 'Username already taken. Please choose a different username.'});
 
-    const newUser = await userModel.createUser({
-      email,
-      username,
-      password,
-      role,
-    });
-
-    const token = generateAuthToken(newUser);
     //prettier-ignore
-    res.status(201).json({ message: "User created successfully.", user: newUser, token });
+    const newUser = await userModel.createUser({email,username,password,role,});
+
+    if (!newUser.success) {
+      return res.status(500).json({
+        message: "Internal server error occurred during user registration.",
+      });
+    }
+
+    const token = generateAuthToken(newUser.data);
+
+    //prettier-ignore
+    res.status(201).json({ message: "User created successfully.", user: newUser.data, token });
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error occurred during user registration.", error: err.message });
@@ -39,14 +42,13 @@ exports.deleteUser = async (req, res) => {
 
   try {
     const deletedUser = await userModel.deleteUserById(userId);
-    if (!deletedUser) {
-      return res
-        .status(404)
-        .json({ message: "User not found. Deletion failed." });
+    if (!deletedUser.success) {
+      //prettier-ignore
+      return res.status(404).json({ message: "User not found. Deletion failed." });
     }
 
     //prettier-ignore
-    res.status(200).json({message: "User deleted successfully.",user: deletedUser,});
+    res.status(200).json({message: "User deleted successfully.",user: deletedUser.data});
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error occurred during user deletion.", error: err.message });
