@@ -7,16 +7,23 @@ const { generateAuthToken } = require("../utils/token");
 exports.signupUser = async (req, res) => {
   try {
     const value = validateRequest(createUserSchema, req, res);
+
     if (!value) return;
 
     const { email, username, password, role } = value;
 
     //prettier-ignore
-    if (await checkFieldExists(res, userModel.findUserBy, "email", email))
-      return res.status(400).json({message: 'Email already exists. Please use a different email.'});
+    const emailExists = await checkFieldExists(res, userModel.findUserBy, "email", email);
     //prettier-ignore
-    if (await checkFieldExists(res, userModel.findUserBy, "username", username))
-      return res.status(400).json({message: 'Username already taken. Please choose a different username.'});
+    if (emailExists) {
+      return 
+    }
+    //prettier-ignore
+    const usernameExists = await checkFieldExists(res, userModel.findUserBy, "username", username);
+    //prettier-ignore
+    if (usernameExists) {
+      return 
+    }
 
     //prettier-ignore
     const newUser = await userModel.createUser({email,username,password,role,});
