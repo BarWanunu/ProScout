@@ -1,23 +1,36 @@
 const teamModel = require("../models/teamModel");
 //prettier-ignore
 const {registerTeamSchema,updateTeamFieldSchema,} = require("../validations/teamValidation");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getImagePath } = require("../utils/imageUtils");
 
 exports.registerTeam = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, registerTeamSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "team", "register team")) return;
+    value.logo = req.file ? getImagePath(req.file) : "";
 
-    if (req.file) {
-      value.logo = req.file.path;
+    ["team_name", "league", "country", "formation", "stadium"].forEach(
+      (field) => {
+        if (value[field]) value[field] = String(value[field]);
+      }
+    );
+
+    if (value.trophies) {
+      value.trophies = parseInt(value.trophies);
+      if (isNaN(value.trophies)) {
+        return res.status(400).json({ message: "Trophies must be a number" });
+      }
     }
+
+    const { error } = registerTeamSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    if (!checkUserRole(res, req.user, "team", "register team")) return;
 
     if (await checkFieldExists(teamModel.findTeamBy, "user_id", user_id))
       //prettier-ignore
@@ -25,10 +38,9 @@ exports.registerTeam = async (req, res) => {
 
     const newTeam = await teamModel.createTeam({ user_id, ...value });
 
+    //prettier-ignore
     if (!newTeam.success) {
-      return res.status(500).json({
-        message: "Failed to create team profile.",
-      });
+      return res.status(500).json({message: "Failed to create team profile.",});
     }
 
     res.status(201).json({
@@ -48,17 +60,33 @@ exports.updateTeamField = async (req, res) => {
 
     if (req.file) {
       field = "logo";
-      newValue = req.file.path;
+      newValue = getImagePath(req.file);
     } else {
-      const result = await validateAndFetchUser(
-        req,
-        res,
-        updateTeamFieldSchema
-      );
-      if (!result) return;
+      field = req.body.field;
+      newValue = req.body.value;
 
-      field = result.value.field;
-      newValue = result.value.value;
+      if (!field) {
+        return res.status(400).json({ message: "Field is required." });
+      }
+
+      if (field === "trophies") {
+        newValue = parseInt(newValue);
+        if (isNaN(newValue)) {
+          return res.status(400).json({ message: "Trophies must be a number" });
+        }
+      } else if (
+        //prettier-ignore
+        ["formation", "stadium"].includes(field)
+      ) {
+        newValue = newValue ? String(newValue) : "";
+        if (!newValue) {
+          //prettier-ignore
+          return res.status(400).json({ message: `${field} must be a non-empty string` });
+        }
+      } else {
+        //prettier-ignore
+        return res.status(400).json({ message: `Invalid field: ${field}. Must be one of : stadium, formation, logo, trophies` });
+      }
     }
 
     if (!checkUserRole(res, req.user, "team", "update team field")) return;

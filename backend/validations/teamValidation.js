@@ -51,9 +51,11 @@ const updateTeamFieldSchema = Joi.object({
     registerTeamSchema.extract("formation"),
     registerTeamSchema.extract("stadium"),
     registerTeamSchema.extract("trophies"),
-    Joi.string().allow("") // עבור לוגו, נתיב כתמונה יכול להיות מחרוזת ריקה
+    Joi.string().allow("").optional()
   ),
 });
+
+module.exports = { updateTeamFieldSchema };
 
 module.exports = {
   registerTeamSchema,

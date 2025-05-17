@@ -17,7 +17,7 @@ exports.createTeam = async (team) => {
       `INSERT INTO teams 
        (user_id, team_name, league, country, formation, stadium, trophies, logo)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-       RETURNING id, user_id, team_name, created_at`,
+       RETURNING *`,
       [user_id, team_name, league, country, formation, stadium, trophies, logo]
     );
     return { success: true, data: result.rows[0] };
