@@ -16,10 +16,10 @@ exports.registerPlayer = async (req, res) => {
     const { value, user } = result;
     const user_id = req.user.id;
 
-    if (!checkUserRole(res, user, "player", "register player")) return;
+    if (!checkUserRole(res, user.data, "player", "register player")) return;
 
     //prettier-ignore
-    if (await checkFieldExists(res, playerModel.findPlayerBy, "user_id", user_id)) {
+    if (await checkFieldExists(playerModel.findPlayerBy, "user_id", user_id)) {
       return res.status(400).json({
         message: "A player profile already exists for this user.",
       });

@@ -17,7 +17,7 @@ exports.registerTeam = async (req, res) => {
 
     if (!checkUserRole(res, user.data, "team", "register team")) return;
 
-    if (await checkFieldExists(res, teamModel.findTeamBy, "user_id", user_id))
+    if (await checkFieldExists(teamModel.findTeamBy, "user_id", user_id))
       //prettier-ignore
       return res.status(400).json({message: 'A team profile already exists for this user.'});
 

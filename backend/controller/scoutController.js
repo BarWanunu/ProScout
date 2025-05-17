@@ -15,10 +15,10 @@ exports.registerScout = async (req, res) => {
     const { value, user } = result;
     const user_id = req.user.id;
 
-    if (!checkUserRole(res, user, "scout", "register scout")) return;
+    if (!checkUserRole(res, user.data, "scout", "register scout")) return;
 
     //prettier-ignore
-    if( await checkFieldExists(res, scoutModel.findScoutBy, "user_id", user_id)) {
+    if( await checkFieldExists(scoutModel.findScoutBy, "user_id", user_id)) {
       //prettier-ignore
       return res.status(400).json({ message: 'A scout profile already exists for this user.' });
     }

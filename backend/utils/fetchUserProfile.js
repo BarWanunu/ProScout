@@ -22,7 +22,7 @@ exports.fetchUserProfile = async (user) => {
 
   const { rows } = await db.query(query, params);
   if (rows.length === 0) {
-    throw new Error(`Profile not found for role: ${role}`);
+    return false;
   }
   return rows[0];
 };

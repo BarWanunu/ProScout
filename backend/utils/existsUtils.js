@@ -1,5 +1,4 @@
-// existsUtils.js
-exports.checkFieldExists = async (res, finderFn, field, value) => {
+exports.checkFieldExists = async (finderFn, field, value) => {
   try {
     const result = await finderFn(field, value);
 
@@ -8,18 +7,15 @@ exports.checkFieldExists = async (res, finderFn, field, value) => {
       return false;
     }
 
-    const existing = result.data;
-
-    if (existing) {
-      const label = field === "username" ? "Username" : "Email";
-      res.status(409).json({
-        message: `${label} already in use. Please choose a different ${label}`,
-      });
-      return true;
+    if (!result.data) {
+      console.log(`No existing record found for ${field} with value ${value}`);
+      return false;
     }
-    return false;
+
+    console.log("Existing entry found:", result.data);
+    return true;
   } catch (err) {
-    console.error("Error in checkFieldExists:", err);
+    console.error("Error in checkFieldExists:", err.message);
     return false;
   }
 };

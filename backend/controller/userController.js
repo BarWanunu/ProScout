@@ -13,16 +13,17 @@ exports.signupUser = async (req, res) => {
     const { email, username, password, role } = value;
 
     //prettier-ignore
-    const emailExists = await checkFieldExists(res, userModel.findUserBy, "email", email);
+    const emailExists = await checkFieldExists(userModel.findUserBy, "email", email);
     //prettier-ignore
     if (emailExists) {
-      return 
+      return res.status(403).json({message: 'Email already in use. please try another email.'})
     }
     //prettier-ignore
-    const usernameExists = await checkFieldExists(res, userModel.findUserBy, "username", username);
+    const usernameExists = await checkFieldExists(userModel.findUserBy, "username", username);
     //prettier-ignore
     if (usernameExists) {
-      return 
+      return res.status(403).json({message: 'Username already in use. please try another username.'})
+      
     }
 
     //prettier-ignore

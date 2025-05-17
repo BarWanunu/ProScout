@@ -12,7 +12,7 @@ exports.getPlayerStats = async (req, res) => {
       });
     }
 
-    stats.sort((a, b) => b.season - a.season);
+    stats.data.sort((a, b) => b.season - a.season);
 
     res.status(200).json({
       message: "Player statistics retrieved successfully.",
