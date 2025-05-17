@@ -27,7 +27,7 @@ exports.addShortlistedPlayer = async (req, res) => {
     }
 
     //prettier-ignore
-    res.status(201).json({ message: "Player successfully added to shortlist", shortlist: newShortlist });
+    res.status(201).json({ message: "Player successfully added to shortlist", shortlist: newShortlist.data });
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error while adding player to shortlist.", error: err.message });
