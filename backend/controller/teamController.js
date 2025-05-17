@@ -15,7 +15,7 @@ exports.registerTeam = async (req, res) => {
     const { value, user } = result;
     const user_id = req.user.id;
 
-    if (!checkUserRole(res, user, "team", "register team")) return;
+    if (!checkUserRole(res, user.data, "team", "register team")) return;
 
     if (await checkFieldExists(res, teamModel.findTeamBy, "user_id", user_id))
       //prettier-ignore
