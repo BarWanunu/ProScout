@@ -58,7 +58,7 @@ exports.deleteRecommendation = async (req, res) => {
       return res.status(403).json({ message: "Profile not found." });
 
     //prettier-ignore
-    if (!["scout", "team"].includes(req.user.role)) {
+    if (req.user.role === 'player') {
       return res.status(403).json({message: "Only scouts and teams are able to delete recommendations.",});
     }
 
@@ -67,9 +67,9 @@ exports.deleteRecommendation = async (req, res) => {
       return res.status(404).json({ message: "Recommendation not found." });
 
     const isScoutDeleting =
-      req.user.role === "scout" && recommendation.scout_id === profile.id;
+      req.user.role === "scout" && recommendation.data.scout_id === profile.id;
     const isTeamDeleting =
-      req.user.role === "team" && recommendation.teams_id === profile.id;
+      req.user.role === "team" && recommendation.data.teams_id === profile.id;
 
     //prettier-ignore
     if (!isScoutDeleting && !isTeamDeleting) {
