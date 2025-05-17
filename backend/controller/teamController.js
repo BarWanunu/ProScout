@@ -1,6 +1,6 @@
 const teamModel = require("../models/teamModel");
 //prettier-ignore
-const {registerTeamSchema,updateTeamFieldSchema,} = require("../validations/teamValidation");
+const {registerTeamSchema} = require("../validations/teamValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
 const { getImagePath } = require("../utils/imageUtils");
