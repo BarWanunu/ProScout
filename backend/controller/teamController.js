@@ -104,6 +104,7 @@ exports.updateTeamField = async (req, res) => {
     if (!updatedTeam.success) {
       return res.status(500).json({
         message: "Failed to update team profile.",
+        error: updatedTeam.error,
       });
     }
 
