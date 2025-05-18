@@ -3,22 +3,50 @@ const statsModel = require("../models/statsModel");
 //prettier-ignore
 const {createPlayerSchema,updatePlayerSchema,} = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getImagePath } = require("../utils/imageUtils");
 
 exports.registerPlayer = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, createPlayerSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "player", "register player")) return;
+    value.photo = req.file ? getImagePath(req.file) : "";
 
-    if (req.file) {
-      value.photo = req.file.path;
+    //prettier-ignore
+    ["name", "first_name", "last_name", "club", "height", "weight", "position", "nationality", "video"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+    });
+
+    if (typeof value.age !== "undefined") {
+      value.age = parseInt(value.age);
+      if (isNaN(value.age)) {
+        return res.status(400).json({ message: "Age must be a number" });
+      }
     }
+
+    if (typeof value.number !== "undefined") {
+      value.number = parseInt(value.number);
+      if (isNaN(value.number)) {
+        return res.status(400).json({ message: "Kit number must be a number" });
+      }
+    }
+
+    if (value.birthdate) {
+      const birthdate = new Date(value.birthdate);
+      if (isNaN(birthdate.getTime())) {
+        //prettier-ignore
+        return res.status(400).json({message: "Invalid birthdate format. Please use YYYY-MM-DD.",});
+      }
+      value.birthdate = birthdate.toISOString().split("T")[0];
+    }
+
+    const { error } = createPlayerSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    if (!checkUserRole(res, req.user, "player", "register player")) return;
 
     //prettier-ignore
     if (await checkFieldExists(playerModel.findPlayerBy, "user_id", user_id)) {
@@ -31,7 +59,7 @@ exports.registerPlayer = async (req, res) => {
 
     if (!newPlayer.success) {
       //prettier-ignore
-      return res.status(500).json({message: "Failed to create player profile."});
+      return res.status(500).json({message: "Failed to create player profile.", error : newPlayer.error});
     }
 
     await statsModel.insertRandomStatsForPlayer(newPlayer.data);
@@ -48,18 +76,53 @@ exports.registerPlayer = async (req, res) => {
 
 exports.updatePlayerProfile = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updatePlayerSchema);
-    if (!result) return;
-
-    const { value } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
+
+    if (req.file) {
+      value.photo = getImagePath(req.file);
+    }
+
+    ["club", "height", "weight", "position", "video"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+    });
+
+    if (typeof value.age !== "undefined") {
+      value.age = parseInt(value.age);
+      if (isNaN(value.age)) {
+        return res.status(400).json({ message: "Age must be a number" });
+      }
+    }
+
+    if (typeof value.number !== "undefined") {
+      value.number = parseInt(value.number);
+      if (isNaN(value.number)) {
+        return res.status(400).json({ message: "Kit number must be a number" });
+      }
+    }
+
+    const restrictedFields = [
+      "birthdate",
+      "nationality",
+      "name",
+      "first_name",
+      "last_name",
+    ];
+    for (const field of restrictedFields) {
+      if (value[field] !== undefined) {
+        return res
+          .status(400)
+          .json({ message: `${field} cannot be updated directly.` });
+      }
+    }
+
+    const { error } = updatePlayerSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
     if (!checkUserRole(res, req.user, "player", "update player profile"))
       return;
-
-    if (req.file) {
-      value.photo = req.file.path;
-    }
 
     const updatedPlayer = await playerModel.updatePlayerProfile(user_id, value);
 
