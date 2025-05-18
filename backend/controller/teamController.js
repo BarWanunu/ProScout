@@ -30,6 +30,13 @@ exports.registerTeam = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    //prettier-ignore
+    const nameExists = await checkFieldExists(teamModel.findTeamBy, "team_name", value.team_name);
+    //prettier-ignore
+    if (nameExists) {
+      return res.status(403).json({message: 'This name is already in use. please try another name.'})
+    }
+
     if (!checkUserRole(res, req.user, "team", "register team")) return;
 
     if (await checkFieldExists(teamModel.findTeamBy, "user_id", user_id))
@@ -40,7 +47,7 @@ exports.registerTeam = async (req, res) => {
 
     //prettier-ignore
     if (!newTeam.success) {
-      return res.status(500).json({message: "Failed to create team profile.",});
+      return res.status(500).json({message: "Failed to create team profile.", error: newTeam.error});
     }
 
     res.status(201).json({

@@ -32,6 +32,7 @@ exports.signupUser = async (req, res) => {
     if (!newUser.success) {
       return res.status(500).json({
         message: "Internal server error occurred during user registration.",
+        error: newUser.error,
       });
     }
 
