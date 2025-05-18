@@ -30,6 +30,13 @@ exports.registerScout = async (req, res) => {
       return res.status(400).json({ message: error.details[0].message });
     }
 
+    //prettier-ignore
+    const phoneExists = await checkFieldExists(scoutModel.findScoutBy, "phone", value.phone);
+    //prettier-ignore
+    if (phoneExists) {
+          return res.status(403).json({message: 'Phone already in use. please try another phone.'})
+        }
+
     if (!checkUserRole(res, req.user, "scout", "register scout")) return;
 
     //prettier-ignore
