@@ -1,23 +1,36 @@
 const scoutModel = require("../models/scoutModel");
 //prettier-ignore
-const {createScoutSchema,updateScoutFieldSchema,} = require("../validations/scoutValidation");
+const {createScoutSchema} = require("../validations/scoutValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getImagePath } = require("../utils/imageUtils");
 
 exports.registerScout = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, createScoutSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "scout", "register scout")) return;
+    value.image = req.file ? getImagePath(req.file) : "";
 
-    if (req.file) {
-      value.image = req.file.path;
+    ["first_name", "last_name", "nationality", "phone"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+    });
+
+    //prettier-ignore
+    if (typeof value.experience_years !== "undefined" && value.experience_years !== "") {
+      value.experience_years = parseInt(value.experience_years);
+      if (isNaN(value.experience_years)) {
+        //prettier-ignore
+        return res.status(400).json({ message: "Experience years must be a number" });
+      }
     }
+
+    const { error } = createScoutSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    if (!checkUserRole(res, req.user, "scout", "register scout")) return;
 
     //prettier-ignore
     if( await checkFieldExists(scoutModel.findScoutBy, "user_id", user_id)) {
@@ -27,9 +40,10 @@ exports.registerScout = async (req, res) => {
 
     const newScout = await scoutModel.createScout({ user_id, ...value });
 
-    if (!newScout.success) {
+    if (!newScout.success || !newScout.data) {
       return res.status(500).json({
         message: "Failed to create scout profile.",
+        error: newScout.error,
       });
     }
 
@@ -45,16 +59,31 @@ exports.registerScout = async (req, res) => {
 
 exports.updateScoutField = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updateScoutFieldSchema);
-    if (!result) return;
-
-    const { field, value: newValue } = result.value;
     const user_id = req.user.id;
+    let field, newValue;
 
     if (req.file) {
-      newValue = req.file.path;
-    }
+      field = "image";
+      newValue = getImagePath(req.file);
+    } else {
+      field = req.body.field;
+      newValue = req.body.value;
 
+      if (!field) {
+        return res.status(400).json({ message: "Field is required." });
+      }
+
+      //prettier-ignore
+      if (field === "experience_years") {
+        newValue = parseInt(newValue);
+        if (isNaN(newValue)) {
+          return res.status(400).json({ message: "Experience years must be a number" });
+        }
+      } else if (field !== "image") {
+        //prettier-ignore
+        return res.status(400).json({ message: `Invalid field: ${field}. Must be one of: image, experience years` });
+      }
+    }
     //prettier-ignore
     const updatedScout = await scoutModel.updateScoutField(user_id, field, newValue);
 
