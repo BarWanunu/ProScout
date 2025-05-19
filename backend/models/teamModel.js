@@ -27,7 +27,7 @@ exports.createTeam = async (team) => {
 };
 
 exports.findTeamBy = async (field, value) => {
-  const allowedFields = ["user_id", "team_name"];
+  const allowedFields = ["user_id", "id", "team_name"];
   if (!allowedFields.includes(field)) {
     return { success: false, error: "Invalid field for team lookup" };
   }

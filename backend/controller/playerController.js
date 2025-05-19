@@ -166,10 +166,10 @@ exports.getPlayer = async (req, res) => {
   const playerId = req.params.id;
 
   try {
-    const player = await playerModel.getPlayerById(playerId);
+    const player = await playerModel.findPlayerBy("id", playerId);
 
     if (!player.success || !player.data) {
-      return res.status(404).json({ message: "Player profile wasn't found." });
+      return res.status(404).json({ message: "Player profile not found." });
     }
 
     //prettier-ignore

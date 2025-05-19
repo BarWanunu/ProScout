@@ -145,7 +145,7 @@ exports.getTeam = async (req, res) => {
   try {
     const team = await teamModel.findTeamBy("id", teamId);
 
-    if (!team.success) {
+    if (!team.success || !team.data) {
       //prettier-ignore
       return res.status(404).json({ message: "Team profile not found." });
     }
