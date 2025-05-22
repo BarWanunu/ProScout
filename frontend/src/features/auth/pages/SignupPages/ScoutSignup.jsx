@@ -25,7 +25,7 @@ export default function ScoutSignup() {
   const submit = e => {
     e.preventDefault();
     if (!ok()) return;
-    nav("/scout-dashboard");
+    nav("/login/scout",  { state: { justSignedUp: true } });
   };
 
   return (

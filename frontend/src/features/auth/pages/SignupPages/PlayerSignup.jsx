@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { TextField, FormStepper, ImagePicker } from "../../../../components/common";
+import { TextField, FormStepper, ImagePicker, FilePicker } from "../../../../components/common";
 import { POSITIONS } from "../../../../constants/positions";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../styles/SignupStyles/PlayerSignup.css";
@@ -11,17 +11,18 @@ export default function PlayerSignup() {
   const validate = v => {
     const e = {};
     if (!v.firstName)   e.firstName = "Required";
-    if (!v.surname)     e.surname   = "Required";
+    if (!v.lastName)    e.lastName = "Required";
+    if (!v.fullName)    e.fullName = "Required"; 
     if (!v.age || v.age < 16 || v.age > 45) e.age = "16‑45 only";
     if (!v.position)    e.position  = "Pick a position";
     return e;
   };
 
   const { values, errors, touched, onChange, onBlur, setField, validate:ok }
-  = useProfileForm({ firstName:"", surname:"", team:"",
+  = useProfileForm({ firstName:"", lastName:"", fullName:"", team:"",
                      kit:"", position:"", age:"",
                      height:"", weight:"", nationality:"",
-                     birth:"", image:null }, validate);
+                     birth:"", image:null, video:null }, validate);
 
   if (!creds) return <Navigate to="/signup" />;   // direct access guard
 
@@ -29,7 +30,7 @@ export default function PlayerSignup() {
     e.preventDefault();
     if (!ok()) return;
     // TODO: send credentials + profile to backend
-    nav("/player-dashboard");
+    nav("/login/player", { state: { justSignedUp: true } });
   };
 
   return (
@@ -42,10 +43,15 @@ export default function PlayerSignup() {
                    onBlur={onBlur} touched={touched.firstName}
                    error={errors.firstName}/>
 
-        <TextField id="surname" label="Surname"
-                   value={values.surname} onChange={onChange}
-                   onBlur={onBlur} touched={touched.surname}
-                   error={errors.surname}/>
+        <TextField id="lastName" label="Last Name"
+                   value={values.lastName} onChange={onChange}
+                   onBlur={onBlur} touched={touched.lastName}
+                   error={errors.lastName}/>
+        
+        <TextField id="fullName" label="Full Name"
+                   value={values.fullName} onChange={onChange}
+                   onBlur={onBlur} touched={touched.fullName}
+                   error={errors.fullName}/>
 
         <TextField id="age" label="Age" type="number"
                    value={values.age} onChange={onChange}
@@ -82,6 +88,11 @@ export default function PlayerSignup() {
         <ImagePicker id="image" label="Profile Image"
                      value={values.image}
                      onChange={file => setField("image", file)} />
+
+        <FilePicker id="video" label="Highlight Video (optional)"
+                    accept="video/*"
+                    value={values.video}
+                    onChange={file => setField("video", file)} />
 
         <button className="ps-submit">Finish Sign‑Up</button>
         <FormStepper step={1}/>

@@ -1,6 +1,6 @@
 // Initial signup page for ProScout application
 
-import React, { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../../components/common";
 import RoleDropdown from "../../../../components/roles/RoleDropdown/RoleDropdown";
