@@ -1,8 +1,7 @@
 // Description: Landing page component for the application.
 // It includes a full-screen video background, a header, a role selection grid, and a footer.
 
-import React from "react";
-import { FullScreenVideo, Header, Footer } from "../../../components/layout";
+import { FullScreenVideo } from "../../../components/layout";
 import useRoleNavigation from "../hooks/useRoleNavigation";
 import RoleGrid from "../../../components/roles/RoleGrid";
 import landingVideo from "../../../assets/landing.mp4";

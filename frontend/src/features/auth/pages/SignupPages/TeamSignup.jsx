@@ -30,7 +30,7 @@ export default function TeamSignup() {
   const submit = e => {
     e.preventDefault();
     if (!ok()) return;
-    nav("/team-dashboard");
+    nav("/login/team", { state: { justSignedUp: true } });
   };
 
   return (
