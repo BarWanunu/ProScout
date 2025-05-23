@@ -39,13 +39,11 @@ const createPlayerSchema = Joi.object({
       "any.required": "Position is required",
     }),
   // prettier-ignore
-  height: Joi.string().pattern(/^\d+\s?cm$/).required().messages({
-      "string.pattern.base":"Height must be a number followed by 'cm', e.g., '180cm'",
+  height: Joi.string().required().messages({
       "string.empty": "Height is required",
     }),
   // prettier-ignore
-  weight: Joi.string().pattern(/^\d+\s?kg$/).required().messages({
-      "string.pattern.base": "Weight must be a number followed by 'kg', e.g., '75kg'",
+  weight: Joi.string().required().messages({
       "string.empty": "Weight is required",
     }),
   nationality: Joi.string().trim().max(100).required().messages({

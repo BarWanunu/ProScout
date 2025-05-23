@@ -16,6 +16,12 @@ exports.registerPlayer = async (req, res) => {
     //prettier-ignore
     ["name", "first_name", "last_name", "club", "height", "weight", "position", "nationality", "video"].forEach((field) => {
       if (value[field] !== undefined) value[field] = String(value[field]);
+      if (field === 'height') {
+        value.height = value.height + ' cm'
+      }
+      if (field === 'weight') {
+        value.weight = value.weight + ' kg'
+      }
     });
 
     if (typeof value.age !== "undefined") {
@@ -85,6 +91,12 @@ exports.updatePlayerProfile = async (req, res) => {
 
     ["club", "height", "weight", "position", "video"].forEach((field) => {
       if (value[field] !== undefined) value[field] = String(value[field]);
+      if (field === "height") {
+        value.height = value.height + " cm";
+      }
+      if (field === "weight") {
+        value.weight = value.weight + " kg";
+      }
     });
 
     if (typeof value.age !== "undefined") {
