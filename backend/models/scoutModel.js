@@ -36,7 +36,7 @@ exports.createScout = async (scout) => {
 
 exports.findScoutBy = async (field, value) => {
   try {
-    const allowedFields = ["user_id", "phone"];
+    const allowedFields = ["user_id", "phone", "id"];
     if (!allowedFields.includes(field)) {
       return { success: false, error: "Invalid field for scout lookup" };
     }

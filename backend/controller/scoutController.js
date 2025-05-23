@@ -129,3 +129,24 @@ exports.deleteScout = async (req, res) => {
     res.status(500).json({ message: "Internal server error during scout deletion." });
   }
 };
+
+exports.getScoutById = async (req, res) => {
+  const scoutId = req.params.id;
+
+  try {
+    const scout = await scoutModel.findScoutBy("id", scoutId);
+
+    if (!scout.success || !scout.data) {
+      return res.status(404).json({ message: "Scout not found." });
+    }
+
+    res.status(200).json({
+      message: "Scout profile retrieved successfully.",
+      scout: scout.data,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error.", error: err.message });
+  }
+};

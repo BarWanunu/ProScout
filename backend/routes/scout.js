@@ -8,5 +8,6 @@ router.post("/", auth, upload.single("image"), scoutController.registerScout);
 //prettier-ignore
 router.patch("/", auth, upload.single("image"), scoutController.updateScoutField);
 router.delete("/", auth, scoutController.deleteScout);
+router.get("/:id", auth, scoutController.getScoutById);
 
 module.exports = router;

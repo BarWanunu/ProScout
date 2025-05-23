@@ -13,6 +13,7 @@ const recommendation = require("../routes/recommendation");
 module.exports = function (app) {
   app.use(express.json());
   app.use(cors());
+  app.use("/uploads", express.static("uploads"));
   app.use("/api/login", login);
   app.use("/api/user", user);
   app.use("/api/team", team);
