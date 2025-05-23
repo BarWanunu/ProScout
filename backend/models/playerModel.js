@@ -12,7 +12,7 @@ exports.createPlayer = async (player) => {
       `INSERT INTO players 
         (user_id, name, first_name, last_name, age, club, number, photo, position, height, weight, nationality, birthdate, video)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
-       RETURNING id, user_id, name, first_name, last_name, position, club, created_at`,
+       RETURNING *`,
       [
         user_id, name, first_name, last_name, age, club, number,
         photo, position, height, weight, nationality, birthdate, video

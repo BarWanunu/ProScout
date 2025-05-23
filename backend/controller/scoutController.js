@@ -1,21 +1,43 @@
 const scoutModel = require("../models/scoutModel");
-const {
-  createScoutSchema,
-  updateScoutFieldSchema,
-} = require("../validations/scoutValidation");
+//prettier-ignore
+const {createScoutSchema} = require("../validations/scoutValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerScout = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, createScoutSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "scout", "register scout")) return;
+    value.image = req.file ? getMediaPath(req.file) : "";
+
+    ["first_name", "last_name", "nationality", "phone"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+    });
+
+    //prettier-ignore
+    if (typeof value.experience_years !== "undefined" && value.experience_years !== "") {
+      value.experience_years = parseInt(value.experience_years);
+      if (isNaN(value.experience_years)) {
+        //prettier-ignore
+        return res.status(400).json({ message: "Experience years must be a number" });
+      }
+    }
+
+    const { error } = createScoutSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    //prettier-ignore
+    const phoneExists = await checkFieldExists(scoutModel.findScoutBy, "phone", value.phone);
+    //prettier-ignore
+    if (phoneExists) {
+          return res.status(403).json({message: 'Phone already in use. please try another phone.'})
+        }
+
+    if (!checkUserRole(res, req.user, "scout", "register scout")) return;
 
     //prettier-ignore
     if( await checkFieldExists(scoutModel.findScoutBy, "user_id", user_id)) {
@@ -25,9 +47,10 @@ exports.registerScout = async (req, res) => {
 
     const newScout = await scoutModel.createScout({ user_id, ...value });
 
-    if (!newScout.success) {
+    if (!newScout.success || !newScout.data) {
       return res.status(500).json({
         message: "Failed to create scout profile.",
+        error: newScout.error,
       });
     }
 
@@ -43,12 +66,31 @@ exports.registerScout = async (req, res) => {
 
 exports.updateScoutField = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updateScoutFieldSchema);
-    if (!result) return;
-
-    const { field, value: newValue } = result.value;
     const user_id = req.user.id;
+    let field, newValue;
 
+    if (req.file) {
+      field = "image";
+      newValue = getMediaPath(req.file);
+    } else {
+      field = req.body.field;
+      newValue = req.body.value;
+
+      if (!field) {
+        return res.status(400).json({ message: "Field is required." });
+      }
+
+      //prettier-ignore
+      if (field === "experience_years") {
+        newValue = parseInt(newValue);
+        if (isNaN(newValue)) {
+          return res.status(400).json({ message: "Experience years must be a number" });
+        }
+      } else if (field !== "image") {
+        //prettier-ignore
+        return res.status(400).json({ message: `Invalid field: ${field}. Must be one of: image, experience years` });
+      }
+    }
     //prettier-ignore
     const updatedScout = await scoutModel.updateScoutField(user_id, field, newValue);
 
@@ -85,5 +127,26 @@ exports.deleteScout = async (req, res) => {
   } catch (err) {
     //prettier-ignore
     res.status(500).json({ message: "Internal server error during scout deletion." });
+  }
+};
+
+exports.getScoutById = async (req, res) => {
+  const scoutId = req.params.id;
+
+  try {
+    const scout = await scoutModel.findScoutBy("id", scoutId);
+
+    if (!scout.success || !scout.data) {
+      return res.status(404).json({ message: "Scout not found." });
+    }
+
+    res.status(200).json({
+      message: "Scout profile retrieved successfully.",
+      scout: scout.data,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error.", error: err.message });
   }
 };

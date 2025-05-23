@@ -1,21 +1,43 @@
 const teamModel = require("../models/teamModel");
-const {
-  registerTeamSchema,
-  updateTeamFieldSchema,
-} = require("../validations/teamValidation");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
+//prettier-ignore
+const {registerTeamSchema} = require("../validations/teamValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerTeam = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, registerTeamSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "team", "register team")) return;
+    value.logo = req.file ? getMediaPath(req.file) : "";
+
+    ["team_name", "league", "country", "formation", "stadium"].forEach(
+      (field) => {
+        if (value[field]) value[field] = String(value[field]);
+      }
+    );
+
+    if (value.trophies) {
+      value.trophies = parseInt(value.trophies);
+      if (isNaN(value.trophies)) {
+        return res.status(400).json({ message: "Trophies must be a number" });
+      }
+    }
+
+    const { error } = registerTeamSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    //prettier-ignore
+    const nameExists = await checkFieldExists(teamModel.findTeamBy, "team_name", value.team_name);
+    //prettier-ignore
+    if (nameExists) {
+      return res.status(403).json({message: 'This name is already in use. please try another name.'})
+    }
+
+    if (!checkUserRole(res, req.user, "team", "register team")) return;
 
     if (await checkFieldExists(teamModel.findTeamBy, "user_id", user_id))
       //prettier-ignore
@@ -23,10 +45,9 @@ exports.registerTeam = async (req, res) => {
 
     const newTeam = await teamModel.createTeam({ user_id, ...value });
 
+    //prettier-ignore
     if (!newTeam.success) {
-      return res.status(500).json({
-        message: "Failed to create team profile.",
-      });
+      return res.status(500).json({message: "Failed to create team profile.", error: newTeam.error});
     }
 
     res.status(201).json({
@@ -41,20 +62,49 @@ exports.registerTeam = async (req, res) => {
 
 exports.updateTeamField = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updateTeamFieldSchema);
-    if (!result) return;
-
-    const { field, value: newValue } = result.value;
     const user_id = req.user.id;
+    let field, newValue;
+
+    if (req.file) {
+      field = "logo";
+      newValue = getMediaPath(req.file);
+    } else {
+      field = req.body.field;
+      newValue = req.body.value;
+
+      if (!field) {
+        return res.status(400).json({ message: "Field is required." });
+      }
+
+      if (field === "trophies") {
+        newValue = parseInt(newValue);
+        if (isNaN(newValue)) {
+          return res.status(400).json({ message: "Trophies must be a number" });
+        }
+      } else if (
+        //prettier-ignore
+        ["formation", "stadium"].includes(field)
+      ) {
+        newValue = newValue ? String(newValue) : "";
+        if (!newValue) {
+          //prettier-ignore
+          return res.status(400).json({ message: `${field} must be a non-empty string` });
+        }
+      } else {
+        //prettier-ignore
+        return res.status(400).json({ message: `Invalid field: ${field}. Must be one of : stadium, formation, logo, trophies` });
+      }
+    }
 
     if (!checkUserRole(res, req.user, "team", "update team field")) return;
 
     //prettier-ignore
-    const updatedTeam = await teamModel.updateTeamField(user_id, field,newValue);
+    const updatedTeam = await teamModel.updateTeamField(user_id, field, newValue);
 
     if (!updatedTeam.success) {
       return res.status(500).json({
         message: "Failed to update team profile.",
+        error: updatedTeam.error,
       });
     }
 
@@ -95,7 +145,7 @@ exports.getTeam = async (req, res) => {
   try {
     const team = await teamModel.findTeamBy("id", teamId);
 
-    if (!team.success) {
+    if (!team.success || !team.data) {
       //prettier-ignore
       return res.status(404).json({ message: "Team profile not found." });
     }

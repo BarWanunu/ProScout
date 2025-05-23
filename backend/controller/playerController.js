@@ -1,22 +1,62 @@
 const playerModel = require("../models/playerModel");
 const statsModel = require("../models/statsModel");
-const {
-  createPlayerSchema,
-  updatePlayerSchema,
-} = require("../validations/playerValidation");
+//prettier-ignore
+const {createPlayerSchema,updatePlayerSchema,} = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
-const { validateAndFetchUser } = require("../utils/controllerUtils");
 const { checkUserRole } = require("../utils/roleUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerPlayer = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, createPlayerSchema);
-    if (!result) return;
-
-    const { value, user } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
 
-    if (!checkUserRole(res, user.data, "player", "register player")) return;
+    const photoFile = req.files?.photo?.[0];
+    const videoFile = req.files?.video?.[0];
+
+    value.photo = photoFile ? getMediaPath(photoFile) : "";
+    value.video = videoFile ? getMediaPath(videoFile) : value.video || "";
+
+    //prettier-ignore
+    ["name", "first_name", "last_name", "club", "height", "weight", "position", "nationality", "video"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+      if (field === 'height') {
+        value.height = value.height + ' cm'
+      }
+      if (field === 'weight') {
+        value.weight = value.weight + ' kg'
+      }
+    });
+
+    if (typeof value.age !== "undefined") {
+      value.age = parseInt(value.age);
+      if (isNaN(value.age)) {
+        return res.status(400).json({ message: "Age must be a number" });
+      }
+    }
+
+    if (typeof value.number !== "undefined") {
+      value.number = parseInt(value.number);
+      if (isNaN(value.number)) {
+        return res.status(400).json({ message: "Kit number must be a number" });
+      }
+    }
+
+    if (value.birthdate) {
+      const birthdate = new Date(value.birthdate);
+      if (isNaN(birthdate.getTime())) {
+        //prettier-ignore
+        return res.status(400).json({message: "Invalid birthdate format. Please use YYYY-MM-DD.",});
+      }
+      value.birthdate = birthdate.toISOString().split("T")[0];
+    }
+
+    const { error } = createPlayerSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
+    if (!checkUserRole(res, req.user, "player", "register player")) return;
 
     //prettier-ignore
     if (await checkFieldExists(playerModel.findPlayerBy, "user_id", user_id)) {
@@ -29,7 +69,7 @@ exports.registerPlayer = async (req, res) => {
 
     if (!newPlayer.success) {
       //prettier-ignore
-      return res.status(500).json({message: "Failed to create player profile."});
+      return res.status(500).json({message: "Failed to create player profile.", error : newPlayer.error});
     }
 
     await statsModel.insertRandomStatsForPlayer(newPlayer.data);
@@ -46,11 +86,59 @@ exports.registerPlayer = async (req, res) => {
 
 exports.updatePlayerProfile = async (req, res) => {
   try {
-    const result = await validateAndFetchUser(req, res, updatePlayerSchema);
-    if (!result) return;
-
-    const { value } = result;
     const user_id = req.user.id;
+    let value = { ...req.body };
+
+    const photoFile = req.files?.photo?.[0];
+    const videoFile = req.files?.video?.[0];
+
+    if (photoFile) value.photo = getMediaPath(photoFile);
+    if (videoFile) value.video = getMediaPath(videoFile);
+    if (!videoFile && value.video) value.video = String(value.video);
+
+    ["club", "height", "weight", "position", "video"].forEach((field) => {
+      if (value[field] !== undefined) value[field] = String(value[field]);
+      if (field === "height") {
+        value.height = value.height + " cm";
+      }
+      if (field === "weight") {
+        value.weight = value.weight + " kg";
+      }
+    });
+
+    if (typeof value.age !== "undefined") {
+      value.age = parseInt(value.age);
+      if (isNaN(value.age)) {
+        return res.status(400).json({ message: "Age must be a number" });
+      }
+    }
+
+    if (typeof value.number !== "undefined") {
+      value.number = parseInt(value.number);
+      if (isNaN(value.number)) {
+        return res.status(400).json({ message: "Kit number must be a number" });
+      }
+    }
+
+    const restrictedFields = [
+      "birthdate",
+      "nationality",
+      "name",
+      "first_name",
+      "last_name",
+    ];
+    for (const field of restrictedFields) {
+      if (value[field] !== undefined) {
+        return res
+          .status(400)
+          .json({ message: `${field} cannot be updated directly.` });
+      }
+    }
+
+    const { error } = updatePlayerSchema.validate(value);
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
     if (!checkUserRole(res, req.user, "player", "update player profile"))
       return;
@@ -97,10 +185,10 @@ exports.getPlayer = async (req, res) => {
   const playerId = req.params.id;
 
   try {
-    const player = await playerModel.getPlayerById(playerId);
+    const player = await playerModel.findPlayerBy("id", playerId);
 
     if (!player.success || !player.data) {
-      return res.status(404).json({ message: "Player profile wasn't found." });
+      return res.status(404).json({ message: "Player profile not found." });
     }
 
     //prettier-ignore

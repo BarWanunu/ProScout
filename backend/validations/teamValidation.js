@@ -47,13 +47,15 @@ const updateTeamFieldSchema = Joi.object({
       "any.only": `field must be one of: ${allowedFields.join(", ")}`,
       "any.required": `field is required`,
     }),
-  value: Joi.alternatives().conditional("field", [
-    { is: "formation", then: registerTeamSchema.extract("formation") },
-    { is: "stadium", then: registerTeamSchema.extract("stadium") },
-    { is: "trophies", then: registerTeamSchema.extract("trophies") },
-    { is: "logo", then: registerTeamSchema.extract("logo") },
-  ]),
+  value: Joi.alternatives().try(
+    registerTeamSchema.extract("formation"),
+    registerTeamSchema.extract("stadium"),
+    registerTeamSchema.extract("trophies"),
+    Joi.string().allow("").optional()
+  ),
 });
+
+module.exports = { updateTeamFieldSchema };
 
 module.exports = {
   registerTeamSchema,
