@@ -6,7 +6,15 @@ const auth = require("../middleware/auth");
 const upload = require("../middleware/uploadMedia.js");
 
 router.get("/:id", playerController.getPlayer);
-router.post("/", auth, upload.single("photo"), playerController.registerPlayer);
+router.post(
+  "/",
+  auth,
+  upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "video", maxCount: 1 },
+  ]),
+  playerController.registerPlayer
+);
 //prettier-ignore
 router.patch("/", auth, upload.single('photo') ,playerController.updatePlayerProfile);
 router.delete("/", auth, playerController.deletePlayer);

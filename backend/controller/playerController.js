@@ -4,14 +4,18 @@ const statsModel = require("../models/statsModel");
 const {createPlayerSchema,updatePlayerSchema,} = require("../validations/playerValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
-const { getImagePath } = require("../utils/imageUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerPlayer = async (req, res) => {
   try {
     const user_id = req.user.id;
     let value = { ...req.body };
 
-    value.photo = req.file ? getImagePath(req.file) : "";
+    const photoFile = req.files?.photo?.[0];
+    const videoFile = req.files?.video?.[0];
+
+    value.photo = photoFile ? getMediaPath(photoFile) : "";
+    value.video = videoFile ? getMediaPath(videoFile) : value.video || "";
 
     //prettier-ignore
     ["name", "first_name", "last_name", "club", "height", "weight", "position", "nationality", "video"].forEach((field) => {
@@ -85,9 +89,12 @@ exports.updatePlayerProfile = async (req, res) => {
     const user_id = req.user.id;
     let value = { ...req.body };
 
-    if (req.file) {
-      value.photo = getImagePath(req.file);
-    }
+    const photoFile = req.files?.photo?.[0];
+    const videoFile = req.files?.video?.[0];
+
+    if (photoFile) value.photo = getMediaPath(photoFile);
+    if (videoFile) value.video = getMediaPath(videoFile);
+    if (!videoFile && value.video) value.video = String(value.video);
 
     ["club", "height", "weight", "position", "video"].forEach((field) => {
       if (value[field] !== undefined) value[field] = String(value[field]);

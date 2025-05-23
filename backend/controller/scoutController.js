@@ -3,14 +3,14 @@ const scoutModel = require("../models/scoutModel");
 const {createScoutSchema} = require("../validations/scoutValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
-const { getImagePath } = require("../utils/imageUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerScout = async (req, res) => {
   try {
     const user_id = req.user.id;
     let value = { ...req.body };
 
-    value.image = req.file ? getImagePath(req.file) : "";
+    value.image = req.file ? getMediaPath(req.file) : "";
 
     ["first_name", "last_name", "nationality", "phone"].forEach((field) => {
       if (value[field] !== undefined) value[field] = String(value[field]);
@@ -71,7 +71,7 @@ exports.updateScoutField = async (req, res) => {
 
     if (req.file) {
       field = "image";
-      newValue = getImagePath(req.file);
+      newValue = getMediaPath(req.file);
     } else {
       field = req.body.field;
       newValue = req.body.value;

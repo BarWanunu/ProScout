@@ -27,8 +27,10 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb) => {
   if (file.mimetype.startsWith("image/")) {
     cb(null, true);
+  } else if (req.user.role === "player" && file.mimetype.startsWith("video/")) {
+    cb(null, true);
   } else {
-    cb(new Error("Invalid file type. Only images are allowed"));
+    cb(new Error("Invalid file type. Only images and videos are allowed"));
   }
 };
 

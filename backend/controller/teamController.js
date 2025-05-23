@@ -3,14 +3,14 @@ const teamModel = require("../models/teamModel");
 const {registerTeamSchema} = require("../validations/teamValidation");
 const { checkFieldExists } = require("../utils/existsUtils");
 const { checkUserRole } = require("../utils/roleUtils");
-const { getImagePath } = require("../utils/imageUtils");
+const { getMediaPath } = require("../utils/imageUtils");
 
 exports.registerTeam = async (req, res) => {
   try {
     const user_id = req.user.id;
     let value = { ...req.body };
 
-    value.logo = req.file ? getImagePath(req.file) : "";
+    value.logo = req.file ? getMediaPath(req.file) : "";
 
     ["team_name", "league", "country", "formation", "stadium"].forEach(
       (field) => {
@@ -67,7 +67,7 @@ exports.updateTeamField = async (req, res) => {
 
     if (req.file) {
       field = "logo";
-      newValue = getImagePath(req.file);
+      newValue = getMediaPath(req.file);
     } else {
       field = req.body.field;
       newValue = req.body.value;

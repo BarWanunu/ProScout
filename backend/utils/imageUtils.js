@@ -1,6 +1,6 @@
-const getImagePath = (file) => {
+const getMediaPath = (file) => {
   if (!file) return "";
   return file.path.replace(/\\/g, "/");
 };
 
-module.exports = { getImagePath };
+module.exports = { getMediaPath };
