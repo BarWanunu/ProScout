@@ -16,7 +16,11 @@ router.post(
   playerController.registerPlayer
 );
 //prettier-ignore
-router.patch("/", auth, upload.single('photo') ,playerController.updatePlayerProfile);
+router.patch("/", auth,upload.fields([
+    { name: "photo", maxCount: 1 },
+    { name: "video", maxCount: 1 },
+  ]),
+  playerController.updatePlayerProfile);
 router.delete("/", auth, playerController.deletePlayer);
 router.get("/stats/:id", statsController.getPlayerStats);
 
