@@ -1,0 +1,57 @@
+/* ------------------------------------------------------------------
+   Styling for the custom slider
+   (all class names are prefixed with slider- to avoid clashes)
+------------------------------------------------------------------ */
+.slider-root {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 1.25rem;                 /* 20 px tall clickable area */
+  user-select: none;
+}
+
+.slider-track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  margin: auto;
+  background: #e5e7eb;             /* neutral grey track */
+  border-radius: 9999px;
+}
+
+.slider-fill {
+  position: absolute;
+  height: 100%;
+  background: #2563eb;             /* blue fill – tweak to taste */
+  border-radius: inherit;
+}
+
+/* the real <input type="range"> we use for accessibility */
+.slider-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;                      /* invisible but still clickable */
+  cursor: pointer;
+}
+
+/* visible knob */
+.slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 2px solid #2563eb;
+  border-radius: 50%;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  pointer-events: none;            /* clicks go to the hidden input */
+}
+
+.slider-input:active + .slider-thumb,
+.slider-input:focus-visible + .slider-thumb {
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+}

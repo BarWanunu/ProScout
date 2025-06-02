@@ -1,0 +1,51 @@
+/* =================================================================
+   Single–player card (light glass on dark dashboard)
+   ================================================================= */
+.player-card {
+  --glass: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.15);
+
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border 160ms, box-shadow 160ms;
+  cursor: pointer;
+}
+
+.player-card--selected {
+  border-left: 4px solid #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,.25);
+}
+
+/* ------------- internal flex layout ------------- */
+.pc-flex            { display:flex; flex-direction:row; }
+.pc-left            { display:flex; gap:1rem; flex:1; padding:1.25rem; }
+.pc-avatar          { height:80px; width:80px; flex-shrink:0; }
+.pc-info            { flex:1; display:flex; flex-direction:column; gap:.5rem; }
+.pc-row             { display:flex; justify-content:space-between; align-items:center; }
+.pc-name            { font-size:1.125rem; font-weight:600; color:#fff; }
+.pc-sub             { font-size:.875rem; color:#cbd5e1; }
+
+.pc-badges          { display:flex; flex-wrap:wrap; gap:.35rem; }
+
+.pc-kpis            { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:.75rem; }
+.pc-kpi             { display:flex; align-items:center; gap:.5rem; }
+.pc-kpi-label       { font-size:.75rem; flex:1; color:#e2e8f0; }
+.pc-kpi-bar         { flex:1; height:4px; background:#1e293b; border-radius:2px; }
+.pc-kpi-val         { font-size:.75rem; width:36px; text-align:right; color:#f1f5f9; }
+
+/* ------------- star toggle ------------- */
+.pc-watch           { height:2rem;width:2rem; }
+.pc-star            { height:1.25rem;width:1.25rem; transition:fill .15s; }
+.pc-star--inactive  { fill:none; color:#94a3b8; }
+.pc-star--active    { fill:#facc15; color:#facc15; }
+
+/* ------------- right actions ------------ */
+.pc-actions         { display:flex; flex-direction:column; gap:.5rem;
+                      border-left:1px solid var(--border);
+                      background:rgba(255,255,255,0.03);
+                      padding:1rem; min-width:140px; }
+.pc-act-btn         { font-size:.75rem; justify-content:flex-start; gap:.5rem; }
+.pc-act-btn--primary{ background:#22c55e; color:#fff; }
+.pc-act-btn--primary:hover{ background:#16a34a; }

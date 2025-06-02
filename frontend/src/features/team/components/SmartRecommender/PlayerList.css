@@ -1,0 +1,4 @@
+/* grey pulses & prompts visible on dark bg */
+.player-skeleton    { background:rgba(255,255,255,0.06); border-radius:12px; }
+.empty-circle       { background:rgba(255,255,255,0.05); }
+.empty-text         { color:#e2e8f0; }

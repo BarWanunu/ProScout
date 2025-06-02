@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "name": "Bruno Fernandes",
+    "age": 22,
+    "position": "DM",
+    "nationality": "Portugal",
+    "club": "Sporting CP",
+    "marketValue": "€35M",
+    "addedDate": "2024-05-10",
+    "lastUpdated": "2024-05-20",
+    "notes": "Excellent passing range and vision. Could be perfect for our system.",
+    "notifications": true,
+    "recentEvents": [
+      { "type": "performance", "date": "2024-05-18", "description": "2 assists in 3-1 win vs. Benfica" },
+      { "type": "injury", "date": "2024-05-05", "description": "Minor knock, returned after 1 game" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Javier Rodríguez",
+    "age": 21,
+    "position": "DM",
+    "nationality": "Spain",
+    "club": "Sevilla",
+    "marketValue": "€28M",
+    "addedDate": "2024-05-12",
+    "lastUpdated": "2024-05-19",
+    "notes": "Strong defensive midfielder with good ball-winning abilities.",
+    "notifications": true,
+    "recentEvents": [
+      { "type": "contract", "date": "2024-05-15", "description": "Contract negotiations stalled" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Thomas Müller",
+    "age": 23,
+    "position": "DM",
+    "nationality": "Germany",
+    "club": "Borussia Dortmund",
+    "marketValue": "€32M",
+    "addedDate": "2024-05-08",
+    "lastUpdated": "2024-05-21",
+    "notes": "Physical presence in midfield. Good aerial ability.",
+    "notifications": false,
+    "recentEvents": [
+      { "type": "performance", "date": "2024-05-20", "description": "Clean sheet vs. Bayern" }
+    ]
+  }
+]

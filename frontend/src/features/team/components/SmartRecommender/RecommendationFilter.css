@@ -1,0 +1,138 @@
+/* ------------------------------------------------------------------
+   RecommendationFilter – standalone styles
+------------------------------------------------------------------ */
+
+/* ---- outer card ------------------------------------------------- */
+.rf-card {
+  border: 0;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(to right, #eff6ff 0%, #ede9fe 100%);
+}
+
+/* ---- header ----------------------------------------------------- */
+.rf-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.rf-zap {
+  color: #2563eb; /* blue-600 */
+}
+
+.rf-desc {
+  font-size: 0.875rem;
+  color: #475569; /* slate-600 */
+}
+
+/* ---- grid layout ------------------------------------------------ */
+.rf-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .rf-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.rf-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rf-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #334155; /* slate-700 */
+}
+
+/* ---- select trigger -------------------------------------------- */
+.rf-select-trigger {
+  background: #ffffff;
+  height: 2.5rem;
+  border-radius: 0.375rem;
+  padding: 0 0.75rem;
+  border: 1px solid #cbd5e1; /* slate-300 */
+}
+
+/* narrow version for sort-by */
+.rf-w40 {
+  width: 10rem;
+}
+
+/* ---- slider track tweaks (inherits project-wide slider style) --- */
+.rf-slider {
+  cursor: pointer;
+}
+
+/* ---- footer row ------------------------------------------------- */
+.rf-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rf-sort {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.rf-muted {
+  font-size: 0.875rem;
+  color: #64748b; /* slate-500 */
+  padding-bottom: 0.25rem;
+}
+
+/* ---- apply button ---------------------------------------------- */
+.rf-apply {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(to right, #2563eb 0%, #7c3aed 100%);
+  color: #ffffff;
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: background 0.25s ease;
+}
+
+.rf-apply:hover:not(:disabled) {
+  background: linear-gradient(to right, #1d4ed8 0%, #6d28d9 100%);
+}
+
+.rf-apply:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* spinning loader inside button */
+.rf-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid transparent;
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: rf-spin 0.6s linear infinite;
+}
+
+@keyframes rf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rf-filter-icon {
+  width: 1rem;
+  height: 1rem;
+}
