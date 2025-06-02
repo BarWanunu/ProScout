@@ -1,0 +1,146 @@
+/* ------------------------------------------------------------------
+   DARK GLASS BACKGROUND + MOUNT ANIMATION
+------------------------------------------------------------------ */
+.td-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: radial-gradient(
+      ellipse at top,
+      rgba(30, 41, 59, 0.8) 0%,
+      rgba(15, 23, 42, 0.95) 100%
+    );
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-in  { opacity: 1; transform: translateY(0);  }
+.fade-out { opacity: 0; transform: translateY(-20px); }
+
+/* ------------------------------------------------------------------
+   HEADER
+------------------------------------------------------------------ */
+.td-header {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  color: #fff;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@media (min-width: 768px) {
+  .td-header { flex-direction: row; justify-content: space-between; }
+}
+
+.td-heading h1 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.td-heading p {
+  margin: 0.25rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+/* ------------------------------------------------------------------
+   ACTION BUTTONS
+------------------------------------------------------------------ */
+.td-actions {
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: .5rem;
+  color: #fff;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.td-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .6rem 1.2rem;
+  border-radius: .55rem;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .25s ease, transform .25s ease;
+}
+
+.td-btn svg { flex-shrink: 0; }
+
+.td-btn            { background: #2563eb; color:#fff; border: none; }
+.td-btn:hover      { background: #1d4ed8; transform: translateY(-2px); }
+
+.td-btn--outline   {
+  background: transparent;
+  border: 1px solid #475569;
+  color: #e2e8f0;
+}
+.td-btn--outline:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* ------------------------------------------------------------------
+   TABS
+------------------------------------------------------------------ */
+.td-tabs {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+  gap: .75rem;
+}
+
+.td-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .45rem;
+  padding: .7rem .9rem;
+  background: rgba(255,255,255,0.08);
+  color: #cbd5e1;
+  border: 1px solid transparent;
+  border-radius: .6rem;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: background .25s ease, color .25s ease, transform .25s ease;
+}
+
+.td-tab:hover      { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+.td-tab.active     { background: #2563eb; color:#fff; }
+.td-tab.active:hover { transform:none; }
+
+/* ------------------------------------------------------------------
+   CONTENT WRAPPER (lets child-components handle their own layout)
+------------------------------------------------------------------ */
+.td-content {
+  max-width: 1280px;
+  width: 100%;
+  margin: 2rem auto 0;
+}
+
+/* Give cards from sub-components a common glassy look */
+.td-content .card,
+.td-content .Card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(3px);
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,.25);
+}
+
+/* ------------------------------------------------------------------
+   Simple keyframe reused from InitialSignup
+------------------------------------------------------------------ */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

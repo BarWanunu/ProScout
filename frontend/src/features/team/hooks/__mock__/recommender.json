@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Bruno Fernandes",
+    "age": 22,
+    "position": "DM",
+    "nationality": "Portugal",
+    "club": "Sporting CP",
+    "matchScore": 92,
+    "lineBreaking": 87,
+    "defensiveActions": 82,
+    "passing": 90,
+    "contract": "2025",
+    "marketValue": "€35M",
+    "stats": { "matches": 34, "goals": 5, "assists": 12, "passAccuracy": 89 }
+  },
+  {
+    "id": 2,
+    "name": "Javier Rodríguez",
+    "age": 21,
+    "position": "DM",
+    "nationality": "Spain",
+    "club": "Sevilla",
+    "matchScore": 88,
+    "lineBreaking": 85,
+    "defensiveActions": 84,
+    "passing": 86,
+    "contract": "2024",
+    "marketValue": "€28M",
+    "stats": { "matches": 30, "goals": 3, "assists": 8, "passAccuracy": 87 }
+  },
+  {
+    "id": 3,
+    "name": "Thomas Müller",
+    "age": 23,
+    "position": "DM",
+    "nationality": "Germany",
+    "club": "Borussia Dortmund",
+    "matchScore": 85,
+    "lineBreaking": 82,
+    "defensiveActions": 88,
+    "passing": 83,
+    "contract": "2026",
+    "marketValue": "€32M",
+    "stats": { "matches": 32, "goals": 2, "assists": 7, "passAccuracy": 85 }
+  },
+  {
+    "id": 4,
+    "name": "Luca Pellegrini",
+    "age": 20,
+    "position": "DM",
+    "nationality": "Italy",
+    "club": "Atalanta",
+    "matchScore": 83,
+    "lineBreaking": 80,
+    "defensiveActions": 85,
+    "passing": 81,
+    "contract": "2025",
+    "marketValue": "€18M",
+    "stats": { "matches": 28, "goals": 1, "assists": 5, "passAccuracy": 84 }
+  }
+]
