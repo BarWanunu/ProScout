@@ -1,0 +1,27 @@
+const searchModel = require("../models/searchModel");
+
+exports.searchPlayersByName = async (req, res) => {
+  const { name } = req.query;
+
+  if (!name || name.trim() === "") {
+    return res.status(400).json({
+      success: false,
+      error: "Missing or empty name parameter",
+    });
+  }
+
+  const result = await searchModel.searchPlayersByName(name.trim());
+
+  if (!result.success) {
+    return res.status(500).json(result);
+  }
+
+  if (result.data.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No players found with the given name",
+    });
+  }
+
+  return res.json(result);
+};
