@@ -230,3 +230,36 @@ exports.searchPlayersWithStats = async (filters, limit = 30) => {
     };
   }
 };
+
+exports.advancedSearchTeams = async (filters, limit = 20) => {
+  try {
+    let query = `SELECT * FROM teams WHERE 1=1`;
+    const values = [];
+    let index = 1;
+
+    if (filters.team_name) {
+      query += ` AND team_name ILIKE $${index++}`;
+      values.push(`%${filters.team_name}%`);
+    }
+
+    if (filters.league) {
+      query += ` AND league ILIKE $${index++}`;
+      values.push(`%${filters.league}%`);
+    }
+
+    if (filters.country) {
+      query += ` AND country ILIKE $${index++}`;
+      values.push(`%${filters.country}%`);
+    }
+
+    if (filters.formation) {
+      query += ` AND formation = $${index++}`;
+      values.push(filters.formation);
+    }
+
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+};
