@@ -206,8 +206,9 @@ exports.searchPlayersWithStats = async (filters, limit = 30) => {
       orderByFields.push("p.name ASC");
     }
 
-    const whereClause =
-      conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
     const orderByClause = `ORDER BY ${orderByFields.join(", ")}`;
 
     const query = `
@@ -257,9 +258,15 @@ exports.advancedSearchTeams = async (filters, limit = 20) => {
       values.push(filters.formation);
     }
 
+    query += ` ORDER BY team_name ASC LIMIT $${index}`;
+    values.push(limit);
+
     const result = await db.query(query, values);
     return { success: true, data: result.rows };
   } catch (err) {
-    return { success: false, message: err.message };
+    return {
+      success: false,
+      error: `Failed to search teams: ${err.message}`,
+    };
   }
 };
