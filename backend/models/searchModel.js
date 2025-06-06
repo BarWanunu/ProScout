@@ -136,3 +136,56 @@ exports.advancedSearchPlayers = async (filters, limit = 20) => {
     };
   }
 };
+
+exports.advancedSearchTeams = async (filters, limit = 20) => {
+  try {
+    const conditions = [];
+    const values = [];
+    let index = 1;
+
+    const clean = (v) => (typeof v === "string" ? v.trim() : v);
+
+    if (filters.team_name) {
+      conditions.push(`team_name ILIKE $${index}`);
+      values.push(`%${clean(filters.team_name)}%`);
+      index++;
+    }
+
+    if (filters.league) {
+      conditions.push(`league ILIKE $${index}`);
+      values.push(`%${clean(filters.league)}%`);
+      index++;
+    }
+
+    if (filters.country) {
+      conditions.push(`country ILIKE $${index}`);
+      values.push(`%${clean(filters.country)}%`);
+      index++;
+    }
+
+    if (filters.formation) {
+      conditions.push(`formation = $${index}`);
+      values.push(clean(filters.formation));
+      index++;
+    }
+
+    const whereClause =
+      conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+
+    const query = `
+      SELECT * FROM teams
+      ${whereClause}
+      ORDER BY team_name ASC
+      LIMIT $${index}
+    `;
+    values.push(limit);
+
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to search teams: ${err.message}`,
+    };
+  }
+};
