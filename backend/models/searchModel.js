@@ -137,7 +137,7 @@ exports.advancedSearchPlayers = async (filters, limit = 20) => {
   }
 };
 
-exports.advancedSearchTeams = async (filters, limit = 20) => {
+exports.searchPlayersWithStats = async (filters, limit = 30) => {
   try {
     const conditions = [];
     const values = [];
@@ -145,39 +145,80 @@ exports.advancedSearchTeams = async (filters, limit = 20) => {
 
     const clean = (v) => (typeof v === "string" ? v.trim() : v);
 
-    if (filters.team_name) {
-      conditions.push(`team_name ILIKE $${index}`);
-      values.push(`%${clean(filters.team_name)}%`);
+    if (filters.name) {
+      conditions.push(
+        `(p.name ILIKE $${index} OR p.first_name ILIKE $${index} OR p.last_name ILIKE $${index})`
+      );
+      values.push(`${clean(filters.name)}%`);
       index++;
     }
 
-    if (filters.league) {
-      conditions.push(`league ILIKE $${index}`);
-      values.push(`%${clean(filters.league)}%`);
+    if (filters.club) {
+      conditions.push(`p.club ILIKE $${index}`);
+      values.push(`%${clean(filters.club)}%`);
       index++;
     }
 
-    if (filters.country) {
-      conditions.push(`country ILIKE $${index}`);
-      values.push(`%${clean(filters.country)}%`);
+    if (filters.season) {
+      conditions.push(`s.season = $${index}`);
+      values.push(Number(filters.season));
       index++;
     }
 
-    if (filters.formation) {
-      conditions.push(`formation = $${index}`);
-      values.push(clean(filters.formation));
+    if (filters.position) {
+      conditions.push(`p.position = $${index}`);
+      values.push(clean(filters.position));
       index++;
+    }
+
+    const statFields = [
+      "goals",
+      "assists",
+      "yellow_cards",
+      "red_cards",
+      "passes_completed",
+      "key_passes",
+      "shots_on_target",
+      "dribbles_attempted",
+      "dribbles_success",
+      "dribble_success_rate",
+      "tackles",
+      "interceptions",
+      "duels",
+      "duels_won",
+      "rating",
+    ];
+
+    const orderByFields = [];
+
+    for (const field of statFields) {
+      const key = `min_${field}`;
+      if (filters[key] !== undefined) {
+        conditions.push(`s.${field} >= $${index}`);
+        values.push(Number(filters[key]));
+        index++;
+
+        orderByFields.push(`s.${field} DESC`);
+      }
+    }
+
+    if (orderByFields.length === 0) {
+      orderByFields.push("p.name ASC");
     }
 
     const whereClause =
       conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+    const orderByClause = `ORDER BY ${orderByFields.join(", ")}`;
 
     const query = `
-      SELECT * FROM teams
+      SELECT p.id, p.name, p.club, s.*
+      FROM players p
+      JOIN player_stats s ON p.id = s.player_id
       ${whereClause}
-      ORDER BY team_name ASC
+      ${orderByClause}
       LIMIT $${index}
     `;
+
     values.push(limit);
 
     const result = await db.query(query, values);
@@ -185,7 +226,7 @@ exports.advancedSearchTeams = async (filters, limit = 20) => {
   } catch (err) {
     return {
       success: false,
-      error: `Failed to search teams: ${err.message}`,
+      error: `Failed to search players with stats: ${err.message}`,
     };
   }
 };

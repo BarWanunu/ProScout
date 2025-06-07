@@ -23,5 +23,6 @@ router.patch("/", auth,upload.fields([
   playerController.updatePlayerProfile);
 router.delete("/", auth, playerController.deletePlayer);
 router.get("/stats/:id", statsController.getPlayerStats);
+router.get("/:id/full", statsController.getPlayerFull);
 
 module.exports = router;

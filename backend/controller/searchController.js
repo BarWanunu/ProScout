@@ -89,3 +89,22 @@ exports.advancedSearchTeams = async (req, res) => {
 
   return res.json(result);
 };
+
+exports.searchPlayersWithStats = async (req, res) => {
+  const filters = req.body;
+
+  const result = await searchModel.searchPlayersWithStats(filters);
+
+  if (!result.success) {
+    return res.status(500).json(result);
+  }
+
+  if (result.data.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No players matched the search criteria",
+    });
+  }
+
+  return res.json(result);
+};
