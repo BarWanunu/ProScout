@@ -46,3 +46,52 @@ exports.getStatsByPlayerId = async (playerId) => {
     };
   }
 };
+
+exports.getPlayerStatsSummary = async (playerId, fromYear, toYear) => {
+  try {
+    let query = `
+      SELECT
+        player_id,
+        SUM(goals) AS total_goals,
+        SUM(assists) AS total_assists,
+        SUM(yellow_cards) AS total_yellow_cards,
+        SUM(red_cards) AS total_red_cards,
+        SUM(passes_completed) AS total_passes_completed,
+        SUM(key_passes) AS total_key_passes,
+        SUM(dribbles_attempted) AS total_dribbles_attempted,
+        SUM(dribbles_success) AS total_dribbles_successful,
+        SUM(tackles) AS total_tackles,
+        SUM(interceptions) AS total_interceptions,
+        SUM(duels) AS total_duels,
+        SUM(duels_won) AS total_duels_won,
+        ROUND(AVG(rating), 2) AS average_rating,
+        COUNT(*) AS seasons_counted
+      FROM player_stats
+      WHERE player_id = $1  
+    `;
+
+    const values = [playerId];
+    let paramIndex = 2;
+
+    if (fromYear) {
+      query += ` AND season >= $${paramIndex}`;
+      values.push(fromYear);
+      paramIndex++;
+    }
+
+    if (toYear) {
+      query += ` AND season <= $${paramIndex}`;
+      values.push(toYear);
+    }
+
+    query += ` GROUP BY player_id`;
+
+    const result = await db.query(query, values);
+    if (result.rows.length === 0)
+      return { success: false, message: "No stats found." };
+
+    return { success: true, data: result.rows[0] };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+};
