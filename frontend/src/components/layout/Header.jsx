@@ -1,10 +1,22 @@
 import { Logo } from "../../assets";
 import "./Header.css";
 import { FaCog } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  // סגירה בלחיצה מחוץ לתפריט
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="header">
@@ -14,11 +26,11 @@ export default function Header() {
 
       <div className="right-section">
         <span className="app-name">ProScout</span>
-        <div className="settings-container">
+        <div className="settings-container" ref={menuRef}>
           <FaCog
             size={25}
             className="settings-icon"
-            onClick={() => setShowMenu(!showMenu)}
+            onClick={() => setShowMenu((prev) => !prev)}
           />
           {showMenu && (
             <div className="dropdown-menu">

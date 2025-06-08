@@ -5,6 +5,9 @@
   background: black;
   padding: 10px 20px;
   color: white;
+  position: relative;
+  z-index: 10;
+  overflow: visible;
 }
 
 .logo-section {
@@ -44,21 +47,30 @@
 }
 
 .dropdown-menu {
+  display: block;
   position: absolute;
-  top: 28px;
+  top: 50px;
   right: 0;
-  background: #222;
-  border: 1px solid #555;
-  border-radius: 8px;
-  overflow: hidden;
-  z-index: 10;
+  background-color: #1c1c1c;
+  border: 3px solid #aaa;
+  border-radius: 10px;
+  min-width: 180px;
+  padding: 10px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .dropdown-menu div {
-  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   white-space: nowrap;
+  padding: 10px;
   cursor: pointer;
+  font-size: 1.2rem; /* או מה שהגדלת */
+  transition: background-color 0.2s ease;
 }
+
 
 .dropdown-menu div:hover {
   background-color: #333;
