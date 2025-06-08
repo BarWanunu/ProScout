@@ -24,3 +24,31 @@ exports.getPlayerStats = async (req, res) => {
     res.status(500).json({ message: "Internal server error while retrieving player statistics.", error: err.message });
   }
 };
+
+exports.getPlayerStatsSummary = async (req, res) => {
+  const playerId = req.params.id;
+  const { fromYear, toYear } = req.body;
+
+  try {
+    const summary = await statsModel.getPlayerStatsSummary(
+      playerId,
+      fromYear,
+      toYear
+    );
+
+    if (!summary.success) {
+      return res
+        .status(404)
+        .json({ message: summary.message || "No stats found for the player." });
+    }
+
+    res.status(200).json({
+      message: `Summary stats for player ${playerId}`,
+      summary: summary.data,
+    });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Internal server error.", error: err.message });
+  }
+};

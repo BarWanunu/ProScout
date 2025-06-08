@@ -96,3 +96,32 @@ exports.getPlayerById = async (playerId) => {
     };
   }
 };
+
+exports.getPlayerFull = async (playerId) => {
+  try {
+    // נשלוף את פרטי השחקן
+    const playerQuery = `SELECT * FROM players WHERE id = $1`;
+    const playerResult = await db.query(playerQuery, [playerId]);
+
+    if (playerResult.rows.length === 0) {
+      return { success: false, error: "Player not found" };
+    }
+
+    // נשלוף את הסטטיסטיקה לפי ID
+    const statsQuery = `SELECT * FROM player_stats WHERE player_id = $1`;
+    const statsResult = await db.query(statsQuery, [playerId]);
+
+    return {
+      success: true,
+      data: {
+        player: playerResult.rows[0],
+        stats: statsResult.rows,
+      },
+    };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to retrieve full player info: ${err.message}`,
+    };
+  }
+};
