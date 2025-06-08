@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import AdvancedSearchTeam from "./AdvancedSearchTeam";
+import PlayerSearchPanel from "./PlayerSearchPanel";
 import "../styles/ScoutSearch.css";
 
 export default function ScoutSearch() {
@@ -11,6 +12,8 @@ export default function ScoutSearch() {
   const [country, setCountry] = useState("");
   const [formation, setFormation] = useState("");
 
+  const [playerFilters, setPlayerFilters] = useState({});
+
   const handleSearch = () => {
     if (searchType === "team") {
       alert(`🔎 Search Team:
@@ -20,7 +23,8 @@ export default function ScoutSearch() {
       Formation: ${formation}`);
     } else {
       alert(`🔎 Search Player:
-      Name: ${searchInput}`);
+      Name: ${searchInput}
+      Filters: ${JSON.stringify(playerFilters, null, 2)}`);
     }
   };
 
@@ -62,6 +66,10 @@ export default function ScoutSearch() {
           formation={formation}
           setFormation={setFormation}
         />
+      )}
+
+      {searchType === "player" && (
+        <PlayerSearchPanel onPlayerFiltersChange={setPlayerFilters} />
       )}
 
       <Button

@@ -16,6 +16,7 @@ export default function ScoutWelcome() {
 
         <Col>
           <h4 className="mb-0 text-white">Welcome, John Doe</h4>
+          <h6 className="mt-2">Explore and discover new talents. Become the best scout using ProScout.</h6>
         </Col>
 
         <Col xs="auto">

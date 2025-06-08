@@ -1,0 +1,12 @@
+.player-profile-box {
+  background: #f4f3fc;
+  border-radius: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.slider-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #343a40;
+}
