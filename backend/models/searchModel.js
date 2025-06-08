@@ -206,8 +206,9 @@ exports.searchPlayersWithStats = async (filters, limit = 30) => {
       orderByFields.push("p.name ASC");
     }
 
-    const whereClause =
-      conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+    const whereClause = conditions.length
+      ? `WHERE ${conditions.join(" AND ")}`
+      : "";
     const orderByClause = `ORDER BY ${orderByFields.join(", ")}`;
 
     const query = `
@@ -227,6 +228,45 @@ exports.searchPlayersWithStats = async (filters, limit = 30) => {
     return {
       success: false,
       error: `Failed to search players with stats: ${err.message}`,
+    };
+  }
+};
+
+exports.advancedSearchTeams = async (filters, limit = 20) => {
+  try {
+    let query = `SELECT * FROM teams WHERE 1=1`;
+    const values = [];
+    let index = 1;
+
+    if (filters.team_name) {
+      query += ` AND team_name ILIKE $${index++}`;
+      values.push(`%${filters.team_name}%`);
+    }
+
+    if (filters.league) {
+      query += ` AND league ILIKE $${index++}`;
+      values.push(`%${filters.league}%`);
+    }
+
+    if (filters.country) {
+      query += ` AND country ILIKE $${index++}`;
+      values.push(`%${filters.country}%`);
+    }
+
+    if (filters.formation) {
+      query += ` AND formation = $${index++}`;
+      values.push(filters.formation);
+    }
+
+    query += ` ORDER BY team_name ASC LIMIT $${index}`;
+    values.push(limit);
+
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to search teams: ${err.message}`,
     };
   }
 };
