@@ -108,3 +108,17 @@ exports.searchPlayersWithStats = async (req, res) => {
 
   return res.json(result);
 };
+
+exports.searchScoutsByName = async (req, res) => {
+  const { name } = req.query;
+
+  if (!name || name.trim() === "") {
+    return res.status(400).json({ message: "Name is required for search." });
+  }
+
+  if (!result.success) {
+    return res.status(500).json({ message: result.message });
+  }
+
+  res.status(200).json({ scouts: result.data });
+};
