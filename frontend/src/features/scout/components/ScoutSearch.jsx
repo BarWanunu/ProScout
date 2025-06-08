@@ -13,6 +13,8 @@ export default function ScoutSearch() {
   const [formation, setFormation] = useState("");
 
   const [playerFilters, setPlayerFilters] = useState({});
+  const [statsFilters, setStatsFilters] = useState({});
+  const [searchMode, setSearchMode] = useState("profile"); // "profile" | "stats"
 
   const handleSearch = () => {
     if (searchType === "team") {
@@ -22,9 +24,12 @@ export default function ScoutSearch() {
       Country: ${country}
       Formation: ${formation}`);
     } else {
+      const filters =
+        searchMode === "profile" ? playerFilters : statsFilters;
+
       alert(`🔎 Search Player:
       Name: ${searchInput}
-      Filters: ${JSON.stringify(playerFilters, null, 2)}`);
+      Filters: ${JSON.stringify(filters, null, 2)}`);
     }
   };
 
@@ -69,7 +74,11 @@ export default function ScoutSearch() {
       )}
 
       {searchType === "player" && (
-        <PlayerSearchPanel onPlayerFiltersChange={setPlayerFilters} />
+        <PlayerSearchPanel
+          onPlayerFiltersChange={setPlayerFilters}
+          onStatsFiltersChange={setStatsFilters}
+          onSearchModeChange={setSearchMode}
+        />
       )}
 
       <Button

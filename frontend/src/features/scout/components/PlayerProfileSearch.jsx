@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../styles/PlayerProfileSearch.css";
 
 export default function PlayerProfileSearch({ onFiltersChange }) {
@@ -16,21 +16,19 @@ export default function PlayerProfileSearch({ onFiltersChange }) {
     weightMax: "",
   });
 
-  useEffect(() => {
-    if (onFiltersChange) {
-      onFiltersChange(filters);
-    }
-  }, [filters]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prev) => ({ ...prev, [name]: value }));
+    const updated = { ...filters, [name]: value };
+    setFilters(updated);
+    if (onFiltersChange) onFiltersChange(updated);
   };
 
   return (
-    <div className="player-profile-box p-4">
+    <div className="player-stats-box p-4"> {/* תואם לקופסה של סטטיסטיקות */}
       <div className="row g-3">
+        {/* Position */}
         <div className="col-md-4">
+          <label className="form-label text-black">Position</label>
           <select
             name="position"
             className="form-select"
@@ -45,87 +43,100 @@ export default function PlayerProfileSearch({ onFiltersChange }) {
             ))}
           </select>
         </div>
+
+        {/* Club */}
         <div className="col-md-4">
+          <label className="form-label text-black">Club</label>
           <input
             type="text"
             name="club"
             className="form-control"
-            placeholder="Club"
             value={filters.club}
             onChange={handleInputChange}
           />
         </div>
+
+        {/* Nationality */}
         <div className="col-md-4">
+          <label className="form-label text-black">Nationality</label>
           <input
             type="text"
             name="nationality"
             className="form-control"
-            placeholder="Nationality"
             value={filters.nationality}
             onChange={handleInputChange}
           />
         </div>
 
+        {/* Age */}
         <div className="col-md-6">
+          <label className="form-label text-black">Min Age</label>
           <input
             type="number"
             name="ageMin"
             className="form-control"
-            placeholder="Min Age"
             value={filters.ageMin}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
         <div className="col-md-6">
+          <label className="form-label text-black">Max Age</label>
           <input
             type="number"
             name="ageMax"
             className="form-control"
-            placeholder="Max Age"
             value={filters.ageMax}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
 
+        {/* Height */}
         <div className="col-md-6">
+          <label className="form-label text-black">Min Height (cm)</label>
           <input
             type="number"
             name="heightMin"
             className="form-control"
-            placeholder="Min Height (cm)"
             value={filters.heightMin}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
         <div className="col-md-6">
+          <label className="form-label text-black">Max Height (cm)</label>
           <input
             type="number"
             name="heightMax"
             className="form-control"
-            placeholder="Max Height (cm)"
             value={filters.heightMax}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
 
+        {/* Weight */}
         <div className="col-md-6">
+          <label className="form-label text-black">Min Weight (kg)</label>
           <input
             type="number"
             name="weightMin"
             className="form-control"
-            placeholder="Min Weight (kg)"
             value={filters.weightMin}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
         <div className="col-md-6">
+          <label className="form-label text-black">Max Weight (kg)</label>
           <input
             type="number"
             name="weightMax"
             className="form-control"
-            placeholder="Max Weight (kg)"
             value={filters.weightMax}
             onChange={handleInputChange}
+            min={0}
           />
         </div>
       </div>

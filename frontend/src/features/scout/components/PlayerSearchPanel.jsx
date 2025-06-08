@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PlayerSearchToggle from "./PlayerSearchToggle";
 import PlayerProfileSearch from "./PlayerProfileSearch";
+import PlayerStatsSearch from "./PlayerStatsSearch";
 
-export default function PlayerSearchPanel({ onPlayerFiltersChange }) {
+export default function PlayerSearchPanel({
+  onPlayerFiltersChange,
+  onStatsFiltersChange,
+  onSearchModeChange,
+}) {
   const [searchMode, setSearchMode] = useState("profile");
+
+  // עדכון ה־parent בכל שינוי במצב החיפוש
+  useEffect(() => {
+    if (onSearchModeChange) {
+      onSearchModeChange(searchMode);
+    }
+  }, [searchMode, onSearchModeChange]);
 
   return (
     <div>
@@ -12,7 +24,7 @@ export default function PlayerSearchPanel({ onPlayerFiltersChange }) {
       {searchMode === "profile" ? (
         <PlayerProfileSearch onFiltersChange={onPlayerFiltersChange} />
       ) : (
-        <div>📊 Stats search fields will go here</div>
+        <PlayerStatsSearch onFiltersChange={onStatsFiltersChange} />
       )}
     </div>
   );
