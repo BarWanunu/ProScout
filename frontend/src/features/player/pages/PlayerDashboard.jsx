@@ -1,11 +1,11 @@
 "use client"
 
 import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../components/ui"
-import { Button } from "../../components/ui"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui"
-import { Progress } from "../../components/ui"
-import { Avatar, AvatarFallback, AvatarImage } from "../../components/ui"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../../../components/ui"
+import { Button } from "../../../components/ui"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../components/ui"
+import { Progress } from "../../../components/ui"
+import { Avatar, AvatarFallback, AvatarImage } from "../../../components/ui"
 import { Star, TrendingUp, Users, Award } from "lucide-react"
 
 export default function PlayerProfile() {
