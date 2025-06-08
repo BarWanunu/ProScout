@@ -1,13 +1,34 @@
-// Description: Header component for the ProScout application
-
 import { Logo } from "../../assets";
 import "./Header.css";
+import { FaCog } from "react-icons/fa";
+import { useState } from "react";
 
-const Header = () => (
-  <header className="header">
-    <Logo className="h-10 w-10" />
-    <h1 className="header__title">ProScout</h1>
-  </header>
-);
+export default function Header() {
+  const [showMenu, setShowMenu] = useState(false);
 
-export default Header;
+  return (
+    <header className="header">
+      <div className="logo-section">
+        <Logo />
+      </div>
+
+      <div className="right-section">
+        <span className="app-name">ProScout</span>
+        <div className="settings-container">
+          <FaCog
+            size={25}
+            className="settings-icon"
+            onClick={() => setShowMenu(!showMenu)}
+          />
+          {showMenu && (
+            <div className="dropdown-menu">
+              <div onClick={() => alert("Edit Profile")}>✏️ Edit Profile</div>
+              <div onClick={() => alert("Logout")}>🚪 Logout</div>
+              <div onClick={() => alert("Delete Account")}>🗑️ Delete Account</div>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+}
