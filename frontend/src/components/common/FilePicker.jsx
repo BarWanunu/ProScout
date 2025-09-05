@@ -1,13 +1,5 @@
 import PropTypes from "prop-types";
 import "./TextField.css"           
-/**
- * Generic file chooser.
- * Props:
- *   id, label   – required
- *   accept      – MIME pattern e.g. "video/*"
- *   value       – currently selected File (or null)
- *   onChange(f) – returns File | null
- */
 export default function FilePicker({ id, label, accept, value, onChange }) {
   return (
     <div className="form-field">
