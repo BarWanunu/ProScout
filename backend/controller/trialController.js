@@ -161,68 +161,85 @@ exports.getTrialById = async (req, res) => {
 exports.getTrials = async (req, res) => {
   try {
     const { type, id } = req.params;
-
     const profile = await fetchUserProfile(req.user);
     if (!profile)
       return res.status(403).json({ message: "Profile not found." });
 
-    let exists;
-
     if (type === "player") {
-      exists = await trialModel.playerExists(id);
+      const exists = await trialModel.playerExists(id);
       if (!exists)
         return res.status(404).json({ message: "Player not found." });
 
       const isPlayerViewing =
         req.user.role === "player" &&
         req.user.id === profile.user_id &&
-        profile.id === parseInt(id);
-      const isScoutViewing = req.user.role === "scout";
+        profile.id === parseInt(id, 10);
 
-      if (isPlayerViewing || isScoutViewing) {
-        const trials = await trialModel.getTrialsByPlayerId(id);
+      const isScoutViewing = req.user.role === "scout"; // ← חסר בקוד שלך
 
-        if (!trials.success || trials.data.length === 0) {
-          //prettier-ignore
-          return res.status(404).json({ message: "No trials found for this player." });
-        }
-        return res.status(200).json({
-          message: "Player trials retrieved successfully.",
-          trials: trials.data,
-        });
+      if (!(isPlayerViewing || isScoutViewing)) {
+        return res
+          .status(403)
+          .json({ message: "Unauthorized to view this player's trials." });
       }
-      //prettier-ignore
-      return res.status(403).json({ message: "Unauthorized to view this player's trials." });
-    } else if (type === "team") {
-      exists = await trialModel.playerExists(id);
+
+      const trials = await trialModel.getTrialsByPlayerId(id);
+      return res.status(200).json({
+        message: "Player trials retrieved successfully.",
+        trials: trials.success ? trials.data : [],
+      });
+    }
+
+    if (type === "team") {
+      const exists = await trialModel.teamExists(id);
       if (!exists) return res.status(404).json({ message: "Team not found." });
 
       const isTeamViewing =
         req.user.role === "team" &&
-        profile.user_id === req.user.id &&
-        profile.id === parseInt(id);
+        req.user.id === profile.user_id &&
+        profile.id === parseInt(id, 10);
 
-      if (isTeamViewing) {
-        const trials = await trialModel.getTrialsByTeamId(id);
-
-        if (!trials.success || trials.data.length === 0) {
-          //prettier-ignore
-          return res.status(404).json({ message: "No trials found for this team." });
-        }
-        return res.status(200).json({
-          message: "Team trials retrieved successfully.",
-          trials: trials.data,
-        });
+      if (!isTeamViewing) {
+        return res
+          .status(403)
+          .json({ message: "Unauthorized to view this team trials." });
       }
 
-      //prettier-ignore
-      return res.status(403).json({ message: "Unauthorized to view this team trials." });
+      const trials = await trialModel.getTrialsByTeamId(id);
+      return res.status(200).json({
+        message: "Team trials retrieved successfully.",
+        trials: trials.success ? trials.data : [],
+      });
     }
 
-    //prettier-ignore
-    return res.status(400).json({ message: "Invalid type parameter. Use 'player' or 'team'." });
+    if (type === "scout") {
+      const exists = await trialModel.scoutExists(id);
+      if (!exists) return res.status(404).json({ message: "Scout not found." });
+
+      const isSameScout =
+        req.user.role === "scout" && profile.id === parseInt(id, 10);
+
+      if (!isSameScout) {
+        return res
+          .status(403)
+          .json({ message: "Unauthorized to view this scout's trials." });
+      }
+
+      const trials = await trialModel.getTrialsByScoutId(id);
+      return res.status(200).json({
+        message: "Scout trials retrieved successfully.",
+        trials: trials.success ? trials.data : [],
+      });
+    }
+
+    return res.status(400).json({
+      message: "Invalid type parameter. Use 'player', 'team', or 'scout'.",
+    });
   } catch (error) {
-    //prettier-ignore
-    res.status(500).json({ message: "Server error while retrieving trials.", error: err.message });
+    console.error(error);
+    res.status(500).json({
+      message: "Server error while retrieving trials.",
+      error: error.message,
+    });
   }
 };
