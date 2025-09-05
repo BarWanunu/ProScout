@@ -18,3 +18,42 @@ background: radial-gradient(
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
   }
   
+  /* קונטיינר ראשי */
+.connect-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  flex-wrap: wrap; /* אם המסך קטן – ירד שורה */
+}
+
+/* כרטיס בודד */
+.connect-card {
+  flex: 1 1 300px;   /* בסיס של 300px, גמיש */
+  max-width: 350px;  /* לא יחרוג */
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  transition: transform 0.2s ease;
+}
+
+.connect-card:hover {
+  transform: translateY(-5px);
+}
+
+/* כותרת */
+.connect-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* טקסט */
+.connect-description {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #ddd;
+}

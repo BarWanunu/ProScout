@@ -45,6 +45,7 @@ export default function ScoutSearch() {
           <option value="team">Search by Team</option>
         </select>
 
+        {(searchType === "team" || (searchType === "player" && searchMode === "profile")) &&  (
         <div className="main-input-wrapper">
           <Form.Control
             type="text"
@@ -60,6 +61,7 @@ export default function ScoutSearch() {
             }}
           />
         </div>
+        )}
       </div>
 
       {searchType === "team" && (

@@ -6,12 +6,19 @@
                          background:rgba(0,0,0,.5); min-height:100vh; z-index:10; }
 
 /* --- Main section --- */
-.main                  { flex:1; display:flex; flex-direction:column; justify-content:center;
-                         align-items:center; width:100%; padding:2rem 1rem; }
+.main                  { max-width: min(1400px, 92vw);
+  margin: 0 auto;
+  padding: 0 1rem; /* ביטוח קטן נגד גלילה אופקית */
+  box-sizing: border-box;    }
 .main__headline        { color:#fff; font-size:1.875rem; font-weight:700; text-align:center; margin-bottom:2rem; }
-.card-grid             { display:grid; gap:1.5rem; width:100%; max-width:80rem; }
+.card-grid             { display:flex; justify-content: center; align-items: center; gap:2rem; padding: 2rem; flex-wrap: wrap; }
 @media (min-width:768px){ .card-grid{ grid-template-columns:repeat(3,1fr);} }
 
 /* --- Links --- */
 .link                  { color:#60a5fa; transition:color .15s ease; }
 .link:hover            { color:#93c5fd; }
+/* Grid שמחזיק את כל ה-RoleCards */
+.card-grid {
+  display: grid;
+  gap: 2rem;
+}

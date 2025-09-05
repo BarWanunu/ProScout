@@ -5,7 +5,7 @@ import { FullScreenVideo } from "../../../components/layout";
 import useRoleNavigation from "../hooks/useRoleNavigation";
 import RoleGrid from "../../../components/roles/RoleGrid";
 import landingVideo from "../../../assets/landing.mp4";
-import "../styles/LandingPage.css";
+import "../../../styles/LandingPage.css";
 
 const LandingPage = () => {
   const handleCardClick = useRoleNavigation();

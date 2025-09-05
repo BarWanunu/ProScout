@@ -5,7 +5,7 @@ import { ROLE_META } from "../../../../constants/roles";
 import { FullScreenVideo } from "../../../../components/layout";
 import landingVideo from "../../../../assets/landing.mp4";
 import Logo from "../../../../assets/Logo";
-import "../../styles/LoginStyles/LoginPage.css";
+import "../../../../styles/LoginStyles/LoginPage.css";
 
 export default function LoginPage() {
     const { role } = useParams(); // "player" | "scout" | "team"

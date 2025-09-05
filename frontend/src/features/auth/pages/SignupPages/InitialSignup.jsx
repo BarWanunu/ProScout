@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../../components/common";
 import RoleDropdown from "../../../../components/roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
-import "../../styles/SignupStyles/InitialSignup.css";
+import "../../../../styles/SignupStyles/InitialSignup.css";
 
 export default function InitialSignup() {
   const nav = useNavigate();

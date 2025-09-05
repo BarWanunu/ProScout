@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import "../styles/PlayerSearch.css";  
 
 const statFields = [
   "goals",
@@ -31,7 +32,7 @@ export default function PlayerStatsSearch({ onFiltersChange }) {
   }, [filters, onFiltersChange]);
 
   return (
-    <div className="row g-3 mt-3">
+    <div className="row row-cols-1 row-cols-md-3 g-3 mt-3">
       {statFields.map((field) => (
         <div className="col-md-4 text-black" key={field}>
           <label className="form-label text-capitalize">

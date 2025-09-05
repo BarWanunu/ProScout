@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { TextField, FormStepper, ImagePicker } from "../../../../components/common";
 import useProfileForm from "../../hooks/useProfileForm";
-import "../../styles/SignupStyles/ScoutSignup.css";
+import "../../../../styles/SignupStyles/ScoutSignup.css";
 
 export default function ScoutSignup() {
   const nav = useNavigate();

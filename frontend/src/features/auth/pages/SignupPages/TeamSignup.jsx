@@ -2,7 +2,7 @@ import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { TextField, FormStepper, ImagePicker } from "../../../../components/common";
 import { LEAGUES } from "../../../../constants/leagues";
 import useProfileForm from "../../hooks/useProfileForm";
-import "../../styles/SignupStyles/TeamSignup.css";
+import "../../../../styles/SignupStyles/TeamSignup.css";
 
 export default function TeamSignup() {
   const nav = useNavigate();

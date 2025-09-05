@@ -10,22 +10,23 @@ export default function PlayerSearchPanel({
 }) {
   const [searchMode, setSearchMode] = useState("profile");
 
-  // עדכון ה־parent בכל שינוי במצב החיפוש
   useEffect(() => {
-    if (onSearchModeChange) {
-      onSearchModeChange(searchMode);
-    }
+    onSearchModeChange?.(searchMode);
   }, [searchMode, onSearchModeChange]);
 
   return (
     <div>
       <PlayerSearchToggle onModeChange={setSearchMode} />
 
-      {searchMode === "profile" ? (
-        <PlayerProfileSearch onFiltersChange={onPlayerFiltersChange} />
-      ) : (
-        <PlayerStatsSearch onFiltersChange={onStatsFiltersChange} />
-      )}
+      {/* עטיפה אחידה לשני המצבים */}
+      <div className="player-stats-box p-4">
+        {searchMode === "profile" ? (
+          <PlayerProfileSearch onFiltersChange={onPlayerFiltersChange} />
+        ) : (
+          <PlayerStatsSearch onFiltersChange={onStatsFiltersChange} />
+        )}
+      </div>
     </div>
   );
 }
+
