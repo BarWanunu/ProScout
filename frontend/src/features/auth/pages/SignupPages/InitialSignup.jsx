@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { signupUser } from "../../../../services/signupService";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../../components/common";
 import RoleDropdown from "../../../../components/roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
@@ -18,25 +19,36 @@ export default function InitialSignup() {
     setFadeIn(true);
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!validate()) return;
-    
-    // Animation before navigation
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validate()) return;
+
+  try {
+    // ניסיון קריאה לשרת
+    const { token, user } = await signupUser({
+      email: values.email,
+      username: values.username,
+      password: values.password,
+      role: values.role,
+    });
+
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+
     setFadeIn(false);
-    
-    // Delay navigation slightly for animation
     setTimeout(() => {
-      // push to step‑2 page and carry creds via location.state
-      nav(`/signup/${values.role}`, { 
+      nav(`/signup/${values.role}`, {
         state: {
           email: values.email,
           username: values.username,
           password: values.password,
-        }
+        },
       });
     }, 300);
-  };
+  } catch (error) {
+    alert(error); 
+  }
+};
 
   return (
     <div className={`si-wrapper ${fadeIn ? 'fade-in' : 'fade-out'}`}>
