@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
+import { registerScout } from "../../../services/scoutService";
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/ScoutSignup.css";
@@ -22,10 +23,26 @@ export default function ScoutSignup() {
                          nationality:"", experience:"", image:null }, validate);
   if (!creds) return <Navigate to="/signup" />;
 
-  const submit = e => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!ok()) return;
-    nav("/login/scout",  { state: { justSignedUp: true } });
+
+    const token = localStorage.getItem("token")
+    const payload= {
+      first_name: values.firstName,
+      last_name: values.surname,
+      phone: values.phone,
+      nationality: values.nationality,
+      experience_years: values.experience,
+      image: values.image
+    };
+
+    try {
+      await registerScout(payload, token)
+      nav("/login/scout",  { state: { justSignedUp: true } });
+    } catch (err) {
+      alert(err?.message || "Scout registration failed.")
+    }
   };
 
   return (
@@ -43,7 +60,7 @@ export default function ScoutSignup() {
                    touched={touched.phone} error={errors.phone}/>
         <TextField id="nationality" label="Nationality"
                    value={values.nationality} onChange={onChange}/>
-        <TextField id="experience" label="Experience (years)" type="number"
+        <TextField id="experience" label="Years of Experience" type="number"
                    value={values.experience} onChange={onChange}
                    onBlur={onBlur} touched={touched.experience}
                    error={errors.experience}/>
