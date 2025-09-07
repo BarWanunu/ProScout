@@ -1,8 +1,7 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import PlayerDashboard from '../features/player/pages/PlayerDashboard.jsx';
-import ScoutDashboard from '../features/scout/pages/ScoutDashboard.jsx';
-import TeamDashboard from '../features/team/pages/TeamDashboard.jsx';
+import PlayerDashboard from '../components/player/pages/PlayerDashboard.jsx';
+import ScoutDashboard from '../components/scout/pages/ScoutDashboard.jsx';
+import TeamDashboard from '../components/team/pages/TeamDashboard.jsx';
 
 function DashboardRoutes() {
   return (

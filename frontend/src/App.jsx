@@ -1,5 +1,5 @@
 import { AllRoutes } from './routes';
-import AppLayout from './components/layout/AppLayout';
+import AppLayout from './layout/overallLayout/AppLayout';
 
 function App() {
   return (
