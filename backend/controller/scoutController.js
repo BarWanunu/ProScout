@@ -18,12 +18,12 @@ exports.registerScout = async (req, res) => {
 
     //prettier-ignore
     if (typeof value.experience_years !== "undefined" && value.experience_years !== "") {
-      value.experience_years = parseInt(value.experience_years);
-      if (isNaN(value.experience_years)) {
-        //prettier-ignore
-        return res.status(400).json({ message: "Experience years must be a number" });
+        value.experience_years = parseInt(value.experience_years);
+        if (isNaN(value.experience_years)) {
+          //prettier-ignore
+          return res.status(400).json({ message: "Experience years must be a number" });
+        }
       }
-    }
 
     const { error } = createScoutSchema.validate(value);
     if (error) {
@@ -34,16 +34,16 @@ exports.registerScout = async (req, res) => {
     const phoneExists = await checkFieldExists(scoutModel.findScoutBy, "phone", value.phone);
     //prettier-ignore
     if (phoneExists) {
-          return res.status(403).json({message: 'Phone already in use. please try another phone.'})
-        }
+            return res.status(403).json({message: 'Phone already in use. please try another phone.'})
+          }
 
     if (!checkUserRole(res, req.user, "scout", "register scout")) return;
 
     //prettier-ignore
     if( await checkFieldExists(scoutModel.findScoutBy, "user_id", user_id)) {
-      //prettier-ignore
-      return res.status(400).json({ message: 'A scout profile already exists for this user.' });
-    }
+        //prettier-ignore
+        return res.status(400).json({ message: 'A scout profile already exists for this user.' });
+      }
 
     const newScout = await scoutModel.createScout({ user_id, ...value });
 
