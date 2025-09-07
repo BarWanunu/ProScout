@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/layout/ui";
+} from "../../../../layout/ui";
 import { Button } from "@/layout/ui";
 import { Badge } from "@/layout/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@/layout/ui";

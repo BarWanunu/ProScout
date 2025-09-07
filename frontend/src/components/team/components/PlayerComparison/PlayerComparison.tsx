@@ -28,7 +28,7 @@ import {
   TableRow,
   TableCell,
   Input,
-} from "@/layout/ui";
+} from "../../../../layout/ui";
 import { BarChart2, RefreshCw, Send, Star } from "lucide-react";
 
 // Mock data for players

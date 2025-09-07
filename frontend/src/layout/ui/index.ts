@@ -1,4 +1,4 @@
-// src/layout/ui/index.ts (או index.js)
+// src/layout/ui/index.ts
 export * from "./Card";
 export * from "./Button";
 export * from "./Badge";
@@ -9,4 +9,4 @@ export * from "./Table";
 export * from "./Input";
 export * from "./Progress";
 export * from "./Slider";
-export * from "./Textarea";
+export * from "./TextArea";

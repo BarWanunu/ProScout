@@ -1,13 +1,23 @@
-/* ------------------------------------------------------------------
-   Generic Slider  – no Tailwind colours required
------------------------------------------------------------------- */
 "use client";
 
 import * as React from "react";
-import { cn } from "../../utils/utils";             
-import "./Slider.css";                               
+import { cn } from "../../utils/utils";
+import "./Slider.css";
 
-const Slider = React.forwardRef(
+export interface SliderProps
+  extends Omit<
+    React.HTMLAttributes<HTMLDivElement>,
+    "value" | "defaultValue" | "onChange"
+  > {
+  value?: number[];
+  defaultValue?: number[];
+  min?: number;
+  max?: number;
+  step?: number;
+  onValueChange?: (vals: number[]) => void;
+}
+
+export const Slider = React.forwardRef<HTMLDivElement, SliderProps>(
   (
     {
       value,
@@ -21,24 +31,27 @@ const Slider = React.forwardRef(
     },
     ref
   ) => {
-    /* allow both controlled and uncontrolled use */
-    const [internal, setInternal] = React.useState(value ?? defaultValue);
-    const current = value ?? internal;
+    const [internal, setInternal] = React.useState<number[]>(
+      value ?? defaultValue
+    );
+    const current = (value ?? internal) as number[];
 
-    const handle = (idx, next) => {
+    React.useEffect(() => {
+      if (value) setInternal(value);
+    }, [value?.join(",")]);
+
+    const handle = (idx: number, next: number) => {
       const nextArr = [...current];
       nextArr[idx] = next;
       setInternal(nextArr);
       onValueChange?.(nextArr);
     };
 
-    const pct = (v) => ((v - min) / (max - min)) * 100;
+    const pct = (v: number) => ((v - min) / (max - min)) * 100;
 
     return (
       <div ref={ref} {...rest} className={cn("slider-root", className)}>
-        {/* ── track ── */}
         <div className="slider-track">
-          {/* filled range (single or double) */}
           {current.length === 1 ? (
             <div
               className="slider-fill"
@@ -56,7 +69,6 @@ const Slider = React.forwardRef(
             />
           )}
 
-          {/* invisible <input type="range"> elements */}
           {current.map((val, idx) => (
             <input
               key={idx}
@@ -71,7 +83,6 @@ const Slider = React.forwardRef(
             />
           ))}
 
-          {/* visible thumbs */}
           {current.map((val, idx) => (
             <div
               key={`thumb-${idx}`}
@@ -86,4 +97,3 @@ const Slider = React.forwardRef(
 );
 
 Slider.displayName = "Slider";
-export { Slider };
