@@ -1,0 +1,28 @@
+/* תיבת הרקע – שתהיה זהה בשני המצבים */
+.player-stats-box {
+  background: #e9efff; /* כמו אצלך */
+  border-radius: 12px;
+}
+
+/* שדות זהים לשני המצבים */
+.player-stats-box .form-label {
+  color: #1e293b;
+  font-weight: 600;
+  margin-bottom: 6px;
+  min-height: 24px; /* מייצב גובה כותרת כדי למנוע קפיצות בין עמודות */
+}
+
+.player-stats-box .form-control,
+.player-stats-box .form-select {
+  background-color: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: none;
+}
+
+/* אם יש שדה שובר שורה ארוכה – אל תגלוש */
+.player-stats-box .form-label {
+  line-height: 1.25;
+  word-break: break-word;
+}

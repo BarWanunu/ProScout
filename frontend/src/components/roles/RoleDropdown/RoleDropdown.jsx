@@ -2,7 +2,7 @@ import { useState } from "react";
 import DropdownButton from "./DropdownBtn.jsx";
 import DropdownMenu from "./DropdownMenu.jsx";
 import "./RoleDropdown.css";
-import { ROLE_META } from "../../../constants/roles";
+import { ROLE_META } from "../../../data/roles.js";
 
 // This component is a dropdown for selecting user roles. It displays the currently selected role and allows the user to select a different role from a list. The dropdown is toggled by clicking on the button, and the selected role is passed to the parent component through the onSelect callback.
 

@@ -86,6 +86,22 @@ exports.getTrialsByPlayerId = async (player_id) => {
   }
 };
 
+exports.getTrialsByScoutId = async (scout_id) => {
+  try {
+    const query = `
+      SELECT * FROM trials
+      WHERE scout_id = $1;
+    `;
+    const values = [scout_id];
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to get trials by scout ID: ${err.message}`,
+    };
+  }
+};
 exports.getTrialsByTeamId = async (team_id) => {
   try {
     const query = `
@@ -119,6 +135,21 @@ exports.playerExists = async (player_id) => {
   }
 };
 
+exports.scoutExists = async (scout_id) => {
+  try {
+    const query = `
+      SELECT id FROM scouts WHERE id = $1;
+    `;
+    const values = [scout_id];
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows.length > 0 };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to check scout existence: ${err.message}`,
+    };
+  }
+};
 exports.teamExists = async (team_id) => {
   try {
     const query = `

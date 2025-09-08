@@ -270,3 +270,15 @@ exports.advancedSearchTeams = async (filters, limit = 20) => {
     };
   }
 };
+
+exports.searchScoutsByName = async (name) => {
+  try {
+    const result = await db.query(
+      `SELECT * FROM scouts WHERE first_name ILIKE $1 OR last_name ILIKE $1 OR CONCAT(first_name, ' ', last_name) ILIKE $1`,
+      [`%${name}%`]
+    );
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return { success: false, message: err.message };
+  }
+};
