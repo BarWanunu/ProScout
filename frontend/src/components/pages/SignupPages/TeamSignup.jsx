@@ -17,16 +17,32 @@ export default function TeamSignup() {
     return e;
   };
 
-  const { values, errors, touched, onChange, onBlur, setField, validate: ok } =
-    useProfileForm({ name: "", league: "", country: "", formation: "", stadium: "", logo: null }, validate);
+  const {
+    values,
+    errors,
+    touched,
+    onChange,
+    onBlur,
+    setField,
+    validate: ok,
+  } = useProfileForm(
+    {
+      name: "",
+      league: "",
+      country: "",
+      formation: "",
+      stadium: "",
+      logo: null,
+    },
+    validate
+  );
 
   if (!creds) return <Navigate to="/signup" />;
 
-  // עדכון ליגה: גם select יתעדכן וגם country
-  const onLeagueChange = (e) => {
-    onChange(e); // יעדכן values.league
-    const leagueId = String(e.target.value);
-    const l = LEAGUES.find((x) => String(x.id) === leagueId);
+  const onLeague = (e) => {
+    const league = e.target.value;
+    const l = LEAGUES.find((l) => l.id === league);
+    setField("league", league);
     setField("country", l ? l.country : "");
   };
 
@@ -34,7 +50,9 @@ export default function TeamSignup() {
     e.preventDefault();
     if (!ok()) return;
 
-    const leagueObj = LEAGUES.find((l) => String(l.id) === String(values.league));
+    const leagueObj = LEAGUES.find(
+      (l) => String(l.id) === String(values.league)
+    );
     const leagueToSend = leagueObj ? leagueObj.label : values.league;
 
     const payload = {
@@ -48,7 +66,7 @@ export default function TeamSignup() {
     };
 
     try {
-      await registerTeam(payload); // ❌ בלי token
+      await registerTeam(payload);
       nav("/login/team", { state: { justSignedUp: true } });
     } catch (err) {
       alert(err?.message || "Team registration failed.");
@@ -57,8 +75,10 @@ export default function TeamSignup() {
 
   return (
     <div className="ts-wrapper">
-      <h1 className="ts-headline">Team Profile</h1>
+      {" "}
+      <h1 className="ts-headline">Team Profile</h1>{" "}
       <form className="ts-form" onSubmit={submit}>
+        {" "}
         <TextField
           id="name"
           label="Team Name"
@@ -67,27 +87,33 @@ export default function TeamSignup() {
           onBlur={onBlur}
           touched={touched.name}
           error={errors.name}
-        />
-
-        <label>League</label>
+        />{" "}
+        <label>League</label>{" "}
         <select
-          id="league"
           name="league"
           value={values.league}
-          onChange={onLeagueChange}
+          onChange={onChange}
+          onClick={onLeague}
           onBlur={onBlur}
         >
-          <option value="">Select league</option>
+          {" "}
+          <option value="">Select league</option>{" "}
           {LEAGUES.map((l) => (
-            <option key={l.id} value={String(l.id)}>
+            <option key={l.id} value={l.id}>
               {l.label}
             </option>
-          ))}
-        </select>
-        {touched.league && errors.league && <span className="error-message">{errors.league}</span>}
-
-        <TextField id="country" label="Country" value={values.country} onChange={onChange} readOnly />
-
+          ))}{" "}
+        </select>{" "}
+        {touched.league && errors.league && (
+          <span className="error-message">{errors.league}</span>
+        )}{" "}
+        <TextField
+          id="country"
+          label="Country"
+          value={values.country}
+          onChange={onChange}
+          readOnly
+        />{" "}
         <TextField
           id="formation"
           label="Playing Formation (4-3-3...)"
@@ -96,8 +122,7 @@ export default function TeamSignup() {
           onBlur={onBlur}
           touched={touched.formation}
           error={errors.formation}
-        />
-
+        />{" "}
         <TextField
           id="stadium"
           label="Stadium"
@@ -106,13 +131,16 @@ export default function TeamSignup() {
           onBlur={onBlur}
           touched={touched.stadium}
           error={errors.stadium}
-        />
-
-        <ImagePicker id="logo" label="Team Logo" value={values.logo} onChange={(file) => setField("logo", file)} />
-
-        <button className="ts-submit">Finish Sign Up</button>
-        <FormStepper step={1} />
-      </form>
+        />{" "}
+        <ImagePicker
+          id="logo"
+          label="Team Logo"
+          value={values.logo}
+          onChange={(file) => setField("logo", file)}
+        />{" "}
+        <button className="ts-submit">Finish Sign Up</button>{" "}
+        <FormStepper step={1} />{" "}
+      </form>{" "}
     </div>
   );
 }
