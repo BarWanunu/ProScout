@@ -14,7 +14,7 @@ export default function LoginPage() {
   const meta = ROLE_META[role];
   const nav  = useNavigate();
   const { login, DASHBOARD_BY_ROLE } = useAuth();
-
+const [leaving, setLeaving] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]     = useState("");
@@ -38,12 +38,15 @@ export default function LoginPage() {
         hasFullProfile: prevHasFull,
       });
 
-      if (prevHasFull) {
-        const target = DASHBOARD_BY_ROLE[user.role] || `/${user.role}-dashboard`;
-        nav(target, { replace: true });
-      } else {
-        nav(`/signup/${user.role}`, { replace: true, state: { email } });
-      }
+      setLeaving(true);
+      setTimeout(() => {
+        if (prevHasFull) {
+          const target = DASHBOARD_BY_ROLE[user.role] || `/${user.role}-dashboard`;
+          nav(target, { replace: true });
+        } else {
+          nav(`/signup/${user.role}`, { replace: true, state: { email } });
+        }
+      }, 220)
     } catch (err) {
       const msg = err.response?.data?.message || "Login failed. Please try again.";
       setError(msg);
@@ -51,7 +54,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="login-page">
+    <div className={`login-page ${leaving ? "fade-out-page" : ""}`}>
       <div className="bg-wrapper">
         <FullScreenVideo src={landingVideo} />
         <div className="overlay">
