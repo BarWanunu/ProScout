@@ -1,10 +1,9 @@
 // services/scoutServices.js
-import axios from "axios";
+import { http } from "../http";
 
-const API_BASE = "http://localhost:3000/api/scout";
-
-export async function registerScout(scoutData, token) {
+export async function registerScout(scoutData) {
   const fd = new FormData();
+
   fd.append("first_name", scoutData.first_name);
   fd.append("last_name", scoutData.last_name);
   fd.append("phone", scoutData.phone);
@@ -21,9 +20,7 @@ export async function registerScout(scoutData, token) {
   if (imgFile) fd.append("image", imgFile);
 
   try {
-    const res = await axios.post(API_BASE, fd, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const res = await http.post("/api/scout", fd);
     return res.data;
   } catch (err) {
     console.error("registerScout error:", err.response?.data || err.message);
