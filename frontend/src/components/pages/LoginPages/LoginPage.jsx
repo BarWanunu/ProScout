@@ -7,11 +7,13 @@ import { FullScreenVideo } from "../../../layout/overallLayout";
 import landingVideo from "../../../assets/landing.mp4";
 import Logo from "../../../assets/Logo";
 import "../../../styles/LoginPage.css";
+import { useAuth } from '../../../auth/AuthContext'
 
 export default function LoginPage() {
     const { role } = useParams(); // "player" | "scout" | "team"
     const meta = ROLE_META[role];
     const nav  = useNavigate();
+    const {login, DASHBOARD_BY_ROLE} = useAuth();
     const [email, setEmail]       = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("")
@@ -30,15 +32,15 @@ export default function LoginPage() {
 
             const {token, user} = res.data
 
-            localStorage.setItem("token", token)
-            localStorage.setItem("userRole", user.role)
-            localStorage.setItem("userId", user.id)
+            login({
+              token, 
+              role: user.role,
+              hasFullProfile: true
+            })
 
-            if(user.role === "scout" || "player" || "team") {
-                nav(`/${user.role}-dashboard`)
-            } else {
-                setError("Unknnown role")
-            }
+            const target = DASHBOARD_BY_ROLE[user.role] || `/${user.role}-dashboard`
+            nav(target, {replace: true})
+          
         } catch (err) {
             const msg= err.respose?.data?.message || "Login failed. Please try again."
             setError(msg)
