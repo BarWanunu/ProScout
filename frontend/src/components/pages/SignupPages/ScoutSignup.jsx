@@ -1,47 +1,48 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { registerScout } from "../../../services/scoutService";
+import { registerScout } from "@/services/scoutService"; 
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/ScoutSignup.css";
 
 export default function ScoutSignup() {
   const nav = useNavigate();
-  const { state:creds } = useLocation();
+  const { state: creds } = useLocation();
 
-  /* ---------- form ---------- */
-  const validate = v => {
+  const validate = (v) => {
     const e = {};
     if (!v.firstName) e.firstName = "Required";
-    if (!v.surname)   e.surname   = "Required";
-    if (!v.phone)     e.phone     = "Phone required";
+    if (!v.surname) e.surname = "Required";
+    if (!v.phone) e.phone = "Phone required";
     if (!v.experience || v.experience < 0) e.experience = "Years?";
     return e;
   };
 
-  const { values, errors, touched, onChange, onBlur, setField, validate:ok }
-      = useProfileForm({ firstName:"", surname:"", phone:"",
-                         nationality:"", experience:"", image:null }, validate);
+  const { values, errors, touched, onChange, onBlur, setField, validate: ok } =
+    useProfileForm(
+      { firstName: "", surname: "", phone: "", nationality: "", experience: "", image: null },
+      validate
+    );
+
   if (!creds) return <Navigate to="/signup" />;
 
   const submit = async (e) => {
     e.preventDefault();
     if (!ok()) return;
 
-    const token = localStorage.getItem("token")
-    const payload= {
+    const payload = {
       first_name: values.firstName,
       last_name: values.surname,
       phone: values.phone,
       nationality: values.nationality,
       experience_years: values.experience,
-      image: values.image
+      image: values.image,
     };
 
     try {
-      await registerScout(payload, token)
-      nav("/login/scout",  { state: { justSignedUp: true } });
+      await registerScout(payload); // ❌ בלי token
+      nav("/login/scout", { state: { justSignedUp: true } });
     } catch (err) {
-      alert(err?.message || "Scout registration failed.")
+      alert(err?.message || "Scout registration failed.");
     }
   };
 
@@ -49,26 +50,47 @@ export default function ScoutSignup() {
     <div className="ss-wrapper">
       <h1 className="ss-headline">Scout Profile</h1>
       <form className="ss-form" onSubmit={submit}>
-        <TextField id="firstName" label="First Name"  value={values.firstName}
-                   onChange={onChange} onBlur={onBlur}
-                   touched={touched.firstName} error={errors.firstName}/>
-        <TextField id="surname"   label="Surname"    value={values.surname}
-                   onChange={onChange} onBlur={onBlur}
-                   touched={touched.surname} error={errors.surname}/>
-        <TextField id="phone"     label="Phone"      value={values.phone}
-                   onChange={onChange} onBlur={onBlur}
-                   touched={touched.phone} error={errors.phone}/>
-        <TextField id="nationality" label="Nationality"
-                   value={values.nationality} onChange={onChange}/>
-        <TextField id="experience" label="Years of Experience" type="number"
-                   value={values.experience} onChange={onChange}
-                   onBlur={onBlur} touched={touched.experience}
-                   error={errors.experience}/>
-        <ImagePicker id="image" label="Profile Image"
-                     value={values.image}
-                     onChange={file => setField("image", file)} />
+        <TextField
+          id="firstName"
+          label="First Name"
+          value={values.firstName}
+          onChange={onChange}
+          onBlur={onBlur}
+          touched={touched.firstName}
+          error={errors.firstName}
+        />
+        <TextField
+          id="surname"
+          label="Surname"
+          value={values.surname}
+          onChange={onChange}
+          onBlur={onBlur}
+          touched={touched.surname}
+          error={errors.surname}
+        />
+        <TextField
+          id="phone"
+          label="Phone"
+          value={values.phone}
+          onChange={onChange}
+          onBlur={onBlur}
+          touched={touched.phone}
+          error={errors.phone}
+        />
+        <TextField id="nationality" label="Nationality" value={values.nationality} onChange={onChange} />
+        <TextField
+          id="experience"
+          label="Years of Experience"
+          type="number"
+          value={values.experience}
+          onChange={onChange}
+          onBlur={onBlur}
+          touched={touched.experience}
+          error={errors.experience}
+        />
+        <ImagePicker id="image" label="Profile Image" value={values.image} onChange={(file) => setField("image", file)} />
         <button className="ss-submit">Finish Sign Up</button>
-        <FormStepper step={1}/>
+        <FormStepper step={1} />
       </form>
     </div>
   );

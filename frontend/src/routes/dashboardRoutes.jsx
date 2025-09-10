@@ -3,8 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import PlayerDashboard from '../components/player/pages/PlayerDashboard.jsx';
 import ScoutDashboard from '../components/scout/pages/ScoutDashboard.jsx';
 import TeamDashboard from '../components/team/pages/TeamDashboard.jsx';
-
-import { RequireAuth, RequireFullProfile } from "../auth/AuthContext.jsx";
+import { RequireAuth, RequireFullProfile } from "../auth/RouteGuards.jsx";
 
 export default function DashboardRoutes() {
   return (

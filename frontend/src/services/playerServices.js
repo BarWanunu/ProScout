@@ -1,5 +1,4 @@
-// services/playerServices.js
-import { http } from "../http";
+import { http } from "../api/http";
 
 export const registerPlayer = async (profileData) => {
   const fd = new FormData();

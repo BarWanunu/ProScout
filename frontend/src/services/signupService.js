@@ -1,4 +1,4 @@
-import { http } from "../http";
+import { http } from "../api/http";
 
 export const signupUser = async ({ email, username, password, role }) => {
   try {

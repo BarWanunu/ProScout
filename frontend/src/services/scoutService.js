@@ -1,5 +1,4 @@
-// services/scoutServices.js
-import { http } from "../http";
+import { http } from "../api/http";
 
 export async function registerScout(scoutData) {
   const fd = new FormData();

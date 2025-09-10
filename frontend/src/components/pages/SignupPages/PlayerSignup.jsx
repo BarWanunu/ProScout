@@ -1,10 +1,10 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 //prettuer-ignore
-import {TextField, FormStepper, ImagePicker,FilePicker,} from "../../../layout/common";
+import { TextField, FormStepper, ImagePicker, FilePicker } from "../../../layout/common";
 import { POSITIONS } from "../../../data/positions";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/PlayerSignup.css";
-import { registerPlayer } from "../../../services/playerServices";
+import { registerPlayer } from "@/services/playerServices";
 
 export default function PlayerSignup() {
   const nav = useNavigate();
@@ -20,66 +20,55 @@ export default function PlayerSignup() {
     return e;
   };
 
-  const {
-    values,
-    errors,
-    touched,
-    onChange,
-    onBlur,
-    setField,
-    validate: ok,
-  } = useProfileForm(
-    {
-      firstName: "",
-      lastName: "",
-      fullName: "",
-      team: "",
-      kit: "",
-      position: "",
-      age: "",
-      height: "",
-      weight: "",
-      nationality: "",
-      birth: "",
-      image: null,
-      video: null,
-    },
-    validate
-  );
+  const { values, errors, touched, onChange, onBlur, setField, validate: ok } =
+    useProfileForm(
+      {
+        firstName: "",
+        lastName: "",
+        fullName: "",
+        team: "",
+        kit: "",
+        position: "",
+        age: "",
+        height: "",
+        weight: "",
+        nationality: "",
+        birth: "",
+        image: null,
+        video: null,
+      },
+      validate
+    );
 
   if (!creds) return <Navigate to="/signup" />;
 
- const submit = async (e) => {
-  e.preventDefault();
-  if (!ok()) return;
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!ok()) return;
 
-  const token = localStorage.getItem("token"); // כמו אצלך
+    const profileData = {
+      name: values.fullName,
+      first_name: values.firstName,
+      last_name: values.lastName,
+      age: values.age,
+      club: values.team,
+      number: values.kit,
+      position: values.position,
+      height: values.height,
+      weight: values.weight,
+      nationality: values.nationality,
+      birthdate: values.birth,
+      photo: values.image,
+      video: values.video,
+    };
 
-  // מיפוי מה-state הקיים שלך לשמות שהבקאנד מצפה להם
-  const profileData = {
-    name: values.fullName,
-    first_name: values.firstName,
-    last_name: values.lastName,
-    age: values.age,
-    club: values.team,
-    number: values.kit,
-    position: values.position,
-    height: values.height,        
-    weight: values.weight,        
-    nationality: values.nationality,
-    birthdate: values.birth,     
-    photo: values.image,         
-    video: values.video,         
+    try {
+      await registerPlayer(profileData); // ❌ בלי token
+      nav("/login/player", { state: { justSignedUp: true } });
+    } catch (err) {
+      alert(err?.message || "Registration failed.");
+    }
   };
-
-  try {
-    await registerPlayer(profileData, token);
-    nav("/login/player", { state: { justSignedUp: true } });
-  } catch (err) {
-    // נראה הודעה מדויקת אם השרת מחזיר message
-    alert(err?.message || "Registration failed.");
-  }
-};
 
   return (
     <div className="ps-wrapper">
@@ -125,7 +114,7 @@ export default function PlayerSignup() {
           onBlur={onBlur}
           touched={touched.age}
           error={errors.age}
-          placeholder="16‑45"
+          placeholder="16-45"
         />
 
         <TextField
@@ -145,12 +134,7 @@ export default function PlayerSignup() {
         />
 
         <label>Position</label>
-        <select
-          name="position"
-          value={values.position}
-          onChange={onChange}
-          onBlur={onBlur}
-        >
+        <select name="position" value={values.position} onChange={onChange} onBlur={onBlur}>
           <option value="">Select position</option>
           {POSITIONS.map((p) => (
             <option key={p} value={p}>
@@ -163,43 +147,15 @@ export default function PlayerSignup() {
         )}
 
         <div className="grid-two">
-          <TextField
-            id="height"
-            label="Height (cm)"
-            type="number"
-            value={values.height}
-            onChange={onChange}
-          />
-          <TextField
-            id="weight"
-            label="Weight (kg)"
-            type="number"
-            value={values.weight}
-            onChange={onChange}
-          />
+          <TextField id="height" label="Height (cm)" type="number" value={values.height} onChange={onChange} />
+          <TextField id="weight" label="Weight (kg)" type="number" value={values.weight} onChange={onChange} />
         </div>
 
-        <TextField
-          id="nationality"
-          label="Nationality"
-          value={values.nationality}
-          onChange={onChange}
-        />
+        <TextField id="nationality" label="Nationality" value={values.nationality} onChange={onChange} />
 
-        <TextField
-          id="birth"
-          label="Birth Date"
-          type="date"
-          value={values.birth}
-          onChange={onChange}
-        />
+        <TextField id="birth" label="Birth Date" type="date" value={values.birth} onChange={onChange} />
 
-        <ImagePicker
-          id="image"
-          label="Profile Image"
-          value={values.image}
-          onChange={(file) => setField("image", file)}
-        />
+        <ImagePicker id="image" label="Profile Image" value={values.image} onChange={(file) => setField("image", file)} />
 
         <FilePicker
           id="video"

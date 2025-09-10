@@ -42,7 +42,7 @@ export default function LoginPage() {
             nav(target, {replace: true})
           
         } catch (err) {
-            const msg= err.respose?.data?.message || "Login failed. Please try again."
+            const msg= err.response?.data?.message || "Login failed. Please try again."
             setError(msg)
         }
     }; 

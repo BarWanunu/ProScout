@@ -1,5 +1,4 @@
-// services/teamServices.js
-import { http } from "../http";
+import { http } from "../api/http";
 
 export async function registerTeam(teamData) {
   const fd = new FormData();
