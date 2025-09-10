@@ -1,116 +1,101 @@
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { ArrowLeftIcon } from "lucide-react";
 import { ROLE_META } from "../../../data/roles";
 import { FullScreenVideo } from "../../../layout/overallLayout";
 import landingVideo from "../../../assets/landing.mp4";
 import Logo from "../../../assets/Logo";
 import "../../../styles/LoginPage.css";
-import { useAuth } from '../../../auth/AuthContext'
+import { useAuth } from "../../../auth/AuthContext";
 
 export default function LoginPage() {
-    const { role } = useParams(); // "player" | "scout" | "team"
-    const meta = ROLE_META[role];
-    const nav  = useNavigate();
-    const {login, DASHBOARD_BY_ROLE} = useAuth();
-    const [email, setEmail]       = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("")
+  const { role } = useParams();
+  const meta = ROLE_META[role];
+  const nav  = useNavigate();
+  const { login, DASHBOARD_BY_ROLE } = useAuth();
 
-    if (!meta) return <Navigate to="/" replace />;  // unknown role → landing
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError]     = useState("");
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError("")
+  if (!meta) return <Navigate to="/" replace />;
 
-        try {
-            const res = await axios.post("http://localhost:3000/api/login", {
-                email, 
-                password
-            })
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
 
-            const {token, user} = res.data
+    try {
+      const res = await axios.post("http://localhost:3000/api/login", { email, password });
+      const { token, user } = res.data;
 
-            login({
-              token, 
-              role: user.role,
-              hasFullProfile: true
-            })
+      // קוראים את הדגל הקיים (מתעדכן רק אחרי הרשמת Player/Scout/Team)
+      const prevHasFull = localStorage.getItem("hasFullProfile") === "true";
 
-            const target = DASHBOARD_BY_ROLE[user.role] || `/${user.role}-dashboard`
-            nav(target, {replace: true})
-          
-        } catch (err) {
-            const msg= err.response?.data?.message || "Login failed. Please try again."
-            setError(msg)
-        }
-    }; 
+      login({
+        token,
+        role: user.role,
+        hasFullProfile: prevHasFull,
+      });
 
-    return (
-  <div className="login-page">
-    <div className="bg-wrapper">
-      <FullScreenVideo src={landingVideo} />
-      <div className="overlay">
-        {/* Header */}
-        <header className="header">
-          <button onClick={() => nav("/")} className="header__back">
-            <ArrowLeftIcon className="h-5 w-5" />
-            <span>&nbsp;Back</span>
-          </button>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Logo className="h-10 w-10" />
-            <h1 className="header__title">ProScout</h1>
-          </div>
-          <div style={{ width: "6rem" }} />
-        </header>
+      if (prevHasFull) {
+        const target = DASHBOARD_BY_ROLE[user.role] || `/${user.role}-dashboard`;
+        nav(target, { replace: true });
+      } else {
+        nav(`/signup/${user.role}`, { replace: true, state: { email } });
+      }
+    } catch (err) {
+      const msg = err.response?.data?.message || "Login failed. Please try again.";
+      setError(msg);
+    }
+  };
 
-        {/* Main */}
-        <main className="main">
-          <div className="form-wrap">
-            <div className="form-icon" style={{ background: meta.accent }}>
-              {<meta.icon className="text-white h-8 w-8" />}
+  return (
+    <div className="login-page">
+      <div className="bg-wrapper">
+        <FullScreenVideo src={landingVideo} />
+        <div className="overlay">
+          <header className="header">
+            <button onClick={() => nav("/")} className="header__back">
+              <ArrowLeftIcon className="h-5 w-5" />
+              <span>&nbsp;Back</span>
+            </button>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Logo className="h-10 w-10" />
+              <h1 className="header__title">ProScout</h1>
             </div>
-            <h2 className="form-title">{meta.label} Login</h2>
+            <div style={{ width: "6rem" }} />
+          </header>
 
-            <form onSubmit={handleLogin} style={{ display: "grid", gap: "1rem" }}>
-              <div>
-                <label className="label">Email</label>
-                <input
-                  className="input"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+          <main className="main">
+            <div className="form-wrap">
+              <div className="form-icon" style={{ background: meta.accent }}>
+                {<meta.icon className="text-white h-8 w-8" />}
               </div>
+              <h2 className="form-title">{meta.label} Login</h2>
 
-              <div>
-                <label className="label">Password</label>
-                <input
-                  className="input"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-
-              {error && (
-                <div style={{ color: "red", textAlign: "center", fontSize: "0.9rem" }}>
-                  {error}
+              <form onSubmit={handleLogin} style={{ display: "grid", gap: "1rem" }}>
+                <div>
+                  <label className="label">Email</label>
+                  <input className="input" type="email" value={email}
+                         onChange={(e) => setEmail(e.target.value)} required />
                 </div>
-              )}
+                <div>
+                  <label className="label">Password</label>
+                  <input className="input" type="password" value={password}
+                         onChange={(e) => setPassword(e.target.value)} required />
+                </div>
 
-              <button className="btn" style={{ background: meta.accent }}>
-                Sign In
-              </button>
-            </form>
-          </div>
-        </main>
+                {error && <div style={{ color: "red", textAlign: "center", fontSize: "0.9rem" }}>{error}</div>}
+
+                <button className="btn" style={{ background: meta.accent }}>
+                  Sign In
+                </button>
+              </form>
+            </div>
+          </main>
+        </div>
       </div>
     </div>
-  </div>
-);
-
+  );
 }

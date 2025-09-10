@@ -67,6 +67,7 @@ export default function TeamSignup() {
 
     try {
       await registerTeam(payload);
+            localStorage.setItem("hasFullProfile", "true"); 
       nav("/login/team", { state: { justSignedUp: true } });
     } catch (err) {
       alert(err?.message || "Team registration failed.");
