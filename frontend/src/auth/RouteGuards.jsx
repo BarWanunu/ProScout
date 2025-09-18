@@ -6,14 +6,13 @@ export function RequireAuth({ children }) {
   const { token, hydrating } = useAuth();
   const location = useLocation();
   if (hydrating) return null;
-  if (!token) return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!token) return <Navigate to="/" state={{ from: location }} replace />;
   return children;
 }
 
 export function RequireFullProfile({ children }) {
-  const { hasFullProfile, hydrating } = useAuth();
+  const { hydrating } = useAuth();
   if (hydrating) return null;
-  if (!hasFullProfile) return <Navigate to="/signup" replace />;
   return children;
 }
 

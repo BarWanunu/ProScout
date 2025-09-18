@@ -33,26 +33,24 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await SignupService.login({ email, password });
-      console.log("Login Success:", res)
-      console.log(res.user.role);
-      
-
-      const prevHasFull = localStorage.getItem("hasFullProfile") === "true";
+      const res = await SignupService.login({ email, password })
 
       login({
         token: res.token,
         role: res.user.role,
         id: res.user.id,
-        hasFullProfile: prevHasFull,
+        hasFullProfile: res.hasFullProfile || false
       });
-
+      
+      console.log(res.hasFullProfile);
+        
       setLeaving(true);
       setTimeout(() => {
-        if (prevHasFull) {
+        if (res.hasFullProfile) {
           const target = DASHBOARD_BY_ROLE?.[res.user.role] ?? `/${res.user.role}-dashboard`;
           nav(target, { replace: true });
         } else {
+          alert(`You must complete your ${res.user.role} profile before.`)
           nav(`/signup/${res.user.role}`, { replace: true, state: { email } });
         }
       }, 220);

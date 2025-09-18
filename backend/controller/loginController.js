@@ -26,19 +26,14 @@ exports.loginUser = async (req, res) => {
 
     try {
       const profile = await fetchUserProfile(userData);
-
-      if (!profile) {
-        return res.status(403).json({
-          message: `User must complete ${userData.role} profile before logging in.`,
-        });
-      }
-
       const token = generateAuthToken(userData);
+      const hasFullProfile = Boolean(profile);
 
       res.status(200).json({
         message: "Login Successful.",
         user: userData,
         token,
+        hasFullProfile,
       });
     } catch (err) {
       return res.status(403).json({
