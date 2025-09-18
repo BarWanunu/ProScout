@@ -1,4 +1,5 @@
 // Export all route components from a single file
+import { useLocation } from 'react-router-dom';
 import AuthRoutes from './authRoutes';
 import DashboardRoutes from './dashboardRoutes';
 

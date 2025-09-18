@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {  SignupService } from "../../../api/services/signupServices";
+import { SignupService } from "../../../api/services/signupServices";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../layout/common";
 import RoleDropdown from "../../roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
@@ -11,10 +11,8 @@ import "../../../styles/Signup/InitialSignup.css";
 export default function InitialSignup() {
   const nav = useNavigate();
   const { values, errors, touched, isValid, onChange, onBlur, selectRole, validate } = useSignupForm();
-  // Animation state
   const [fadeIn, setFadeIn] = useState(false);
 
-  // Animate on mount
   useEffect(() => {
     setFadeIn(true);
   }, []);
@@ -24,7 +22,7 @@ const handleSubmit = async (e) => {
   if (!validate()) return;
 
   try {
-    const { token, user } = await SignupService({
+    const { token, user } = await SignupService.signupInitial({
       email: values.email,
       username: values.username,
       password: values.password,

@@ -3,29 +3,23 @@ import React, {createContext, useCallback, useContext, useEffect, useMemo, useSt
 
 const AuthContext = createContext(null);
 
-const TOKEN_KEY = "token";
-const ROLE_KEY = "role";
 const FULL_KEY = "hasFullProfile";
 
 export function AuthProvider({ children }) {
+  const [id, setId] = useState(() => localStorage.getItem("id") || null);
   const [token, setToken] = useState(
-    () => localStorage.getItem(TOKEN_KEY) || ""
+    () => localStorage.getItem("token") || ""
   );
-  const [role, setRole] = useState(() => localStorage.getItem(ROLE_KEY) || "");
+  const [role, setRole] = useState(() => localStorage.getItem("role") || "");
   const [hasFullProfile, setHasFullProfile] = useState(
     () => localStorage.getItem(FULL_KEY) === "true"
   );
 
   const login = useCallback(
-    ({ token: t, role: r, hasFullProfile: full = false }) => {
-      if (t) {
-        localStorage.setItem(TOKEN_KEY, t);
-        setToken(t);
-      }
-      if (r) {
-        localStorage.setItem(ROLE_KEY, r);
-        setRole(r);
-      }
+    ({ token: t, role: r, id:uid, hasFullProfile: full = false }) => {
+      if (t) {localStorage.setItem("token", t);setToken(t);}
+      if (r) {localStorage.setItem("role", r);setRole(r);}
+      if(uid) {localStorage.setItem("id", uid); setId(uid)}
       localStorage.setItem(FULL_KEY, String(Boolean(full)));
       setHasFullProfile(Boolean(full));
     },
@@ -33,8 +27,8 @@ export function AuthProvider({ children }) {
   );
 
   const logout = useCallback(() => {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(ROLE_KEY);
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
     localStorage.removeItem(FULL_KEY);
     setToken("");
     setRole("");
@@ -48,7 +42,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const onStorage = (e) => {
-      if (e.key === TOKEN_KEY && !e.newValue) {
+      if (e.key === "token" && !e.newValue) {
         logout();
       }
     };
@@ -57,8 +51,8 @@ export function AuthProvider({ children }) {
   }, [logout]);
 
   const value = useMemo(
-    () => ({ token, role, hasFullProfile, login, logout, markFullProfile }),
-    [token, role, hasFullProfile, login, logout, markFullProfile]
+    () => ({ token, role,id,  hasFullProfile, login, logout, markFullProfile }),
+    [token, role,id, hasFullProfile,  login, logout, markFullProfile]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

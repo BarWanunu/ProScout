@@ -44,7 +44,7 @@ export const registerPlayer = async (profileData) => {
   if (videoFile) fd.append("video", videoFile);
 
   try {
-    const res = await http.post("/api/player", fd);
+    const res = await http.post("/player", fd);
     return res.data;
   } catch (err) {
     console.error("registerPlayer error:", err.response?.data || err.message);

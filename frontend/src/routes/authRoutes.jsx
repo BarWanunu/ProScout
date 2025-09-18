@@ -1,7 +1,6 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from '../components/pages/LandingPage'
-import LoginPage from '../components/pages/LoginPages/LoginPage';
+import LoginPage from '../components/pages/LoginPage';
 import { InitialSignup, PlayerSignup, ScoutSignup, TeamSignup } from '../components/pages/SignupPages'
 
 function AuthRoutes() {

@@ -134,7 +134,7 @@ exports.getScoutById = async (req, res) => {
   const scoutId = req.params.id;
 
   try {
-    const scout = await scoutModel.findScoutBy("id", scoutId);
+    const scout = await scoutModel.findScoutBy("user_id", scoutId);
 
     if (!scout.success || !scout.data) {
       return res.status(404).json({ message: "Scout not found." });

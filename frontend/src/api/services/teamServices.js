@@ -19,7 +19,7 @@ export async function registerTeam(teamData) {
   if (logoFile) fd.append("logo", logoFile);
 
   try {
-    const res = await http.post("/api/team", fd);
+    const res = await http.post("/team", fd);
     return res.data;
   } catch (err) {
     console.error("registerTeam error:", err.response?.data || err.message);
