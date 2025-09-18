@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../../../services/signupService";
+import {  SignupService } from "../../../api/services/signupServices";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../layout/common";
 import RoleDropdown from "../../roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
@@ -24,8 +24,7 @@ const handleSubmit = async (e) => {
   if (!validate()) return;
 
   try {
-    // ניסיון קריאה לשרת
-    const { token, user } = await signupUser({
+    const { token, user } = await SignupService({
       email: values.email,
       username: values.username,
       password: values.password,

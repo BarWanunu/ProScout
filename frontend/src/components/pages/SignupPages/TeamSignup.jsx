@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { registerTeam } from "@/services/teamServices";
+import { registerTeam } from "@/api/services/teamServices";
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import { LEAGUES } from "../../../data/leagues";
 import useProfileForm from "../../hooks/useProfileForm";

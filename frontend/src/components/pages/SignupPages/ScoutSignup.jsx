@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { registerScout } from "@/services/scoutService";
+import { registerScout } from "@/api/services/scoutServices";
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/ScoutSignup.css";

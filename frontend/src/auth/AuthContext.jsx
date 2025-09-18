@@ -1,45 +1,71 @@
-// auth/AuthContext.jsx
-import React, { createContext, useContext, useEffect, useState } from "react";
+//prettier-ignore
+import React, {createContext, useCallback, useContext, useEffect, useMemo, useState,} from "react";
 
-const AuthCtx = createContext(null);
-export const useAuth = () => useContext(AuthCtx);
+const AuthContext = createContext(null);
 
-const DASHBOARD_BY_ROLE = {
-  player: "/player-dashboard",
-  scout:  "/scout-dashboard",
-  team:   "/team-dashboard",
-};
+const TOKEN_KEY = "token";
+const ROLE_KEY = "role";
+const FULL_KEY = "hasFullProfile";
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(null);
-  const [role, setRole] = useState(null);
-  const [hasFullProfile, setHasFullProfile] = useState(false);
-  const [hydrating, setHydrating] = useState(true);
+  const [token, setToken] = useState(
+    () => localStorage.getItem(TOKEN_KEY) || ""
+  );
+  const [role, setRole] = useState(() => localStorage.getItem(ROLE_KEY) || "");
+  const [hasFullProfile, setHasFullProfile] = useState(
+    () => localStorage.getItem(FULL_KEY) === "true"
+  );
 
-  useEffect(() => {
-    const t = localStorage.getItem("token");
-    const r = localStorage.getItem("role");
-    const h = localStorage.getItem("hasFullProfile");
-    if (t) setToken(t);
-    if (r) setRole(r);
-    if (h != null) setHasFullProfile(h === "true");
-    setHydrating(false);
+  const login = useCallback(
+    ({ token: t, role: r, hasFullProfile: full = false }) => {
+      if (t) {
+        localStorage.setItem(TOKEN_KEY, t);
+        setToken(t);
+      }
+      if (r) {
+        localStorage.setItem(ROLE_KEY, r);
+        setRole(r);
+      }
+      localStorage.setItem(FULL_KEY, String(Boolean(full)));
+      setHasFullProfile(Boolean(full));
+    },
+    []
+  );
+
+  const logout = useCallback(() => {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(ROLE_KEY);
+    localStorage.removeItem(FULL_KEY);
+    setToken("");
+    setRole("");
+    setHasFullProfile(false);
   }, []);
 
-  const login = ({ token: t, role: r, hasFullProfile: h }) => {
-    setToken(t); setRole(r); setHasFullProfile(!!h);
-    localStorage.setItem("token", t);
-    localStorage.setItem("role", r);
-    localStorage.setItem("hasFullProfile", (!!h).toString());
-  };
+  const markFullProfile = useCallback(() => {
+    localStorage.setItem(FULL_KEY, "true");
+    setHasFullProfile(true);
+  }, []);
 
-  const logout = () => {
-    setToken(null); setRole(null); setHasFullProfile(false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    localStorage.removeItem("hasFullProfile");
-  };
+  useEffect(() => {
+    const onStorage = (e) => {
+      if (e.key === TOKEN_KEY && !e.newValue) {
+        logout();
+      }
+    };
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, [logout]);
 
-  const value = { token, role, hasFullProfile, hydrating, login, logout, DASHBOARD_BY_ROLE };
-  return <AuthCtx.Provider value={value}>{children}</AuthCtx.Provider>;
+  const value = useMemo(
+    () => ({ token, role, hasFullProfile, login, logout, markFullProfile }),
+    [token, role, hasFullProfile, login, logout, markFullProfile]
+  );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+}
+
+export function useAuth() {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within <AuthProvider>");
+  return ctx;
 }
