@@ -2,11 +2,9 @@ import { Button, Row, Col, Container } from "react-bootstrap";
 import scoutImage from "../../../assets/scout.jpeg";
 
 export default function ScoutWelcome({ scout }) {
-  const name = scout?.first_name
-    ? `${scout.first_name} ${scout.last_name}`
-    : "Loading...";
+  const name = scout?.first_name ? `${scout.first_name} ${scout.last_name}` : "";
+  const welcome = name === "" ? "" : `, ${name}`
 
-  // אם יש תמונה בשרת נבנה URL מלא
   const profilePic = scout?.image
     ? `${import.meta.env.VITE_API_BASE_URL}/${scout.image}`
     : scoutImage;
@@ -24,7 +22,8 @@ export default function ScoutWelcome({ scout }) {
         </Col>
 
         <Col>
-          <h4 className="mb-0 text-white">Welcome, {name}</h4>
+          
+          <h4 className="mb-0 text-white">Welcome{welcome}</h4>
           <h6 className="mt-2">
             Explore and discover new talents. Become the best scout using
             ProScout.

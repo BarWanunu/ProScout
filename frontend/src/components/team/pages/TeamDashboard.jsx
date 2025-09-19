@@ -12,6 +12,8 @@ import Watchlist from "../components/Watchlist/Watchlist111.js";
 import SmartRecommender from "../components/SmartRecommender/SmartRecommender.jsx";
 import PlayerSearch from "../components/PlayerSearch/PlayerSearch.js";
 import PlayerComparison from "../components/PlayerComparison/PlayerComparison.js";
+import Header from "@/layout/overallLayout/Header.jsx";
+import Footer from "@/layout/overallLayout/Footer.jsx";
 
 import "../styles/TeamDashboard.css";        //  ⬅ new style
 
@@ -32,6 +34,8 @@ export default function TeamDashboard() {
   };
 
   return (
+    <>
+    <Header />
     <div className={`td-wrapper ${fadeIn ? "fade-in" : "fade-out"}`}>
       {/* ---------- HEADER ---------- */}
       <header className="td-header">
@@ -79,7 +83,7 @@ export default function TeamDashboard() {
         <button
           className={`td-tab ${activeTab === "watchlist" ? "active" : ""}`}
           onClick={() => setActiveTab("watchlist")}
-        >
+          >
           <Star size={18} /> <span>Watchlist</span>
         </button>
       </nav>
@@ -87,5 +91,7 @@ export default function TeamDashboard() {
       {/* ---------- CONTENT ---------- */}
       <main className="td-content">{renderTab()}</main>
     </div>
+    <Footer />
+          </>
   );
 }

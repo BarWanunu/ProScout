@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../layout/ui"
 import { Progress } from "../../../layout/ui"
 import { Avatar, AvatarFallback, AvatarImage } from "../../../layout/ui"
 import { Star, TrendingUp, Users, Award } from "lucide-react"
+import { Footer, Header } from "@/layout/overallLayout"
 
 export default function PlayerProfile() {
   const [isWatchlisted, setIsWatchlisted] = useState(false)
@@ -50,6 +51,8 @@ export default function PlayerProfile() {
   }
 
   return (
+    <>
+    <Header />
     <div className="container mx-auto p-6 space-y-6">
       {/* Player Header */}
       <Card>
@@ -258,5 +261,7 @@ export default function PlayerProfile() {
         </TabsContent>
       </Tabs>
     </div>
+    <Footer />
+                </>
   )
 }
