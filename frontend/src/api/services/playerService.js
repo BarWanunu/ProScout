@@ -1,53 +1,96 @@
 import { http } from "../http";
 
-export const registerPlayer = async (profileData) => {
-  const fd = new FormData();
+const endpoint = "/player";
 
-  fd.append("name", profileData.name);
-  fd.append("first_name", profileData.first_name);
-  fd.append("last_name", profileData.last_name);
-  fd.append(
-    "age",
-    profileData.age !== undefined && profileData.age !== ""
-      ? String(profileData.age)
-      : ""
-  );
-  fd.append("club", profileData.club ?? "Free Agent");
-  fd.append(
-    "number",
-    profileData.number !== undefined && profileData.number !== ""
-      ? String(profileData.number)
-      : ""
-  );
-  fd.append("position", profileData.position);
+async function registerPlayer(data, token) {
+  const formData = new FormData();
 
-  fd.append(
-    "height",
-    profileData.height !== undefined && profileData.height !== ""
-      ? `${profileData.height}`
-      : ""
-  );
-  fd.append(
-    "weight",
-    profileData.weight !== undefined && profileData.weight !== ""
-      ? `${profileData.weight}`
-      : ""
-  );
-  fd.append("nationality", profileData.nationality);
-  fd.append("birthdate", profileData.birthdate);
-
-  const photoFile =
-    profileData.photo?.originFileObj || profileData.photo || null;
-  const videoFile =
-    profileData.video?.originFileObj || profileData.video || null;
-  if (photoFile) fd.append("photo", photoFile);
-  if (videoFile) fd.append("video", videoFile);
-
-  try {
-    const res = await http.post("/player", fd);
-    return res.data;
-  } catch (err) {
-    console.error("registerPlayer error:", err.response?.data || err.message);
-    throw err.response?.data || { message: "Registration failed." };
+  for (const key in data) {
+    if (data[key] !== undefined && data[key] !== null) {
+      formData.append(key, data[key]);
+    }
   }
+
+  const config = {
+    headers: {
+      "Content-type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await http.post(endpoint, formData, config);
+  return response.data;
+}
+
+async function updatePlayer(data, token) {
+  const formData = new FormData();
+
+  for (const key in data) {
+    if (data[key] !== undefined && data[key] !== null) {
+      formData.append(key, data[key]);
+    }
+  }
+
+  const config = {
+    headers: {
+      "Content-type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await http.patch(endpoint, formData, config);
+  return response.data;
+}
+
+async function deletePlayer(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await http.delete(endpoint, config);
+  return response.data;
+}
+
+async function getPlayerById(playerId, token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await http.get(`${endpoint}/${playerId}`, config);
+  return response.data.player;
+}
+
+async function getPlayerFull(playerId) {
+  const response = await http.get(`${endpoint}/${playerId}/full`);
+  return response.data;
+}
+
+async function getPlayerStats(playerId) {
+  const response = await http.get(`${endpoint}/stats/${playerId}`);
+  return response.data;
+}
+
+async function getPlayerStatsSummary(playerId, fromYear, toYear) {
+  const body = { fromYear, toYear };
+  const response = await http.post(
+    `${endpoint}/stats/${playerId}/summary`,
+    body
+  );
+  return response.data.summary;
+}
+
+const playerService = {
+  registerPlayer,
+  updatePlayer,
+  deletePlayer,
+  getPlayerById,
+  getPlayerFull,
+  getPlayerStats,
+  getPlayerStatsSummary,
 };
+
+export default playerService;

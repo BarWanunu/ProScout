@@ -29,7 +29,7 @@ export function AuthProvider({ children }) {
   const logout = useCallback(() => {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-      localStorage.removeItem("id");
+    localStorage.removeItem("id");
     localStorage.removeItem(FULL_KEY);
     setToken("");
     setRole("");

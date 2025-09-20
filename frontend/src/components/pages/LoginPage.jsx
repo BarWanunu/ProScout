@@ -41,10 +41,6 @@ export default function LoginPage() {
         id: res.user.id,
         hasFullProfile: res.hasFullProfile || false
       });
-      console.log(res);
-      
-      console.log(res.hasFullProfile);
-        
       setLeaving(true);
       setTimeout(() => {
         if (res.hasFullProfile) {

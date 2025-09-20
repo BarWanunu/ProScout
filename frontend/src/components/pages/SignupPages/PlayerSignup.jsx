@@ -3,7 +3,7 @@ import { TextField, FormStepper, ImagePicker, FilePicker } from "../../../layout
 import { POSITIONS } from "../../../data/positions";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/PlayerSignup.css";
-import { registerPlayer } from "@/api/services/playerService";
+import playerService from "@/api/services/playerService";
 
 export default function PlayerSignup() {
   const nav = useNavigate();
@@ -49,9 +49,10 @@ export default function PlayerSignup() {
       video: values.video,
     };
 
+    const token = localStorage.getItem("token")
+
     try {
-      await registerPlayer(profileData);
-      localStorage.setItem("hasFullProfile", "true");   // ← כאן מעדכנים
+      await playerService.registerPlayer(profileData, token);
       nav("/login/player", { state: { justSignedUp: true } });
     } catch (err) {
       alert(err?.message || "Registration failed.");
