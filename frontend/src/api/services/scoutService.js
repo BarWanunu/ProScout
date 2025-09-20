@@ -54,14 +54,13 @@ async function deleteScout(token) {
 }
 
 async function getScoutById(id, token) {
-  console.log("➡️ Calling /scout/:id with:", id); // ← לוג של ה־id
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
   const response = await http.get(`${endpoint}/${id}`, config);
-  console.log("⬅️ Raw response from backend:", response.data); // ← לוג תשובה גולמית
-  return response.data.scout; // מחזירים רק את האובייקט של scout
+  console.log("⬅️ Raw response from backend:", response.data);
+  return response.data.scout;
 }
 
 const scoutService = {

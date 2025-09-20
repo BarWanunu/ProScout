@@ -3,7 +3,7 @@ import { TextField, FormStepper, ImagePicker, FilePicker } from "../../../layout
 import { POSITIONS } from "../../../data/positions";
 import useProfileForm from "../../hooks/useProfileForm";
 import "../../../styles/Signup/PlayerSignup.css";
-import { registerPlayer } from "@/api/services/playerServices";
+import { registerPlayer } from "@/api/services/playerService";
 
 export default function PlayerSignup() {
   const nav = useNavigate();

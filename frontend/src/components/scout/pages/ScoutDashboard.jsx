@@ -3,7 +3,7 @@ import Header from "../../../layout/overallLayout/Header";
 import Footer from "../../../layout/overallLayout/Footer";
 import ScoutWelcome from "../components/ScoutWelcome";
 import ScoutSearch from "../components/ScoutSearch";
-import scoutServices from "../../../api/services/scoutServices";
+import scoutServices from "../../../api/services/scoutService";
 import { useAuth } from "@/auth/AuthContext";
 
 export default function ScoutDashboard() {

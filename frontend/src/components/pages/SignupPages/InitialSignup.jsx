@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { SignupService } from "../../../api/services/signupServices";
+import { SignupService } from "../../../api/services/signupService";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../layout/common";
 import RoleDropdown from "../../roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";

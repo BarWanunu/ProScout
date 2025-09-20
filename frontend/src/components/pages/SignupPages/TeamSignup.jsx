@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import { registerTeam } from "@/api/services/teamServices";
+import teamService from "../../../api/services/teamService"
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import { LEAGUES } from "../../../data/leagues";
 import useProfileForm from "../../hooks/useProfileForm";
@@ -65,8 +65,10 @@ export default function TeamSignup() {
       trophies: values.trophies,
     };
 
+    const token = localStorage.getItem("token")
+
     try {
-      await registerTeam(payload);
+      await teamService.registerTeam(payload, token);
             localStorage.setItem("hasFullProfile", "true"); 
       nav("/login/team", { state: { justSignedUp: true } });
     } catch (err) {

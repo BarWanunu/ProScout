@@ -14,15 +14,39 @@ import PlayerSearch from "../components/PlayerSearch/PlayerSearch.js";
 import PlayerComparison from "../components/PlayerComparison/PlayerComparison.js";
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
+import teamService from "@/api/services/teamService";
+import { getToken } from "@/api/tokenStore";
+
 
 import "../styles/TeamDashboard.css";        //  ⬅ new style
 
 export default function TeamDashboard() {
   const [activeTab, setActiveTab] = useState("recommender");
   const [fadeIn,   setFadeIn]   = useState(false);
+  const [team, setTeam] = useState(null);
+
 
   /* simple mount animation (same trick as InitialSignup) */
   useEffect(() => setFadeIn(true), []);
+
+  useEffect(() => {
+  const fetchTeam = async () => {
+    try {
+      const token = getToken();
+      const userId = localStorage.getItem("id");   // או "userId" תלוי איך שמרת
+      if (!userId) return;
+
+      const teamData = await teamService.getTeamById(userId, token);
+      console.log("✅ Team response:", teamData);
+      setTeam(teamData.team);
+    } catch (err) {
+      console.error("❌ Error fetching team:", err);
+    }
+  };
+
+  fetchTeam();
+}, []);
+
 
   const renderTab = () => {
     switch (activeTab) {
@@ -40,9 +64,11 @@ export default function TeamDashboard() {
       {/* ---------- HEADER ---------- */}
       <header className="td-header">
         <div className="td-heading">
-          <h1>Team&nbsp;Dashboard</h1>
-          <p>Discover, analyse &amp; contact players that fit your team’s needs</p>
-        </div>
+  <h1>
+    {team ? `${team.team_name}'s Dashboard` : "Team Dashboard"}
+  </h1>
+  <p>Discover, analyse &amp; contact players that fit your team’s needs</p>
+</div>
 
         <div className="td-actions">
           <button className="td-btn td-btn--outline">

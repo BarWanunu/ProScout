@@ -143,7 +143,7 @@ exports.getTeam = async (req, res) => {
   const teamId = req.params.id;
 
   try {
-    const team = await teamModel.findTeamBy("id", teamId);
+    const team = await teamModel.findTeamBy("user_id", teamId);
 
     if (!team.success || !team.data) {
       //prettier-ignore

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
-import scoutServices from "@/api/services/scoutServices";
+import scoutServices from "@/api/services/scoutService";
 import { TextField, FormStepper, ImagePicker } from "../../../layout/common";
 import useProfileForm from "../../hooks/useProfileForm";
 import { useAuth } from "@/auth/AuthContext";   

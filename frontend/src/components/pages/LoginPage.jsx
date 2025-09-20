@@ -7,7 +7,7 @@ import landingVideo from "../../assets/landing.mp4";
 import Logo from "../../assets/Logo";
 import "../../styles/LoginPage.css";
 import { useAuth } from "../../auth/AuthContext";
-import { SignupService } from "../../api/services/signupServices";
+import { SignupService } from "../../api/services/signupService";
 
 const DASHBOARD_BY_ROLE = Object.freeze({
   player: "/player-dashboard",
@@ -41,6 +41,7 @@ export default function LoginPage() {
         id: res.user.id,
         hasFullProfile: res.hasFullProfile || false
       });
+      console.log(res);
       
       console.log(res.hasFullProfile);
         
