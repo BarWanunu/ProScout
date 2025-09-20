@@ -6,6 +6,9 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../layout/ui"
 import { Footer, Header } from "@/layout/overallLayout"
 import MessagesDemo from "@/components/MessageDemo"
+import TrialDemo from "@/components/TrialDemo"
+
+
 export default function PlayerDashboard() {
   const { id: userId, token } = useAuth()
   const [summary, setSummary] = useState(null)
@@ -58,6 +61,7 @@ export default function PlayerDashboard() {
             <MessagesDemo /> 
           </CardContent>
         </Card>
+        <TrialDemo />
       </div>
       <Footer />
     </>

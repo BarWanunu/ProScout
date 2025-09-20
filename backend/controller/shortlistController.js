@@ -70,14 +70,9 @@ exports.getShortlistedPlayers = async (req, res) => {
     //prettier-ignore
     const shortlistedPlayers = await shortlistModel.getShortlistedPlayers(team_id);
 
-    if (!shortlistedPlayers.success || shortlistedPlayers.data.length === 0) {
-      //prettier-ignore
-      return res.status(404).json({message: "No players found in the shortlist.",});
-    }
-
     res.status(200).json({
       message: "Shortlisted players retrieved successfully.",
-      players: shortlistedPlayers.data,
+      players: shortlistedPlayers.success ? shortlistedPlayers.data : [],
     });
   } catch (err) {
     //prettier-ignore
