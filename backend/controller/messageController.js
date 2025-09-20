@@ -35,15 +35,9 @@ exports.getMessagesBetweenUsers = async (req, res) => {
     //prettier-ignore
     const messages = await messagesModel.getMessagesBetweenUsers(user_id,other_user_id);
 
-    if (!messages.success || messages.data.length === 0) {
-      return res.status(404).json({
-        message: "No messages found between the users.",
-      });
-    }
-
     res.status(200).json({
       message: "Messages retrieved successfully.",
-      messages: messages.data,
+      messages: messages.success ? messages.data : [],
     });
   } catch (err) {
     //prettier-ignore

@@ -5,8 +5,8 @@ import playerService from "@/api/services/playerService"
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "../../../layout/ui"
 import { Footer, Header } from "@/layout/overallLayout"
-
-export default function PlayerStatsSummary() {
+import MessagesDemo from "@/components/MessageDemo"
+export default function PlayerDashboard() {
   const { id: userId, token } = useAuth()
   const [summary, setSummary] = useState(null)
 
@@ -35,6 +35,7 @@ export default function PlayerStatsSummary() {
     <>
       <Header />
       <div className="container mx-auto p-6 space-y-6">
+        {/* --- כרטיס סטטיסטיקות --- */}
         <Card>
           <CardHeader>
             <CardTitle>Stats Summary (2022 - 2024)</CardTitle>
@@ -45,6 +46,16 @@ export default function PlayerStatsSummary() {
             ) : (
               <p>Loading stats summary...</p>
             )}
+          </CardContent>
+        </Card>
+
+        {/* --- כרטיס הודעות --- */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Messages</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <MessagesDemo /> 
           </CardContent>
         </Card>
       </div>

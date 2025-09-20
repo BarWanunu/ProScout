@@ -15,10 +15,11 @@ import PlayerComparison from "../components/PlayerComparison/PlayerComparison.js
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
 import teamService from "@/api/services/teamService";
-import shortlistService from "@/api/services/shortlistService";   // ⬅️ חדש
+import shortlistService from "@/api/services/shortlistService";   
 import { getToken } from "@/api/tokenStore";
 
 import "../styles/TeamDashboard.css";
+import MessagesDemo from "@/components/MessageDemo.jsx";
 
 export default function TeamDashboard() {
   const [activeTab, setActiveTab] = useState("recommender");
@@ -96,6 +97,8 @@ const addDummyPlayer = async () => {
         return <PlayerComparison />;
       case "watchlist":
         return <Watchlist />;
+      case "messages":
+        return <MessagesDemo />
       default:
         return <SmartRecommender />;
     }
@@ -201,6 +204,13 @@ const addDummyPlayer = async () => {
           >
             <Star size={18} /> <span>Watchlist</span>
           </button>
+
+          <button
+  className={`td-tab ${activeTab === "messages" ? "active" : ""}`}
+  onClick={() => setActiveTab("messages")}
+>
+  💬 <span>Messages</span>
+</button>
         </nav>
 
         {/* ---------- CONTENT ---------- */}
