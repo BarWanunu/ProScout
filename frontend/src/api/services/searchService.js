@@ -10,12 +10,12 @@ async function searchPlayersByName(name) {
 }
 
 async function advancedSearchPlayers(filters) {
-  const response = await http.get(`${endpoint}/players/advanced`, filters);
+  const response = await http.post(`${endpoint}/players/advanced`, filters);
   return response.data;
 }
 
 async function searchPlayersWithStats(filters) {
-  const response = await http.get(`${endpoint}/players/stats`, filters);
+  const response = await http.post(`${endpoint}/players/stats`, filters);
   return response.data;
 }
 

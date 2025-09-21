@@ -8,12 +8,12 @@ export default function PlayerProfileSearch({ onFiltersChange }) {
     position: "",
     club: "",
     nationality: "",
-    ageMin: "",
-    ageMax: "",
-    heightMin: "",
-    heightMax: "",
-    weightMin: "",
-    weightMax: "",
+    min_age: "",
+    max_age: "",
+    min_height: "",
+    max_height: "",
+    min_weight: "",
+    max_weigth: "",
   });
 
   const handleInputChange = (e) => {
@@ -69,7 +69,7 @@ return (
         <label className="form-label text-black">Min Age</label>
         <input
           type="number"
-          name="ageMin"
+          name="min_age"
           className="form-control"
           value={filters.ageMin}
           onChange={handleInputChange}
@@ -81,7 +81,7 @@ return (
         <label className="form-label text-black">Max Age</label>
         <input
           type="number"
-          name="ageMax"
+          name="max_age"
           className="form-control"
           value={filters.ageMax}
           onChange={handleInputChange}
@@ -93,7 +93,7 @@ return (
         <label className="form-label text-black">Min Height (cm)</label>
         <input
           type="number"
-          name="heightMin"
+          name="min_height"
           className="form-control"
           value={filters.heightMin}
           onChange={handleInputChange}
@@ -105,7 +105,7 @@ return (
         <label className="form-label text-black">Max Height (cm)</label>
         <input
           type="number"
-          name="heightMax"
+          name="max_height"
           className="form-control"
           value={filters.heightMax}
           onChange={handleInputChange}
@@ -117,7 +117,7 @@ return (
         <label className="form-label text-black">Min Weight (kg)</label>
         <input
           type="number"
-          name="weightMin"
+          name="min_weight"
           className="form-control"
           value={filters.weightMin}
           onChange={handleInputChange}
@@ -129,7 +129,7 @@ return (
         <label className="form-label text-black">Max Weight (kg)</label>
         <input
           type="number"
-          name="weightMax"
+          name="max_weight"
           className="form-control"
           value={filters.weightMax}
           onChange={handleInputChange}

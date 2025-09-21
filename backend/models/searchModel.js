@@ -1,6 +1,6 @@
 const db = require("../startup/db");
 
-exports.searchPlayersByName = async (name, limit = 30) => {
+exports.searchPlayersByName = async (name, limit = 50) => {
   try {
     const query = `
         SELECT * FROM players
@@ -32,7 +32,7 @@ exports.searchTeamsByName = async (name, limit = 30) => {
   }
 };
 
-exports.advancedSearchPlayers = async (filters, limit = 20) => {
+exports.advancedSearchPlayers = async (filters, limit = 50) => {
   try {
     const conditions = [];
     const values = [];
@@ -137,7 +137,7 @@ exports.advancedSearchPlayers = async (filters, limit = 20) => {
   }
 };
 
-exports.searchPlayersWithStats = async (filters, limit = 30) => {
+exports.searchPlayersWithStats = async (filters, limit = 50) => {
   try {
     const conditions = [];
     const values = [];
