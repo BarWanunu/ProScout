@@ -22,7 +22,7 @@ async function registerScout(data, token) {
 }
 
 async function updateScoutField({ field, value, token }) {
-  const formData = new formData();
+  const formData = new FormData();
 
   if (field === "image" && value instanceof File) {
     formData.append("image", value);

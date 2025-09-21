@@ -5,10 +5,12 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext"
 import {http} from "../../api/http"
+import { ProfileEditModal } from "../../components/profile";
 
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
+  const [showProfileEdit, setShowProfileEdit] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { logout} = useAuth(); 
@@ -22,6 +24,23 @@ export default function Header() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // פתיחת עריכת פרופיל
+  const handleEditProfile = () => {
+    setShowMenu(false);
+    setShowProfileEdit(true);
+  };
+
+  // סגירת עריכת פרופיל
+  const handleCloseProfileEdit = () => {
+    setShowProfileEdit(false);
+  };
+
+  // הצלחה בעדכון פרופיל
+  const handleProfileUpdateSuccess = () => {
+    // אפשר להוסיף כאן רענון נתונים או הודעה
+    console.log('Profile updated successfully');
+  };
 
   // התנתקות
   const handleLogout = () => {
@@ -62,13 +81,20 @@ export default function Header() {
           />
           {showMenu && (
             <div className="dropdown-menu">
-              <div onClick={() => alert("Edit Profile")}>✏️ Edit Profile</div>
+              <div onClick={handleEditProfile}>✏️ Edit Profile</div>
               <div onClick={handleLogout}>🚪 Logout</div>
               <div onClick={handleDeleteAccount}>🗑️ Delete Account</div>
             </div>
           )}
         </div>
       </div>
+      
+      {/* Profile Edit Modal */}
+      <ProfileEditModal 
+        isOpen={showProfileEdit}
+        onClose={handleCloseProfileEdit}
+        onSuccess={handleProfileUpdateSuccess}
+      />
     </header>
   );
 }

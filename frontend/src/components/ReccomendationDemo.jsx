@@ -17,7 +17,7 @@ export default function RecommendationDemo() {
       try {
         if (role === "player") {
           const res = await playerService.getPlayerById(userId, token);
-          setProfileId(res.player.id);
+          setProfileId(res.id);
         } else if (role === "team") {
           const res = await teamService.getTeamById(userId, token);
           setProfileId(res.team.id);
