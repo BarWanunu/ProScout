@@ -17,8 +17,7 @@ export default function TrialDemoTeam() {
       try {
         if (role === "team") {
           const response = await teamService.getTeamById(userId, token);
-          console.log("✅ Team response:", response);
-          setTeamId(response.team?.id); // לשים לב שזה מתוך response.team
+          setTeamId(response.team?.id);
         }
       } catch (err) {
         console.error("❌ Failed to fetch team:", err);
@@ -35,7 +34,7 @@ export default function TrialDemoTeam() {
     try {
       setLoading(true);
       const response = await trialService.getTrialsByTeam(teamId, token);
-      console.log("✅ Raw trials response:", response);
+      console.log(response);
       setTrials(response.trials || response.data?.trials || []);
     } catch (err) {
       console.error("❌ Failed to fetch trials:", err);
