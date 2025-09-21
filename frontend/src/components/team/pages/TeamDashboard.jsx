@@ -18,7 +18,7 @@ import teamService from "@/api/services/teamService";
 import shortlistService from "@/api/services/shortlistService";
 import trialService from "@/api/services/trialService"; // ✅ לוודא שקיים
 import { getToken } from "@/api/tokenStore";
-
+import RecommendationDemo from "@/components/ReccomendationDemo.jsx";
 import "../styles/TeamDashboard.css";
 import MessagesDemo from "@/components/MessageDemo.jsx";
 import TrialDemo from "@/components/TrialDemo.jsx";
@@ -119,7 +119,9 @@ export default function TeamDashboard() {
       case "messages":
         return <MessagesDemo />;
       case "trials":
-        return <TrialDemo />; // ✅ שולחים ל־TrialDemo
+        return <TrialDemo />; 
+      case "recommendations": 
+        return <RecommendationDemo />
       default:
         return <SmartRecommender />;
     }
@@ -136,7 +138,7 @@ export default function TeamDashboard() {
               {team ? `${team.team_name}'s Dashboard` : "Team Dashboard"}
             </h1>
             <p>
-              Discover, analyse &amp; contact players that fit your team’s needs
+              Discover, analyse &amp; contact players that fit your team's needs
             </p>
           </div>
         </header>
@@ -250,6 +252,12 @@ export default function TeamDashboard() {
           >
             📋 <span>Trials</span>
           </button>
+            <button
+          className={`td-tab ${activeTab === "recommendations" ? "active" : ""}`}
+          onClick={() => setActiveTab("recommendations")}
+        >
+          ⭐ <span>Recommendations</span>
+        </button>
         </nav>
 
         {/* ---------- CONTENT ---------- */}
