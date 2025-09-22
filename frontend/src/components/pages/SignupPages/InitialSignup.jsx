@@ -7,6 +7,7 @@ import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from
 import RoleDropdown from "../../roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
 import "../../../styles/Signup/InitialSignup.css";
+import { ArrowLeftIcon } from "lucide-react";
 
 export default function InitialSignup() {
   const nav = useNavigate();
@@ -49,6 +50,14 @@ const handleSubmit = async (e) => {
 
   return (
     <div className={`si-wrapper ${fadeIn ? 'fade-in' : 'fade-out'}`}>
+      {/* Header with Back Button */}
+      <div className="si-header">
+        <button onClick={() => nav("/")} className="si-back">
+          <ArrowLeftIcon className="si-back-icon" />
+          <span className="si-back-text">Back to Home</span>
+        </button>
+      </div>
+      
       <h1 className="si-headline">Create your ProScout account</h1>
       <form className="si-form" onSubmit={handleSubmit}>
         {/* ---- Email field ---- */}

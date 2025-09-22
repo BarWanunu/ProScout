@@ -2,123 +2,189 @@
    GLOBAL LAYOUT & ANIMATIONS
 ------------------------------------------------------------------ */
 .si-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem 1rem;
-    background: radial-gradient(ellipse at top,
-      rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
-    backdrop-filter: blur(4px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding: 0 1rem 2rem 1rem;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(15, 23, 42, 0.95) 100%
+  );
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* ---------- HEADER WITH BACK BUTTON ---------- */
+.si-header {
+  width: 100%;
+  max-width: 28rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 2rem 0 1rem 0;
+}
+
+@media (max-width: 768px) {
+  .si-header {
+    padding: 1.5rem 0 0.5rem 0;
   }
-  
-  .fade-in {
-    opacity: 1;
-    transform: translateY(0);
+}
+
+.si-back {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  font-weight: 500;
+}
+
+.si-back:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-4px);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.si-back-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+}
+
+.si-back-text {
+  font-size: 0.95rem;
+}
+
+@media (max-width: 480px) {
+  .si-back {
+    padding: 0.5rem 0.75rem;
   }
-  
-  .fade-out {
+
+  .si-back-icon {
+    width: 0.875rem;
+    height: 0.875rem;
+    margin-right: 0.25rem;
+  }
+
+  .si-back-text {
+    font-size: 0.875rem;
+  }
+}
+
+.si-headline {
+  color: #fff;
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
     opacity: 0;
     transform: translateY(-20px);
   }
-  
-  .si-headline {
-    color: #fff;
-    font-size: 1.875rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-    text-align: center;
-    animation: fadeInDown 0.6s ease-out;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* ------------------------------------------------------------------
+}
+
+/* ------------------------------------------------------------------
      FORM WRAPPER
   ------------------------------------------------------------------ */
-  .si-form {
-    width: 100%;
-    max-width: 32rem;
-    display: grid;
-    gap: 1.25rem;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid #374151;
-    border-radius: 0.75rem;
-    padding: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    animation: fadeIn 0.5s ease-out 0.2s both;
+.si-form {
+  width: 100%;
+  max-width: 32rem;
+  display: grid;
+  gap: 1.25rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #374151;
+  border-radius: 0.75rem;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.5s ease-out 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+  to {
+    opacity: 1;
   }
-      
-  /* ------------------------------------------------------------------
+}
+
+/* ------------------------------------------------------------------
      SUBMIT BUTTON
   ------------------------------------------------------------------ */
-  .si-submit {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    margin-top: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .si-submit.active {
-    background: #2563eb;
-    color: #fff;
-    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2), 0 2px 4px -1px rgba(37, 99, 235, 0.1);
-  }
-  
-  .si-submit.active:hover {
-    background: #1d4ed8;
-    transform: translateY(-2px);
-  }
-  
-  .si-submit.disabled {
-    background: rgba(37, 99, 235, 0.3);
-    color: rgba(255, 255, 255, 0.5);
-    cursor: not-allowed;
-  }
-    
-  /* ------------------------------------------------------------------
+.si-submit {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-top: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.si-submit.active {
+  background: #2563eb;
+  color: #fff;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2),
+    0 2px 4px -1px rgba(37, 99, 235, 0.1);
+}
+
+.si-submit.active:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.si-submit.disabled {
+  background: rgba(37, 99, 235, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+/* ------------------------------------------------------------------
      RESPONSIVE ADJUSTMENTS
   ------------------------------------------------------------------ */
-  @media (max-width: 480px) {
-    .si-headline {
-      font-size: 1.5rem;
-    }
-    
-    .si-form {
-      padding: 1.5rem;
-    }
-    
-    .form-progress {
-      flex-direction: column;
-      gap: 1rem;
-    }
-    
-    .progress-connector {
-      width: 1px;
-      height: 1rem;
-    }
+@media (max-width: 480px) {
+  .si-headline {
+    font-size: 1.5rem;
   }
+
+  .si-form {
+    padding: 1.5rem;
+  }
+
+  .form-progress {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .progress-connector {
+    width: 1px;
+    height: 1rem;
+  }
+}

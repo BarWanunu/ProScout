@@ -78,7 +78,6 @@ export default function TeamSignup() {
 
   return (
     <div className="ts-wrapper">
-      {" "}
       <h1 className="ts-headline">Team Profile</h1>{" "}
       <form className="ts-form" onSubmit={submit}>
         {" "}
