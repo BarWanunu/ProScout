@@ -139,6 +139,28 @@ exports.deleteTeam = async (req, res) => {
   }
 };
 
+exports.getTeamName = async (req, res) => {
+  const teamId = req.params.id;
+
+  try {
+    const team = await teamModel.findTeamBy("id", teamId);
+
+    if (!team.success || !team.data) {
+      return res.status(404).json({ message: "Team not found." });
+    }
+
+    res.status(200).json({
+      message: "Team name retrieved successfully.",
+      name: team.data.team_name,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal server error during team name retrieval.",
+      error: err.message,
+    });
+  }
+};
+
 exports.getTeam = async (req, res) => {
   const teamId = req.params.id;
 

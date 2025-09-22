@@ -6,6 +6,7 @@ const auth = require("../middleware/auth");
 const upload = require("../middleware/uploadMedia.js");
 
 router.get("/:id", playerController.getPlayer);
+router.get("/:id/name", playerController.getPlayerName);
 router.post(
   "/",
   auth,

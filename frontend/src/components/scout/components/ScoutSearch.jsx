@@ -19,10 +19,12 @@ export default function ScoutSearch() {
 
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = async () => {
     try {
       setLoading(true);
+      setHasSearched(true);
 
       if (searchType === "team") {
         if (league || country || formation) {
@@ -134,7 +136,7 @@ export default function ScoutSearch() {
             ))}
           </ul>
         ) : (
-          !loading && <p>No results found</p>
+          hasSearched && !loading && <p>No results found for your search criteria</p>
         )}
       </div>
     </div>

@@ -8,5 +8,6 @@ router.post("/", auth, upload.single("logo"), teamController.registerTeam);
 router.patch("/", auth, upload.single("logo"), teamController.updateTeamField);
 router.delete("/", auth, teamController.deleteTeam);
 router.get("/:id", teamController.getTeam);
+router.get("/:id/name", teamController.getTeamName);
 
 module.exports = router;
