@@ -1,7 +1,7 @@
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   background: black;
   padding: 10px 20px;
   color: white;
@@ -13,6 +13,7 @@
 .logo-section {
   display: flex;
   align-items: center;
+  gap: 15px;
 }
 
 .logo {
@@ -23,13 +24,13 @@
 .right-section {
   display: flex;
   align-items: center;
-  gap: 12px;
+  margin-left: auto;
 }
 
 .app-name {
   font-weight: bold;
   font-size: 1.5rem;
-  margin-right: 10px;
+  margin: 0;
 }
 
 .settings-container {
@@ -70,7 +71,6 @@
   font-size: 1.2rem; /* או מה שהגדלת */
   transition: background-color 0.2s ease;
 }
-
 
 .dropdown-menu div:hover {
   background-color: #333;

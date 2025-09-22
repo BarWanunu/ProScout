@@ -28,7 +28,8 @@
   background-color: #1e293b;
   color: white;
   font-weight: 600;
-  min-width: 180px;
+  width: 100%;
+  flex: 1;
 
   appearance: none;
   -webkit-appearance: none;

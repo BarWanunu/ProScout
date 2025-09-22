@@ -69,10 +69,10 @@ export default function Header() {
     <header className="header">
       <div className="logo-section">
         <Logo />
+        <span className="app-name">ProScout</span>
       </div>
 
       <div className="right-section">
-        <span className="app-name">ProScout</span>
         <div className="settings-container" ref={menuRef}>
           <FaCog
             size={25}
