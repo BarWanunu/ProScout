@@ -12,7 +12,7 @@ export default function FilePicker({ id, label, accept, value, onChange }) {
       />
       {value && (
         <span style={{ color: "#4ade80", marginLeft: "0.5rem" }}>
-          ✓ {value.name}
+          ✓ File Selected: {value.name}
         </span>
       )}
     </div>

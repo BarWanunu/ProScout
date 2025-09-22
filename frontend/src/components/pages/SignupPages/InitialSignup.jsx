@@ -2,19 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signupUser } from "../../../services/signupService";
+import { SignupService } from "../../../api/services/signupService";
 import { TextField, PasswordField, FormStepper, PasswordStrengthIndicator } from "../../../layout/common";
 import RoleDropdown from "../../roles/RoleDropdown/RoleDropdown";
 import useSignupForm from "../../hooks/useSignupForm";
 import "../../../styles/Signup/InitialSignup.css";
+import { ArrowLeftIcon } from "lucide-react";
 
 export default function InitialSignup() {
   const nav = useNavigate();
   const { values, errors, touched, isValid, onChange, onBlur, selectRole, validate } = useSignupForm();
-  // Animation state
   const [fadeIn, setFadeIn] = useState(false);
 
-  // Animate on mount
   useEffect(() => {
     setFadeIn(true);
   }, []);
@@ -24,8 +23,7 @@ const handleSubmit = async (e) => {
   if (!validate()) return;
 
   try {
-    // ניסיון קריאה לשרת
-    const { token, user } = await signupUser({
+    const { token, user } = await SignupService.signupInitial({
       email: values.email,
       username: values.username,
       password: values.password,
@@ -52,7 +50,15 @@ const handleSubmit = async (e) => {
 
   return (
     <div className={`si-wrapper ${fadeIn ? 'fade-in' : 'fade-out'}`}>
-      <h1 className="si-headline">Create your ProScout account</h1>
+      {/* Header with Back Button */}
+      <div className="si-header">
+        <button onClick={() => nav("/")} className="si-back">
+          <ArrowLeftIcon className="si-back-icon" />
+          <span className="si-back-text">Back to Home</span>
+        </button>
+      </div>
+      
+      <h1 className="si-headline mt-4">Create your ProScout account</h1>
       <form className="si-form" onSubmit={handleSubmit}>
         {/* ---- Email field ---- */}
         <TextField

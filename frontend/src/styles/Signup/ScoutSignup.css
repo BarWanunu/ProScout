@@ -4,48 +4,189 @@
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem 1rem;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  padding: 2rem 1rem 3rem 1rem;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  position: relative;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .ss-wrapper {
+    padding: 1.5rem 0.75rem 2rem 0.75rem;
+  }
 }
 
 /* headline */
 .ss-headline {
   color: #fff;
-  font-size: 1.875rem;
+  font-size: 2rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .ss-headline {
+    font-size: 1.75rem;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ss-headline {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
 }
 
 /* ---------- FORM ---------- */
 .ss-form {
   width: 100%;
-  max-width: 40rem;
+  max-width: 42rem;
   display: grid;
-  gap: 1.25rem;
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid #374151;
-  border-radius: 0.75rem;
-  padding: 2rem;
+  gap: 1.5rem;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5),
+    0 10px 10px -5px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
 }
 
-/* field + inputs (reuse same rules) */
-@import "./PlayerSignup.css"; /* pulls in .form-field etc. */
+@media (max-width: 768px) {
+  .ss-form {
+    max-width: 38rem;
+    padding: 2rem;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ss-form {
+    padding: 1.5rem;
+    gap: 1rem;
+  }
+}
+
+/* ---------- FIELD & INPUT styles ---------- */
+.ss-form .form-field label {
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-weight: 500;
+}
+
+.ss-form .input-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.ss-form .input-container input,
+.ss-form .input-container select {
+  width: 100%;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.ss-form .input-container input:focus,
+.ss-form .input-container select:focus {
+  outline: none;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+  background: rgba(17, 24, 39, 0.95);
+}
+
+.ss-form .input-container.success input {
+  border-color: #16a34a;
+}
+
+.ss-form .input-container.error input {
+  border-color: #dc2626;
+}
+
+.ss-form .icon-success {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  color: #16a34a;
+}
+
+.ss-form .icon-error {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  color: #dc2626;
+}
+
+.ss-form .error-message {
+  color: #f87171;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+/* ---------- IMAGE PICKER ---------- */
+.ss-form input[type="file"] {
+  color: #d1d5db;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.ss-form input[type="file"]::-webkit-file-upload-button {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-right: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.ss-form input[type="file"]::-webkit-file-upload-button:hover {
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+}
 
 /* ---------- SUBMIT ---------- */
 .ss-submit {
   width: 100%;
-  padding: 0.75rem 1rem;
-  margin-top: 0.5rem;
-  background: #7c3aed;
+  padding: 0.875rem 1rem;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
   color: #fff;
   font-weight: 600;
+  font-size: 1rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(124, 58, 237, 0.3);
 }
+
 .ss-submit:hover {
-  background: #6937d8;
+  background: linear-gradient(135deg, #6d28d9, #7c3aed);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 10px -1px rgba(124, 58, 237, 0.4);
+}
+
+.ss-submit:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .ss-submit {
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+  }
 }

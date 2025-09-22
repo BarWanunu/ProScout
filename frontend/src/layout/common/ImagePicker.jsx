@@ -9,7 +9,7 @@ export default function ImagePicker({ id, label, value, onChange }) {
       <label>{label}</label>
       <input type="file" id={id} accept="image/*"
              onChange={e => onChange(e.target.files[0])} />
-      {value && <span style={{ color:"#4ade80" }}>✓ Selected</span>}
+      {value && <span style={{ color:"#4ade80" }}>✓ File Selected</span>}
     </div>
   );
 }

@@ -97,12 +97,14 @@ exports.updatePlayerProfile = async (req, res) => {
     if (!videoFile && value.video) value.video = String(value.video);
 
     ["club", "height", "weight", "position", "video"].forEach((field) => {
-      if (value[field] !== undefined) value[field] = String(value[field]);
+      if (value[field] === undefined) return;
+
       if (field === "height") {
         value.height = value.height + " cm";
-      }
-      if (field === "weight") {
+      } else if (field === "weight") {
         value.weight = value.weight + " kg";
+      } else {
+        value[field] = String(value[field]);
       }
     });
 
@@ -185,7 +187,7 @@ exports.getPlayer = async (req, res) => {
   const playerId = req.params.id;
 
   try {
-    const player = await playerModel.findPlayerBy("id", playerId);
+    const player = await playerModel.findPlayerBy("user_id", playerId);
 
     if (!player.success || !player.data) {
       return res.status(404).json({ message: "Player profile not found." });

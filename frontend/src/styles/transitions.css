@@ -1,0 +1,10 @@
+.route-fade {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.route-fade.in {
+  opacity: 1;
+  transform: none;
+}
