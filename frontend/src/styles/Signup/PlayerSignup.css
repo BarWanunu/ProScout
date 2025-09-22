@@ -140,6 +140,149 @@ PER ---------- */ .ps-wrapper {
   background: rgba(17, 24, 39, 0.95);
 }
 
+.input-container input:hover,
+.input-container select:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Special styling for position select dropdown */
+.position-select {
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%23ffffff" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 12px;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.position-select:focus {
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="%233b82f6" d="M2 0L0 2h4zm0 5L0 3h4z"/></svg>');
+}
+
+.position-select option {
+  background: #1f2937;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.position-select option:hover,
+.position-select option:checked {
+  background: #374151;
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+/* Custom date input styling */
+.date-input-container {
+  position: relative;
+}
+
+.date-input {
+  width: 100%;
+  background: rgba(17, 24, 39, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  padding: 0.75rem 3rem 0.75rem 1rem;
+  color: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  direction: ltr;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: rgba(17, 24, 39, 0.95);
+}
+
+.date-input:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Date input placeholder styling */
+.date-input::-webkit-datetime-edit-text {
+  color: #9ca3af;
+}
+
+.date-input::-webkit-datetime-edit-month-field {
+  color: #fff;
+}
+
+.date-input::-webkit-datetime-edit-day-field {
+  color: #fff;
+}
+
+.date-input::-webkit-datetime-edit-year-field {
+  color: #fff;
+}
+
+/* Calendar icon styling */
+.date-input::-webkit-calendar-picker-indicator {
+  background: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM5 19V8h14v11H5z"/></svg>')
+    no-repeat;
+  background-size: 20px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  opacity: 0.8;
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+}
+
+.date-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+  background-color: rgba(59, 130, 246, 0.1);
+  border-radius: 4px;
+}
+
+/* Firefox date input styling */
+.date-input[type="date"] {
+  appearance: none;
+  -moz-appearance: none;
+}
+
+/* Custom styling for when date is not selected */
+.date-input:invalid {
+  color: #9ca3af;
+}
+
+.date-input:valid {
+  color: #fff;
+}
+
+/* Mobile responsiveness for date input */
+@media (max-width: 768px) {
+  .date-input::-webkit-calendar-picker-indicator {
+    background-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .date-input {
+    font-size: 0.95rem;
+    padding: 0.65rem 0.875rem;
+  }
+
+  .date-input::-webkit-calendar-picker-indicator {
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+    margin-left: 6px;
+  }
+}
+
 .input-container.success input {
   border-color: #16a34a;
 }

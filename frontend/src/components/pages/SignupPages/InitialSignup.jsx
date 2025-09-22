@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
         </button>
       </div>
       
-      <h1 className="si-headline">Create your ProScout account</h1>
+      <h1 className="si-headline mt-4">Create your ProScout account</h1>
       <form className="si-form" onSubmit={handleSubmit}>
         {/* ---- Email field ---- */}
         <TextField

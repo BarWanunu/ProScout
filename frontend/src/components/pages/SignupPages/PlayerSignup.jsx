@@ -81,12 +81,16 @@ export default function PlayerSignup() {
         <TextField id="kit" label="Kit Number" type="number"
                    value={values.kit} onChange={onChange}/>
 
-        <label>Position</label>
-        <select name="position" value={values.position} onChange={onChange} onBlur={onBlur}>
-          <option value="">Select position</option>
-          {POSITIONS.map((p) => <option key={p} value={p}>{p}</option>)}
-        </select>
-        {touched.position && errors.position && <span className="error-message">{errors.position}</span>}
+        <div className="form-field">
+          <label>Position</label>
+          <div className="input-container">
+            <select name="position" value={values.position} onChange={onChange} onBlur={onBlur} className="position-select">
+              <option value="">Select position</option>
+              {POSITIONS.map((p) => <option key={p} value={p}>{p}</option>)}
+            </select>
+          </div>
+          {touched.position && errors.position && <span className="error-message">{errors.position}</span>}
+        </div>
 
         <div className="grid-two">
           <TextField id="height" label="Height (cm)" type="number"
@@ -96,7 +100,23 @@ export default function PlayerSignup() {
         </div>
 
         <TextField id="nationality" label="Nationality" value={values.nationality} onChange={onChange}/>
-        <TextField id="birth" label="Birth Date" type="date" value={values.birth} onChange={onChange}/>
+        
+        <div className="form-field">
+          <label>Birth Date</label>
+          <div className="input-container date-input-container">
+            <input
+              id="birth"
+              name="birth"
+              type="date"
+              value={values.birth}
+              onChange={onChange}
+              onBlur={onBlur}
+              className="date-input"
+              placeholder="dd/mm/yyyy"
+            />
+          </div>
+          {touched.birth && errors.birth && <span className="error-message">{errors.birth}</span>}
+        </div>
 
         <ImagePicker id="image" label="Profile Image" value={values.image}
                      onChange={(file) => setField("image", file)}/>
