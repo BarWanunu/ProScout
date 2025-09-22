@@ -6,7 +6,9 @@ export default function ScoutWelcome({ scout }) {
   const welcome = name === "" ? "" : `, ${name}`
 
   const profilePic = scout?.image
-    ? `${import.meta.env.VITE_API_BASE_URL}/${scout.image}`
+    ? scout.image.startsWith('http')
+      ? scout.image   
+      : `${import.meta.env.VITE_API_BASE_URL}/${scout.image}`   
     : scoutImage;
 
   return (
