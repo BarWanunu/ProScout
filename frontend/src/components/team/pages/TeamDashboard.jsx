@@ -21,7 +21,6 @@ import { getToken } from "@/api/tokenStore";
 import RecommendationDemo from "@/components/ReccomendationDemo.jsx";
 import "../styles/TeamDashboard.css";
 import MessagesDemo from "@/components/MessageDemo.jsx";
-import TrialDemo from "@/components/TrialDemo.jsx";
 
 export default function TeamDashboard() {
   const [activeTab, setActiveTab] = useState("recommender");
@@ -118,8 +117,6 @@ export default function TeamDashboard() {
         return <Watchlist />;
       case "messages":
         return <MessagesDemo />;
-      case "trials":
-        return <TrialDemo />; 
       case "recommendations": 
         return <RecommendationDemo />
       default:
