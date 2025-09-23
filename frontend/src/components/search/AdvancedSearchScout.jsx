@@ -1,12 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import "@/components/search/SearchBox.css";
 
-const AdvancedSearchScout = ({ name, onSearch, setNameFilter }) => {
-  const [nationality, setNationality] = useState('');
-  const [minExperienceYears, setMinExperienceYears] = useState('');
-  const [maxExperienceYears, setMaxExperienceYears] = useState('');
+const AdvancedSearchScout = ({ filters, setFilters, onSearch }) => {
+  const [nationality, setNationality] = useState(filters?.nationality || '');
+  const [minExperienceYears, setMinExperienceYears] = useState(filters?.min_experience_years || '');
+  const [maxExperienceYears, setMaxExperienceYears] = useState(filters?.max_experience_years || '');
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  
+  // Update local state when filters prop changes
+  useEffect(() => {
+    setNationality(filters?.nationality || '');
+    setMinExperienceYears(filters?.min_experience_years || '');
+    setMaxExperienceYears(filters?.max_experience_years || '');
+  }, [filters]);
 
   const toggleAdvanced = () => {
     setIsAdvancedOpen(!isAdvancedOpen);
@@ -16,20 +23,21 @@ const AdvancedSearchScout = ({ name, onSearch, setNameFilter }) => {
     setNationality('');
     setMinExperienceYears('');
     setMaxExperienceYears('');
+    
+    // Update the parent component's filters
+    setFilters({});
   };
-
-  const handleSearch = () => {
-    // Construct filters object
-    const filters = {
-      name: name,
+  
+  // Update parent filters when local state changes
+  useEffect(() => {
+    const newFilters = {
       nationality: nationality || undefined,
       min_experience_years: minExperienceYears ? parseInt(minExperienceYears, 10) : undefined,
       max_experience_years: maxExperienceYears ? parseInt(maxExperienceYears, 10) : undefined
     };
-
-    // Call the parent's search function with our filters
-    onSearch(filters);
-  };
+    
+    setFilters(newFilters);
+  }, [nationality, minExperienceYears, maxExperienceYears, setFilters]);
 
   return (
     <div className="advanced-search-panel scout-search">
@@ -40,19 +48,6 @@ const AdvancedSearchScout = ({ name, onSearch, setNameFilter }) => {
 
       {isAdvancedOpen && (
         <div className="advanced-panel">
-          <Form.Group className="mb-3">
-            <Form.Label>Search by Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter name (regex search)"
-              value={name}
-              onChange={(e) => setNameFilter(e.target.value)}
-            />
-            <Form.Text className="text-muted">
-              Search by first name, last name, or full name (regex-style matching)
-            </Form.Text>
-          </Form.Group>
-
           <Row className="mb-3">
             <Col>
               <Form.Group>
@@ -97,9 +92,6 @@ const AdvancedSearchScout = ({ name, onSearch, setNameFilter }) => {
           <div className="advanced-buttons">
             <Button variant="outline-secondary" onClick={handleClearFilters}>
               Clear Filters
-            </Button>
-            <Button variant="primary" onClick={handleSearch}>
-              Search Scouts
             </Button>
           </div>
         </div>

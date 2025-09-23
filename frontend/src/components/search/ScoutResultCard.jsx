@@ -12,14 +12,23 @@ const ScoutResultCard = ({ scout, index }) => {
   return (
     <div className="result-item scout-item">
       <div className="scout-info">
-        {scout.image && (
+        {/* Always include image container, with default placeholder if no image */}
+        <div className="scout-photo-container">
           <img 
-            src={scout.image} 
+            src={
+              scout.image 
+                ? scout.image.startsWith('http') 
+                  ? scout.image
+                  : `${import.meta.env.VITE_API_BASE_URL}/${scout.image}`
+                : '/assets/default-scout.png'
+            }
             alt={`${scout.first_name} ${scout.last_name}`}
             className="scout-photo"
-            onError={(e) => {e.target.style.display = 'none'}}
+            onError={(e) => {
+              e.target.src = '/assets/default-scout.png';
+            }}
           />
-        )}
+        </div>
         
         <div className="scout-details-wrapper">
           <div className="scout-header">
@@ -38,6 +47,7 @@ const ScoutResultCard = ({ scout, index }) => {
           <div className="scout-details">
             <span className="badge nationality">{scout.nationality}</span>
             <span className="badge experience">{scout.experience_years} years experience</span>
+            {scout.phone && <span className="badge phone">{scout.phone}</span>}
           </div>
         </div>
       </div>

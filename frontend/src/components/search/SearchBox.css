@@ -97,11 +97,12 @@
   color: white;
   border: none;
   transition: background 0.25s ease, transform 0.2s ease;
-  align-self: flex-start;
+  width: 100%;
   margin-top: 12px;
   cursor: pointer;
   position: relative;
   z-index: 2;
+  text-align: center;
 }
 
 .search-button:hover {

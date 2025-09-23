@@ -7,6 +7,8 @@ export { default as TeamSearch } from "./TeamSearch";
 export { default as PlayerSearch } from "./PlayerSearch";
 export { default as PlayerSearchPanel } from "./PlayerSearchPanel";
 export { default as AdvancedSearchTeam } from "./AdvancedSearchTeam";
+export { default as DirectTeamSearch } from "./DirectTeamSearch";
+export { default as DirectScoutSearch } from "./DirectScoutSearch";
 export { default as PlayerSearchToggle } from "./PlayerSearchToggle";
 export { default as PlayerProfileSearch } from "./PlayerProfileSearch";
 export { default as PlayerStatsSearch } from "./PlayerStatsSearch";

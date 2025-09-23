@@ -1,0 +1,31 @@
+/* Fix team-specific styling for search */
+.team-search .search-select {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.direct-scout-search {
+  margin-top: 15px;
+}
+
+.team-search .filter-toggle-button:hover {
+  background: rgba(148, 163, 184, 0.1);
+  border-color: rgba(148, 163, 184, 0.4);
+  color: #e2e8f0;
+}
+
+.team-search .search-button {
+  margin-top: 12px;
+}
+
+/* Make sure the search results container has proper spacing */
+.team-search .search-results-container {
+  margin-top: 2rem;
+}
+
+/* Responsive styles for team search */
+@media (max-width: 768px) {
+  .team-search .search-header {
+    flex-direction: column;
+  }
+}

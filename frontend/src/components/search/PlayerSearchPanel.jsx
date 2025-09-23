@@ -16,11 +16,11 @@ export default function PlayerSearchPanel({
   }, [searchMode, onSearchModeChange]);
 
   return (
-    <div>
+    <div className="direct-player-search">
       <PlayerSearchToggle key="player-toggle" onModeChange={setSearchMode} />
 
       {/* עטיפה אחידה לשני המצבים */}
-      <div className="player-stats-box p-4">
+      <div className="advanced-panel">
         {searchMode === "profile" ? (
           <PlayerProfileSearch 
             key="player-profile-search"

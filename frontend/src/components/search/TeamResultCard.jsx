@@ -12,14 +12,22 @@ const TeamResultCard = ({ team, index }) => {
   return (
     <div className="result-item team-item">
       <div className="team-info">
-        {team.logo && (
+        <div className="team-logo-container">
           <img 
-            src={team.logo} 
+            src={
+              team.logo 
+                ? team.logo.startsWith('http') 
+                  ? team.logo
+                  : `${import.meta.env.VITE_API_BASE_URL}/${team.logo}`
+                : '/assets/default-team.png'
+            }
             alt={`${team.team_name} logo`}
             className="team-logo"
-            onError={(e) => {e.target.style.display = 'none'}}
+            onError={(e) => {
+              e.target.src = '/assets/default-team.png';
+            }}
           />
-        )}
+        </div>
         
         <div className="team-details-wrapper">
           <div className="team-header">

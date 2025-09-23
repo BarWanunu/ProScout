@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import AdvancedSearchTeam from "@/components/search/AdvancedSearchTeam";
+import DirectTeamSearch from "@/components/search/DirectTeamSearch";
 import PlayerSearchPanel from "@/components/search/PlayerSearchPanel";
 import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";  
 import "@/components/search/SearchBox.css";
 import "@/components/search/SearchFixGlobal.css";
+import "@/components/search/DirectSearchStyles.css";
 
 export default function ScoutSearch() {
   const [searchType, setSearchType] = useState("player");
@@ -119,7 +120,7 @@ export default function ScoutSearch() {
       </div>
 
       {searchType === "team" && (
-        <AdvancedSearchTeam
+        <DirectTeamSearch
           key="team-search-panel"
           league={league}
           setLeague={setLeague}
