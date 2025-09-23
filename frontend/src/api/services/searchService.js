@@ -128,6 +128,11 @@ async function searchScoutsByName(name) {
   return response.data;
 }
 
+async function advancedSearchScouts(filters) {
+  const response = await http.post(`${endpoint}/scouts/advanced`, filters);
+  return response.data;
+}
+
 export default {
   searchPlayersByName,
   advancedSearchPlayers,
@@ -135,4 +140,5 @@ export default {
   searchTeamsByName,
   advancedSearchTeams,
   searchScoutsByName,
+  advancedSearchScouts,
 };

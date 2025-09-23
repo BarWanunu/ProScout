@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
-import AdvancedSearchTeam from "./AdvancedSearchTeam";
-import PlayerSearchPanel from "./PlayerSearchPanel";
-import PlayerResultCard from "./PlayerResultCard";
-import TeamResultCard from "./TeamResultCard";
+import AdvancedSearchTeam from "@/components/search/AdvancedSearchTeam";
+import PlayerSearchPanel from "@/components/search/PlayerSearchPanel";
+import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";  
-import "../styles/ScoutSearch.css";
+import "@/components/search/SearchBox.css";
 
 export default function ScoutSearch() {
   const [searchType, setSearchType] = useState("player");
@@ -58,12 +57,12 @@ export default function ScoutSearch() {
           const filters = { team_name: searchInput, league, country, formation };
           const res = await searchService.advancedSearchTeams(filters);
           setResults(res.data || res);
-            console.log(res.data);
+          console.log(res.data);
         } else {
           // simple search by name
           const res = await searchService.searchTeamsByName(searchInput);
           setResults(res.data || res);
-            console.log(res.data);
+          console.log(res.data);
         }
       } else {
         // --- player search ---
@@ -71,14 +70,12 @@ export default function ScoutSearch() {
           const filters = { ...statsFilters, name: searchInput };
           const res = await searchService.searchPlayersWithStats(filters);
           setResults(res.data || res);
-                      console.log(res.data);
-
+          console.log(res.data);
         } else {
           const filters = { ...playerFilters, name: searchInput };
           const res = await searchService.advancedSearchPlayers(filters);
           setResults(res.data || res);
-                      console.log(res.data);
-
+          console.log(res.data);
         }
       }
     } catch (err) {
@@ -152,39 +149,12 @@ export default function ScoutSearch() {
       </Button>
 
       {/* --- Results --- */}
-      <div className="search-results mt-4">
-        {loading ? (
-          <div className="text-center">
-            <p>Searching...</p>
-          </div>
-        ) : results.length > 0 ? (
-          <div className="search-results-container">
-            <h4>Search Results ({results.length})</h4>
-            
-            {searchType === "team" ? (
-              // Team Results
-              <div className="results-list">
-                {results.map((team, index) => (
-                  <TeamResultCard key={`team-${index}`} team={team} index={index} />
-                ))}
-              </div>
-            ) : (
-              // Player Results
-              <div className="results-list">
-                {results.map((result, index) => (
-                  <PlayerResultCard key={`player-${result.player?.id || index}`} result={result} index={index} />
-                ))}
-              </div>
-            )}
-          </div>
-        ) : (
-          hasSearched && !loading && (
-            <div className="no-results">
-              <p>No results found for your search criteria</p>
-            </div>
-          )
-        )}
-      </div>
+      <SearchResultsList 
+        results={results}
+        loading={loading}
+        hasSearched={hasSearched}
+        searchType={searchType}
+      />
     </div>
   );
 }

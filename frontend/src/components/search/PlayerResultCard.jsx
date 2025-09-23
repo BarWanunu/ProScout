@@ -1,6 +1,14 @@
-import React from "react";
+import React from 'react';
+import ActionMenu from '@/components/shared/ActionMenu';
+import { useSearchActions } from '@/hooks/search/useSearchActions';
+import { normalizeSearchResult } from '@/utils/searchResultUtils';
+import './SearchResultCard.css';
 
 const PlayerResultCard = ({ result, index }) => {
+  const { getActionsForUser } = useSearchActions();
+  const normalizedResult = normalizeSearchResult(result);
+  const actions = getActionsForUser(normalizedResult);
+
   return (
     <div className="result-item player-item">
       <div className="player-info">
@@ -15,7 +23,19 @@ const PlayerResultCard = ({ result, index }) => {
         
         <div className="player-details">
           <div className="basic-info">
-            <h5>{result.player?.name || result.name}</h5>
+            <div className="player-header">
+              <h5>{result.player?.name || result.name}</h5>
+              <ActionMenu 
+                actions={actions}
+                trigger={
+                  <button className="more-actions-btn">
+                    <span className="more-actions-icon">⋮</span>
+                    More Actions
+                  </button>
+                }
+                position="bottom-right"
+              />
+            </div>
             <div className="player-meta">
               <span className="position">{result.player?.position}</span>
               <span className="club">{result.player?.club || result.club}</span>

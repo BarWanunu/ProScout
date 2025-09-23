@@ -165,5 +165,28 @@ exports.searchScoutsByName = async (req, res) => {
     return res.status(500).json({ message: result.message });
   }
 
-  res.status(200).json({ scouts: result.data });
+  res.status(200).json({ success: true, data: result.data });
+};
+
+exports.advancedSearchScouts = async (req, res) => {
+  const filters = req.body;
+
+  const result = await searchModel.advancedSearchScouts(filters);
+
+  if (!result.success) {
+    return res.status(500).json(result);
+  }
+
+  if (result.data.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No scouts matched the search criteria",
+    });
+  }
+
+  return res.json({
+    ...result,
+    searchType: "advanced",
+    matchedCriteria: filters,
+  });
 };

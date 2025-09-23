@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ScoutSearch from "./ScoutSearch";
+import { ScoutSearch } from "@/components/search";
 import ScoutTrials from "./ScoutTrials";
 import "../styles/ScoutDashboardTabs.css";
 

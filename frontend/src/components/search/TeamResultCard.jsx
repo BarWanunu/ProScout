@@ -1,6 +1,14 @@
 import React from "react";
+import ActionMenu from '@/components/shared/ActionMenu';
+import { useSearchActions } from '@/hooks/search/useSearchActions';
+import { normalizeSearchResult } from '@/utils/searchResultUtils';
+import './SearchResultCard.css';
 
 const TeamResultCard = ({ team, index }) => {
+  const { getActionsForUser } = useSearchActions();
+  const normalizedResult = normalizeSearchResult(team);
+  const actions = getActionsForUser(normalizedResult);
+
   return (
     <div className="result-item team-item">
       <div className="team-info">
@@ -14,7 +22,19 @@ const TeamResultCard = ({ team, index }) => {
         )}
         
         <div className="team-details-wrapper">
-          <h5>{team.team_name}</h5>
+          <div className="team-header">
+            <h5>{team.team_name}</h5>
+            <ActionMenu 
+              actions={actions}
+              trigger={
+                <button className="more-actions-btn">
+                  <span className="more-actions-icon">⋮</span>
+                  More Actions
+                </button>
+              }
+              position="bottom-right"
+            />
+          </div>
           <div className="team-details">
             <span className="badge country">{team.country}</span>
             <span className="badge league">{team.league}</span>

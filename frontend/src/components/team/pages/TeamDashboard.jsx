@@ -10,7 +10,7 @@ import {
 
 import Watchlist from "../components/Watchlist/Watchlist111.js";
 import SmartRecommender from "../components/SmartRecommender/SmartRecommender.jsx";
-import PlayerSearch from "../components/PlayerSearch/PlayerSearch.js";
+import { TeamSearch } from "@/components/search";
 import PlayerComparison from "../components/PlayerComparison/PlayerComparison.js";
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
@@ -110,7 +110,7 @@ export default function TeamDashboard() {
   const renderTab = () => {
     switch (activeTab) {
       case "search":
-        return <PlayerSearch />;
+        return <TeamSearch />;
       case "compare":
         return <PlayerComparison />;
       case "watchlist":

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import PlayerSearchToggle from "./PlayerSearchToggle";
-import PlayerProfileSearch from "./PlayerProfileSearch";
-import PlayerStatsSearch from "./PlayerStatsSearch";
+import PlayerSearchToggle from "@/components/search/PlayerSearchToggle";
+import PlayerProfileSearch from "@/components/search/PlayerProfileSearch";
+import PlayerStatsSearch from "@/components/search/PlayerStatsSearch";
 
 export default function PlayerSearchPanel({
   onPlayerFiltersChange,
@@ -38,4 +38,3 @@ export default function PlayerSearchPanel({
     </div>
   );
 }
-

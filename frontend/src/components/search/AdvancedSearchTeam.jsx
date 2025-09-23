@@ -1,4 +1,3 @@
-
 export default function AdvancedSearchTeam({ league, setLeague, country, setCountry, formation, setFormation, onSearch }) {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "../styles/PlayerSearchToggle.css";
+import "@/components/search/PlayerSearchToggle.css";
 
 export default function PlayerSearchToggle({ onModeChange }) {
   const [mode, setMode] = useState("profile");
