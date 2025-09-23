@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Table, Button, Spinner, Badge } from 'react-bootstrap';
-import { UserMinus, Send, Search, MessageCircle, User } from 'lucide-react';
+import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
 import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
 import { getToken } from '@/api/tokenStore';
@@ -220,7 +220,7 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], onSwitchToSearch, onRe
                   className="action-btn trial-btn"
                   onClick={() => handleSendTrialInvitation(player.player_id)}
                 >
-                  <Send size={16} className="action-icon" />
+                  <ClipboardList size={16} className="action-icon" />
                   Trial
                 </Button>
                 

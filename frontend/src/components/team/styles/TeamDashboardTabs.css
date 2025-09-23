@@ -11,7 +11,7 @@
 .team-dashboard-tabs .tab-navigation {
   background: rgba(30, 41, 59, 0.85);
   border-radius: 15px 15px 0 0;
-  padding: 0.75rem;
+  padding: 0.5rem;
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
@@ -26,10 +26,10 @@
   background: rgba(148, 163, 184, 0.15);
   border: 1px solid rgba(148, 163, 184, 0.3);
   border-radius: 10px;
-  padding: 0.85rem 1.25rem;
+  padding: 1rem 1.5rem;
   color: #e2e8f0;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -38,6 +38,7 @@
   justify-content: center;
   flex: 1;
   max-width: 220px;
+  min-width: 160px;
 }
 
 .team-dashboard-tabs .tab-button:hover {
@@ -59,7 +60,7 @@
 }
 
 .team-dashboard-tabs .tab-label {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 

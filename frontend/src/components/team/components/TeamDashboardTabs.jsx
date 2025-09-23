@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Search, Star, CalendarDays, Users } from "lucide-react";
+import { Search, Star, ClipboardList, Users, User } from "lucide-react";
 import { TeamSearch } from "@/components/search";
 import "@/components/search/styles/SearchFixGlobal.css";
 import TrialsTab from "./TrialsTab";
@@ -23,18 +23,18 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
     },
     { 
       id: "trials", 
-      label: "Trials", 
-      icon: <CalendarDays size={18} /> 
+      label: "Trials Invitations", 
+      icon: <ClipboardList size={18} /> 
     },
     { 
       id: "recommendations", 
       label: "Recommendations", 
-      icon: <Star size={18} /> 
+      icon: <Users size={18} /> 
     },
     { 
       id: "shortlist", 
       label: "Shortlist", 
-      icon: <Users size={18} /> 
+      icon: <Star size={18} /> 
     },
   ];
 
