@@ -1,10 +1,17 @@
 
-export default function AdvancedSearchTeam({ league, setLeague, country, setCountry, formation, setFormation }) {
+export default function AdvancedSearchTeam({ league, setLeague, country, setCountry, formation, setFormation, onSearch }) {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSearch?.();
+    }
+  };
+
   return (
     <div className="advanced-team-fields">
       <div className="field-group">
         <label>League</label>
-        <select value={league} onChange={(e) => setLeague(e.target.value)}>
+        <select value={league} onChange={(e) => setLeague(e.target.value)} onKeyDown={handleKeyDown}>
           <option value="">Select League</option>
           <option value="Bundesliga">Bundesliga</option>
           <option value="La Liga">La Liga</option>
@@ -21,12 +28,13 @@ export default function AdvancedSearchTeam({ league, setLeague, country, setCoun
           placeholder="Enter country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
       </div>
 
       <div className="field-group">
         <label>Formation</label>
-        <select value={formation} onChange={(e) => setFormation(e.target.value)}>
+        <select value={formation} onChange={(e) => setFormation(e.target.value)} onKeyDown={handleKeyDown}>
           <option value="">Select Formation</option>
           <option>4-3-3</option>
           <option>4-4-2</option>

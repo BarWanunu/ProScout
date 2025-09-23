@@ -7,6 +7,7 @@ export default function PlayerSearchPanel({
   onPlayerFiltersChange,
   onStatsFiltersChange,
   onSearchModeChange,
+  onSearch,
 }) {
   const [searchMode, setSearchMode] = useState("profile");
 
@@ -16,14 +17,22 @@ export default function PlayerSearchPanel({
 
   return (
     <div>
-      <PlayerSearchToggle onModeChange={setSearchMode} />
+      <PlayerSearchToggle key="player-toggle" onModeChange={setSearchMode} />
 
       {/* עטיפה אחידה לשני המצבים */}
       <div className="player-stats-box p-4">
         {searchMode === "profile" ? (
-          <PlayerProfileSearch onFiltersChange={onPlayerFiltersChange} />
+          <PlayerProfileSearch 
+            key="player-profile-search"
+            onFiltersChange={onPlayerFiltersChange} 
+            onSearch={onSearch} 
+          />
         ) : (
-          <PlayerStatsSearch onFiltersChange={onStatsFiltersChange} />
+          <PlayerStatsSearch 
+            key="player-stats-search"
+            onFiltersChange={onStatsFiltersChange} 
+            onSearch={onSearch} 
+          />
         )}
       </div>
     </div>

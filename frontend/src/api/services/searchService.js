@@ -1,22 +1,108 @@
 import { http } from "../http";
+import playerService from "./playerService";
 
 const endpoint = "/search";
+
+// Helper function to get full player data
+const enrichPlayerData = async (players, searchType, matchedCriteria) => {
+  const enrichedPlayers = await Promise.all(
+    players.map(async (player) => {
+      try {
+        // Get full player data using the existing playerService
+        const fullPlayerData = await playerService.getPlayerFull(player.id);
+
+        // For stats search, preserve the matched stats and don't use full stats
+        if (searchType === "statistics") {
+          return {
+            player: fullPlayerData.player,
+            stats: null, // Don't use full stats for statistics search
+            searchType: searchType,
+            matchedCriteria: matchedCriteria,
+            matchedStats: player.matchedStats || null,
+          };
+        }
+
+        // For profile search, use full data
+        return {
+          player: fullPlayerData.player,
+          stats: fullPlayerData.stats,
+          searchType: searchType,
+          matchedCriteria: matchedCriteria,
+          matchedStats: player.matchedStats || null,
+        };
+      } catch (err) {
+        console.error(`Failed to get full data for player ${player.id}:`, err);
+        return {
+          player: player,
+          stats: null,
+          searchType: searchType,
+          matchedCriteria: matchedCriteria,
+          matchedStats: player.matchedStats || null,
+        };
+      }
+    })
+  );
+
+  return enrichedPlayers;
+};
 
 // ----- Players -----
 
 async function searchPlayersByName(name) {
   const response = await http.get(`${endpoint}/players`, { params: { name } });
-  return response.data;
+  const result = response.data;
+
+  if (result.success && result.data.length > 0) {
+    const enrichedData = await enrichPlayerData(
+      result.data,
+      result.searchType,
+      result.matchedCriteria
+    );
+    return {
+      ...result,
+      data: enrichedData,
+    };
+  }
+
+  return result;
 }
 
 async function advancedSearchPlayers(filters) {
   const response = await http.post(`${endpoint}/players/advanced`, filters);
-  return response.data;
+  const result = response.data;
+
+  if (result.success && result.data.length > 0) {
+    const enrichedData = await enrichPlayerData(
+      result.data,
+      result.searchType,
+      result.matchedCriteria
+    );
+    return {
+      ...result,
+      data: enrichedData,
+    };
+  }
+
+  return result;
 }
 
 async function searchPlayersWithStats(filters) {
   const response = await http.post(`${endpoint}/players/stats`, filters);
-  return response.data;
+  const result = response.data;
+
+  if (result.success && result.data.length > 0) {
+    const enrichedData = await enrichPlayerData(
+      result.data,
+      result.searchType,
+      result.matchedCriteria
+    );
+    return {
+      ...result,
+      data: enrichedData,
+    };
+  }
+
+  return result;
 }
 
 // ----- Teams -----

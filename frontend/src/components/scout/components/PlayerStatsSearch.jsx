@@ -19,12 +19,19 @@ const statFields = [
   "rating",
 ];
 
-export default function PlayerStatsSearch({ onFiltersChange }) {
+export default function PlayerStatsSearch({ onFiltersChange, onSearch }) {
   const [filters, setFilters] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSearch?.();
+    }
   };
 
   useEffect(() => {
@@ -44,6 +51,7 @@ export default function PlayerStatsSearch({ onFiltersChange }) {
             className="form-control"
             value={filters[`min_${field}`] || ""}
             onChange={handleChange}
+            onKeyDown={handleKeyDown}
             min={0}
           />
         </div>

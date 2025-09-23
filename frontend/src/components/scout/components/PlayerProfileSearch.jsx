@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "../styles/PlayerSearch.css";
 
-export default function PlayerProfileSearch({ onFiltersChange }) {
+export default function PlayerProfileSearch({ onFiltersChange, onSearch }) {
   const positions = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
   const [filters, setFilters] = useState({
@@ -21,6 +21,13 @@ export default function PlayerProfileSearch({ onFiltersChange }) {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSearch?.();
+    }
+  };
+
   useEffect(() => {
     if (onFiltersChange) onFiltersChange(filters);
   }, [filters, onFiltersChange]);
@@ -35,6 +42,7 @@ return (
           className="form-select"
           value={filters.position}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         >
           <option value="">Select Position</option>
           {positions.map((pos) => (
@@ -51,6 +59,7 @@ return (
           className="form-control"
           value={filters.club}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
 
@@ -62,6 +71,7 @@ return (
           className="form-control"
           value={filters.nationality}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
         />
       </div>
 
@@ -73,6 +83,7 @@ return (
           className="form-control"
           value={filters.ageMin}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>
@@ -85,6 +96,7 @@ return (
           className="form-control"
           value={filters.ageMax}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>
@@ -97,6 +109,7 @@ return (
           className="form-control"
           value={filters.heightMin}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>
@@ -109,6 +122,7 @@ return (
           className="form-control"
           value={filters.heightMax}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>
@@ -121,6 +135,7 @@ return (
           className="form-control"
           value={filters.weightMin}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>
@@ -133,6 +148,7 @@ return (
           className="form-control"
           value={filters.weightMax}
           onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
           min={0}
         />
       </div>

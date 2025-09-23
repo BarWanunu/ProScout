@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import AdvancedSearchTeam from "./AdvancedSearchTeam";
 import PlayerSearchPanel from "./PlayerSearchPanel";
-import searchService from "@/api/services/searchService";  // 👈 חיבור ל-service
+import PlayerResultCard from "./PlayerResultCard";
+import TeamResultCard from "./TeamResultCard";
+import searchService from "@/api/services/searchService";  
 import "../styles/ScoutSearch.css";
 
 export default function ScoutSearch() {
@@ -20,6 +22,30 @@ export default function ScoutSearch() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Reset all filters when searchType changes
+  useEffect(() => {
+    // Reset search input
+    setSearchInput("");
+    
+    // Reset team filters
+    setLeague("");
+    setCountry("");
+    setFormation("");
+    
+    // Reset player filters
+    setPlayerFilters({});
+    setStatsFilters({});
+    setSearchMode("profile");
+    
+    // Clear results
+    setResults([]);
+    setHasSearched(false);
+  }, [searchType]);
+
+  const handleSearchTypeChange = (e) => {
+    setSearchType(e.target.value);
+  };
 
   const handleSearch = async () => {
     try {
@@ -69,7 +95,7 @@ export default function ScoutSearch() {
         <select
           className="search-select"
           value={searchType}
-          onChange={(e) => setSearchType(e.target.value)}
+          onChange={handleSearchTypeChange}
         >
           <option value="player">Search by Player</option>
           <option value="team">Search by Team</option>
@@ -96,20 +122,24 @@ export default function ScoutSearch() {
 
       {searchType === "team" && (
         <AdvancedSearchTeam
+          key="team-search-panel"
           league={league}
           setLeague={setLeague}
           country={country}
           setCountry={setCountry}
           formation={formation}
           setFormation={setFormation}
+          onSearch={handleSearch}
         />
       )}
 
       {searchType === "player" && (
         <PlayerSearchPanel
+          key="player-search-panel"
           onPlayerFiltersChange={setPlayerFilters}
           onStatsFiltersChange={setStatsFilters}
           onSearchModeChange={setSearchMode}
+          onSearch={handleSearch}
         />
       )}
 
@@ -121,22 +151,38 @@ export default function ScoutSearch() {
         {loading ? "Searching..." : "Search"}
       </Button>
 
-      {/* --- תוצאות --- */}
-      <div className="search-results mt-4 text-black">
+      {/* --- Results --- */}
+      <div className="search-results mt-4">
         {loading ? (
-          <p>Loading...</p>
+          <div className="text-center">
+            <p>Searching...</p>
+          </div>
         ) : results.length > 0 ? (
-          <ul>
-            {results.map((item, i) => (
-              <li key={i}>
-                {searchType === "team"
-                  ? `${item.team_name} (${item.country}, ${item.league}, ${item.formation}, ${item.stadium}, ${item.trophies})`
-                  : `${item.name} - ${item.goals || "?"} - ${item.season} (${item.club || "?"})`}
-              </li>
-            ))}
-          </ul>
+          <div className="search-results-container">
+            <h4>Search Results ({results.length})</h4>
+            
+            {searchType === "team" ? (
+              // Team Results
+              <div className="results-list">
+                {results.map((team, index) => (
+                  <TeamResultCard key={`team-${index}`} team={team} index={index} />
+                ))}
+              </div>
+            ) : (
+              // Player Results
+              <div className="results-list">
+                {results.map((result, index) => (
+                  <PlayerResultCard key={`player-${result.player?.id || index}`} result={result} index={index} />
+                ))}
+              </div>
+            )}
+          </div>
         ) : (
-          hasSearched && !loading && <p>No results found for your search criteria</p>
+          hasSearched && !loading && (
+            <div className="no-results">
+              <p>No results found for your search criteria</p>
+            </div>
+          )
         )}
       </div>
     </div>
