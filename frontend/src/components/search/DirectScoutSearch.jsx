@@ -13,15 +13,6 @@ const DirectScoutSearch = ({ filters, setFilters, onSearch }) => {
     setMinExperienceYears(filters?.min_experience_years || '');
     setMaxExperienceYears(filters?.max_experience_years || '');
   }, [filters]);
-
-  const handleClearFilters = () => {
-    setNationality('');
-    setMinExperienceYears('');
-    setMaxExperienceYears('');
-    
-    // Update the parent component's filters
-    setFilters({});
-  };
   
   // Update parent filters when local state changes
   useEffect(() => {

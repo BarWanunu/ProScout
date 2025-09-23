@@ -13,7 +13,7 @@ export default function TeamDashboardTabs({ team, trials, shortlist }) {
   const tabs = [
     { 
       id: "search", 
-      label: "Player Search", 
+      label: "Search", 
       icon: <Search size={18} /> 
     },
     { 
