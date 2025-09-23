@@ -10,10 +10,13 @@
   flex-direction: column;
   gap: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 0;
 }
 
 .main-input-wrapper {
   width: 100%;
+  position: relative;
 }
 .search-header {
   display: flex;
@@ -93,13 +96,17 @@
   background-color: #2563eb;
   color: white;
   border: none;
-  transition: background 0.25s ease;
+  transition: background 0.25s ease, transform 0.2s ease;
   align-self: flex-start;
   margin-top: 12px;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
 }
 
 .search-button:hover {
   background-color: #1d4ed8;
+  transform: translateY(-1px);
 }
 .field-group select:focus,
 .field-group input:focus {
@@ -129,4 +136,9 @@
   .advanced-team-fields {
     grid-template-columns: 1fr;
   }
+}
+
+/* Fix for search results appearing behind other elements */
+.search-results-container {
+  margin-bottom: 40px; /* מוסיף מרווח בתחתית תוצאות החיפוש */
 }

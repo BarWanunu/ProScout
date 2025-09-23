@@ -1,0 +1,53 @@
+/* Global Fixes for Search UI */
+.search-component-wrapper {
+  isolation: isolate;
+}
+
+/* Fix z-index issues for search results */
+.search-results-container {
+  isolation: isolate;
+}
+
+.result-item {
+  isolation: isolate;
+  margin-bottom: 12px; /* Add space between items */
+}
+
+/* Ensure each result card has its own stacking context */
+.results-list > * {
+  position: relative !important;
+  margin-bottom: 4px !important;
+}
+
+/* Ensure all search result cards are visible */
+.player-item,
+.team-item,
+.scout-item {
+  isolation: isolate;
+}
+
+/* Make actions visible above other elements */
+.more-actions-btn,
+.action-buttons {
+  z-index: 2000 !important;
+  position: relative;
+}
+
+/* Fix tabs showing through results */
+.tab-navigation,
+.tab-content {
+  z-index: 0;
+  position: relative;
+}
+
+/* Each result wrapper gets proper spacing and stacking */
+.result-wrapper {
+  margin-bottom: 16px !important;
+  position: relative;
+}
+
+/* Force each result to create its own stacking context */
+.result-wrapper .result-item {
+  transform: translateZ(0);
+  margin-bottom: 0;
+}

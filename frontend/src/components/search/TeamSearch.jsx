@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";
 import "@/components/search/SearchBox.css";
+import "@/components/search/SearchFixGlobal.css";
 
 export default function TeamSearch() {
   const [searchType, setSearchType] = useState("player");
@@ -41,7 +42,7 @@ export default function TeamSearch() {
   };
 
   return (
-    <div className="scout-search-box">
+    <div className="scout-search-box search-component-wrapper">
       <div className="search-header">
         <select
           className="search-select"

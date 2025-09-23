@@ -4,6 +4,8 @@ import TeamResultCard from './TeamResultCard';
 import ScoutResultCard from './ScoutResultCard';
 import { getUserTypeFromResult } from '@/utils/searchResultUtils';
 import './SearchResultsList.css';
+import './SearchFixGlobal.css';
+import './SearchResultWrapper.css';
 
 const SearchResultsList = ({ 
   results, 
@@ -40,7 +42,7 @@ const SearchResultsList = ({
   }
 
   return (
-    <div className={`search-results-container ${className}`}>
+    <div className={`search-results-container search-component-wrapper ${className}`}>
       <div className="results-header">
         <h4>Search Results ({results.length})</h4>
         <div className="results-summary">
@@ -58,39 +60,53 @@ const SearchResultsList = ({
       <div className="results-list">
         {results.map((result, index) => {
           const resultType = getUserTypeFromResult(result);
+          // Calculate a decreasing z-index for each item to ensure proper stacking
+          const itemStyle = { 
+            zIndex: 1000 - index,
+            position: 'relative',
+            marginBottom: '8px'
+          };
           
           // Choose appropriate card component based on result type
           if (resultType === 'player' || searchType === 'player') {
             return (
-              <PlayerResultCard 
-                key={`player-${result.player?.id || result.id || index}`} 
-                result={result} 
-                index={index} 
-              />
+              <div key={`player-container-${index}`} style={itemStyle} className="result-wrapper">
+                <PlayerResultCard 
+                  key={`player-${result.player?.id || result.id || index}`} 
+                  result={result} 
+                  index={index} 
+                />
+              </div>
             );
           } else if (resultType === 'team' || searchType === 'team') {
             return (
-              <TeamResultCard 
-                key={`team-${result.id || index}`} 
-                team={result} 
-                index={index} 
-              />
+              <div key={`team-container-${index}`} style={itemStyle} className="result-wrapper">
+                <TeamResultCard 
+                  key={`team-${result.id || index}`} 
+                  team={result} 
+                  index={index} 
+                />
+              </div>
             );
           } else if (resultType === 'scout' || searchType === 'scout') {
             return (
-              <ScoutResultCard 
-                key={`scout-${result.id || index}`} 
-                scout={result} 
-                index={index} 
-              />
+              <div key={`scout-container-${index}`} style={itemStyle} className="result-wrapper">
+                <ScoutResultCard 
+                  key={`scout-${result.id || index}`} 
+                  scout={result} 
+                  index={index} 
+                />
+              </div>
             );
           } else {
             // Fallback for unknown result types
             return (
-              <div key={`unknown-${index}`} className="result-item unknown-item">
-                <div className="unknown-result">
-                  <h5>{result.name || 'Unknown Result'}</h5>
-                  <p>Result type not recognized</p>
+              <div key={`unknown-container-${index}`} style={itemStyle} className="result-wrapper">
+                <div key={`unknown-${index}`} className="result-item unknown-item">
+                  <div className="unknown-result">
+                    <h5>{result.name || 'Unknown Result'}</h5>
+                    <p>Result type not recognized</p>
+                  </div>
                 </div>
               </div>
             );

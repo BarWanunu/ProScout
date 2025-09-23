@@ -4,9 +4,15 @@
   background-color: white;
   border-radius: 8px;
   padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000 !important;
   position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: visible;
+  padding-bottom: 30px; /* Add extra padding at bottom */
 }
 
 .results-header {
@@ -65,7 +71,9 @@
 .results-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 5px; /* Increased gap between items */
+  position: relative;
+  z-index: 1001 !important;
 }
 
 /* Loading State */
