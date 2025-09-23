@@ -8,20 +8,23 @@ import { Footer, Header } from "@/layout/overallLayout"
 import MessagesDemo from "@/components/MessageDemo"
 import RecommendationDemo from "@/components/ReccomendationDemo"
 import { PlayerSearch } from "@/components/search"
+import WelcomeSection from "@/components/common/WelcomeSection"
 
 export default function PlayerDashboard() {
   const { id: userId, token } = useAuth()
   const [summary, setSummary] = useState(null)
+  const [player, setPlayer] = useState(null)
   const [activeTab, setActiveTab] = useState("stats")
 
   useEffect(() => {
-    const fetchSummary = async () => {
+    const fetchPlayerData = async () => {
       try {
         // קודם שולפים את השחקן כדי לדעת את ה-id שלו
-        const player = await playerService.getPlayerById(userId, token)
-
-        if (player?.id) {
-          const data = await playerService.getPlayerStatsSummary(player.id, 2022, 2024)
+        const playerData = await playerService.getPlayerById(userId, token)
+        setPlayer(playerData)
+        
+        if (playerData?.id) {
+          const data = await playerService.getPlayerStatsSummary(playerData.id, 2022, 2024)
           setSummary(data)
           console.log("✅ Player stats summary:", data)
         }
@@ -31,7 +34,7 @@ export default function PlayerDashboard() {
     }
 
     if (userId && token) {
-      fetchSummary()
+      fetchPlayerData()
     }
   }, [userId, token])
 
@@ -76,6 +79,9 @@ export default function PlayerDashboard() {
     <>
       <Header />
       <div className="container mx-auto p-6 space-y-6">
+        {/* Welcome Section */}
+        <WelcomeSection user={player} userType="player" imageStyle="circle" />
+        
         {/* Simple Tab Navigation */}
         <div className="flex space-x-2 mb-4 border-b pb-2">
           <button 
