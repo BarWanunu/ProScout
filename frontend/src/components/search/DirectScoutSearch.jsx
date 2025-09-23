@@ -33,50 +33,60 @@ const DirectScoutSearch = ({ filters, setFilters, onSearch }) => {
     
     setFilters(newFilters);
   }, [nationality, minExperienceYears, maxExperienceYears, setFilters]);
+  
+  // Handle form submission when Enter key is pressed
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent default form submission
+      onSearch();
+    }
+  };
 
   return (
     <div className="advanced-search-panel scout-search direct-scout-search">
       <div className="advanced-panel">
-        <Row className="mb-3">
-          <Col>
-            <Form.Group>
-              <Form.Label>Nationality</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter nationality"
-                value={nationality}
-                onChange={(e) => setNationality(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+        <Form onKeyDown={handleKeyDown}>
+          <Row className="mb-3">
+            <Col>
+              <Form.Group>
+                <Form.Label>Nationality</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter nationality"
+                  value={nationality}
+                  onChange={(e) => setNationality(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
 
-        <Row className="mb-3">
-          <Col>
-            <Form.Group>
-              <Form.Label>Min Experience (years)</Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                placeholder="Min"
-                value={minExperienceYears}
-                onChange={(e) => setMinExperienceYears(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label>Max Experience (years)</Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                placeholder="Max"
-                value={maxExperienceYears}
-                onChange={(e) => setMaxExperienceYears(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
+          <Row className="mb-3">
+            <Col>
+              <Form.Group>
+                <Form.Label>Min Experience (years)</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="0"
+                  placeholder="Min"
+                  value={minExperienceYears}
+                  onChange={(e) => setMinExperienceYears(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+            <Col>
+              <Form.Group>
+                <Form.Label>Max Experience (years)</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="0"
+                  placeholder="Max"
+                  value={maxExperienceYears}
+                  onChange={(e) => setMaxExperienceYears(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+        </Form>
       </div>
     </div>
   );
