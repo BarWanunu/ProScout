@@ -5,8 +5,8 @@ import { PlayerInfo, PlayerStats, PlayerProfile } from './player';
 import './styles/SearchResultCard.css';
 import './styles/PlayerComponents.css';
 
-const PlayerResultCard = ({ result, index }) => {
-  const { getActionsForUser } = useSearchActions();
+const PlayerResultCard = ({ result, index, onRefreshShortlist }) => {
+  const { getActionsForUser } = useSearchActions({ onRefreshShortlist });
   const normalizedResult = normalizeSearchResult(result);
   const actions = getActionsForUser(normalizedResult);
 

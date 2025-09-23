@@ -8,8 +8,12 @@ import RecommendationTab from "./RecommendationTab";
 import "../styles/TeamDashboardTabs.css";
 import "../styles/TeamContainer.css";
 
-export default function TeamDashboardTabs({ team, trials, shortlist }) {
+export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshShortlist }) {
   const [activeTab, setActiveTab] = useState("search");
+
+  const switchToTab = (tabId) => {
+    setActiveTab(tabId);
+  };
 
   const tabs = [
     { 
@@ -37,15 +41,21 @@ export default function TeamDashboardTabs({ team, trials, shortlist }) {
   const renderTabContent = () => {
     switch (activeTab) {
       case "search":
-        return <TeamSearch />;
+        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
       case "trials":
         return <TrialsTab trials={trials} />;
       case "recommendations":
         return <RecommendationTab team={team} />;
       case "shortlist":
-        return <ShortlistTab shortlist={shortlist} />;
+        return (
+          <ShortlistTab 
+            shortlist={shortlist} 
+            onSwitchToSearch={() => switchToTab("search")}
+            onRefreshShortlist={onRefreshShortlist}
+          />
+        );
       default:
-        return <TeamSearch />;
+        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
     }
   };
 

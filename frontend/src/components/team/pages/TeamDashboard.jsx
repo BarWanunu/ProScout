@@ -66,17 +66,17 @@ export default function TeamDashboard() {
   }, [team]);
 
   // --- Fetch Shortlist ---
-  useEffect(() => {
-    const fetchShortlist = async () => {
-      try {
-        const token = getToken();
-        const players = await shortlistService.getShortlist(token);
-        setShortlist(players);
-      } catch (err) {
-        console.error("❌ Error fetching shortlist:", err);
-      }
-    };
+  const fetchShortlist = async () => {
+    try {
+      const token = getToken();
+      const players = await shortlistService.getShortlist(token);
+      setShortlist(players);
+    } catch (err) {
+      console.error("❌ Error fetching shortlist:", err);
+    }
+  };
 
+  useEffect(() => {
     fetchShortlist();
   }, []);
 
@@ -95,7 +95,8 @@ export default function TeamDashboard() {
           <TeamDashboardTabs 
             team={team} 
             trials={trials} 
-            shortlist={shortlist} 
+            shortlist={shortlist}
+            onRefreshShortlist={fetchShortlist}
           />
         </div>
       </div>

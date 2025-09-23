@@ -5,7 +5,7 @@ import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import './styles/SearchResultCard.css';
 
 const TeamResultCard = ({ team, index }) => {
-  const { getActionsForUser } = useSearchActions();
+  const { getActionsForUser } = useSearchActions({});
   const normalizedResult = normalizeSearchResult(team);
   const actions = getActionsForUser(normalizedResult);
 

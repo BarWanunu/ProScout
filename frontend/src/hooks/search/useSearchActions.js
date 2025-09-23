@@ -1,7 +1,9 @@
 import { useAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import shortlistService from "@/api/services/shortlistService";
+import { getToken } from "@/api/tokenStore";
 
-export const useSearchActions = () => {
+export const useSearchActions = ({ onRefreshShortlist } = {}) => {
   const { role, id: currentUserId } = useAuth();
   const navigate = useNavigate();
 
@@ -185,10 +187,26 @@ export const useSearchActions = () => {
     alert(`Opening trial request dialog to: ${user.name} (${user.type})`);
   };
 
-  const handleAddToShortlist = (player) => {
-    console.log("Adding to shortlist:", player);
-    // TODO: הוסף לרשימת מועדפים
-    alert(`Adding ${player.name} to shortlist`);
+  const handleAddToShortlist = async (player) => {
+    try {
+      console.log("Adding to shortlist:", player);
+      const token = getToken();
+      const playerId = player.player_id || player.id;
+      await shortlistService.addPlayer(playerId, token);
+      alert(`${player.name} has been added to your shortlist successfully!`);
+      // Refresh the shortlist if callback is provided
+      if (onRefreshShortlist) {
+        console.log("Refreshing shortlist after adding player...");
+        await onRefreshShortlist();
+      }
+    } catch (error) {
+      console.error("Failed to add player to shortlist:", error);
+      if (error.response?.status === 400) {
+        alert("This player is already in your shortlist.");
+      } else {
+        alert("Failed to add player to shortlist. Please try again.");
+      }
+    }
   };
 
   return {

@@ -12,7 +12,8 @@ const SearchResultsList = ({
   loading, 
   hasSearched, 
   searchType,
-  className = ''
+  className = '',
+  onRefreshShortlist
 }) => {
   if (loading) {
     return (
@@ -74,7 +75,8 @@ const SearchResultsList = ({
                 <PlayerResultCard 
                   key={`player-${result.player?.id || result.id || index}`} 
                   result={result} 
-                  index={index} 
+                  index={index}
+                  onRefreshShortlist={onRefreshShortlist}
                 />
               </div>
             );
