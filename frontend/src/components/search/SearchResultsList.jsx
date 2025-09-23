@@ -3,9 +3,9 @@ import PlayerResultCard from './PlayerResultCard';
 import TeamResultCard from './TeamResultCard';
 import ScoutResultCard from './ScoutResultCard';
 import { getUserTypeFromResult } from '@/utils/searchResultUtils';
-import './SearchResultsList.css';
-import './SearchFixGlobal.css';
-import './SearchResultWrapper.css';
+import './styles/SearchResultsList.css';
+import './styles/SearchFixGlobal.css';
+import './styles/SearchResultWrapper.css';
 
 const SearchResultsList = ({ 
   results, 

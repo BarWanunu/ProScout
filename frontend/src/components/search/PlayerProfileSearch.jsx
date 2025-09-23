@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "@/components/search/PlayerSearch.css";
+import "@/components/search/styles/PlayerSearch.css";
 
 export default function PlayerProfileSearch({ onFiltersChange, onSearch }) {
   const positions = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];

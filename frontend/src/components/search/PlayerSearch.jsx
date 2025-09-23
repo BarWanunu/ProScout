@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";
-import "@/components/search/SearchBox.css";
-import "@/components/search/SearchFixGlobal.css";
+import "@/components/search/styles/SearchBox.css";
+import "@/components/search/styles/SearchFixGlobal.css";
 
 export default function PlayerSearch() {
   const [searchType, setSearchType] = useState("team");

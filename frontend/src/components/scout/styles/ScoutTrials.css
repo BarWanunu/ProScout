@@ -85,7 +85,7 @@
 .trial-card {
   border: none;
   border-radius: 12px;
-  background: #f8f9fa !important;
+  background: #f1f5fb !important; /* Light blue background like in the image */
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   transition: transform 0.3s ease;

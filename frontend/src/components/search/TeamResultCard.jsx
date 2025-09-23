@@ -2,7 +2,7 @@ import React from "react";
 import ActionMenu from '@/components/shared/ActionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
-import './SearchResultCard.css';
+import './styles/SearchResultCard.css';
 
 const TeamResultCard = ({ team, index }) => {
   const { getActionsForUser } = useSearchActions();

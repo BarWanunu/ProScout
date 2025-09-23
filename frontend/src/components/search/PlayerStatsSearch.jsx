@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "@/components/search/PlayerSearch.css";
+import "@/components/search/styles/PlayerSearch.css";
 
 const statFields = [
   "goals",

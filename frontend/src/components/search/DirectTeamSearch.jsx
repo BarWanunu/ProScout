@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import "@/components/search/SearchBox.css";
+import "@/components/search/styles/SearchBox.css";
 
 const DirectTeamSearch = ({ league, setLeague, country, setCountry, formation, setFormation, onSearch }) => {
   const handleClearFilters = () => {

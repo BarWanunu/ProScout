@@ -4,9 +4,10 @@ import DirectTeamSearch from "@/components/search/DirectTeamSearch";
 import PlayerSearchPanel from "@/components/search/PlayerSearchPanel";
 import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";  
-import "@/components/search/SearchBox.css";
-import "@/components/search/SearchFixGlobal.css";
-import "@/components/search/DirectSearchStyles.css";
+import "@/components/search/styles/SearchBox.css";
+import "@/components/search/styles/SearchFixGlobal.css";
+import "@/components/search/styles/DirectSearchStyles.css";
+
 
 export default function ScoutSearch() {
   const [searchType, setSearchType] = useState("player");

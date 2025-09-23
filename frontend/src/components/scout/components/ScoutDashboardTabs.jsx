@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ScoutSearch } from "@/components/search";
 import ScoutTrials from "./ScoutTrials";
 import "../styles/ScoutDashboardTabs.css";
+import "../styles/ScoutContainer.css";
 
 export default function ScoutDashboardTabs({ scout }) {
   const [activeTab, setActiveTab] = useState("search");
@@ -40,7 +41,7 @@ export default function ScoutDashboardTabs({ scout }) {
       </div>
 
       {/* Tab Content */}
-      <div className="tab-content">
+      <div className="tab-content scout-container">
         {renderTabContent()}
       </div>
     </div>

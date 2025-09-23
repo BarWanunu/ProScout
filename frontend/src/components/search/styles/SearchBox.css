@@ -1,5 +1,19 @@
-/* Search Box Styling */
+/* Scout Search Box Styling */
 .scout-search-box {
+  background: #f1f5fb; /* Light blue background like in the image */
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 30px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 0;
+}
+tyling */ .scout-search-box {
   background: linear-gradient(to right, #e0e7ff, #f0f4ff);
   padding: 24px;
   border-radius: 12px;

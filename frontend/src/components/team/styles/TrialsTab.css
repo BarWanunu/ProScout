@@ -29,11 +29,11 @@
 }
 
 .trial-card {
-  background: rgba(30, 41, 59, 0.75);
+  background: #f1f5fb; /* Light blue background like in the image */
   border: 1px solid rgba(148, 163, 184, 0.2);
   border-radius: 12px;
   padding: 1.25rem;
-  color: #e2e8f0;
+  color: #333; /* Darker text for light background */
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -60,7 +60,7 @@
 .trial-player-info h6 {
   font-weight: 600;
   margin-bottom: 0.25rem;
-  color: #f8fafc;
+  color: #333;
 }
 
 .trial-position {
@@ -69,7 +69,7 @@
 }
 
 .trial-details {
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -79,7 +79,7 @@
   display: flex;
   align-items: center;
   margin-bottom: 0.75rem;
-  color: #94a3b8;
+  color: #333;
 }
 
 .trial-detail-item:last-child {
@@ -92,7 +92,7 @@
 }
 
 .trial-notes {
-  background: rgba(15, 23, 42, 0.3);
+  background: rgba(255, 255, 255, 0.6);
   border-left: 3px solid #60a5fa;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
@@ -102,13 +102,13 @@
 .trial-notes strong {
   display: block;
   margin-bottom: 0.25rem;
-  color: #f8fafc;
+  color: #333;
 }
 
 .trial-notes p {
   margin: 0;
   font-size: 0.9rem;
-  color: #94a3b8;
+  color: #333;
 }
 
 .trial-actions {

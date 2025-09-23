@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-import "@/components/search/SearchBox.css";
+import "@/components/search/styles/SearchBox.css";
 
 const DirectScoutSearch = ({ filters, setFilters, onSearch }) => {
   const [nationality, setNationality] = useState(filters?.nationality || '');

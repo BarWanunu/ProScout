@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Search, Star, CalendarDays, Users } from "lucide-react";
 import { TeamSearch } from "@/components/search";
-import "@/components/search/SearchFixGlobal.css";
+import "@/components/search/styles/SearchFixGlobal.css";
 import TrialsTab from "./TrialsTab";
 import ShortlistTab from "./ShortlistTab";
 import RecommendationTab from "./RecommendationTab";
 import "../styles/TeamDashboardTabs.css";
+import "../styles/TeamContainer.css";
 
 export default function TeamDashboardTabs({ team, trials, shortlist }) {
   const [activeTab, setActiveTab] = useState("search");
@@ -67,7 +68,7 @@ export default function TeamDashboardTabs({ team, trials, shortlist }) {
       </div>
 
       {/* Tab Content */}
-      <div className="tab-content">
+      <div className="tab-content team-container">
         {renderTabContent()}
       </div>
     </div>
