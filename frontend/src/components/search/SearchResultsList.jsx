@@ -113,7 +113,14 @@ const SearchResultsList = ({
                 <TeamResultCard 
                   key={`team-${result.id || index}`} 
                   team={result} 
-                  index={index} 
+                  index={index}
+                  // Pass shared actions to avoid creating new hook instance
+                  searchActions={{
+                    getActionsForUser,
+                    userRole,
+                    currentUserId,
+                    teamId
+                  }}
                 />
               </div>
             );
@@ -123,7 +130,14 @@ const SearchResultsList = ({
                 <ScoutResultCard 
                   key={`scout-${result.id || index}`} 
                   scout={result} 
-                  index={index} 
+                  index={index}
+                  // Pass shared actions to avoid creating new hook instance
+                  searchActions={{
+                    getActionsForUser,
+                    userRole,
+                    currentUserId,
+                    teamId
+                  }}
                 />
               </div>
             );

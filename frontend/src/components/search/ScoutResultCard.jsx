@@ -4,8 +4,10 @@ import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import './styles/SearchResultCard.css';
 
-const ScoutResultCard = ({ scout, index }) => {
-  const { getActionsForUser } = useSearchActions({});
+const ScoutResultCard = ({ scout, index, searchActions }) => {
+  // Only create hook if searchActions is not provided
+  const hookActions = searchActions ? null : useSearchActions({});
+  const { getActionsForUser } = searchActions || hookActions;
   const normalizedResult = normalizeSearchResult(scout);
   const actions = getActionsForUser(normalizedResult);
 
