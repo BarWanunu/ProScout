@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, MessageSquare, Send, ArrowLeft, User } from 'lucide-react';
 import trialService from '@/api/services/trialService';
+import scoutService from '@/api/services/scoutService';
 import { getToken } from '@/api/tokenStore';
 import { useAuth } from '@/auth/AuthContext';
 import Header from '@/layout/overallLayout/Header';
@@ -71,13 +72,44 @@ const CreateTrialPage = () => {
       // Combine date and time
       const trialDateTime = `${formData.trialDate}T${formData.timeSlot}:00.000Z`;
       
-      // Build trial data - use scoutId from URL if provided, otherwise use current user
-      const effectiveScoutId = urlScoutId ? parseInt(urlScoutId, 10) : parseInt(currentUserId, 10);
+      // Get the scout_id from the scout service if sender is scout
+      let effectiveScoutId = null;
+      
+      if (role === 'scout') {
+        try {
+          // Use scoutId from URL if provided, otherwise use current user
+          const userIdToLookup = urlScoutId ? parseInt(urlScoutId, 10) : parseInt(currentUserId, 10);
+          console.log('🔍 Looking up scout with user_id:', userIdToLookup);
+          
+          const scoutData = await scoutService.getScoutById(userIdToLookup, token);
+          effectiveScoutId = scoutData.id; // This is the scout_id from scouts table
+          
+          console.log('🎯 Scout lookup result:', {
+            userIdLookedUp: userIdToLookup,
+            scoutData,
+            effectiveScoutId
+          });
+        } catch (scoutError) {
+          console.error('❌ Failed to lookup scout:', scoutError);
+          setError('Failed to lookup scout information. Please try again.');
+          return;
+        }
+      }
+      
+      console.log('🔍 Scout ID debug info:', {
+        urlScoutId,
+        currentUserId,
+        role,
+        effectiveScoutId,
+        'URL scout ID': urlScoutId,
+        'Current user ID': currentUserId,
+        'Effective scout ID (from scouts table)': effectiveScoutId
+      });
       
       const trialData = {
         player_id: parseInt(playerId, 10),
         team_id: parseInt(teamId, 10),
-        user_id: effectiveScoutId,
+        scout_id: effectiveScoutId, // Use scout_id instead of user_id
         invitation_message: formData.invitationMessage.trim(),
         trial_date: trialDateTime,
         sender_role: role

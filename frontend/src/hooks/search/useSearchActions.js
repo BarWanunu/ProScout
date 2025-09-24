@@ -45,7 +45,6 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
 
   // פעולות מיוחדות עבור סקאוט
   const getScoutActions = (targetUser) => {
-    console.log("🔧 Getting scout actions for user:", targetUser);
     const actions = [...getCommonActions(targetUser)];
 
     // הוספת מפריד
@@ -84,11 +83,9 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
         },
         tooltip: "Invite player to a trial",
       };
-      console.log("🎪 Adding invite action:", inviteAction);
       actions.push(inviteAction);
     }
 
-    console.log("📋 Final scout actions:", actions);
     return actions;
   };
 
