@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Table, Button, Spinner, Badge } from 'react-bootstrap';
+import { Container, Card, Button, Spinner } from 'react-bootstrap';
 import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
 import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
