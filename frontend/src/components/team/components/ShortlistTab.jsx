@@ -3,14 +3,24 @@ import { Container, Card, Button, Spinner } from 'react-bootstrap';
 import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
 import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
+import TrialInvitationModal from '@/components/shared/TrialInvitationModal';
+import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
 import '../styles/ShortlistTab.css';
 
-const ShortlistTab = ({ shortlist: initialShortlist = [], onSwitchToSearch, onRefreshShortlist }) => {
+const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch, onRefreshShortlist }) => {
+  const { role: userRole, id: currentUserId } = useAuth();
   const [shortlist, setShortlist] = useState(initialShortlist);
   const [loading, setLoading] = useState({});
   const [playerDetails, setPlayerDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
+  
+  // Trial invitation modal state
+  const [trialModal, setTrialModal] = useState({
+    show: false,
+    playerId: null,
+    playerName: null
+  });
   
   // Update local shortlist when initialShortlist prop changes
   useEffect(() => {
@@ -84,10 +94,37 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], onSwitchToSearch, onRe
     }
   };
 
-  // שליחת הזמנה למבחן (לא מיושם עדיין)
+  // שליחת הזמנה למבחן
   const handleSendTrialInvitation = (playerId) => {
-    console.log(`Sending trial invitation to player with ID: ${playerId}`);
-    // כאן יהיה הקוד בהמשך
+    console.log(`Opening trial invitation modal for player ID: ${playerId}`);
+    
+    const playerName = getPlayerDetail(playerId, 'name');
+    
+    setTrialModal({
+      show: true,
+      playerId: playerId,
+      playerName: playerName
+    });
+  };
+
+  // Close trial modal
+  const closeTrialModal = () => {
+    setTrialModal({
+      show: false,
+      playerId: null,
+      playerName: null
+    });
+  };
+
+  // Handle trial creation success
+  const handleTrialCreated = async () => {
+    console.log('Trial created successfully from shortlist');
+    closeTrialModal();
+    
+    // Optionally refresh data
+    if (onRefreshShortlist) {
+      await onRefreshShortlist();
+    }
   };
 
   // שליחת הודעה לשחקן (לא מיושם עדיין)
@@ -267,6 +304,17 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], onSwitchToSearch, onRe
           </div>
         ))}
       </div>
+
+      {/* Trial Invitation Modal */}
+      <TrialInvitationModal
+        show={trialModal.show}
+        onHide={closeTrialModal}
+        playerId={trialModal.playerId}
+        playerName={trialModal.playerName}
+        onTrialCreated={handleTrialCreated}
+        senderRole={userRole}
+        senderId={team?.id}
+      />
     </div>
   );
 };

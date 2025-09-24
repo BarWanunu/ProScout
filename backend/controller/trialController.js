@@ -3,6 +3,9 @@ const { fetchUserProfile } = require("../utils/fetchUserProfile");
 
 exports.createTrial = async (req, res) => {
   try {
+    console.log("📥 Trial creation request received:", req.body);
+    console.log("👤 User from token:", req.user);
+
     //prettier-ignore
     const {player_id, team_id,scout_id,invitation_message,trial_date} = req.body;
 
@@ -11,14 +14,18 @@ exports.createTrial = async (req, res) => {
     //prettier-ignore
     const trial = await trialModel.createTrial(player_id,team_id,scout_id,invitation_message,trial_date,sender_role);
 
+    console.log("✅ Trial model result:", trial);
+
     //prettier-ignore
     if (!trial.success) {
-      return res.status(500).json({ message: "Failed to create trial." });
+      console.error('❌ Trial creation failed:', trial.error);
+      return res.status(500).json({ message: "Failed to create trial.", error: trial.error });
     }
 
     //prettier-ignore
     res.status(201).json({ message: "Trial invitation created successfully.", trial: trial.data });
   } catch (err) {
+    console.error("💥 Server error:", err);
     //prettier-ignore
     res.status(500).json({ message: "Server error while creating trial.", error: err.message });
   }

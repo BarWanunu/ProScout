@@ -59,6 +59,11 @@ async function getTeamById(id) {
   return response.data;
 }
 
+async function getTeamByTeamId(id) {
+  const response = await http.get(`${endpoint}/team-id/${id}`);
+  return response.data;
+}
+
 async function getTeamName(id) {
   const response = await http.get(`${endpoint}/${id}/name`);
   return response.data;
@@ -69,6 +74,7 @@ const teamService = {
   updateTeamField,
   deleteTeam,
   getTeamById,
+  getTeamByTeamId,
   getTeamName,
 };
 

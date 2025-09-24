@@ -1,11 +1,19 @@
 import { useAuth } from "@/auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import shortlistService from "@/api/services/shortlistService";
 import { getToken } from "@/api/tokenStore";
 
 export const useSearchActions = ({ onRefreshShortlist } = {}) => {
   const { role, id: currentUserId } = useAuth();
   const navigate = useNavigate();
+
+  // State for trial invitation modal
+  const [trialModalState, setTrialModalState] = useState({
+    show: false,
+    playerId: null,
+    playerName: null,
+  });
 
   // פעולות כלליות שזמינות לכל המשתמשים
   const getCommonActions = (targetUser) => [
@@ -176,9 +184,25 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
   };
 
   const handleInviteToTrial = (user) => {
-    console.log("Inviting to trial:", user);
-    // TODO: פתח דיאלוג הזמנה למבחן
-    alert(`Opening trial invitation dialog for: ${user.name} (${user.type})`);
+    console.log("Opening trial invitation for:", user);
+
+    // Extract player info based on user type and structure
+    const playerId = user.type === "player" ? user.player?.id || user.id : null;
+
+    const playerName =
+      user.type === "player" ? user.player?.name || user.name : null;
+
+    if (!playerId) {
+      console.error("No player ID found for trial invitation");
+      alert("Unable to invite - player information not available");
+      return;
+    }
+
+    setTrialModalState({
+      show: true,
+      playerId: playerId,
+      playerName: playerName,
+    });
   };
 
   const handleRequestTrial = (user) => {
@@ -209,9 +233,35 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
     }
   };
 
+  // Trial modal handlers
+  const closeTrialModal = () => {
+    setTrialModalState({
+      show: false,
+      playerId: null,
+      playerName: null,
+    });
+  };
+
+  const handleTrialCreated = async () => {
+    // Refresh any necessary data after trial creation
+    console.log("Trial created successfully");
+
+    // Close modal
+    closeTrialModal();
+
+    // Optionally refresh shortlist or other data
+    if (onRefreshShortlist) {
+      await onRefreshShortlist();
+    }
+  };
+
   return {
     getActionsForUser,
     currentUserId,
     userRole: role,
+    // Trial modal state and handlers
+    trialModal: trialModalState,
+    closeTrialModal,
+    handleTrialCreated,
   };
 };

@@ -50,6 +50,7 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
         return (
           <ShortlistTab 
             shortlist={shortlist} 
+            team={team}
             onSwitchToSearch={() => switchToTab("search")}
             onRefreshShortlist={onRefreshShortlist}
           />

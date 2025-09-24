@@ -179,3 +179,22 @@ exports.getTeam = async (req, res) => {
     res.status(500).json({ message: "Internal server error during team retrieval.", error: err.message });
   }
 };
+
+exports.getTeamByTeamId = async (req, res) => {
+  const teamId = req.params.id;
+
+  try {
+    const team = await teamModel.findTeamBy("id", teamId);
+
+    if (!team.success || !team.data) {
+      //prettier-ignore
+      return res.status(404).json({ message: "Team profile not found." });
+    }
+
+    //prettier-ignore
+    res.status(200).json({ message: "Team profile retrieved successfully.", team: team.data });
+  } catch (err) {
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error during team retrieval.", error: err.message });
+  }
+};

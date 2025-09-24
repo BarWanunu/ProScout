@@ -23,6 +23,69 @@ ls-manager {
   backdrop-filter: blur(10px);
 }
 
+/* Trial sender header */
+.trial-sender-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  font-size: 0.9rem;
+}
+
+.sender-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sender-label {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.sender-name {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.sender-role {
+  color: #64748b;
+  font-style: italic;
+  text-transform: capitalize;
+}
+
+/* Message sender button */
+.message-sender-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
+.message-sender-btn:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+}
+
+.message-sender-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+}
+
 /* Trial Row Layout */
 .trial-row {
   display: flex;

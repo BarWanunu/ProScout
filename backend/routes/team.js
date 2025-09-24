@@ -9,5 +9,6 @@ router.patch("/", auth, upload.single("logo"), teamController.updateTeamField);
 router.delete("/", auth, teamController.deleteTeam);
 router.get("/:id", teamController.getTeam);
 router.get("/:id/name", teamController.getTeamName);
+router.get("/team-id/:id", teamController.getTeamByTeamId);
 
 module.exports = router;

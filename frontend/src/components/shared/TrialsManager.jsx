@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Badge, Row, Col, Alert, Spinner } from 'react-bootstrap';
-import { Calendar, Check, X, Trash2, User } from 'lucide-react';
+import { Calendar, Check, X, Trash2, User, MessageCircle } from 'lucide-react';
 import trialService from '@/api/services/trialService';
 import playerService from '@/api/services/playerService';
+import scoutService from '@/api/services/scoutService';
+import teamService from '@/api/services/teamService';
 import { getToken } from '@/api/tokenStore';
 import './TrialsManager.css';
 
@@ -15,6 +17,7 @@ const TrialsManager = ({
   const [loading, setLoading] = useState({});
   const [error, setError] = useState('');
   const [playerDetails, setPlayerDetails] = useState({});
+  const [senderDetails, setSenderDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
 
   // Fetch player details for all trials
@@ -43,6 +46,78 @@ const TrialsManager = ({
     
     fetchPlayerDetails();
   }, [trials]);
+
+  // Fetch sender details for all trials
+  useEffect(() => {
+    const fetchSenderDetails = async () => {
+      if (!trials || trials.length === 0) return;
+      
+      const token = getToken();
+      for (const trial of trials) {
+        try {
+          const senderKey = `${trial.sender_role}_${trial.scout_id || trial.team_id || trial.player_id}`;
+          
+          if (!senderDetails[senderKey]) {
+            setFetchingDetails(prev => ({ ...prev, [senderKey]: true }));
+            
+            let details = null;
+            if (trial.sender_role === 'scout' && trial.scout_id) {
+              details = await scoutService.getScoutByScoutId(trial.scout_id);
+            } else if (trial.sender_role === 'team' && trial.team_id) {
+              const teamData = await teamService.getTeamByTeamId(trial.team_id);
+              details = teamData.team; // Extract team object from response
+            } else if (trial.sender_role === 'player' && trial.player_id) {
+              const playerData = await playerService.getPlayerFull(trial.player_id);
+              details = playerData.player;
+            }
+            
+            if (details) {
+              setSenderDetails(prev => ({ 
+                ...prev, 
+                [senderKey]: { 
+                  ...details, 
+                  role: trial.sender_role 
+                } 
+              }));
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to fetch sender details for ${trial.sender_role}:`, error);
+        } finally {
+          const senderKey = `${trial.sender_role}_${trial.scout_id || trial.team_id || trial.player_id}`;
+          setFetchingDetails(prev => ({ ...prev, [senderKey]: false }));
+        }
+      }
+    };
+    
+    fetchSenderDetails();
+  }, [trials]);
+
+  // Helper function to get sender name
+  const getSenderName = (trial) => {
+    const senderKey = `${trial.sender_role}_${trial.scout_id || trial.team_id || trial.player_id}`;
+    const senderData = senderDetails[senderKey];
+    
+    // Check if data is loading
+    if (fetchingDetails[senderKey]) return 'Loading...';
+    if (!senderData) return 'Loading...';
+    
+    
+    switch (trial.sender_role) {
+      case 'scout':
+        return senderData.first_name && senderData.last_name 
+          ? `${senderData.first_name} ${senderData.last_name}` 
+          : senderData.username || 'Unknown Scout';
+      case 'team':
+        return senderData.team_name || senderData.name || 'Unknown Team';
+      case 'player':
+        return senderData.first_name && senderData.last_name 
+          ? `${senderData.first_name} ${senderData.last_name}` 
+          : senderData.username || 'Unknown Player';
+      default:
+        return 'Unknown Sender';
+    }
+  };
 
   // Handle status update
   const handleStatusUpdate = async (trialId, newStatus) => {
@@ -83,6 +158,21 @@ const TrialsManager = ({
     } finally {
       setLoading(prev => ({ ...prev, [trialId]: false }));
     }
+  };
+
+  // Handle sending message to trial sender
+  const handleSendMessage = (trial) => {
+    const senderName = getSenderName(trial);
+    
+    // TODO: Implement messaging functionality
+    alert(`Send message to: ${senderName} (${trial.sender_role})`);
+    console.log('Sending message to:', {
+      senderRole: trial.sender_role,
+      scoutId: trial.scout_id,
+      teamId: trial.team_id,
+      playerId: trial.player_id,
+      senderName: senderName
+    });
   };
 
   // Get status badge variant
@@ -190,6 +280,23 @@ const TrialsManager = ({
           return (
             <Card key={trial.id} className="trial-card mb-3">
               <Card.Body className="p-3">
+                {/* Trial sent by header */}
+                <div className="trial-sender-header">
+                  <div className="sender-info">
+                    <span className="sender-label">Trial sent by:</span>
+                    <span className="sender-name">{getSenderName(trial)}</span>
+                    <span className="sender-role">({trial.sender_role})</span>
+                  </div>
+                  <button 
+                    className="message-sender-btn"
+                    onClick={() => handleSendMessage(trial)}
+                    title={`Send message to ${getSenderName(trial)}`}
+                  >
+                    <MessageCircle size={16} />
+                    Message
+                  </button>
+                </div>
+                
                 <div className="trial-row">
                   {/* Left Section: Avatar and Player Info */}
                   <div className="trial-left-section">
