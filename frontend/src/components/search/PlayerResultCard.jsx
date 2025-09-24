@@ -6,8 +6,8 @@ import './styles/SearchResultCard.css';
 import './styles/PlayerComponents.css';
 
 const PlayerResultCard = ({ result, index, onRefreshShortlist, teamData, searchActions }) => {
-  // Use the passed searchActions if available, otherwise create a new hook instance
-  const hookActions = useSearchActions({ onRefreshShortlist, teamData });
+  // Only create hook if searchActions is not provided
+  const hookActions = searchActions ? null : useSearchActions({ onRefreshShortlist, teamData });
   const { 
     getActionsForUser,
     userRole,
