@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"  
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
 import WelcomeSection from "@/components/common/WelcomeSection";
@@ -48,22 +48,24 @@ export default function TeamDashboard() {
     };
   }, []);
 
+   const fetchTrials = async () => {
+    try {
+      const token = getToken();
+      if (!team) return;
+
+      const trialsData = await trialService.getTrialsByTeam(team.id, token);      
+      setTrials(trialsData.trials);
+      console.log(trialsData.trials);
+      
+    } catch (err) {
+      console.error("❌ Error fetching trials:", err);
+    }
+  };
+
   // --- Fetch Trials (רק אחרי שהקבוצה נטענת) ---
   useEffect(() => {
-    const fetchTrials = async () => {
-      try {
-        const token = getToken();
-        if (!team) return;
-
-        const trialsData = await trialService.getTrialsByTeam(team.id, token);
-        setTrials(trialsData);
-      } catch (err) {
-        console.error("❌ Error fetching trials:", err);
-      }
-    };
-
     fetchTrials();
-  }, [team]);
+  }, [team]); // נבצע fetch רק כאשר הקבוצה משתנה from "@/layout/overallLayout/Header.jsx";
 
   // --- Fetch Shortlist ---
   const fetchShortlist = async () => {
@@ -97,6 +99,7 @@ export default function TeamDashboard() {
             trials={trials} 
             shortlist={shortlist}
             onRefreshShortlist={fetchShortlist}
+            onRefreshTrials={fetchTrials}
           />
         </div>
       </div>
