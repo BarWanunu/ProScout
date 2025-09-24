@@ -1,0 +1,18 @@
+/* Search Result Card Wrapper Styles */
+.result-wrapper {
+  margin-bottom: 24px !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  position: relative;
+  display: block;
+}
+
+/* Fixed positioning to ensure proper stacking */
+.results-list {
+  padding-bottom: 20px;
+}
+
+/* Ensure each result is displayed properly */
+.result-wrapper:last-child {
+  margin-bottom: 10px !important;
+}

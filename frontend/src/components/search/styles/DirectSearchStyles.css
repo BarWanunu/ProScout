@@ -1,0 +1,158 @@
+/* Shared styling for direct advanced search in both scout and team dashboards */
+.direct-scout-search .advanced-panel,
+.direct-team-search .advanced-panel,
+.direct-player-search .advanced-panel {
+  background: #f1f5fb; /* Light blue background like in the image */
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.direct-scout-search .form-label,
+.direct-team-search .form-label,
+.direct-player-search .form-label {
+  color: #333; /* Darker text for light background */
+  font-size: 0.9rem;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.direct-scout-search .form-control,
+.direct-team-search .form-control,
+.direct-player-search .form-control {
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #333;
+  padding: 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.direct-scout-search .form-control:focus,
+.direct-team-search .form-control:focus,
+.direct-player-search .form-control:focus {
+  background: #ffffff;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  color: #333;
+}
+
+.direct-scout-search .btn-outline-secondary,
+.direct-team-search .btn-outline-secondary,
+.direct-player-search .btn-outline-secondary {
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.4);
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.direct-scout-search .btn-outline-secondary:hover,
+.direct-team-search .btn-outline-secondary:hover,
+.direct-player-search .btn-outline-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+/* Make sure the search select spans full width */
+.scout-search-box .search-select,
+.team-search .search-select,
+.player-search-box .search-select {
+  width: 100%;
+  margin-bottom: 1rem;
+  background-color: #1e293b;
+  color: #e2e8f0;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+/* Fix search header styling */
+.scout-search-box .search-header,
+.team-search .search-header,
+.player-search-box .search-header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: #e2e8f0;
+}
+
+.scout-search-box .main-input-wrapper,
+.team-search .main-input-wrapper,
+.player-search-box .main-input-wrapper {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Optimize the search layout */
+.scout-search-box .advanced-panel,
+.team-search .advanced-panel,
+.player-search-box .advanced-panel {
+  margin-top: 0;
+}
+
+.scout-search-box .form-control,
+.team-search .form-control,
+.player-search-box .form-control {
+  height: 45px;
+}
+
+/* Make search results look cleaner */
+.scout-search-box .search-results-container,
+.team-search .search-results-container,
+.player-search-box .search-results-container {
+  margin-top: 15px;
+}
+
+/* Improve the styling of the result items */
+.result-item {
+  margin-bottom: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.result-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for form selects */
+.form-select {
+  background-color: #ffffff;
+  color: #333;
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.form-select:focus {
+  background-color: #ffffff;
+  color: #333;
+  border-color: rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+/* Dark theme for trials section */
+.trials-section {
+  background: linear-gradient(to right, #1e293b, #0f172a);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #e2e8f0;
+}
+
+.trials-section .trials-header {
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.trials-section .trial-item {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  color: #e2e8f0;
+}

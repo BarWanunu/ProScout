@@ -1,0 +1,111 @@
+/* Team Stats Component Styles */
+.team-stats-container {
+  margin: 0 auto 2rem;
+  max-width: 1200px;
+  width: 92%;
+}
+
+.stats-heading {
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.team-stat-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.team-stat-card .card-body {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.team-stat-icon {
+  background: rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-stat-content h6 {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 0.25rem;
+}
+
+.team-stat-value {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.team-info-card {
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.team-info-card h6 {
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.team-info-item {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.info-label {
+  color: #94a3b8;
+  width: 80px;
+}
+
+.info-value {
+  color: white;
+  font-weight: 500;
+}
+
+.position-badge {
+  background: #2563eb !important;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* Stadium info styles */
+.stadium-details {
+  padding-left: 3.5rem;
+}
+
+.stadium-name {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.stadium-location {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* Make top cards equal height */
+.team-stat-card {
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.team-stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}

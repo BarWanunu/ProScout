@@ -8,5 +8,6 @@ router.post("/players/stats", searchController.searchPlayersWithStats);
 router.get("/teams", searchController.searchTeamsByName);
 router.post("/teams/advanced", searchController.advancedSearchTeams);
 router.get("/scouts", searchController.searchScoutsByName);
+router.post("/scouts/advanced", searchController.advancedSearchScouts);
 
 module.exports = router;

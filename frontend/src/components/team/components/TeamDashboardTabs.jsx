@@ -1,0 +1,86 @@
+import React, { useState } from "react";
+import { Search, Star, ClipboardList, Users, User } from "lucide-react";
+import { TeamSearch } from "@/components/search";
+import "@/components/search/styles/SearchFixGlobal.css";
+import TrialsTab from "./TrialsTab";
+import ShortlistTab from "./ShortlistTab";
+import RecommendationTab from "./RecommendationTab";
+import "../styles/TeamDashboardTabs.css";
+import "../styles/TeamContainer.css";
+
+export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshShortlist }) {
+  const [activeTab, setActiveTab] = useState("search");
+
+  const switchToTab = (tabId) => {
+    setActiveTab(tabId);
+  };
+
+  const tabs = [
+    { 
+      id: "search", 
+      label: "Search", 
+      icon: <Search size={18} /> 
+    },
+    { 
+      id: "trials", 
+      label: "Trials Invitations", 
+      icon: <ClipboardList size={18} /> 
+    },
+    { 
+      id: "recommendations", 
+      label: "Recommendations", 
+      icon: <Users size={18} /> 
+    },
+    { 
+      id: "shortlist", 
+      label: "Shortlist", 
+      icon: <Star size={18} /> 
+    },
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "search":
+        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
+      case "trials":
+        return <TrialsTab trials={trials} />;
+      case "recommendations":
+        return <RecommendationTab team={team} />;
+      case "shortlist":
+        return (
+          <ShortlistTab 
+            shortlist={shortlist} 
+            onSwitchToSearch={() => switchToTab("search")}
+            onRefreshShortlist={onRefreshShortlist}
+          />
+        );
+      default:
+        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
+    }
+  };
+
+  return (
+    <div className="team-dashboard-tabs">
+      {/* Tab Navigation */}
+      <div className="tab-navigation">
+        <div className="tab-list">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.icon}
+              <span className="tab-label">{tab.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Tab Content */}
+      <div className="tab-content team-container">
+        {renderTabContent()}
+      </div>
+    </div>
+  );
+}

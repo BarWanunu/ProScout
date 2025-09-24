@@ -23,7 +23,11 @@ exports.searchPlayersByName = async (req, res) => {
     });
   }
 
-  return res.json(result);
+  return res.json({
+    ...result,
+    searchType: "name",
+    matchedCriteria: { name: name.trim() },
+  });
 };
 
 exports.searchTeamsByName = async (req, res) => {
@@ -68,7 +72,11 @@ exports.advancedSearchPlayers = async (req, res) => {
     });
   }
 
-  return res.json(result);
+  return res.json({
+    ...result,
+    searchType: "profile",
+    matchedCriteria: filters,
+  });
 };
 
 exports.advancedSearchTeams = async (req, res) => {
@@ -106,7 +114,42 @@ exports.searchPlayersWithStats = async (req, res) => {
     });
   }
 
-  return res.json(result);
+  // Extract matched stats for each player
+  const dataWithMatchedStats = result.data.map((playerStats) => {
+    // Include all the stats data from the matched season
+    const matchedStats = {
+      season: playerStats.season,
+      goals: playerStats.goals,
+      assists: playerStats.assists,
+      yellow_cards: playerStats.yellow_cards,
+      red_cards: playerStats.red_cards,
+      passes_completed: playerStats.passes_completed,
+      key_passes: playerStats.key_passes,
+      shots_on_target: playerStats.shots_on_target,
+      dribbles_attempted: playerStats.dribbles_attempted,
+      dribbles_success: playerStats.dribbles_success,
+      dribble_success_rate: playerStats.dribble_success_rate,
+      tackles: playerStats.tackles,
+      interceptions: playerStats.interceptions,
+      duels: playerStats.duels,
+      duels_won: playerStats.duels_won,
+      rating: playerStats.rating,
+    };
+
+    return {
+      id: playerStats.id,
+      name: playerStats.name,
+      club: playerStats.club,
+      matchedStats: matchedStats,
+    };
+  });
+
+  return res.json({
+    success: true,
+    data: dataWithMatchedStats,
+    searchType: "statistics",
+    matchedCriteria: filters,
+  });
 };
 
 exports.searchScoutsByName = async (req, res) => {
@@ -116,9 +159,34 @@ exports.searchScoutsByName = async (req, res) => {
     return res.status(400).json({ message: "Name is required for search." });
   }
 
+  const result = await searchModel.searchScoutsByName(name.trim());
+
   if (!result.success) {
     return res.status(500).json({ message: result.message });
   }
 
-  res.status(200).json({ scouts: result.data });
+  res.status(200).json({ success: true, data: result.data });
+};
+
+exports.advancedSearchScouts = async (req, res) => {
+  const filters = req.body;
+
+  const result = await searchModel.advancedSearchScouts(filters);
+
+  if (!result.success) {
+    return res.status(500).json(result);
+  }
+
+  if (result.data.length === 0) {
+    return res.status(404).json({
+      success: false,
+      message: "No scouts matched the search criteria",
+    });
+  }
+
+  return res.json({
+    ...result,
+    searchType: "advanced",
+    matchedCriteria: filters,
+  });
 };

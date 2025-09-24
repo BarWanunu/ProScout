@@ -1,0 +1,135 @@
+/* Team Dashboard Tabs Styling */
+
+.team-dashboard-tabs {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Tab Navigation */
+.team-dashboard-tabs .tab-navigation {
+  background: rgba(30, 41, 59, 0.85);
+  border-radius: 15px 15px 0 0;
+  padding: 0.5rem;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.team-dashboard-tabs .tab-list {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.team-dashboard-tabs .tab-button {
+  background: rgba(148, 163, 184, 0.15);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  color: #e2e8f0;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+  flex: 1;
+  max-width: 220px;
+  min-width: 160px;
+}
+
+.team-dashboard-tabs .tab-button:hover {
+  background: rgba(148, 163, 184, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(30, 41, 59, 0.3);
+  border-color: rgba(148, 163, 184, 0.4);
+}
+
+.team-dashboard-tabs .tab-button.active {
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+  transform: translateY(-2px);
+}
+
+.team-dashboard-tabs .tab-button.active:hover {
+  background: linear-gradient(135deg, #1e40af, #2563eb);
+}
+
+.team-dashboard-tabs .tab-label {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Tab Content */
+.team-dashboard-tabs .tab-content {
+  border-radius: 0 0 15px 15px;
+  min-height: 500px;
+  box-shadow: 0 8px 32px rgba(30, 41, 59, 0.15);
+  border-top: none;
+  color: #e2e8f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .team-dashboard-tabs {
+    padding: 0 0.5rem;
+  }
+
+  .team-dashboard-tabs .tab-list {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .team-dashboard-tabs .tab-button {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    min-width: auto;
+    flex: 1 0 45%;
+    max-width: none;
+  }
+
+  .team-dashboard-tabs .tab-content {
+    padding: 1.5rem;
+    min-height: 400px;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-dashboard-tabs .tab-list {
+    flex-direction: column;
+  }
+
+  .team-dashboard-tabs .tab-button {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 0.85rem;
+  }
+
+  .team-dashboard-tabs .tab-label {
+    font-size: 0.85rem;
+  }
+
+  .team-dashboard-tabs .tab-content {
+    padding: 1rem;
+  }
+}
+
+/* Animation for tab content switching */
+.team-dashboard-tabs .tab-content > * {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

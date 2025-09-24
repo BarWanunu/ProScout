@@ -69,6 +69,11 @@ async function getPlayerFull(playerId) {
   return response.data;
 }
 
+async function getPlayerName(playerId) {
+  const response = await http.get(`${endpoint}/${playerId}/name`);
+  return response.data;
+}
+
 async function getPlayerStats(playerId) {
   const response = await http.get(`${endpoint}/stats/${playerId}`);
   return response.data;
@@ -89,6 +94,7 @@ const playerService = {
   deletePlayer,
   getPlayerById,
   getPlayerFull,
+  getPlayerName,
   getPlayerStats,
   getPlayerStatsSummary,
 };

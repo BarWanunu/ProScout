@@ -59,11 +59,17 @@ async function getTeamById(id) {
   return response.data;
 }
 
+async function getTeamName(id) {
+  const response = await http.get(`${endpoint}/${id}/name`);
+  return response.data;
+}
+
 const teamService = {
   registerTeam,
   updateTeamField,
   deleteTeam,
   getTeamById,
+  getTeamName,
 };
 
 export default teamService;

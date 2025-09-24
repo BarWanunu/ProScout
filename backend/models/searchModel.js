@@ -282,3 +282,66 @@ exports.searchScoutsByName = async (name) => {
     return { success: false, message: err.message };
   }
 };
+
+// New advanced scout search function
+exports.advancedSearchScouts = async (filters, limit = 30) => {
+  try {
+    const conditions = [];
+    const values = [];
+    let index = 1;
+
+    const clean = (v) => (typeof v === "string" ? v.trim() : v);
+
+    if (filters.name) {
+      const val = clean(filters.name);
+      conditions.push(
+        `(first_name ILIKE $${index} OR last_name ILIKE $${index} OR CONCAT(first_name, ' ', last_name) ILIKE $${index})`
+      );
+      values.push(`%${val}%`); // Using % at both ends for regex-like behavior
+      index++;
+    }
+
+    if (filters.nationality) {
+      conditions.push(`nationality ILIKE $${index}`);
+      values.push(`%${clean(filters.nationality)}%`);
+      index++;
+    }
+
+    if (
+      filters.min_experience_years !== undefined &&
+      filters.min_experience_years !== null
+    ) {
+      conditions.push(`experience_years >= $${index}`);
+      values.push(Number(filters.min_experience_years));
+      index++;
+    }
+
+    if (
+      filters.max_experience_years !== undefined &&
+      filters.max_experience_years !== null
+    ) {
+      conditions.push(`experience_years <= $${index}`);
+      values.push(Number(filters.max_experience_years));
+      index++;
+    }
+
+    const whereClause =
+      conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
+
+    const query = `
+      SELECT * FROM scouts
+      ${whereClause}
+      ORDER BY first_name ASC, last_name ASC
+      LIMIT $${index}
+    `;
+    values.push(limit);
+
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to search scouts: ${err.message}`,
+    };
+  }
+};

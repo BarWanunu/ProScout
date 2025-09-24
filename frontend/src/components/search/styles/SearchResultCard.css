@@ -1,0 +1,496 @@
+/* CSS for Search Result Cards - unified styling */
+
+/* Common Result Card Styles */
+.result-item {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1002 !important;
+  margin-bottom: 4px; /* Add space to prevent overlap */
+  transform: translateZ(
+    0
+  ); /* Force GPU acceleration and create stacking context */
+}
+
+.result-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Player/Team Header with Actions */
+.player-header,
+.team-header,
+.scout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.player-header h5,
+.team-header h5,
+.scout-header h5 {
+  color: #1e293b;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Player Result Styles */
+.player-item .player-info {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.player-photo-container {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e2e8f0;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.player-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.player-item:hover .player-photo {
+  transform: scale(1.05);
+}
+
+.player-details {
+  flex: 1;
+}
+
+.player-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.player-meta span {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.player-meta .position {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.player-meta .club {
+  background: #f0fdf4;
+  color: #16a34a;
+}
+
+.player-meta .age {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.player-meta .nationality {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+/* Search Type Badge */
+.search-type-badge {
+  margin: 12px 0;
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge.profile {
+  background: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 500;
+}
+
+.badge.stats {
+  background: #dcfce7;
+  color: #16a34a;
+  font-weight: 500;
+}
+
+/* Matched Criteria */
+.matched-criteria {
+  margin: 10px 0 2px;
+  display: block;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.matched-criteria h6 {
+  color: #374151;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+  margin-right: 8px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.criteria-tags-container {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.criteria-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.criteria-tag {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  border: 1px solid #d1d5db;
+}
+
+.criteria-tag-badge {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  margin-right: 8px;
+  margin-left: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #d1d5db;
+  display: inline-block;
+}
+
+/* Season Info */
+.season-info {
+  margin-top: 8px;
+}
+
+.season-info small {
+  color: #6b7280;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: #f9fafb;
+  padding: 4px 8px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+/* Season Header */
+.season-header {
+  margin: 10px 0 10px 0;
+  padding-bottom: 2px;
+  width: 100%;
+  clear: both;
+  display: block;
+}
+
+.season-header h6 {
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+/* Statistics Grid */
+.stats-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.stats-grid .stat-item {
+  min-height: 55px;
+  min-width: 120px;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 14px 10px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  margin-bottom: 5px;
+}
+
+.stats-grid .stat-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.stats-grid.single-stat {
+  justify-content: center;
+  display: flex;
+}
+
+.stats-grid.single-stat .stat-item {
+  margin: 0 auto;
+}
+
+.stats-grid.profile-stats {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stats-grid .stat-label {
+  font-size: 0.75rem;
+  margin-bottom: 6px;
+  line-height: 1.2;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stats-grid .stat-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* Team Result Styles */
+.team-item .team-info {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.team-logo-container {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e2e8f0;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.team-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.team-item:hover .team-logo {
+  transform: scale(1.05);
+}
+
+.team-details-wrapper {
+  flex: 1;
+}
+
+.team-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.team-details .badge {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.badge.country {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge.league {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.badge.formation {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.stadium {
+  color: #64748b;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.trophies {
+  color: #f59e0b;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Scout Result Styles */
+.scout-item .scout-info {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.scout-photo-container {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e2e8f0;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.scout-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.scout-item:hover .scout-photo {
+  transform: scale(1.05);
+}
+
+.scout-details-wrapper {
+  flex: 1;
+}
+
+.scout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.scout-header h5 {
+  color: #1e293b;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.scout-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.scout-details .badge {
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.badge.nationality {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge.experience {
+  background: #f3e8ff;
+  color: #6f42c1;
+}
+
+.badge.phone {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* More Actions Button */
+.more-actions-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.more-actions-btn:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.more-actions-icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .player-item .player-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .player-photo {
+    width: 60px;
+    height: 60px;
+  }
+
+  .stats-grid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .stats-grid .stat-item {
+    flex: 0 0 110px;
+    min-width: 110px;
+  }
+
+  .player-header,
+  .team-header,
+  .scout-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

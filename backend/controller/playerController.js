@@ -201,6 +201,28 @@ exports.getPlayer = async (req, res) => {
   }
 };
 
+exports.getPlayerName = async (req, res) => {
+  const playerId = req.params.id;
+
+  try {
+    const player = await playerModel.findPlayerBy("id", playerId);
+
+    if (!player.success || !player.data) {
+      return res.status(404).json({ message: "Player not found." });
+    }
+
+    res.status(200).json({
+      message: "Player name retrieved successfully.",
+      name: `${player.data.first_name} ${player.data.last_name}`,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Internal server error during player name retrieval.",
+      error: err.message,
+    });
+  }
+};
+
 exports.getPlayerFull = async (req, res) => {
   const playerId = req.params.id;
 

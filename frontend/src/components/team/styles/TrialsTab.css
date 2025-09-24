@@ -1,0 +1,237 @@
+/* TrialsTab.css - Styling for the trials tab */
+
+.trials-tab {
+  padding: 0.5rem 0;
+}
+
+.trials-header {
+  margin-bottom: 2rem;
+}
+
+.trials-header h4 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin-bottom: 0.5rem;
+}
+
+.trials-header p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+/* Trial Cards */
+.trial-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.trial-card {
+  background: #f1f5fb; /* Light blue background like in the image */
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.25rem;
+  color: #333; /* Darker text for light background */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.trial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.trial-player-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.trial-player-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 1rem;
+  border: 2px solid rgba(59, 130, 246, 0.5);
+}
+
+.trial-player-info h6 {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.trial-position {
+  color: #60a5fa;
+  font-size: 0.85rem;
+}
+
+.trial-details {
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.trial-detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  color: #333;
+}
+
+.trial-detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.trial-detail-item svg {
+  margin-right: 0.75rem;
+  color: #60a5fa;
+}
+
+.trial-notes {
+  background: rgba(255, 255, 255, 0.6);
+  border-left: 3px solid #60a5fa;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0 8px 8px 0;
+}
+
+.trial-notes strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.trial-notes p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.trial-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.trial-actions button {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* Completed Trials */
+.completed-trials h5,
+.upcoming-trials h5 {
+  margin-bottom: 1.25rem;
+  color: #f8fafc;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.completed-trials h5 .badge,
+.upcoming-trials h5 .badge {
+  margin-left: 0.75rem;
+  font-size: 0.7rem;
+  padding: 0.35rem 0.65rem;
+  font-weight: 500;
+}
+
+.trials-table {
+  background: rgba(30, 41, 59, 0.75);
+  border-radius: 12px;
+  overflow: hidden;
+  color: #e2e8f0;
+  margin-top: 1rem;
+}
+
+.trials-table thead th {
+  background: rgba(15, 23, 42, 0.5);
+  color: #94a3b8;
+  font-weight: 500;
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-bottom: none;
+}
+
+.trials-table tbody td {
+  padding: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+  vertical-align: middle;
+}
+
+.completed-trial-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Empty state styling */
+.trials-empty {
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  color: #e2e8f0;
+}
+
+.trials-empty h5 {
+  font-weight: 600;
+  color: #f8fafc;
+  margin-top: 1rem;
+}
+
+.trials-empty .text-muted {
+  color: #94a3b8 !important;
+}
+
+@media (max-width: 576px) {
+  .trial-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .trial-actions {
+    flex-direction: column;
+  }
+
+  .trials-table thead {
+    display: none;
+  }
+
+  .trials-table,
+  .trials-table tbody,
+  .trials-table tr,
+  .trials-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .trials-table tr {
+    margin-bottom: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .trials-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .trials-table td:before {
+    content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: 500;
+    color: #94a3b8;
+  }
+}
