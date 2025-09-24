@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { Star, Award, BarChart2 } from 'lucide-react';
+import { Star, Award, BarChart2, ClipboardList } from 'lucide-react';
+import TrialInvitationModal from '@/components/shared/TrialInvitationModal';
+import { useAuth } from '@/auth/AuthContext';
 import '../styles/RecommendationTab.css';
 
 const RecommendationTab = ({ team }) => {

@@ -26,6 +26,8 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
   useEffect(() => {
     setShortlist(initialShortlist);
   }, [initialShortlist]);
+  
+  // Removed the useEffect that was causing issues with tab switching
 
   // Fetch additional player details when component mounts or shortlist changes
   useEffect(() => {
@@ -191,7 +193,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
                     alt={player.name || getPlayerDetail(player.player_id, 'name')} 
                     className="player-avatar-large"
                     onError={(e) => {
-                      console.log('Image failed to load, using default');
                       e.target.src = '/assets/default-player.png';
                     }}
                   />

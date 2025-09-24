@@ -38,11 +38,21 @@ export default function PlayerDashboard() {
     }
   }, [userId, token])
 
+  // Add state to track if we need to refresh content
+  const [refreshKey, setRefreshKey] = useState(0);
+  
+  // Handle tab switch with automatic refresh
+  const handleTabSwitch = (tabId) => {
+    setActiveTab(tabId);
+    // Increment refresh key to force child component refresh
+    setRefreshKey(prevKey => prevKey + 1);
+  };
+  
   const renderContent = () => {
     switch(activeTab) {
       case "stats":
         return (
-          <Card>
+          <Card key={`stats-${refreshKey}`}>
             <CardHeader>
               <CardTitle>Stats Summary (2022 - 2024)</CardTitle>
             </CardHeader>
@@ -56,20 +66,20 @@ export default function PlayerDashboard() {
           </Card>
         );
       case "search":
-        return <PlayerSearch />;
+        return <PlayerSearch key={`search-${refreshKey}`} />;
       case "messages":
         return (
-          <Card>
+          <Card key={`messages-${refreshKey}`}>
             <CardHeader>
               <CardTitle>Messages</CardTitle>
             </CardHeader>
             <CardContent>
-              <MessagesDemo /> 
+              <MessagesDemo key={refreshKey} /> 
             </CardContent>
           </Card>
         );
       case "recommendations":
-        return <RecommendationDemo />;
+        return <RecommendationDemo key={`recommendations-${refreshKey}`} />;
       default:
         return null;
     }
@@ -86,25 +96,25 @@ export default function PlayerDashboard() {
         <div className="flex space-x-2 mb-4 border-b pb-2">
           <button 
             className={`px-4 py-2 ${activeTab === 'stats' ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-t`}
-            onClick={() => setActiveTab('stats')}
+            onClick={() => handleTabSwitch('stats')}
           >
             Stats
           </button>
           <button 
             className={`px-4 py-2 ${activeTab === 'search' ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-t`}
-            onClick={() => setActiveTab('search')}
+            onClick={() => handleTabSwitch('search')}
           >
             Search 🔍
           </button>
           <button 
             className={`px-4 py-2 ${activeTab === 'messages' ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-t`}
-            onClick={() => setActiveTab('messages')}
+            onClick={() => handleTabSwitch('messages')}
           >
             Messages 💬
           </button>
           <button 
             className={`px-4 py-2 ${activeTab === 'recommendations' ? 'bg-blue-500 text-white' : 'bg-gray-200'} rounded-t`}
-            onClick={() => setActiveTab('recommendations')}
+            onClick={() => handleTabSwitch('recommendations')}
           >
             Recommendations ⭐
           </button>

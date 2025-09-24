@@ -6,6 +6,13 @@ import "../styles/ScoutContainer.css";
 
 export default function ScoutDashboardTabs({ scout }) {
   const [activeTab, setActiveTab] = useState("search");
+  const [refreshKey, setRefreshKey] = useState(0);
+  
+  // Switch tab with automatic refresh
+  const handleTabSwitch = (tabId) => {
+    setActiveTab(tabId);
+    setRefreshKey(prevKey => prevKey + 1);
+  };
 
   const tabs = [
     { id: "search", label: "Search 🔍", icon: "search" },
@@ -15,11 +22,11 @@ export default function ScoutDashboardTabs({ scout }) {
   const renderTabContent = () => {
     switch (activeTab) {
       case "search":
-        return <ScoutSearch />;
+        return <ScoutSearch key={`search-${refreshKey}`} />;
       case "trials":
-        return <ScoutTrials scout={scout} />;
+        return <ScoutTrials key={`trials-${refreshKey}`} scout={scout} />;
       default:
-        return <ScoutSearch />;
+        return <ScoutSearch key={`search-${refreshKey}`} />;
     }
   };
 
@@ -32,7 +39,7 @@ export default function ScoutDashboardTabs({ scout }) {
             <button
               key={tab.id}
               className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => handleTabSwitch(tab.id)}
             >
               <span className="tab-label">{tab.label}</span>
             </button>

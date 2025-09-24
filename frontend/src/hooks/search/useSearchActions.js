@@ -3,16 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import shortlistService from "@/api/services/shortlistService";
 import { getToken } from "@/api/tokenStore";
+import PlayerSelectModal from "@/components/shared/PlayerSelectModal";
+import TeamSelectModal from "@/components/shared/TeamSelectModal";
 
-export const useSearchActions = ({ onRefreshShortlist } = {}) => {
+export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
   const { role, id: currentUserId } = useAuth();
   const navigate = useNavigate();
 
-  // State for trial invitation modal
-  const [trialModalState, setTrialModalState] = useState({
+  // State for player selection modal (for scout recommendations)
+  const [playerSelectModalState, setPlayerSelectModalState] = useState({
+    show: false,
+    teamId: null,
+    teamName: null,
+  });
+
+  // State for team selection modal (for scout recommending player to team OR inviting player to trial)
+  const [teamSelectModalState, setTeamSelectModalState] = useState({
     show: false,
     playerId: null,
     playerName: null,
+    isForTrial: false,
   });
 
   // פעולות כלליות שזמינות לכל המשתמשים
@@ -35,6 +45,7 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
 
   // פעולות מיוחדות עבור סקאוט
   const getScoutActions = (targetUser) => {
+    console.log("🔧 Getting scout actions for user:", targetUser);
     const actions = [...getCommonActions(targetUser)];
 
     // הוספת מפריד
@@ -63,15 +74,21 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
         onClick: () => handleRecommendToTeam(targetUser),
         tooltip: "Recommend this player to a team",
       });
-      actions.push({
+      const inviteAction = {
         label: "Invite Player to Trial",
         icon: "⚽",
         className: "primary",
-        onClick: () => handleInviteToTrial(targetUser),
+        onClick: () => {
+          console.log("🎯 Invite action clicked for player:", targetUser);
+          handleInviteToTrial(targetUser);
+        },
         tooltip: "Invite player to a trial",
-      });
+      };
+      console.log("🎪 Adding invite action:", inviteAction);
+      actions.push(inviteAction);
     }
 
+    console.log("📋 Final scout actions:", actions);
     return actions;
   };
 
@@ -173,42 +190,208 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
 
   const handleRecommendPlayer = (team) => {
     console.log("Recommending player to team:", team);
-    // TODO: פתח דיאלוג המלצה על שחקן
-    alert(`Opening player recommendation dialog for team: ${team.name}`);
+
+    // Extract the team ID from the team object
+    const teamId = team.team?.id || team.id;
+    const teamName =
+      team.team?.team_name || team.team_name || team.name || `Team ${teamId}`;
+
+    // Show player selection modal
+    setPlayerSelectModalState({
+      show: true,
+      teamId: teamId,
+      teamName: teamName,
+    });
+  };
+
+  // Handle when a player is selected from the PlayerSelectModal
+  const handlePlayerSelected = (player) => {
+    console.log("🔄 Player selected:", player);
+
+    // Save team information before closing the modal
+    const teamId = playerSelectModalState.teamId;
+    const teamName = playerSelectModalState.teamName;
+    const isForTrial = playerSelectModalState.isForTrial;
+
+    console.log("📋 Data for trial:", {
+      teamId,
+      teamName,
+      playerId: player.id,
+      playerName: player.name,
+      isForTrial,
+      currentState: playerSelectModalState,
+    });
+
+    // Close the player selection modal
+    setPlayerSelectModalState({
+      show: false,
+      teamId: null,
+      teamName: null,
+      isForTrial: false,
+    });
+
+    // Navigate to trial page with player and team data
+    const trialUrl = `/trial/create?playerId=${
+      player.id
+    }&playerName=${encodeURIComponent(
+      player.name
+    )}&teamId=${teamId}&teamName=${encodeURIComponent(teamName)}`;
+    console.log("🚀 Navigating to:", trialUrl);
+    navigate(trialUrl);
   };
 
   const handleRecommendToTeam = (player) => {
     console.log("Recommending player to team:", player);
-    // TODO: פתח דיאלוג המלצה לקבוצה
-    alert(`Opening team recommendation dialog for player: ${player.name}`);
-  };
 
-  const handleInviteToTrial = (user) => {
-    console.log("Opening trial invitation for:", user);
-
-    // Extract player info based on user type and structure
-    const playerId = user.type === "player" ? user.player?.id || user.id : null;
-
+    // Extract player ID and name
+    const playerId = player.player?.id || player.id;
     const playerName =
-      user.type === "player" ? user.player?.name || user.name : null;
+      player.player?.name ||
+      player.name ||
+      player.full_name ||
+      `Player ${playerId}`;
 
-    if (!playerId) {
-      console.error("No player ID found for trial invitation");
-      alert("Unable to invite - player information not available");
-      return;
-    }
-
-    setTrialModalState({
+    // Show team selection modal
+    setTeamSelectModalState({
       show: true,
       playerId: playerId,
       playerName: playerName,
+      isForTrial: false, // This is for recommendation, not trial
     });
+  };
+
+  // Handle when a team is selected from the TeamSelectModal
+  const handleTeamSelected = (team) => {
+    console.log("Team selected:", team);
+
+    // Save player information before closing the modal
+    const playerId = teamSelectModalState.playerId;
+    const playerName = teamSelectModalState.playerName;
+    const isForTrial = teamSelectModalState.isForTrial;
+
+    // Log the data we're working with
+    console.log("handleTeamSelected data:", {
+      teamId: team.id,
+      teamName: team.name,
+      playerId: playerId,
+      playerName: playerName,
+      isForTrial: isForTrial,
+    });
+
+    // Close the team selection modal
+    setTeamSelectModalState({
+      show: false,
+      playerId: null,
+      playerName: null,
+      isForTrial: false,
+    });
+
+    if (isForTrial) {
+      // Navigate to trial creation page
+      const trialUrl = `/trial/create?playerId=${playerId}&playerName=${encodeURIComponent(
+        playerName
+      )}&teamId=${team.id}&teamName=${encodeURIComponent(
+        team.name
+      )}&scoutId=${currentUserId}`;
+      console.log("🚀 Navigating to trial page:", trialUrl);
+
+      // Scroll to top automatically
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      navigate(trialUrl);
+    } else {
+      // This is for player recommendation - implement recommendation logic here
+      console.log("📋 Recommending player to team (not implemented yet)");
+      alert(
+        `Recommending ${playerName} to ${team.name} - Feature coming soon!`
+      );
+    }
+  };
+
+  const handleInviteToTrial = (user) => {
+    console.log("🎯 Opening trial invitation for:", user);
+    console.log("🔍 User type:", user.type);
+
+    if (user.type === "player") {
+      // When inviting a player - first open team selection modal
+      const playerId = user.player?.id || user.id;
+      const playerName =
+        user.player?.name ||
+        user.name ||
+        user.full_name ||
+        `Player ${playerId}`;
+
+      console.log("🏃 Opening team selection modal for player trial:", {
+        playerId,
+        playerName,
+      });
+
+      // Show team selection modal for choosing a team for the player trial
+      setTeamSelectModalState({
+        show: true,
+        playerId: playerId,
+        playerName: playerName,
+        isForTrial: true, // Flag to indicate this is for a trial, not recommendation
+      });
+
+      console.log("📊 Team modal state after setting:", {
+        show: true,
+        playerId: playerId,
+        playerName: playerName,
+        isForTrial: true,
+      });
+    } else if (user.type === "team") {
+      // When scout invites a team
+      const teamId = user.team?.id || user.id;
+      const teamName =
+        user.team?.team_name || user.team_name || user.name || `Team ${teamId}`;
+
+      console.log(
+        "🏆 Opening player selection modal for team trial:",
+        teamName
+      );
+
+      // Open player selection modal for choosing a player for the team trial
+      setPlayerSelectModalState({
+        show: true,
+        teamId: teamId,
+        teamName: teamName,
+        isForTrial: true, // Flag to indicate this is for a trial, not recommendation
+      });
+    } else {
+      console.error(
+        "❌ Unsupported user type for trial invitation:",
+        user.type
+      );
+      alert("Cannot invite this type of user to a trial");
+    }
   };
 
   const handleRequestTrial = (user) => {
     console.log("Requesting trial from:", user);
-    // TODO: פתח דיאלוג בקשת מבחן
-    alert(`Opening trial request dialog to: ${user.name} (${user.type})`);
+
+    // Check if the target is a team
+    if (user.type !== "team") {
+      console.error("Can only request trials from teams");
+      alert("Trial requests can only be sent to teams");
+      return;
+    }
+
+    // Get team ID from the user object
+    const teamId = user.team?.id || user.id;
+    const teamName =
+      user.team?.team_name || user.team_name || user.name || `Team ${teamId}`;
+
+    // Navigate to trial page for player requesting trial from team
+    const trialUrl = `/trial/create?playerId=${currentUserId}&teamId=${teamId}&teamName=${encodeURIComponent(
+      teamName
+    )}`;
+    console.log("🚀 Navigating to trial request page:", trialUrl);
+    navigate(trialUrl);
   };
 
   const handleAddToShortlist = async (player) => {
@@ -233,35 +416,37 @@ export const useSearchActions = ({ onRefreshShortlist } = {}) => {
     }
   };
 
-  // Trial modal handlers
-  const closeTrialModal = () => {
-    setTrialModalState({
+  // Handler for closing player selection modal
+  const closePlayerSelectModal = () => {
+    setPlayerSelectModalState({
       show: false,
-      playerId: null,
-      playerName: null,
+      teamId: null,
+      teamName: null,
     });
   };
 
-  const handleTrialCreated = async () => {
-    // Refresh any necessary data after trial creation
-    console.log("Trial created successfully");
-
-    // Close modal
-    closeTrialModal();
-
-    // Optionally refresh shortlist or other data
-    if (onRefreshShortlist) {
-      await onRefreshShortlist();
-    }
+  // Handler for closing team selection modal
+  const closeTeamSelectModal = () => {
+    setTeamSelectModalState({
+      show: false,
+      playerId: null,
+      playerName: null,
+      isForTrial: false,
+    });
   };
 
   return {
     getActionsForUser,
     currentUserId,
     userRole: role,
-    // Trial modal state and handlers
-    trialModal: trialModalState,
-    closeTrialModal,
-    handleTrialCreated,
+    teamId: teamData?.id || (role === "team" ? currentUserId : null),
+    // Player selection modal state and handlers
+    playerSelectModal: playerSelectModalState,
+    closePlayerSelectModal,
+    handlePlayerSelected,
+    // Team selection modal state and handlers
+    teamSelectModal: teamSelectModalState,
+    closeTeamSelectModal,
+    handleTeamSelected,
   };
 };

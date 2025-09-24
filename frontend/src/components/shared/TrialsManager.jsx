@@ -225,26 +225,43 @@ const TrialsManager = ({
     const actions = [];
     const status = trial.status?.toLowerCase();
 
-    // Team can always accept/decline trials sent to them
-    if (userRole === 'team') {
-      if (status === 'pending') {
-        actions.push('accept', 'decline');
+    // Trial Logic Based on Sender and Recipient
+    
+    // Case 1: Team sent an invitation to Player
+    if (trial.sender_role === 'team') {
+      // Only the Player can accept/decline this type of trial
+      if (userRole === 'player') {
+        if (status === 'pending') {
+          actions.push('accept', 'decline');
+        }
       }
-      if (status === 'declined') {
+      // Team can only delete declined trials they sent
+      else if (userRole === 'team') {
+        if (status === 'declined') {
+          actions.push('delete');
+        }
+      }
+    } 
+    
+    // Case 2: Player requests trial from Team
+    // OR Case 3: Scout recommends Player to Team
+    else if (trial.sender_role === 'player' || trial.sender_role === 'scout') {
+      // Only the Team can accept/decline these trial types
+      if (userRole === 'team') {
+        if (status === 'pending') {
+          actions.push('accept', 'decline');
+        }
+        if (status === 'declined') {
+          actions.push('delete');
+        }
+      }
+    }
+    
+    // All user roles can delete their own sent trials if needed
+    if (userRole === trial.sender_role && status === 'pending') {
+      if (!actions.includes('delete')) {
         actions.push('delete');
       }
-    }
-    
-    // Player can accept/decline trials sent to them by teams
-    if (userRole === 'player' && trial.sender_role === 'team') {
-      if (status === 'pending') {
-        actions.push('accept', 'decline');
-      }
-    }
-    
-    // Scout can only view trials they sent (no actions)
-    if (userRole === 'scout') {
-      // Scouts can only view, no actions for now
     }
 
     return actions;

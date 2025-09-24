@@ -10,9 +10,37 @@ import "../styles/TeamContainer.css";
 
 export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshShortlist, onRefreshTrials }) {
   const [activeTab, setActiveTab] = useState("search");
+  // Remove single refreshKey and create separate flags for each tab to track refreshes
+  const [forceRefresh, setForceRefresh] = useState({
+    search: false,
+    trials: false,
+    recommendations: false,
+    shortlist: false
+  });
 
+  // Update to refresh data when switching tabs
   const switchToTab = (tabId) => {
-    setActiveTab(tabId);
+    
+    // Only proceed if we're actually changing tabs
+    if (tabId !== activeTab) {
+      // Update active tab
+      setActiveTab(tabId);
+      
+      // Then handle refreshes
+      if (tabId === "trials" && onRefreshTrials) {
+        onRefreshTrials();
+      }
+      
+      if (tabId === "shortlist" && onRefreshShortlist) {
+        onRefreshShortlist();
+      }
+      
+      // Update the force refresh flag for this tab
+      setForceRefresh(prev => ({
+        ...prev,
+        [tabId]: !prev[tabId]
+      }));
+    }
   };
 
   const tabs = [
@@ -38,27 +66,7 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
     },
   ];
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "search":
-        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
-      case "trials":
-        return <TrialsTab trials={trials} onTrialUpdate={onRefreshTrials} />;
-      case "recommendations":
-        return <RecommendationTab team={team} />;
-      case "shortlist":
-        return (
-          <ShortlistTab 
-            shortlist={shortlist} 
-            team={team}
-            onSwitchToSearch={() => switchToTab("search")}
-            onRefreshShortlist={onRefreshShortlist}
-          />
-        );
-      default:
-        return <TeamSearch onRefreshShortlist={onRefreshShortlist} />;
-    }
-  };
+  // Removed renderTabContent function as we're now using conditional rendering directly
 
   return (
     <div className="team-dashboard-tabs">
@@ -69,7 +77,7 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
             <button
               key={tab.id}
               className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => switchToTab(tab.id)}
             >
               {tab.icon}
               <span className="tab-label">{tab.label}</span>
@@ -78,9 +86,36 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
         </div>
       </div>
 
-      {/* Tab Content */}
+      {/* Tab Content - Using conditional display instead of a function to maintain state */}
       <div className="tab-content team-container">
-        {renderTabContent()}
+        {activeTab === "search" && (
+          <TeamSearch 
+            onRefreshShortlist={onRefreshShortlist} 
+            team={team} 
+          />
+        )}
+        
+        {activeTab === "trials" && (
+          <TrialsTab 
+            trials={trials} 
+            onTrialUpdate={onRefreshTrials} 
+          />
+        )}
+        
+        {activeTab === "recommendations" && (
+          <RecommendationTab 
+            team={team} 
+          />
+        )}
+        
+        {activeTab === "shortlist" && (
+          <ShortlistTab 
+            shortlist={shortlist} 
+            team={team}
+            onSwitchToSearch={() => switchToTab("search")}
+            onRefreshShortlist={onRefreshShortlist}
+          />
+        )}
       </div>
     </div>
   );

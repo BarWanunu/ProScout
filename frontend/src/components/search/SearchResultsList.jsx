@@ -3,6 +3,9 @@ import PlayerResultCard from './PlayerResultCard';
 import TeamResultCard from './TeamResultCard';
 import ScoutResultCard from './ScoutResultCard';
 import { getUserTypeFromResult } from '@/utils/searchResultUtils';
+import { useSearchActions } from '@/hooks/search/useSearchActions';
+import PlayerSelectModal from '@/components/shared/PlayerSelectModal';
+import TeamSelectModal from '@/components/shared/TeamSelectModal';
 import './styles/SearchResultsList.css';
 import './styles/SearchFixGlobal.css';
 import './styles/SearchResultWrapper.css';
@@ -13,8 +16,24 @@ const SearchResultsList = ({
   hasSearched, 
   searchType,
   className = '',
-  onRefreshShortlist
+  onRefreshShortlist,
+  teamData
 }) => {
+  // Get global modals state and handlers
+  const searchActionsHook = useSearchActions({ onRefreshShortlist, teamData });
+  const { 
+    playerSelectModal, 
+    closePlayerSelectModal, 
+    handlePlayerSelected,
+    teamSelectModal,
+    closeTeamSelectModal,
+    handleTeamSelected,
+    currentUserId,
+    getActionsForUser,
+    userRole,
+    teamId
+  } = searchActionsHook;
+  
   if (loading) {
     return (
       <div className="search-results-container">
@@ -77,6 +96,14 @@ const SearchResultsList = ({
                   result={result} 
                   index={index}
                   onRefreshShortlist={onRefreshShortlist}
+                  teamData={teamData}
+                  // Pass shared actions to avoid creating new hook instance
+                  searchActions={{
+                    getActionsForUser,
+                    userRole,
+                    currentUserId,
+                    teamId
+                  }}
                 />
               </div>
             );
@@ -115,6 +142,31 @@ const SearchResultsList = ({
           }
         })}
       </div>
+      
+      {/* Global Player Selection Modal for Scout Recommendations */}
+      {playerSelectModal.show && (
+        <PlayerSelectModal
+          show={playerSelectModal.show}
+          onHide={closePlayerSelectModal}
+          onPlayerSelected={handlePlayerSelected}
+          teamName={playerSelectModal.teamName}
+          isForTrial={playerSelectModal.isForTrial}
+        />
+      )}
+      
+      {/* Global Team Selection Modal for Scout Recommending Players or Trial Invitations */}
+      {teamSelectModal.show && (
+        <TeamSelectModal
+          show={teamSelectModal.show}
+          onHide={closeTeamSelectModal}
+          onTeamSelected={handleTeamSelected}
+          playerName={teamSelectModal.playerName}
+          title={teamSelectModal.isForTrial 
+            ? `Select a Team for ${teamSelectModal.playerName || 'Player'}'s Trial`
+            : `Select a Team to Recommend ${teamSelectModal.playerName || 'Player'} To`
+          }
+        />
+      )}
     </div>
   );
 };

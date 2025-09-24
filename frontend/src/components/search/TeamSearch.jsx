@@ -9,7 +9,7 @@ import "@/components/search/styles/SearchFixGlobal.css";
 import "@/components/search/styles/SearchFixTeam.css";
 import "@/components/search/styles/DirectSearchStyles.css";
 
-export default function TeamSearch({ onRefreshShortlist }) {
+export default function TeamSearch({ onRefreshShortlist, team }) {
   const [searchType, setSearchType] = useState("player");
   const [searchInput, setSearchInput] = useState("");
 
@@ -144,6 +144,7 @@ export default function TeamSearch({ onRefreshShortlist }) {
         hasSearched={hasSearched}
         searchType={searchType}
         onRefreshShortlist={onRefreshShortlist}
+        teamData={team}
       />
     </div>
   );

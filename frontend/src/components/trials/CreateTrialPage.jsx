@@ -1,0 +1,278 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
+import { Calendar, MessageSquare, Send, ArrowLeft, User } from 'lucide-react';
+import trialService from '@/api/services/trialService';
+import { getToken } from '@/api/tokenStore';
+import { useAuth } from '@/auth/AuthContext';
+import Header from '@/layout/overallLayout/Header';
+import Footer from '@/layout/overallLayout/Footer';
+import './CreateTrialPage.css';
+
+const CreateTrialPage = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { id: currentUserId, role, profile } = useAuth();
+  
+  // Get parameters from URL
+  const playerId = searchParams.get('playerId');
+  const playerName = decodeURIComponent(searchParams.get('playerName') || '');
+  const teamId = searchParams.get('teamId');
+  const teamName = decodeURIComponent(searchParams.get('teamName') || '');
+  const urlScoutId = searchParams.get('scoutId');
+  
+  const [formData, setFormData] = useState({
+    trialDate: '',
+    invitationMessage: '',
+    timeSlot: '10:00'
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    // Scroll to top when page loads
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }, []);
+
+  // Get tomorrow's date as minimum date
+  const getTomorrowDate = () => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    return tomorrow.toISOString().split('T')[0];
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+    if (error) setError('');
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.trialDate || !formData.invitationMessage.trim()) {
+      setError('Please fill in all required fields');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError('');
+      
+      const token = getToken();
+      
+      // Combine date and time
+      const trialDateTime = `${formData.trialDate}T${formData.timeSlot}:00.000Z`;
+      
+      // Build trial data - use scoutId from URL if provided, otherwise use current user
+      const effectiveScoutId = urlScoutId ? parseInt(urlScoutId, 10) : parseInt(currentUserId, 10);
+      
+      const trialData = {
+        player_id: parseInt(playerId, 10),
+        team_id: parseInt(teamId, 10),
+        user_id: effectiveScoutId,
+        invitation_message: formData.invitationMessage.trim(),
+        trial_date: trialDateTime,
+        sender_role: role
+      };
+
+      console.log('📤 Creating trial with data:', trialData);
+      
+      const response = await trialService.createTrial(trialData, token);
+      
+      console.log('✅ Trial created successfully:', response);
+      
+      setSuccess(true);
+      
+      // Navigate back after 2 seconds
+      setTimeout(() => {
+        navigate('/scout-dashboard'); // Go back to previous page
+      }, 2000);
+      
+    } catch (err) {
+      console.error('❌ Failed to create trial:', err);
+      setError(
+        err.response?.data?.message || 
+        'Failed to create trial invitation. Please try again.'
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoBack = () => {
+    // Navigate to scout dashboard instead of going back in history
+    navigate('/scout-dashboard');
+  };
+
+  if (success) {
+    return (
+      <div className="d-flex flex-column min-vh-100 create-trial-page">
+        <Header />
+        <div className="flex-grow-1 d-flex align-items-center justify-content-center py-4">
+          <Container>
+            <div className="scout-container">
+              <div className="success-container">
+                <div className="success-icon">✅</div>
+                <h3 className="success-title">Trial Invitation Sent!</h3>
+                <p className="success-message">
+                  Your trial invitation has been sent to <strong>{playerName}</strong> successfully.
+                </p>
+                <Button variant="primary" onClick={handleGoBack} className="px-4">
+                  <ArrowLeft size={16} className="me-2" />
+                  Go Back
+                </Button>
+              </div>
+            </div>
+          </Container>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="d-flex flex-column min-vh-100 create-trial-page">
+      <Header />
+      <div className="flex-grow-1 py-4">
+        <Container className="create-trial-container">
+          <div className="scout-container">
+            <div className="trial-header">
+              <div className="d-flex align-items-center justify-content-between">
+                <div className="d-flex align-items-center">
+                  <Button 
+                    variant="outline-light" 
+                    size="sm"
+                    onClick={handleGoBack} 
+                    className="me-3 back-button"
+                  >
+                    <ArrowLeft size={16} className="me-1" />
+                    Back
+                  </Button>
+                  <h4 className="mb-0 text-white d-flex align-items-center">
+                    <Send size={20} className="me-2" />
+                    Send Trial Invitation
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            {/* Player and Team Info */}
+            <div className="player-info-card">
+              <div className="d-flex align-items-center">
+                <User size={20} className="me-2 text-primary" />
+                <div>
+                  <strong>Inviting Player to Trial</strong>
+                  <div className="team-info">
+                    {playerName} → {teamName}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {error && (
+            <Alert variant="danger" className="mb-4">
+              {error}
+            </Alert>
+          )}
+
+          <Form onSubmit={handleSubmit} className="trial-form">
+            {/* Trial Date */}
+            <Form.Group className="mb-3">
+              <Form.Label className="text-white">
+                <Calendar size={16} className="me-2" />
+                Trial Date *
+              </Form.Label>
+              <Form.Control
+                type="date"
+                value={formData.trialDate}
+                onChange={(e) => handleInputChange('trialDate', e.target.value)}
+                min={getTomorrowDate()}
+                required
+                disabled={loading}
+              />
+            </Form.Group>
+
+            {/* Time Slot */}
+            <Form.Group className="mb-3">
+              <Form.Label className="text-white">Time Slot</Form.Label>
+              <Form.Select
+                value={formData.timeSlot}
+                onChange={(e) => handleInputChange('timeSlot', e.target.value)}
+                disabled={loading}
+              >
+                <option value="09:00">09:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="14:00">02:00 PM</option>
+                <option value="15:00">03:00 PM</option>
+                <option value="16:00">04:00 PM</option>
+                <option value="17:00">05:00 PM</option>
+                <option value="18:00">06:00 PM</option>
+              </Form.Select>
+            </Form.Group>
+
+            {/* Message */}
+            <Form.Group className="mb-4">
+              <Form.Label className="text-white">
+                <MessageSquare size={16} className="me-2" />
+                Trial Message *
+              </Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                value={formData.invitationMessage}
+                onChange={(e) => handleInputChange('invitationMessage', e.target.value)}
+                placeholder={`Invite ${playerName} to a trial with ${teamName}. Provide details about the trial...`}
+                maxLength={500}
+                disabled={loading}
+              />
+              <Form.Text>
+                {formData.invitationMessage.length}/500 characters
+              </Form.Text>
+            </Form.Group>
+
+            <div className="trial-actions">
+              <Button 
+                variant="outline-light" 
+                onClick={handleGoBack}
+                disabled={loading}
+                className="px-4"
+              >
+                Cancel
+              </Button>
+              <Button 
+                variant="primary" 
+                type="submit"
+                disabled={loading || !formData.trialDate || !formData.invitationMessage.trim()}
+                className="flex-grow-1"
+              >
+                {loading ? (
+                  <>
+                    <Spinner size="sm" className="me-2" />
+                    Sending Invitation...
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} className="me-2" />
+                    Send Trial Invitation
+                  </>
+                )}
+              </Button>
+            </div>
+          </Form>
+          </div>
+        </Container>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default CreateTrialPage;

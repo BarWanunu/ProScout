@@ -2,10 +2,16 @@ import React from "react";
 import ActionMenu from '@/components/shared/ActionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
+import PlayerSelectModal from '@/components/shared/PlayerSelectModal';
 import './styles/SearchResultCard.css';
 
 const TeamResultCard = ({ team, index }) => {
-  const { getActionsForUser } = useSearchActions({});
+  const { 
+    getActionsForUser, 
+    playerSelectModal, 
+    closePlayerSelectModal, 
+    handlePlayerSelected 
+  } = useSearchActions({});
   const normalizedResult = normalizeSearchResult(team);
   const actions = getActionsForUser(normalizedResult);
 
@@ -52,6 +58,16 @@ const TeamResultCard = ({ team, index }) => {
           </div>
         </div>
       </div>
+      
+      {/* Player Selection Modal for Scout Recommendations */}
+      {playerSelectModal.show && playerSelectModal.teamId === (team.team?.id || team.id) && (
+        <PlayerSelectModal
+          show={playerSelectModal.show}
+          onHide={closePlayerSelectModal}
+          onPlayerSelected={handlePlayerSelected}
+          teamName={team.team_name || playerSelectModal.teamName}
+        />
+      )}
     </div>
   );
 };

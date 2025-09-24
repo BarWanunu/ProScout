@@ -52,11 +52,9 @@ export default function TeamDashboard() {
     try {
       const token = getToken();
       if (!team) return;
-
-      const trialsData = await trialService.getTrialsByTeam(team.id, token);      
-      setTrials(trialsData.trials);
-      console.log(trialsData.trials);
       
+      const trialsData = await trialService.getTrialsByTeam(team.id, token);      
+      setTrials(trialsData.trials);      
     } catch (err) {
       console.error("❌ Error fetching trials:", err);
     }
@@ -64,8 +62,10 @@ export default function TeamDashboard() {
 
   // --- Fetch Trials (רק אחרי שהקבוצה נטענת) ---
   useEffect(() => {
-    fetchTrials();
-  }, [team]); // נבצע fetch רק כאשר הקבוצה משתנה from "@/layout/overallLayout/Header.jsx";
+    if (team) {
+      fetchTrials();
+    }
+  }, [team]); // נבצע fetch רק כאשר הקבוצה משתנה
 
   // --- Fetch Shortlist ---
   const fetchShortlist = async () => {
@@ -79,8 +79,19 @@ export default function TeamDashboard() {
   };
 
   useEffect(() => {
-    fetchShortlist();
-  }, []);
+    if (team) {
+      fetchShortlist();
+    }
+  }, [team]);
+
+  // Direct fetch functions - no counter needed
+  const refreshShortlist = async () => {
+    await fetchShortlist();
+  };
+  
+  const refreshTrials = async () => {
+    await fetchTrials();
+  };
 
   return (
     <>
@@ -98,8 +109,8 @@ export default function TeamDashboard() {
             team={team} 
             trials={trials} 
             shortlist={shortlist}
-            onRefreshShortlist={fetchShortlist}
-            onRefreshTrials={fetchTrials}
+            onRefreshShortlist={refreshShortlist}
+            onRefreshTrials={refreshTrials}
           />
         </div>
       </div>

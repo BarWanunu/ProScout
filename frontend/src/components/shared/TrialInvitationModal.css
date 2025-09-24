@@ -2,7 +2,8 @@
 .trial-invitation-modal .modal-dialog {
   max-width: 500px;
   max-height: 95vh;
-  margin: 2.5vh auto;
+  margin: 0.5rem auto;
+  position: relative;
 }
 
 .trial-invitation-modal .modal-content {
@@ -50,6 +51,11 @@
   flex: 1;
   overflow-y: auto;
   max-height: 70vh;
+  min-height: 200px;
+  scroll-behavior: auto;
+  position: relative;
+  overflow-anchor: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .player-info-banner {
@@ -256,14 +262,23 @@
 /* Responsive */
 @media (max-width: 576px) {
   .trial-invitation-modal .modal-dialog {
-    margin: 1rem;
+    margin: 0.5rem auto;
+    width: 95%;
+    top: 0;
   }
 
   .trial-modal-body {
     padding: 1rem;
+    max-height: 65vh;
+    -webkit-overflow-scrolling: touch;
   }
 
   .trial-modal-footer {
     padding: 0.75rem 1rem;
+  }
+
+  /* Fix iOS Safari scroll issues */
+  .trial-invitation-modal .modal-content {
+    overflow: hidden;
   }
 }
