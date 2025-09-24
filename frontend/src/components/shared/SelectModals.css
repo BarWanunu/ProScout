@@ -1,0 +1,57 @@
+/* Custom scrollbar styles for select modals */
+.team-list::-webkit-scrollbar,
+.player-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.team-list::-webkit-scrollbar-track,
+.player-list::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 4px;
+}
+
+.team-list::-webkit-scrollbar-thumb,
+.player-list::-webkit-scrollbar-thumb {
+  background: #6c757d;
+  border-radius: 4px;
+}
+
+.team-list::-webkit-scrollbar-thumb:hover,
+.player-list::-webkit-scrollbar-thumb:hover {
+  background: #495057;
+}
+
+/* Smooth scrolling behavior */
+.team-list,
+.player-list {
+  scroll-behavior: smooth;
+}
+
+/* Selected item highlight */
+.team-item.selected,
+.player-item.selected {
+  background-color: #e3f2fd !important;
+  border-color: #2196f3 !important;
+  box-shadow: 0 2px 4px rgba(33, 150, 243, 0.2);
+}
+
+/* Hover effects */
+.team-item:hover,
+.player-item:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* Better spacing for list items */
+.team-item,
+.player-item {
+  margin-bottom: 8px !important;
+  transition: all 0.2s ease;
+}
+
+.team-item:last-child,
+.player-item:last-child {
+  margin-bottom: 0 !important;
+}

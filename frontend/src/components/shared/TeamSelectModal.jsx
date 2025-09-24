@@ -3,6 +3,7 @@ import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, Building } from 'lucide-react';
 import searchService from '@/api/services/searchService';
 import { getToken } from '@/api/tokenStore';
+import './SelectModals.css';
 
 /**
  * Modal component for selecting a team to recommend a player to
@@ -143,11 +144,22 @@ const TeamSelectModal = ({
               <p className="mt-2">Searching for teams...</p>
             </div>
           ) : results.length > 0 ? (
-            <div className="team-list">
+            <div 
+              className="team-list" 
+              style={{ 
+                maxHeight: '300px', 
+                overflowY: 'auto',
+                border: '1px solid #dee2e6',
+                borderRadius: '8px',
+                padding: '8px',
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#6c757d #f8f9fa'
+              }}
+            >
               {results.map((team) => (
                 <div 
                   key={team.id} 
-                  className={`team-item p-2 mb-2 d-flex align-items-center ${selectedTeamId === (team.team?.id || team.id) ? 'selected bg-light' : ''}`}
+                  className={`team-item p-2 mb-2 d-flex align-items-center ${selectedTeamId === (team.team?.id || team.id) ? 'selected' : ''}`}
                   onClick={() => handleTeamClick(team)}
                   style={{ cursor: 'pointer', borderRadius: '8px', border: '1px solid #ddd' }}
                 >

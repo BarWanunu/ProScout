@@ -3,6 +3,7 @@ import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, User } from 'lucide-react';
 import searchService from '@/api/services/searchService';
 import { getToken } from '@/api/tokenStore';
+import './SelectModals.css';
 
 /**
  * Modal component for selecting a player to recommend to a team
@@ -55,8 +56,8 @@ const PlayerSelectModal = ({
       const token = getToken();
       const res = await searchService.searchPlayersByName(searchInput, token);
       
-      // Limit to 10 results
-      const limitedResults = (res.data || res || []).slice(0, 10);
+      // Limit to 20 results
+      const limitedResults = (res.data || res || []).slice(0, 20);
       
       // Get enhanced player data using playerService.getPlayerFull for better display
       const enhancedResults = await Promise.all(
@@ -175,7 +176,18 @@ const PlayerSelectModal = ({
               <p className="mt-2">Searching for players...</p>
             </div>
           ) : results.length > 0 ? (
-            <div className="player-list">
+            <div 
+              className="player-list"
+              style={{ 
+                maxHeight: '350px', 
+                overflowY: 'auto',
+                border: '1px solid #dee2e6',
+                borderRadius: '8px',
+                padding: '8px',
+                scrollbarWidth: 'thin',
+                scrollbarColor: '#6c757d #f8f9fa'
+              }}
+            >
               {results.map((player) => {
                 // Extract player data from nested structure if available
                 const playerData = player.player || player;
@@ -189,7 +201,7 @@ const PlayerSelectModal = ({
                 return (
                   <div 
                     key={playerId} 
-                    className={`player-item p-2 mb-2 d-flex align-items-center ${selectedPlayerId === playerId ? 'selected bg-light' : ''}`}
+                    className={`player-item p-2 mb-2 d-flex align-items-center ${selectedPlayerId === playerId ? 'selected' : ''}`}
                     onClick={() => handlePlayerClick(player)}
                     style={{ cursor: 'pointer', borderRadius: '8px', border: '1px solid #ddd' }}
                   >
