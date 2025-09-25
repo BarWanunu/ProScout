@@ -214,7 +214,7 @@ const CreateTrialPage = () => {
             </Alert>
           )}
 
-          <Form onSubmit={handleSubmit} className="trial-form">
+          <Form onSubmit={handleSubmit} className="trial-form" id="trial-form">
             {/* Trial Date */}
             <Form.Group className="mb-3">
               <Form.Label className="text-white">
@@ -269,36 +269,39 @@ const CreateTrialPage = () => {
                 {formData.invitationMessage.length}/500 characters
               </Form.Text>
             </Form.Group>
+          </Form>
 
+          <div className="trial-actions-container">
             <div className="trial-actions">
               <Button 
-                variant="outline-light" 
+                variant=""
                 onClick={handleGoBack}
                 disabled={loading}
-                className="px-4"
+                className="cancel-btn"
               >
-                Cancel
+                <span>Cancel</span>
               </Button>
               <Button 
-                variant="primary" 
+                variant=""
                 type="submit"
+                form="trial-form"
                 disabled={loading || !formData.trialDate || !formData.invitationMessage.trim()}
-                className="flex-grow-1"
+                className="send-btn"
               >
                 {loading ? (
-                  <>
+                  <span>
                     <Spinner size="sm" className="me-2" />
                     Sending Invitation...
-                  </>
+                  </span>
                 ) : (
-                  <>
+                  <span>
                     <Send size={16} className="me-2" />
                     Send Trial Invitation
-                  </>
+                  </span>
                 )}
               </Button>
             </div>
-          </Form>
+          </div>
           </div>
         </Container>
       </div>
