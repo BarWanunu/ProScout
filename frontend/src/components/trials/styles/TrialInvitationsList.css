@@ -1,0 +1,287 @@
+/* Trial Invitations Container - Dark Modern Theme */
+.trials-list-container {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 24px !important;
+}
+
+.trials-heading {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 20px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  color: #ffffff !important;
+}
+
+.trials-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+}
+
+/* Individual Trial Card - Modern Dark Style */
+.trial-card {
+  background: linear-gradient(135deg, #3a4f66 0%, #2c3e50 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.trial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Trial Header with sender info */
+.trial-header {
+  display: flex;
+  justify-content: between;
+  align-items: center;
+  margin-bottom: 16px;
+  color: #8fa4b3;
+  font-size: 0.9rem;
+}
+
+.trial-sender {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-button {
+  background: #27ae60;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.message-button:hover {
+  background: #2ecc71;
+}
+
+/* Player Info Section */
+.trial-player-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.player-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.player-details {
+  flex: 1;
+}
+
+.player-name {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.player-meta {
+  color: #8fa4b3;
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.view-profile-btn {
+  background: #3498db;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.view-profile-btn:hover {
+  background: #2980b9;
+}
+
+/* Team and Date Section */
+.trial-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.team-info {
+  color: #8fa4b3;
+  font-size: 0.9rem;
+}
+
+.team-name {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.trial-date-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.trial-date {
+  color: #ffffff;
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  background: #27ae60;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.pending {
+  background: #f39c12;
+}
+
+.status-badge.declined {
+  background: #e74c3c;
+}
+
+.status-badge.accepted {
+  background: #27ae60;
+}
+
+/* Trial Message */
+.trial-message {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  padding: 12px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  border-left: 3px solid #3498db;
+}
+
+/* Action buttons for pending trials */
+.trial-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn.accept {
+  background: #27ae60;
+  color: white;
+}
+
+.action-btn.accept:hover {
+  background: #2ecc71;
+}
+
+.action-btn.decline {
+  background: #e74c3c;
+  color: white;
+}
+
+.action-btn.decline:hover {
+  background: #c0392b;
+}
+
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Loading and Error States */
+.trials-loading,
+.trials-error {
+  padding: 20px;
+  text-align: center;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.trials-loading {
+  background: rgba(52, 152, 219, 0.1);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  color: #3498db;
+}
+
+.trials-error {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #e74c3c;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .trial-card {
+    padding: 16px;
+  }
+
+  .trial-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .trial-date-status {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

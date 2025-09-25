@@ -9,5 +9,6 @@ router.post("/", auth, upload.single("image"), scoutController.registerScout);
 router.patch("/", auth, upload.single("image"), scoutController.updateScoutField);
 router.delete("/", auth, scoutController.deleteScout);
 router.get("/:id", auth, scoutController.getScoutById);
+router.get("/scout-id/:id", scoutController.getScoutByScoutId);
 
 module.exports = router;

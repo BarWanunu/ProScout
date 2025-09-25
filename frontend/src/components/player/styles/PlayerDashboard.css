@@ -1,0 +1,59 @@
+/* ------------------------------------------------------------------
+   PLAYER DASHBOARD - DARK GLASS BACKGROUND + MOUNT ANIMATION
+   Based on TeamDashboard.css but customized for player
+------------------------------------------------------------------ */
+.pd-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  background: radial-gradient(
+    ellipse at top,
+    rgba(30, 41, 59, 0.8) 0%,
+    rgba(15, 23, 42, 0.95) 100%
+  );
+  backdrop-filter: blur(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+/* ------------------------------------------------------------------
+   PLAYER DASHBOARD CONTAINER
+------------------------------------------------------------------ */
+.player-dashboard-container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 2rem auto 0;
+}
+
+/* Give cards from sub-components a common glassy look */
+.pd-content .card,
+.pd-content .Card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(3px);
+  border-radius: 1rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ------------------------------------------------------------------
+   Simple keyframe reused from InitialSignup
+------------------------------------------------------------------ */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

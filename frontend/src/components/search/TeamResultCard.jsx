@@ -1,11 +1,15 @@
 import React from "react";
-import ActionMenu from '@/components/shared/ActionMenu';
+import ActionMenu from '@/components/actionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import './styles/SearchResultCard.css';
 
-const TeamResultCard = ({ team, index }) => {
-  const { getActionsForUser } = useSearchActions({});
+const TeamResultCard = ({ team, index, searchActions }) => {
+  // Only create hook if searchActions is not provided
+  const hookActions = searchActions ? null : useSearchActions({});
+  const { 
+    getActionsForUser
+  } = searchActions || hookActions;
   const normalizedResult = normalizeSearchResult(team);
   const actions = getActionsForUser(normalizedResult);
 

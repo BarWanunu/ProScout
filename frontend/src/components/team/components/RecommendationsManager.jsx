@@ -1,0 +1,301 @@
+import React, { useState, useEffect } from 'react';
+import { Container, Button, Spinner } from 'react-bootstrap';
+import { Star, MessageCircle, User, Trash2 } from 'lucide-react';
+import recommendationService from '@/api/services/recommendationService';
+import playerService from '@/api/services/playerService';
+import scoutService from '@/api/services/scoutService';
+import { getToken } from '@/api/tokenStore';
+import './styles/RecommendationsManager.css';
+
+const RecommendationsManager = ({ 
+  recommendations = [], 
+  userRole, 
+  onRecommendationUpdate, 
+  showActions = true 
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [playerDetails, setPlayerDetails] = useState({});
+  const [scoutDetails, setScoutDetails] = useState({});
+
+  console.log("RecommendationsManager props:", { 
+    recommendations, 
+    userRole, 
+    showActions, 
+    recommendationsLength: recommendations.length 
+  });
+
+  // Fetch player and scout details for all recommendations
+  useEffect(() => {
+    console.log("🔄 useEffect triggered with recommendations:", recommendations);
+    console.log("🔄 recommendations.length:", recommendations.length);
+    
+    const fetchDetails = async () => {
+      if (!recommendations.length) {
+        console.log("❌ No recommendations to fetch details for");
+        return;
+      }
+
+      console.log("✅ Starting to fetch details for recommendations:", recommendations);
+
+      const token = getToken();
+      console.log("🔐 Token:", token);
+      
+      const playerIds = [...new Set(recommendations.map(r => r.player_id))];
+      const scoutIds = [...new Set(recommendations.map(r => r.scout_id))];
+
+      console.log("👤 Player IDs to fetch:", playerIds);
+      console.log("🔍 Scout IDs to fetch:", scoutIds);
+
+      try {
+        // Fetch player details
+        const playerPromises = playerIds.map(async (playerId) => {
+          try {
+            console.log(`🔄 Fetching player ${playerId}...`);
+            const result = await playerService.getPlayerFull(playerId, token);
+            const player = result.player
+            console.log(`✅ Player ${playerId} data:`, player);
+            return { id: playerId, data: player };
+          } catch (error) {
+            console.error(`❌ Failed to fetch player ${playerId}:`, error);
+            return { id: playerId, data: null };
+          }
+        });
+
+        // Fetch scout details
+        const scoutPromises = scoutIds.map(async (scoutId) => {
+          try {
+            console.log(`🔄 Fetching scout ${scoutId}...`);
+            const scout = await scoutService.getScoutByScoutId(scoutId, token);
+            console.log(`✅ Scout ${scoutId} data:`, scout);
+            return { id: scoutId, data: scout };
+          } catch (error) {
+            console.error(`❌ Failed to fetch scout ${scoutId}:`, error);
+            return { id: scoutId, data: null };
+          }
+        });
+
+        console.log("🔄 Starting Promise.all for player and scout data...");
+        const [playerResults, scoutResults] = await Promise.all([
+          Promise.all(playerPromises),
+          Promise.all(scoutPromises)
+        ]);
+
+        console.log("✅ Player results:", playerResults);
+        console.log("✅ Scout results:", scoutResults);
+
+        // Process results
+        const playersMap = {};
+        const scoutsMap = {};
+
+        playerResults.forEach(({ id, data }) => {
+          console.log(`Processing player ${id}:`, data);
+          if (data) playersMap[id] = data;
+        });
+
+        scoutResults.forEach(({ id, data }) => {
+          console.log(`Processing scout ${id}:`, data);
+          if (data) scoutsMap[id] = data;
+        });
+
+        console.log("🎯 Final players map:", playersMap);
+        console.log("🎯 Final scouts map:", scoutsMap);
+
+        setPlayerDetails(playersMap);
+        setScoutDetails(scoutsMap);
+      } catch (error) {
+        console.error('💥 Failed to fetch details:', error);
+      }
+    };
+
+    fetchDetails();
+  }, [recommendations]);
+
+  const handleDeleteRecommendation = async (recommendationId) => {
+    if (!window.confirm('Are you sure you want to delete this recommendation?')) {
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const token = getToken();
+      await recommendationService.deleteRecommendation(recommendationId, token);
+      
+      if (onRecommendationUpdate) {
+        onRecommendationUpdate();
+      }
+    } catch (error) {
+      console.error('Failed to delete recommendation:', error);
+      alert('Failed to delete recommendation. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const getPlayerImage = (player) => {
+    // Check player object for photo
+    if (player?.photo) {
+      if (player.photo.startsWith('http')) {
+        return player.photo;
+      }
+      return `http://localhost:3000/uploads/players/${player.photo}`;
+    }
+    
+    // Default fallback
+    return '/assets/default-player.png';
+  };
+
+  if (loading && !recommendations.length) {
+    return (
+      <div className="recommendations-manager">
+        <div className="empty-state">
+          <div className="empty-icon">
+            <Star size={48} />
+          </div>
+          <h4>Loading Recommendations...</h4>
+          <p>Please wait while we fetch your recommendations.</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="recommendations-manager">
+      <div className="recommendations-header">
+        <h4>Player Recommendations ({recommendations.length})</h4>
+        <p>Recommendations from scouts for your team</p>
+      </div>
+
+      <div className="recommendations-list">
+        {recommendations.map((recommendation) => {
+          const player = playerDetails[recommendation.player_id];
+          const scout = scoutDetails[recommendation.scout_id];
+          
+          console.log(`🔍 Recommendation ${recommendation.id}:`, recommendation);
+          console.log(`👤 Player data for ID ${recommendation.player_id}:`, player);
+          console.log(`🔍 Scout data for ID ${recommendation.scout_id}:`, scout);
+          
+          return (
+            <div key={recommendation.id} className="player-card-extended recommendation-card">
+              {/* Player Header Section */}
+              <div className="player-header">
+                <div className="player-avatar-section">
+                  <img 
+                    src={getPlayerImage(player)}
+                    alt={player?.name || 'Player'} 
+                    className="player-avatar-large"
+                    onError={(e) => {
+                      e.target.src = '/assets/default-player.png';
+                    }}
+                  />
+                </div>
+                
+                <div className="player-main-info">
+                  <div className="player-name-section">
+                    <h5 className="player-name-large text-white">
+                      {player?.name || `Player #${recommendation.player_id}`}
+                    </h5>
+                    <div className="player-nationality">
+                      {player?.nationality || 'Unknown'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Scout Info Section */}
+              <div className="scout-info-section">
+                <div className="scout-info-card">
+                  <span className="scout-label">Recommended by:</span>
+                  <span className="scout-name">
+                    {scout?.first_name && scout?.last_name ? 
+                      `${scout.first_name} ${scout.last_name}` : 
+                      scout?.name || `Scout #${recommendation.scout_id}`
+                    }
+                  </span>
+                </div>
+              </div>
+
+              {/* Player Stats Grid */}
+              <div className="player-stats-grid">
+                <div className="stat-item">
+                  <span className="stat-label">Position</span>
+                  <span className="stat-value">
+                    {player?.position || 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Age</span>
+                  <span className="stat-value">
+                    {player?.age || 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Height</span>
+                  <span className="stat-value">
+                    {player?.height ? `${player.height}` : 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Weight</span>
+                  <span className="stat-value">
+                    {player?.weight ? `${player.weight}` : 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Club</span>
+                  <span className="stat-value">
+                    {player?.club || 'N/A'}
+                  </span>
+                </div>
+               
+              </div>
+
+              {/* Recommendation Note */}
+              <div className="recommendation-note">
+                <div className="note-header">
+                  <MessageCircle size={16} />
+                  <span>Recommendation Note:</span>
+                </div>
+                <p className="note-content">
+                  {recommendation.recommendation_note || 'No additional notes provided.'}
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              {showActions && userRole === 'team' && (
+                <div className="action-buttons-grid">
+                  <div className="action-row-top">
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      className="action-btn profile-btn"
+                      onClick={() => {
+                        console.log('View player:', player);
+                        alert(`Viewing ${player?.name || 'Player'} profile - Feature coming soon!`);
+                      }}
+                    >
+                      <User size={16} className="action-icon" />
+                      View Profile
+                    </Button>
+                    
+                    <Button 
+                      variant="outline-danger"
+                      size="sm"
+                      className="action-btn remove-btn" 
+                      onClick={() => handleDeleteRecommendation(recommendation.id)}
+                      disabled={loading}
+                    >
+                      <Trash2 size={16} className="action-icon" />
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default RecommendationsManager;

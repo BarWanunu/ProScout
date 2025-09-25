@@ -63,11 +63,17 @@ async function getScoutById(id, token) {
   return response.data.scout;
 }
 
+async function getScoutByScoutId(id) {
+  const response = await http.get(`${endpoint}/scout-id/${id}`);
+  return response.data.scout;
+}
+
 const scoutService = {
   registerScout,
   updateScoutField,
   deleteScout,
   getScoutById,
+  getScoutByScoutId,
 };
 
 export default scoutService;

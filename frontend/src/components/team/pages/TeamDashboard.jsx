@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"  
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
 import WelcomeSection from "@/components/common/WelcomeSection";
@@ -48,22 +48,24 @@ export default function TeamDashboard() {
     };
   }, []);
 
+   const fetchTrials = async () => {
+    try {
+      const token = getToken();
+      if (!team) return;
+      
+      const trialsData = await trialService.getTrialsByTeam(team.id, token);      
+      setTrials(trialsData.trials);      
+    } catch (err) {
+      console.error("❌ Error fetching trials:", err);
+    }
+  };
+
   // --- Fetch Trials (רק אחרי שהקבוצה נטענת) ---
   useEffect(() => {
-    const fetchTrials = async () => {
-      try {
-        const token = getToken();
-        if (!team) return;
-
-        const trialsData = await trialService.getTrialsByTeam(team.id, token);
-        setTrials(trialsData);
-      } catch (err) {
-        console.error("❌ Error fetching trials:", err);
-      }
-    };
-
-    fetchTrials();
-  }, [team]);
+    if (team) {
+      fetchTrials();
+    }
+  }, [team]); // נבצע fetch רק כאשר הקבוצה משתנה
 
   // --- Fetch Shortlist ---
   const fetchShortlist = async () => {
@@ -77,8 +79,19 @@ export default function TeamDashboard() {
   };
 
   useEffect(() => {
-    fetchShortlist();
-  }, []);
+    if (team) {
+      fetchShortlist();
+    }
+  }, [team]);
+
+  // Direct fetch functions - no counter needed
+  const refreshShortlist = async () => {
+    await fetchShortlist();
+  };
+  
+  const refreshTrials = async () => {
+    await fetchTrials();
+  };
 
   return (
     <>
@@ -96,7 +109,8 @@ export default function TeamDashboard() {
             team={team} 
             trials={trials} 
             shortlist={shortlist}
-            onRefreshShortlist={fetchShortlist}
+            onRefreshShortlist={refreshShortlist}
+            onRefreshTrials={refreshTrials}
           />
         </div>
       </div>

@@ -1,0 +1,288 @@
+/* Trial Invitation Modal */
+.trial-invitation-modal {
+  padding-top: 10px !important;
+}
+
+.trial-invitation-modal .modal-dialog {
+  max-width: 500px;
+  max-height: 95vh;
+  margin: 0 auto !important;
+  margin-top: 10px !important;
+}
+
+.trial-invitation-modal .modal-content {
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.trial-modal-header {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1.5rem;
+}
+
+.trial-modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e2e8f0;
+  font-weight: 600;
+  margin: 0;
+  order: 2;
+}
+
+.trial-close-btn {
+  color: #94a3b8;
+  border: none;
+  padding: 0;
+  background: none;
+  order: 1;
+}
+
+.trial-close-btn:hover {
+  color: #e2e8f0;
+}
+
+.trial-modal-body {
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: #e2e8f0;
+  padding: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  max-height: 70vh;
+  min-height: 200px;
+  scroll-behavior: auto;
+  position: relative;
+  overflow-anchor: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.player-info-banner {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #93c5fd;
+}
+
+.player-banner-content {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.player-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3b82f6;
+  margin-top: 0.25rem;
+}
+
+.trial-error-alert {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.trial-form-label {
+  display: flex;
+  align-items: center;
+  color: #cbd5e1;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.trial-date-input,
+.trial-time-input,
+.trial-message-input {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 8px;
+  color: #e2e8f0;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.trial-time-input {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.trial-date-input:focus,
+.trial-time-input:focus,
+.trial-message-input:focus {
+  background: rgba(30, 41, 59, 1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  color: #e2e8f0;
+}
+
+.trial-message-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.trial-message-input::placeholder {
+  color: #64748b;
+}
+
+.trial-modal-footer {
+  background: linear-gradient(135deg, #1e293b, #334155);
+  border-top: 1px solid rgba(148, 163, 184, 0.3);
+  padding: 1rem 1.5rem;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.trial-cancel-btn {
+  background: rgba(71, 85, 105, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #cbd5e1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.trial-cancel-btn:hover {
+  background: rgba(71, 85, 105, 1);
+  border-color: rgba(148, 163, 184, 0.5);
+  color: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.trial-send-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  color: white;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.trial-send-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
+}
+
+.trial-send-btn:disabled {
+  background: rgba(71, 85, 105, 0.5);
+  color: rgba(203, 213, 225, 0.5);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Bootstrap form controls override */
+.trial-invitation-modal .form-control,
+.trial-invitation-modal .form-select {
+  background-color: rgba(30, 41, 59, 0.8);
+  border-color: rgba(148, 163, 184, 0.3);
+  color: #e2e8f0;
+}
+
+.trial-invitation-modal .form-control:focus,
+.trial-invitation-modal .form-select:focus {
+  background-color: rgba(30, 41, 59, 1);
+  border-color: #3b82f6;
+  color: #e2e8f0;
+}
+
+.trial-invitation-modal .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23cbd5e1' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") !important;
+  background-position: right 0.75rem center !important;
+  background-size: 16px 12px !important;
+}
+
+.trial-invitation-modal .form-select option {
+  background-color: #1e293b;
+  color: #e2e8f0;
+}
+
+.trial-invitation-modal .text-muted {
+  color: #64748b !important;
+}
+
+/* Bootstrap Modal Footer Override */
+.trial-invitation-modal .modal-footer {
+  justify-content: center !important;
+  gap: 1rem;
+}
+
+/* Bootstrap Modal Header Override */
+.trial-invitation-modal .modal-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.3) !important;
+}
+
+.trial-invitation-modal .modal-header .btn-close {
+  display: none !important;
+}
+
+/* Custom Scrollbar */
+.trial-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.trial-modal-body::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 3px;
+}
+
+.trial-modal-body::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 3px;
+}
+
+.trial-modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .trial-invitation-modal .modal-dialog {
+    margin: 0.5rem auto;
+    width: 95%;
+    top: 0;
+  }
+
+  .trial-modal-body {
+    padding: 1rem;
+    max-height: 65vh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .trial-modal-footer {
+    padding: 0.75rem 1rem;
+  }
+
+  /* Fix iOS Safari scroll issues */
+  .trial-invitation-modal .modal-content {
+    overflow: hidden;
+  }
+}
