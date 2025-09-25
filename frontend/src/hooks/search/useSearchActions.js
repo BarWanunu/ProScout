@@ -193,11 +193,12 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     const teamName =
       team.team?.team_name || team.team_name || team.name || `Team ${teamId}`;
 
-    // Show player selection modal
+    // Show player selection modal for recommendation (not trial)
     setPlayerSelectModalState({
       show: true,
       teamId: teamId,
       teamName: teamName,
+      isForTrial: false, // This is for recommendation, not trial
     });
   };
 
@@ -210,7 +211,7 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     const teamName = playerSelectModalState.teamName;
     const isForTrial = playerSelectModalState.isForTrial;
 
-    console.log("📋 Data for trial:", {
+    console.log("📋 Data for action:", {
       teamId,
       teamName,
       playerId: player.id,
@@ -227,14 +228,45 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
       isForTrial: false,
     });
 
-    // Navigate to trial page with player and team data
-    const trialUrl = `/trial/create?playerId=${
-      player.id
-    }&playerName=${encodeURIComponent(
-      player.name
-    )}&teamId=${teamId}&teamName=${encodeURIComponent(teamName)}`;
-    console.log("🚀 Navigating to:", trialUrl);
-    navigate(trialUrl);
+    if (isForTrial) {
+      // Navigate to trial page with player and team data
+      const trialUrl = `/trial/create?playerId=${
+        player.id
+      }&playerName=${encodeURIComponent(
+        player.name
+      )}&teamId=${teamId}&teamName=${encodeURIComponent(
+        teamName
+      )}&scoutId=${currentUserId}`;
+      console.log("🚀 Navigating to trial page:", trialUrl);
+
+      // Scroll to top automatically
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      navigate(trialUrl);
+    } else {
+      // Navigate to recommendation page with player and team data
+      const recommendationUrl = `/recommendation/create?playerId=${
+        player.id
+      }&playerName=${encodeURIComponent(
+        player.name
+      )}&teamId=${teamId}&teamName=${encodeURIComponent(
+        teamName
+      )}&scoutId=${currentUserId}`;
+      console.log("🚀 Navigating to recommendation page:", recommendationUrl);
+
+      // Scroll to top automatically
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      navigate(recommendationUrl);
+    }
   };
 
   const handleRecommendToTeam = (player) => {
@@ -301,11 +333,22 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
 
       navigate(trialUrl);
     } else {
-      // This is for player recommendation - implement recommendation logic here
-      console.log("📋 Recommending player to team (not implemented yet)");
-      alert(
-        `Recommending ${playerName} to ${team.name} - Feature coming soon!`
-      );
+      // Navigate to recommendation creation page
+      const recommendationUrl = `/recommendation/create?playerId=${playerId}&playerName=${encodeURIComponent(
+        playerName
+      )}&teamId=${team.id}&teamName=${encodeURIComponent(
+        team.name
+      )}&scoutId=${currentUserId}`;
+      console.log("� Navigating to recommendation page:", recommendationUrl);
+
+      // Scroll to top automatically
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+
+      navigate(recommendationUrl);
     }
   };
 
@@ -419,6 +462,7 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
       show: false,
       teamId: null,
       teamName: null,
+      isForTrial: false,
     });
   };
 
