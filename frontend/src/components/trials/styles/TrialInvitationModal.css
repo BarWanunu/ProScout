@@ -1,9 +1,13 @@
 /* Trial Invitation Modal */
+.trial-invitation-modal {
+  padding-top: 10px !important;
+}
+
 .trial-invitation-modal .modal-dialog {
   max-width: 500px;
   max-height: 95vh;
-  margin: 0.5rem auto;
-  position: relative;
+  margin: 0 auto !important;
+  margin-top: 10px !important;
 }
 
 .trial-invitation-modal .modal-content {

@@ -125,7 +125,7 @@ const CreateTrialPage = () => {
       
       // Navigate back after 2 seconds
       setTimeout(() => {
-        navigate('/scout-dashboard'); // Go back to previous page
+        navigate(`/${role}-dashboard`); // Go back to role-specific dashboard
       }, 2000);
       
     } catch (err) {
@@ -140,8 +140,8 @@ const CreateTrialPage = () => {
   };
 
   const handleGoBack = () => {
-    // Navigate to scout dashboard instead of going back in history
-    navigate('/scout-dashboard');
+    // Navigate to role-specific dashboard
+    navigate(`/${role}-dashboard`);
   };
 
   if (success) {

@@ -47,11 +47,11 @@ const TrialInvitationModal = ({
       });
       setError('');
       
-      // Scroll document to top - ensure trial cards at the top are visible
+      // Scroll document to middle-top area to show modal properly
       window.scrollTo({
-        top: 0,
+        top: 550,
         left: 0,
-        behavior: 'instant' // Use instant instead of smooth for more reliable behavior
+        behavior: 'smooth'
       });
       
       // Improved scroll reset function with force redraw
@@ -61,7 +61,7 @@ const TrialInvitationModal = ({
           void modalBodyRef.current.offsetHeight;
           
           // Comprehensive scroll reset using multiple methods
-          modalBodyRef.current.scrollTop = 0;
+          modalBodyRef.current.scrollTop = 500;
           modalBodyRef.current.scrollTo({
             top: 0,
             left: 0,

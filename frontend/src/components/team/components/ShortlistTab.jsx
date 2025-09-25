@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Spinner } from 'react-bootstrap';
 import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
-import TrialInvitationModal from '@/components/trials/TrialInvitationModal';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
 import '../styles/ShortlistTab.css';
 
 const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch, onRefreshShortlist }) => {
   const { role: userRole, id: currentUserId } = useAuth();
+  const navigate = useNavigate();
   const [shortlist, setShortlist] = useState(initialShortlist);
   const [loading, setLoading] = useState({});
   const [playerDetails, setPlayerDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
-  
-  // Trial invitation modal state
-  const [trialModal, setTrialModal] = useState({
-    show: false,
-    playerId: null,
-    playerName: null
-  });
   
   // Update local shortlist when initialShortlist prop changes
   useEffect(() => {
@@ -96,37 +90,25 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     }
   };
 
-  // שליחת הזמנה למבחן
+  // שליחת הזמנה למבחן - ניווט לדף יצירת מבחן
   const handleSendTrialInvitation = (playerId) => {
-    console.log(`Opening trial invitation modal for player ID: ${playerId}`);
-    
     const playerName = getPlayerDetail(playerId, 'name');
+    console.log(`Navigating to create trial page for player: ${playerName} (${playerId})`);
     
-    setTrialModal({
-      show: true,
+    // Build URL with query parameters
+    const params = new URLSearchParams({
       playerId: playerId,
-      playerName: playerName
+      playerName: encodeURIComponent(playerName),
+      teamId: team?.id || '',
+      teamName: encodeURIComponent(team?.team_name || team?.name || 'Team'),
     });
-  };
 
-  // Close trial modal
-  const closeTrialModal = () => {
-    setTrialModal({
-      show: false,
-      playerId: null,
-      playerName: null
-    });
-  };
-
-  // Handle trial creation success
-  const handleTrialCreated = async () => {
-    console.log('Trial created successfully from shortlist');
-    closeTrialModal();
-    
-    // Optionally refresh data
-    if (onRefreshShortlist) {
-      await onRefreshShortlist();
+    // Only add scoutId if user is a scout
+    if (userRole === 'scout') {
+      params.append('scoutId', currentUserId);
     }
+
+    navigate(`/trial/create?${params.toString()}`);
   };
 
   // שליחת הודעה לשחקן (לא מיושם עדיין)
@@ -250,72 +232,57 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
               </div>
             </div>
 
-            <div className="action-buttons-grid">
-              <div className="action-row-top">
-                <Button 
-                  variant="primary" 
-                  size="sm" 
-                  className="action-btn trial-btn"
-                  onClick={() => handleSendTrialInvitation(player.player_id)}
-                >
-                  <ClipboardList size={16} className="action-icon" />
-                  Trial
-                </Button>
-                
-                <Button 
-                  variant="info" 
-                  size="sm" 
-                  className="action-btn profile-btn"
-                  onClick={() => handleViewProfile(player.player_id)}
-                >
-                  <User size={16} className="action-icon" />
-                  Profile
-                </Button>
-              </div>
+            <div className="action-buttons-row">
+              <Button 
+                variant="info" 
+                size="sm" 
+                className="action-btn profile-btn"
+                onClick={() => handleViewProfile(player.player_id)}
+              >
+                <User size={16} className="action-icon" />
+                Profile
+              </Button>
               
-              <div className="action-row-bottom">
-                <Button 
-                  variant="success" 
-                  size="sm" 
-                  className="action-btn message-btn"
-                  onClick={() => handleSendMessage(player.player_id)}
-                >
-                  <MessageCircle size={16} className="action-icon" />
-                  Message
-                </Button>
-                
-                <Button 
-                  variant="danger"
-                  size="sm"
-                  className="action-btn remove-btn" 
-                  onClick={() => handleRemovePlayer(player.player_id)}
-                  disabled={loading[player.player_id]}
-                >
-                  {loading[player.player_id] ? (
-                    <Spinner size="sm" animation="border" />
-                  ) : (
-                    <>
-                      <UserMinus size={16} className="action-icon" />
-                      Remove
-                    </>
-                  )}
-                </Button>
-              </div>
+              <Button 
+                variant="success" 
+                size="sm" 
+                className="action-btn message-btn"
+                onClick={() => handleSendMessage(player.player_id)}
+              >
+                <MessageCircle size={16} className="action-icon" />
+                Message
+              </Button>
+              
+              <Button 
+                variant="primary" 
+                size="sm" 
+                className="action-btn trial-btn"
+                onClick={() => handleSendTrialInvitation(player.player_id)}
+              >
+                <ClipboardList size={16} className="action-icon" />
+                Trial
+              </Button>
+              
+              <Button 
+                variant="danger"
+                size="sm"
+                className="action-btn remove-btn" 
+                onClick={() => handleRemovePlayer(player.player_id)}
+                disabled={loading[player.player_id]}
+              >
+                {loading[player.player_id] ? (
+                  <Spinner size="sm" animation="border" />
+                ) : (
+                  <>
+                    <UserMinus size={16} className="action-icon" />
+                    Remove
+                  </>
+                )}
+              </Button>
             </div>
           </div>
         ))}
       </div>
-
-      {/* Trial Invitation Modal */}
-      <TrialInvitationModal
-        show={trialModal.show}
-        onHide={closeTrialModal}
-        playerId={trialModal.playerId}
-        playerName={trialModal.playerName}
-        onTrialCreated={handleTrialCreated}
-        senderRole={userRole}
-        senderId={team?.id}
-      />
     </div>
   );
 };
