@@ -1,4 +1,5 @@
 const trialModel = require("../models/trialModels");
+const playerModel = require("../models/playerModel");
 const { fetchUserProfile } = require("../utils/fetchUserProfile");
 
 exports.createTrial = async (req, res) => {
@@ -9,10 +10,27 @@ exports.createTrial = async (req, res) => {
     //prettier-ignore
     const {player_id, team_id,scout_id,invitation_message,trial_date} = req.body;
 
+    // Convert user_id to actual player_id from players table
+    const playerData = await playerModel.findPlayerBy("user_id", player_id);
+    if (!playerData.success || !playerData.data) {
+      console.error("❌ Player not found for user_id:", player_id);
+      return res
+        .status(404)
+        .json({ message: "Player not found for this user ID." });
+    }
+
+    const actualPlayerId = playerData.data.id;
+    console.log(
+      "🔄 Converted user_id",
+      player_id,
+      "to player_id",
+      actualPlayerId
+    );
+
     const sender_role = req.user.role;
 
     //prettier-ignore
-    const trial = await trialModel.createTrial(player_id,team_id,scout_id,invitation_message,trial_date,sender_role);
+    const trial = await trialModel.createTrial(actualPlayerId,team_id,scout_id,invitation_message,trial_date,sender_role);
 
     console.log("✅ Trial model result:", trial);
 
@@ -173,16 +191,29 @@ exports.getTrials = async (req, res) => {
       return res.status(403).json({ message: "Profile not found." });
 
     if (type === "player") {
-      const exists = await trialModel.playerExists(id);
-      if (!exists)
-        return res.status(404).json({ message: "Player not found." });
+      // Convert user_id to actual player_id from players table
+      const playerData = await playerModel.findPlayerBy("user_id", id);
+      if (!playerData.success || !playerData.data) {
+        console.error("❌ Player not found for user_id:", id);
+        return res
+          .status(404)
+          .json({ message: "Player not found for this user ID." });
+      }
+
+      const actualPlayerId = playerData.data.id;
+      console.log(
+        "🔄 For trials lookup - converted user_id",
+        id,
+        "to player_id",
+        actualPlayerId
+      );
 
       const isPlayerViewing =
         req.user.role === "player" &&
         req.user.id === profile.user_id &&
-        profile.id === parseInt(id, 10);
+        profile.id === actualPlayerId;
 
-      const isScoutViewing = req.user.role === "scout"; // ← חסר בקוד שלך
+      const isScoutViewing = req.user.role === "scout";
 
       if (!(isPlayerViewing || isScoutViewing)) {
         return res
@@ -190,7 +221,7 @@ exports.getTrials = async (req, res) => {
           .json({ message: "Unauthorized to view this player's trials." });
       }
 
-      const trials = await trialModel.getTrialsByPlayerId(id);
+      const trials = await trialModel.getTrialsByPlayerId(actualPlayerId);
       return res.status(200).json({
         message: "Player trials retrieved successfully.",
         trials: trials.success ? trials.data : [],

@@ -4,6 +4,7 @@ import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, MessageSquare, Send, ArrowLeft, User } from 'lucide-react';
 import trialService from '@/api/services/trialService';
 import scoutService from '@/api/services/scoutService';
+import playerService from '@/api/services/playerService';
 import { getToken } from '@/api/tokenStore';
 import { useAuth } from '@/auth/AuthContext';
 import Header from '@/layout/overallLayout/Header';
@@ -18,6 +19,7 @@ const CreateTrialPage = () => {
   // Get parameters from URL
   const playerId = searchParams.get('playerId');
   const playerName = decodeURIComponent(searchParams.get('playerName') || '');
+   
   const teamId = searchParams.get('teamId');
   const teamName = decodeURIComponent(searchParams.get('teamName') || '');
   const urlScoutId = searchParams.get('scoutId');
@@ -30,6 +32,7 @@ const CreateTrialPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const [currentPlayerData, setCurrentPlayerData] = useState(null);
 
   useEffect(() => {
     // Scroll to top when page loads
@@ -38,7 +41,22 @@ const CreateTrialPage = () => {
       left: 0,
       behavior: 'smooth'
     });
-  }, []);
+
+    // Load current player data if user is a player
+    const loadCurrentPlayerData = async () => {
+      if (role === 'player' && currentUserId) {
+        try {
+          const token = getToken();
+          const playerData = await playerService.getPlayerById(currentUserId, token);
+          setCurrentPlayerData(playerData);
+        } catch (err) {
+          console.error('Failed to load current player data:', err);
+        }
+      }
+    };
+
+    loadCurrentPlayerData();
+  }, [role, currentUserId]);
 
   // Get tomorrow's date as minimum date
   const getTomorrowDate = () => {
@@ -201,9 +219,9 @@ const CreateTrialPage = () => {
               <div className="d-flex align-items-center">
                 <User size={20} className="me-2 text-primary" />
                 <div>
-                  <strong>Inviting Player to Trial</strong>
+                  <strong>Requesting Trial</strong>
                   <div className="team-info">
-                    {playerName} → {teamName}
+                    {currentPlayerData?.name || currentPlayerData?.first_name + ' ' + currentPlayerData?.last_name || 'Current Player'} → {teamName}
                   </div>
                 </div>
               </div>

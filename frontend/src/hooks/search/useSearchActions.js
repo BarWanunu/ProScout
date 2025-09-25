@@ -96,7 +96,8 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     // הוספת מפריד
     actions.push({ type: "separator" });
 
-    if (targetUser.type === "team" || targetUser.type === "scout") {
+    // רק לקבוצות - לא לסקאוטים
+    if (targetUser.type === "team") {
       actions.push({
         label: "Request Trial",
         icon: "⚽",
