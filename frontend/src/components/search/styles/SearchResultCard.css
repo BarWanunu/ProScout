@@ -363,6 +363,24 @@
 }
 
 /* Scout Result Styles */
+.scout-item {
+  background: linear-gradient(145deg, #ffffff, #fefefe);
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+  position: relative; /* Added for absolute positioning of actions */
+}
+
+.scout-item:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.15);
+  transform: translateY(-3px);
+  background: linear-gradient(145deg, #fefefe, #f8fafc);
+}
+
 .scout-item .scout-info {
   display: flex;
   gap: 16px;
@@ -461,6 +479,183 @@
 .more-actions-icon {
   font-size: 1.2rem;
   line-height: 1;
+}
+
+/* Scout specific styles */
+.scout-item .scout-info {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start; /* Back to flex-start for proper alignment */
+}
+
+.scout-photo-container {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  border: 3px solid #3b82f6;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
+  align-self: center; /* This will center the image vertically relative to the content */
+  margin-top: 8px; /* Small adjustment to align with the header */
+}
+
+.scout-item:hover .scout-photo-container {
+  border-color: #1d4ed8;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  transform: scale(1.05);
+}
+
+.scout-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.scout-item:hover .scout-photo {
+  transform: scale(1.1);
+}
+
+.scout-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.scout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.scout-header h5 {
+  color: #1e293b;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 800;
+  flex: 1;
+  margin-right: 16px; /* Reduced from 24px */
+}
+
+/* Actions container positioning */
+.scout-item .actions-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+}
+
+/* General More Actions Button - Beautiful styling */
+.actions-container .more-actions-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  border: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-transform: none;
+  margin-top: 2.2rem;
+}
+
+.actions-container .more-actions-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+
+  transition: left 0.5s;
+}
+
+.actions-container .more-actions-btn:hover::before {
+  left: 100%;
+}
+
+.actions-container .more-actions-btn:hover {
+  background: linear-gradient(135deg, #5b21b6, #7c3aed);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.actions-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+}
+
+/* Horizontal stats layout with beautiful colors */
+.horizontal-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding: 12px;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.horizontal-stats .stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.9rem;
+  min-width: 100px;
+}
+
+.horizontal-stats .stat-label {
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.8px;
+}
+
+.horizontal-stats .stat-value {
+  color: #1e293b;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* Special colors for different stat types */
+.horizontal-stats .stat-item:nth-child(1) .stat-label {
+  color: #059669; /* Green for experience */
+}
+
+.horizontal-stats .stat-item:nth-child(1) .stat-value {
+  color: #047857;
+}
+
+.horizontal-stats .stat-item:nth-child(2) .stat-label {
+  color: #dc2626; /* Red for nationality */
+}
+
+.horizontal-stats .stat-item:nth-child(2) .stat-value {
+  color: #b91c1c;
+}
+
+.horizontal-stats .stat-item:nth-child(3) .stat-label {
+  color: #7c3aed; /* Purple for phone */
+}
+
+.horizontal-stats .stat-item:nth-child(3) .stat-value {
+  color: #6d28d9;
 }
 
 /* Responsive Design */
