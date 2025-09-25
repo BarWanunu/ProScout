@@ -1,0 +1,374 @@
+/* RecommendationsManager - Modern Dark Theme */
+
+.recommendations-manager {
+  padding: 1rem 0;
+}
+
+.recommendations-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recommendations-header h4 {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.recommendations-header p {
+  color: #94a3b8;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: rgba(148, 163, 184, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.empty-icon {
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.empty-state h4 {
+  color: white;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.empty-state p {
+  color: #94a3b8;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+/* Recommendations List */
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recommendation-card {
+  background: rgba(148, 163, 184, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.recommendation-card:hover {
+  border-color: rgba(148, 163, 184, 0.25);
+  background: rgba(148, 163, 184, 0.08);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-card .card-body {
+  padding: 1.5rem;
+}
+
+.recommendation-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+/* Player Info Section */
+.recommendation-left {
+  flex: 0 0 auto;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(148, 163, 184, 0.3);
+}
+
+.player-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.player-avatar svg {
+  color: #64748b;
+}
+
+.player-details {
+  min-width: 150px;
+}
+
+.player-name {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.player-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.position-badge {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: #60a5fa;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.player-age,
+.player-nationality {
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* Player stats row - similar to shortlist */
+.player-stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.stat-label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #e2e8f0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Player club info */
+.player-club {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.club-label {
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.club-name {
+  color: #fbbf24;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Recommendation Details */
+.recommendation-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.recommendation-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.scout-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.scout-label {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.scout-name {
+  color: white;
+  font-weight: 600;
+}
+
+.recommendation-date {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.recommendation-date svg {
+  color: #64748b;
+}
+
+/* Message Section */
+.recommendation-message {
+  background: rgba(148, 163, 184, 0.05);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #e2e8f0;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.message-header svg {
+  color: #64748b;
+}
+
+.message-content {
+  color: #cbd5e1;
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Actions */
+.recommendation-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.recommendation-actions .btn {
+  font-size: 0.875rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  min-width: 130px;
+  height: 42px;
+  justify-content: center;
+}
+
+.recommendation-actions .btn-primary {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.8),
+    rgba(37, 99, 235, 0.8)
+  );
+  border-color: rgba(59, 130, 246, 0.6);
+  color: white;
+  order: 1;
+}
+
+.recommendation-actions .btn-primary:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.9),
+    rgba(37, 99, 235, 0.9)
+  );
+  border-color: rgba(59, 130, 246, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.recommendation-actions .btn-outline-danger {
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #f87171;
+  background: transparent;
+  order: 2;
+}
+
+.recommendation-actions .btn-outline-danger:hover {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .recommendation-content {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .recommendation-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .player-info {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .recommendation-actions {
+    justify-content: center;
+  }
+
+  .recommendation-actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendations-manager {
+    padding: 0.5rem 0;
+  }
+
+  .recommendation-card .card-body {
+    padding: 1rem;
+  }
+
+  .recommendations-header h4 {
+    font-size: 1.25rem;
+  }
+
+  .empty-state {
+    padding: 2rem 1rem;
+  }
+}
