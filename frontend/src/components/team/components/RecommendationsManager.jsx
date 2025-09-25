@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Card, Button, Badge, Row, Col, Alert, Spinner } from 'react-bootstrap';
+import { Container, Button, Spinner } from 'react-bootstrap';
 import { Star, MessageCircle, User, Trash2 } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';
 import playerService from '@/api/services/playerService';
@@ -131,6 +131,19 @@ const RecommendationsManager = ({
     }
   };
 
+  const getPlayerImage = (player) => {
+    // Check player object for photo
+    if (player?.photo) {
+      if (player.photo.startsWith('http')) {
+        return player.photo;
+      }
+      return `http://localhost:3000/uploads/players/${player.photo}`;
+    }
+    
+    // Default fallback
+    return '/assets/default-player.png';
+  };
+
   if (loading && !recommendations.length) {
     return (
       <div className="recommendations-manager">
@@ -160,139 +173,124 @@ const RecommendationsManager = ({
           console.log(`🔍 Recommendation ${recommendation.id}:`, recommendation);
           console.log(`👤 Player data for ID ${recommendation.player_id}:`, player);
           console.log(`🔍 Scout data for ID ${recommendation.scout_id}:`, scout);
-          console.log(`📊 All player details:`, playerDetails);
-          console.log(`📊 All scout details:`, scoutDetails);
           
           return (
-            <Card key={recommendation.id} className="recommendation-card">
-              <Card.Body>
-                <div className="recommendation-content">
-                  <div className="recommendation-left">
-                    <div className="player-info">
-                      <div className="player-avatar">
-                        {player?.profile_image ? (
-                          <img 
-                            src={`http://localhost:3000/uploads/players/${player.profile_image}`} 
-                            alt={player?.name || 'Player'} 
-                            onError={(e) => {
-                              console.log('❌ Image failed to load:', e.target.src);
-                              e.target.style.display = 'none';
-                            }}
-                          />
-                        ) : (
-                          <User size={40} />
-                        )}
-                      </div>
-                      
-                      <div className="player-details">
-                        <h5 className="player-name">
-                          {player?.name || `Player #${recommendation.player_id}`}
-                        </h5>
-                        {player ? (
-                          <>
-                            <div className="player-meta">
-                              {player.position && (
-                                <Badge variant="outline-primary" className="position-badge">
-                                  {player.position}
-                                </Badge>
-                              )}
-                              {player.age && (
-                                <span className="player-age">{player.age} years</span>
-                              )}
-                              {player.nationality && (
-                                <span className="player-nationality">{player.nationality}</span>
-                              )}
-                            </div>
-                            
-                            {/* Additional player info like shortlist */}
-                            <div className="player-stats-row">
-                              {player.height && (
-                                <div className="stat-item">
-                                  <span className="stat-label">Height:</span>
-                                  <span className="stat-value">{player.height}cm</span>
-                                </div>
-                              )}
-                              {player.weight && (
-                                <div className="stat-item">
-                                  <span className="stat-label">Weight:</span>
-                                  <span className="stat-value">{player.weight}kg</span>
-                                </div>
-                              )}
-                              {player.foot && (
-                                <div className="stat-item">
-                                  <span className="stat-label">Foot:</span>
-                                  <span className="stat-value">{player.foot}</span>
-                                </div>
-                              )}
-                            </div>
-                            
-                            {player.club_name && (
-                              <div className="player-club">
-                                <span className="club-label">Current Club:</span>
-                                <span className="club-name">{player.club_name}</span>
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <div className="text-muted">
-                            <small>⚠️ Player not found (ID: {recommendation.player_id})</small>
-                          </div>
-                        )}
-                      </div>
+            <div key={recommendation.id} className="player-card-extended recommendation-card">
+              {/* Player Header Section */}
+              <div className="player-header">
+                <div className="player-avatar-section">
+                  <img 
+                    src={getPlayerImage(player)}
+                    alt={player?.name || 'Player'} 
+                    className="player-avatar-large"
+                    onError={(e) => {
+                      e.target.src = '/assets/default-player.png';
+                    }}
+                  />
+                </div>
+                
+                <div className="player-main-info">
+                  <div className="player-name-section">
+                    <h5 className="player-name-large text-white">
+                      {player?.name || `Player #${recommendation.player_id}`}
+                    </h5>
+                    <div className="player-nationality">
+                      {player?.nationality || 'Unknown'}
                     </div>
-                  </div>
-
-                  <div className="recommendation-right">
-                    <div className="recommendation-details">
-                      <div className="scout-info">
-                        <span className="scout-label">Recommended by:</span>
-                        <span className="scout-name">
-                          {scout?.name || `Scout #${recommendation.scout_id}`}
-                        </span>
-                        {!scout && (
-                          <small className="text-muted">⚠️ Scout not found (ID: {recommendation.scout_id})</small>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="recommendation-message">
-                      <div className="message-header">
-                        <MessageCircle size={16} />
-                        <span>Recommendation Note:</span>
-                      </div>
-                      <p className="message-content">
-                        {recommendation.recommendation_note || 'No additional notes provided.'}
-                      </p>
-                    </div>
-
-                    {showActions && userRole === 'team' && (
-                      <div className="recommendation-actions">
-                        <Button
-                          variant="primary"
-                          onClick={() => {
-                            // TODO: Navigate to player profile
-                            console.log('View player:', player);
-                            alert(`Viewing ${player?.name || 'Player'} profile - Feature coming soon!`);
-                          }}
-                        >
-                          <User size={16} className="me-1" />
-                          View Profile
-                        </Button>
-                        
-                        <Button
-                          variant="outline-danger"
-                          onClick={() => handleDeleteRecommendation(recommendation.id)}
-                          disabled={loading}
-                        >
-                          <Trash2 size={16} className="me-1" />
-                          Remove
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </div>
-              </Card.Body>
-            </Card>
+              </div>
+
+              {/* Scout Info Section */}
+              <div className="scout-info-section">
+                <div className="scout-info-card">
+                  <span className="scout-label">Recommended by:</span>
+                  <span className="scout-name">
+                    {scout?.first_name && scout?.last_name ? 
+                      `${scout.first_name} ${scout.last_name}` : 
+                      scout?.name || `Scout #${recommendation.scout_id}`
+                    }
+                  </span>
+                </div>
+              </div>
+
+              {/* Player Stats Grid */}
+              <div className="player-stats-grid">
+                <div className="stat-item">
+                  <span className="stat-label">Position</span>
+                  <span className="stat-value">
+                    {player?.position || 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Age</span>
+                  <span className="stat-value">
+                    {player?.age || 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Height</span>
+                  <span className="stat-value">
+                    {player?.height ? `${player.height}` : 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Weight</span>
+                  <span className="stat-value">
+                    {player?.weight ? `${player.weight}` : 'N/A'}
+                  </span>
+                </div>
+                <div className="stat-item">
+                  <span className="stat-label">Club</span>
+                  <span className="stat-value">
+                    {player?.club || 'N/A'}
+                  </span>
+                </div>
+               
+              </div>
+
+              {/* Recommendation Note */}
+              <div className="recommendation-note">
+                <div className="note-header">
+                  <MessageCircle size={16} />
+                  <span>Recommendation Note:</span>
+                </div>
+                <p className="note-content">
+                  {recommendation.recommendation_note || 'No additional notes provided.'}
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              {showActions && userRole === 'team' && (
+                <div className="action-buttons-grid">
+                  <div className="action-row-top">
+                    <Button 
+                      variant="primary" 
+                      size="sm" 
+                      className="action-btn profile-btn"
+                      onClick={() => {
+                        console.log('View player:', player);
+                        alert(`Viewing ${player?.name || 'Player'} profile - Feature coming soon!`);
+                      }}
+                    >
+                      <User size={16} className="action-icon" />
+                      View Profile
+                    </Button>
+                    
+                    <Button 
+                      variant="outline-danger"
+                      size="sm"
+                      className="action-btn remove-btn" 
+                      onClick={() => handleDeleteRecommendation(recommendation.id)}
+                      disabled={loading}
+                    >
+                      <Trash2 size={16} className="action-icon" />
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
