@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Badge, Button, Spinner } from 'react-bootstrap';
-import { Calendar, CheckSquare, XSquare, User, Building } from 'lucide-react';
+import { Calendar, CheckSquare, XSquare, User, Building, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/auth/AuthContext';
 import trialService from '@/api/services/trialService';
 import { getToken } from '@/api/tokenStore';
@@ -180,16 +179,17 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
 
   if (loading) {
     return (
-      <div className="trials-loading text-center p-3">
-        <Spinner animation="border" size="sm" /> Loading trial invitations...
+      <div className="trials-loading">
+        <div className="loading-spinner"></div>
+        Loading trial invitations...
       </div>
     );
   }
   
   if (error) {
     return (
-      <div className="trials-error text-center p-2">
-        <p className="text-danger mb-0">{error}</p>
+      <div className="trials-error">
+        <p>{error}</p>
       </div>
     );
   }
@@ -200,63 +200,99 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
   }
   
   return (
-    <div className="trials-list-container mb-4">
+    <div className="trials-list-container">
       <h5 className="trials-heading">
-        <Calendar size={20} className="me-2" />
+        <Calendar size={20} />
         Your Trial Invitations ({trials.length})
       </h5>
       
       <div className="trials-list">
         {trials.map(trial => (
-          <Card key={trial.id} className="trial-card mb-2">
-            <Card.Body className="p-2">
-              <div className="d-flex align-items-center justify-content-between">
-                <div className="trial-info d-flex align-items-center">
-                  {role === 'team' ? (
-                    <User size={20} className="me-2 text-primary" />
-                  ) : (
-                    <Building size={20} className="me-2 text-primary" />
-                  )}
-                  
-                  <div>
-                    <div className="fw-bold">{getOtherPartyName(trial)}</div>
-                    <div className="text-muted small">
-                      <Calendar size={14} className="me-1" />
-                      {formatDate(trial.trial_date)}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="trial-actions d-flex align-items-center">
-                  <Badge bg={getStatusBadgeVariant(trial.status)} className="me-2">
-                    {trial.status.charAt(0).toUpperCase() + trial.status.slice(1)}
-                  </Badge>
-                  
-                  {canUpdateStatus(trial) && (
-                    <div className="action-buttons">
-                      <Button
-                        variant="outline-success"
-                        size="sm"
-                        className="me-1"
-                        disabled={actionLoading[trial.id]}
-                        onClick={() => handleTrialStatusUpdate(trial.id, 'accepted')}
-                      >
-                        <CheckSquare size={16} />
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        disabled={actionLoading[trial.id]}
-                        onClick={() => handleTrialStatusUpdate(trial.id, 'declined')}
-                      >
-                        <XSquare size={16} />
-                      </Button>
-                    </div>
-                  )}
-                </div>
+          <div key={trial.id} className="trial-card">
+            {/* Trial Header with Sender Info */}
+            <div className="trial-header">
+              <div className="trial-sender">
+                <span>Trial sent by: </span>
+                <span style={{color: '#3498db', fontWeight: '500'}}>
+                  {trial.scout_name || 'Katie Moore'} (Scout)
+                </span>
               </div>
-            </Card.Body>
-          </Card>
+              <button className="message-button">
+                <span>💬</span>
+                Message
+              </button>
+            </div>
+
+            {/* Player Info Section */}
+            <div className="trial-player-info">
+              <img 
+                src={trial.player_photo || '/default-player.jpg'} 
+                alt={getOtherPartyName(trial)}
+                className="player-avatar"
+                onError={(e) => {
+                  e.target.src = '/default-player.jpg';
+                }}
+              />
+              <div className="player-details">
+                <div className="player-name">{getOtherPartyName(trial)}</div>
+                <div className="player-meta">Age: {trial.player_age || 'N/A'}</div>
+                <div className="player-meta">{trial.player_position || 'Position'}</div>
+                <div className="player-meta">{trial.player_club || trial.team_name}</div>
+                <div className="player-meta">{trial.player_nationality || 'Country'}</div>
+              </div>
+              <button className="view-profile-btn">
+                VIEW PROFILE
+              </button>
+            </div>
+
+            {/* Team and Date Info */}
+            <div className="trial-details">
+              <div className="team-info">
+                <span>→ TO: </span>
+                <span className="team-name">
+                  {role === 'player' ? trial.team_name : 'N/A'}
+                  {role === 'team' && ' (Team)'}
+                </span>
+              </div>
+              <div className="trial-date-status">
+                <div className="trial-date">
+                  📅 {formatDate(trial.trial_date)}
+                </div>
+                <span className={`status-badge ${trial.status}`}>
+                  {trial.status.toUpperCase()}
+                </span>
+              </div>
+            </div>
+
+            {/* Trial Message */}
+            {trial.invitation_message && (
+              <div className="trial-message">
+                {trial.invitation_message}
+              </div>
+            )}
+
+            {/* Action Buttons for Pending Trials */}
+            {canUpdateStatus(trial) && (
+              <div className="trial-actions">
+                <button
+                  className="action-btn decline"
+                  disabled={actionLoading[trial.id]}
+                  onClick={() => handleTrialStatusUpdate(trial.id, 'declined')}
+                >
+                  <XSquare size={16} />
+                  Decline
+                </button>
+                <button
+                  className="action-btn accept"
+                  disabled={actionLoading[trial.id]}
+                  onClick={() => handleTrialStatusUpdate(trial.id, 'accepted')}
+                >
+                  <CheckSquare size={16} />
+                  Accept
+                </button>
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>

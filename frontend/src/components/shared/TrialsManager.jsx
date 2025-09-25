@@ -18,6 +18,7 @@ const TrialsManager = ({
   const [error, setError] = useState('');
   const [playerDetails, setPlayerDetails] = useState({});
   const [senderDetails, setSenderDetails] = useState({});
+  const [teamDetails, setTeamDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
 
   // Fetch player details for all trials
@@ -45,6 +46,35 @@ const TrialsManager = ({
     };
     
     fetchPlayerDetails();
+  }, [trials]);
+
+  // Fetch team details for trials where recipient is team
+  useEffect(() => {
+    const fetchTeamDetails = async () => {
+      if (!trials || trials.length === 0) return;
+      
+      for (const trial of trials) {
+        try {
+          // If sender is player or scout, recipient is team
+          if ((trial.sender_role === 'player' || trial.sender_role === 'scout') && trial.team_id) {
+            if (!teamDetails[trial.team_id]) {
+              setFetchingDetails(prev => ({ ...prev, [`team_${trial.team_id}`]: true }));
+              const teamData = await teamService.getTeamByTeamId(trial.team_id);
+              setTeamDetails(prev => ({ 
+                ...prev, 
+                [trial.team_id]: teamData.team || teamData
+              }));
+            }
+          }
+        } catch (error) {
+          console.error(`Failed to fetch team details for team ${trial.team_id}:`, error);
+        } finally {
+          setFetchingDetails(prev => ({ ...prev, [`team_${trial.team_id}`]: false }));
+        }
+      }
+    };
+    
+    fetchTeamDetails();
   }, [trials]);
 
   // Fetch sender details for all trials
@@ -117,6 +147,31 @@ const TrialsManager = ({
       default:
         return 'Unknown Sender';
     }
+  };
+
+  // Helper function to get recipient name and role
+  const getRecipientInfo = (trial) => {
+    if (trial.sender_role === 'team') {
+      // Team sent to Player
+      const playerName = getPlayerDetail(trial.player_id, 'name') || 'Unknown Player';
+      return { name: playerName, role: 'player' };
+    } else if (trial.sender_role === 'player' || trial.sender_role === 'scout') {
+      // Player/Scout sent to Team
+      if (trial.team_id) {
+        // Check if team data is loading
+        if (fetchingDetails[`team_${trial.team_id}`]) {
+          return { name: 'Loading...', role: 'team' };
+        }
+        
+        const teamData = teamDetails[trial.team_id];
+        if (teamData) {
+          const teamName = teamData.team_name || teamData.name || 'Unknown Team';
+          return { name: teamName, role: 'team' };
+        }
+      }
+      return { name: 'Unknown Team', role: 'team' };
+    }
+    return { name: 'Unknown', role: 'unknown' };
   };
 
   // Handle status update
@@ -297,12 +352,19 @@ const TrialsManager = ({
           return (
             <Card key={trial.id} className="trial-card mb-3">
               <Card.Body className="p-3">
-                {/* Trial sent by header */}
+                {/* Trial sent by and sent to header */}
                 <div className="trial-sender-header">
-                  <div className="sender-info">
-                    <span className="sender-label">Trial sent by:</span>
-                    <span className="sender-name">{getSenderName(trial)}</span>
-                    <span className="sender-role">({trial.sender_role})</span>
+                  <div className="trial-info-row">
+                    <div className="sender-info">
+                      <span className="sender-label">Trial sent by:</span>
+                      <span className="sender-name">{getSenderName(trial)}</span>
+                      <span className="sender-role">({trial.sender_role})</span>
+                    </div>
+                    <div className="recipient-info">
+                      <span className="recipient-label">Trial sent to:</span>
+                      <span className="recipient-name">{getRecipientInfo(trial).name}</span>
+                      <span className="recipient-role">({getRecipientInfo(trial).role})</span>
+                    </div>
                   </div>
                   <button 
                     className="message-sender-btn"

@@ -3,6 +3,7 @@ import { Spinner, Alert } from "react-bootstrap";
 import trialService from "../../../api/services/trialService";
 import { useAuth } from "../../../auth/AuthContext";
 import TrialsManager from '@/components/shared/TrialsManager';
+import '@/components/shared/TrialsManager.css';
 
 export default function ScoutTrials({ scout }) {
   const [trials, setTrials] = useState([]);
@@ -33,18 +34,20 @@ export default function ScoutTrials({ scout }) {
 
   if (loading) {
     return (
-      <div className="trials-loading text-center p-4">
-        <Spinner animation="border" variant="primary" />
-        <p className="mt-3">Loading Trials Invitations</p>
+      <div className="trials-loading">
+        <div className="custom-spinner"></div>
+        <p>Loading Trial Invitations...</p>
       </div>
     );
   }
 
   if (error) {
     return (
-      <Alert variant="danger" className="trials-error">
-        {error}
-      </Alert>
+      <div className="trials-manager">
+        <div className="alert alert-danger">
+          {error}
+        </div>
+      </div>
     );
   }
 
