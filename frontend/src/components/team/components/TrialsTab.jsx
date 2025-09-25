@@ -1,5 +1,5 @@
 import React from 'react';
-import TrialsManager from '@/components/shared/TrialsManager';
+import TrialsManager from '@/components/trials/TrialsManager';
 
 const TrialsTab = ({ trials = [], onTrialUpdate }) => {
   // Removed the useEffect that was causing issues with tab switching

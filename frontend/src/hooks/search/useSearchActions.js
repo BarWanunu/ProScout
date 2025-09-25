@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import shortlistService from "@/api/services/shortlistService";
 import { getToken } from "@/api/tokenStore";
-import PlayerSelectModal from "@/components/shared/PlayerSelectModal";
-import TeamSelectModal from "@/components/shared/TeamSelectModal";
+import PlayerSelectModal from "@/components/trials/PlayerSelectModal";
+import TeamSelectModal from "@/components/trials/TeamSelectModal";
 
 export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
   const { role, id: currentUserId } = useAuth();

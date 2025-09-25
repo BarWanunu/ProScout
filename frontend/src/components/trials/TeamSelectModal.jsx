@@ -3,7 +3,7 @@ import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, Building } from 'lucide-react';
 import searchService from '@/api/services/searchService';
 import { getToken } from '@/api/tokenStore';
-import './SelectModals.css';
+import './styles/SelectModals.css';
 
 /**
  * Modal component for selecting a team to recommend a player to

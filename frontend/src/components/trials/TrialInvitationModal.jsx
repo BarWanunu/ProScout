@@ -3,7 +3,7 @@ import { Modal, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, MessageSquare, Send, X, User } from 'lucide-react';
 import trialService from '@/api/services/trialService';
 import { getToken } from '@/api/tokenStore';
-import './TrialInvitationModal.css';
+import './styles/TrialInvitationModal.css';
 
 const TrialInvitationModal = ({ 
   show, 

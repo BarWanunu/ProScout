@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Container, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { ArrowLeft, Send, MessageSquare, User } from "lucide-react";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "@/layout/overallLayout/Header";
+import Footer from "@/layout/overallLayout/Footer";
 import { useAuth } from "@/auth/AuthContext";
 import recommendationService from "@/api/services/recommendationService";
 import scoutService from "@/api/services/scoutService";
 import { getToken } from "@/api/tokenStore";
-import "./CreateRecommendationPage.css";
+import "./styles/CreateRecommendationPage.css";
 
 const CreateRecommendationPage = () => {
   const navigate = useNavigate();
@@ -30,10 +30,18 @@ const CreateRecommendationPage = () => {
   const playerName = searchParams.get("playerName");
   const teamId = searchParams.get("teamId");
   const teamName = searchParams.get("teamName");
+  const scoutIdFromUrl = searchParams.get("scoutId");
 
-  // Fetch scout ID for current user
+  // Fetch scout ID for current user (if not provided in URL)
   useEffect(() => {
     const fetchScoutId = async () => {
+      // If scoutId is already provided in URL, use it
+      if (scoutIdFromUrl) {
+        setScoutId(scoutIdFromUrl);
+        return;
+      }
+
+      // Otherwise, fetch from API
       try {
         const token = getToken();
         const scoutData = await scoutService.getScoutByUserId(currentUserId, token);
@@ -46,10 +54,10 @@ const CreateRecommendationPage = () => {
       }
     };
 
-    if (currentUserId) {
+    if (currentUserId || scoutIdFromUrl) {
       fetchScoutId();
     }
-  }, [currentUserId]);
+  }, [currentUserId, scoutIdFromUrl]);
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));

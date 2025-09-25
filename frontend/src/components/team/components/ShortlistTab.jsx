@@ -3,7 +3,7 @@ import { Container, Card, Button, Spinner } from 'react-bootstrap';
 import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
 import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
-import TrialInvitationModal from '@/components/shared/TrialInvitationModal';
+import TrialInvitationModal from '@/components/trials/TrialInvitationModal';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
 import '../styles/ShortlistTab.css';

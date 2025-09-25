@@ -1,5 +1,5 @@
 import React from 'react';
-import ActionMenu from '@/components/shared/ActionMenu';
+import ActionMenu from '@/components/actionMenu';
 
 const PlayerInfo = ({ result, actions }) => {
   return (

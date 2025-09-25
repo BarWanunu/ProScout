@@ -6,7 +6,7 @@ import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import teamService from '@/api/services/teamService';
 import { getToken } from '@/api/tokenStore';
-import './TrialsManager.css';
+import './styles/TrialsManager.css';
 
 const TrialsManager = ({ 
   trials = [], 

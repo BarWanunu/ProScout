@@ -127,12 +127,13 @@
 
 .recommendation-actions .cancel-btn,
 .recommendation-actions .send-btn {
-  padding: 0.75rem 1.5rem;
+  padding: 0.875rem 2rem;
   font-weight: 600;
-  border-radius: 6px;
-  min-width: 140px;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
+  border-radius: 8px;
+  min-width: 160px;
+  height: 48px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
   color: #e2e8f0;
@@ -141,25 +142,46 @@
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.recommendation-actions .cancel-btn::before,
+.recommendation-actions .send-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.recommendation-actions .cancel-btn:hover::before,
+.recommendation-actions .send-btn:hover::before {
+  left: 100%;
 }
 
 .recommendation-actions .cancel-btn:hover {
   background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
   color: white;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .recommendation-actions .send-btn {
-  background: rgba(59, 130, 246, 0.8);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.8));
   border-color: rgba(59, 130, 246, 0.6);
   color: white;
 }
 
 .recommendation-actions .send-btn:hover:not(:disabled) {
-  background: rgba(59, 130, 246, 0.9);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.9));
   border-color: rgba(59, 130, 246, 0.8);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
 }
 
 .recommendation-actions .send-btn:disabled {
@@ -169,6 +191,23 @@
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
+}
+
+/* Button Icons and Spinner */
+.recommendation-actions .send-btn .spinner-border {
+  width: 1rem;
+  height: 1rem;
+  border-width: 2px;
+}
+
+.recommendation-actions .cancel-btn span,
+.recommendation-actions .send-btn span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
 }
 
 /* Success State */
@@ -231,8 +270,11 @@
 
   .recommendation-actions .cancel-btn,
   .recommendation-actions .send-btn {
-    width: 80%;
+    width: 90%;
     min-width: unset;
+    min-width: 200px;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
   }
 }
 
@@ -240,5 +282,13 @@
   .recommendation-actions .cancel-btn,
   .recommendation-actions .send-btn {
     width: 100%;
+    min-width: unset;
+    font-size: 1rem;
+    padding: 0.875rem 1.5rem;
+  }
+  
+  .recommendation-header h4 {
+    font-size: 1.25rem;
+    padding-left: 1rem;
   }
 }

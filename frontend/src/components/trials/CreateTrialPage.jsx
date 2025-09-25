@@ -8,7 +8,7 @@ import { getToken } from '@/api/tokenStore';
 import { useAuth } from '@/auth/AuthContext';
 import Header from '@/layout/overallLayout/Header';
 import Footer from '@/layout/overallLayout/Footer';
-import './CreateTrialPage.css';
+import './styles/CreateTrialPage.css';
 
 const CreateTrialPage = () => {
   const navigate = useNavigate();

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Spinner, Alert } from "react-bootstrap";
 import trialService from "../../../api/services/trialService";
 import { useAuth } from "../../../auth/AuthContext";
-import TrialsManager from '@/components/shared/TrialsManager';
-import '@/components/shared/TrialsManager.css';
+import TrialsManager from '@/components/trials/TrialsManager';
+import '@/components/trials/styles/TrialsManager.css';
 
 export default function ScoutTrials({ scout }) {
   const [trials, setTrials] = useState([]);

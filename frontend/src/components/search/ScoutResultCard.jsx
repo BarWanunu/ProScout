@@ -1,5 +1,5 @@
 import React from "react";
-import ActionMenu from '@/components/shared/ActionMenu';
+import ActionMenu from '@/components/actionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import './styles/SearchResultCard.css';
