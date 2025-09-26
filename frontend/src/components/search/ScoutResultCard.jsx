@@ -3,6 +3,7 @@ import ActionMenu from '@/components/actionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import { MoreVertical } from 'lucide-react';
+import defaultScoutImg from '@/assets/scout.jpeg';
 import './styles/SearchResultCard.css';
 import './styles/PlayerComponents.css';
 
@@ -27,12 +28,12 @@ const ScoutResultCard = ({ scout, index, searchActions, onNavigateToProfile }) =
                 ? scoutData.image.startsWith('http') 
                   ? scoutData.image
                   : `${import.meta.env.VITE_API_BASE_URL}/${scoutData.image}`
-                : '/assets/default-scout.png'
+                : defaultScoutImg
             }
             alt={`${scoutData?.first_name || ''} ${scoutData?.last_name || ''}`}
             className="scout-photo"
             onError={(e) => {
-              e.target.src = '/assets/default-scout.png';
+              e.target.src = defaultScoutImg;
             }}
           />
         </div>

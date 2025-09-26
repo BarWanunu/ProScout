@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Badge, Row, Col, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, Check, X, Trash2, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import trialService from '@/api/services/trialService';
 import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import teamService from '@/api/services/teamService';
 import { getToken } from '@/api/tokenStore';
-import './styles/TrialsManager.css';
+import defaultPlayerImg from '@/assets/default-player.png';
 import './styles/TrialsManager.css';
 
 const TrialsManager = ({ 
@@ -15,6 +16,7 @@ const TrialsManager = ({
   onTrialUpdate, 
   showActions = true 
 }) => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState({});
   const [error, setError] = useState('');
   const [playerDetails, setPlayerDetails] = useState({});
@@ -244,10 +246,20 @@ const TrialsManager = ({
     return 'N/A';
   };
 
+  // Navigate to player profile
+  const handleViewPlayerProfile = (playerId) => {
+    const player = playerDetails[playerId]?.player;
+    if (player && player.id) {
+      navigate(`/player/profile/${player.id}`);
+    } else {
+      console.warn('Player user_id not found for player:', playerId);
+    }
+  };
+
   // Get player image with fallback
   const getPlayerImage = (playerId) => {
     const player = playerDetails[playerId]?.player;
-    if (!player) return '/assets/default-player.png';
+    if (!player) return defaultPlayerImg;
     
     if (player.photo) {
       if (player.photo.startsWith('http')) {
@@ -256,7 +268,7 @@ const TrialsManager = ({
       return `${import.meta.env.VITE_API_BASE_URL}/${player.photo}`;
     }
     
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   // Determine which actions to show based on user role and trial status
@@ -377,14 +389,14 @@ const TrialsManager = ({
                           alt={getPlayerDetail(trial.player_id, 'name')}
                           className="trial-player-avatar"
                           onError={(e) => {
-                            e.target.src = '/assets/default-player.png';
+                            e.target.src = defaultPlayerImg;
                           }}
                         />
                       )}
                       {userRole !== 'player' && (
                         <button 
                           className="view-profile-btn"
-                          onClick={() => {/* TODO: Navigate to player profile */}}
+                          onClick={() => handleViewPlayerProfile(trial.player_id)}
                         >
                           View Profile
                         </button>
@@ -403,7 +415,7 @@ const TrialsManager = ({
                         {getPlayerDetail(trial.player_id, 'position') || 'N/A'}
                       </div>
                       <div className="trial-player-club">
-                        {getPlayerDetail(trial.player_id, 'club') || 'N/A'}
+                        {getPlayerDetail(trial.player_id, 'club') || 'Free Agent'}
                       </div>
                       <div className="trial-player-nationality">
                         {getPlayerDetail(trial.player_id, 'nationality') || 'Unknown'}

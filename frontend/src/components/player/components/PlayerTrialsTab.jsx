@@ -68,7 +68,7 @@ const PlayerTrialsTab = ({ player }) => {
             {trials && trials.length > 0 && (
               <div className="trials-header mb-3">
                 <h4 className="text-white">Trial Invitations</h4>
-                <p className="text-muted mb-0">
+                <p className="text-white mb-0">
                   Manage your trial invitations from teams. You can accept or decline invitations here.
                 </p>
               </div>
@@ -81,7 +81,7 @@ const PlayerTrialsTab = ({ player }) => {
   return (
     <div className="player-trials-tab">
       <div className="trials-header mb-3">
-        <p className="text-muted mb-0">
+        <p className="text-white mb-0">
           Manage your trial invitations from teams. You can accept or decline invitations here.
         </p>
       </div>

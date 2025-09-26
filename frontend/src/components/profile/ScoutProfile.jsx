@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Badge, Spinner, Alert } from 'react-bootstrap';
 import { ArrowLeft, User, Phone, Globe, Award, Calendar } from 'lucide-react';
 import scoutService from '@/api/services/scoutService';
-import './ScoutProfile.css';
+import defaultScoutImg from '@/assets/scout.jpeg';
+import './styles/ScoutProfile.css';
 
 export default function ScoutProfile({ scoutId, onBack }) {
   const [scout, setScout] = useState(null);
@@ -11,7 +12,7 @@ export default function ScoutProfile({ scoutId, onBack }) {
 
   const getScoutImage = (scout) => {
     const image = scout?.image;
-    if (!image) return '/assets/default-player.png';
+    if (!image) return defaultScoutImg;
     if (typeof image === 'string' && image.startsWith('http')) return image;
     // If image looks like an upload path, prefix with server origin
     return `http://localhost:3000${image.startsWith('/') ? image : `/${image}`}`;
@@ -122,7 +123,7 @@ export default function ScoutProfile({ scoutId, onBack }) {
                       src={getScoutImage(scout)}
                       alt={`${scout.first_name} ${scout.last_name}`}
                       className="profile-image scout-image-square"
-                      onError={(e) => { e.currentTarget.src = '/assets/default-player.png'; }}
+                      onError={(e) => { e.currentTarget.src = defaultScoutImg; }}
                     />
                   ) : (
                     <div className="profile-placeholder scout-image-square">

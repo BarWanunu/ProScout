@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Badge, Spinner, Alert } from 'react-bootstrap';
 import { ArrowLeft, Users } from 'lucide-react';
 import teamService from '@/api/services/teamService';
-import './TeamProfile.css';
+import defaultTeamImg from '@/assets/teamPhoto.jpg';
+import './styles/TeamProfile.css';
 
 export default function TeamProfile({ teamId, onBack }) {
   const [team, setTeam] = useState(null);
@@ -11,7 +12,7 @@ export default function TeamProfile({ teamId, onBack }) {
 
   const getTeamLogo = (team) => {
     const logo = team?.logo;
-    if (!logo) return '/assets/default-team.png';
+    if (!logo) return defaultTeamImg;
     if (typeof logo === 'string' && logo.startsWith('http')) return logo;
     // If logo looks like an upload path, prefix with server origin
     return `http://localhost:3000${logo.startsWith('/') ? logo : `/${logo}`}`;
@@ -119,7 +120,7 @@ export default function TeamProfile({ teamId, onBack }) {
                       src={getTeamLogo(team)}
                       alt={team.team_name}
                       className="profile-logo team-logo-square"
-                      onError={(e) => { e.currentTarget.src = '/assets/default-team.png'; }}
+                      onError={(e) => { e.currentTarget.src = defaultTeamImg; }}
                     />
                   ) : (
                     <div className="profile-placeholder team-logo-square" />

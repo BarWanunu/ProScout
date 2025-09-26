@@ -2,6 +2,7 @@ import React from "react";
 import ActionMenu from '@/components/actionMenu';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
+import defaultTeamImg from '@/assets/teamPhoto.jpg';
 import './styles/SearchResultCard.css';
 
 const TeamResultCard = ({ team, index, searchActions, onNavigateToProfile }) => {
@@ -23,12 +24,12 @@ const TeamResultCard = ({ team, index, searchActions, onNavigateToProfile }) => 
                 ? team.logo.startsWith('http') 
                   ? team.logo
                   : `${import.meta.env.VITE_API_BASE_URL}/${team.logo}`
-                : '/assets/default-team.png'
+                : defaultTeamImg
             }
             alt={`${team.team_name} logo`}
             className="team-logo"
             onError={(e) => {
-              e.target.src = '/assets/default-team.png';
+              e.target.src = defaultTeamImg;
             }}
           />
         </div>

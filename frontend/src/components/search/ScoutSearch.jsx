@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import DirectTeamSearch from "@/components/search/DirectTeamSearch";
 import PlayerSearchPanel from "@/components/search/PlayerSearchPanel";
 import { SearchResultsList } from "@/components/search";
-import { ScoutProfile, TeamProfile } from "@/components/profile";
+import { PlayerProfile, ScoutProfile, TeamProfile } from "@/components/profile";
 import searchService from "@/api/services/searchService";
 import useProfileNavigation from "@/hooks/useProfileNavigation";
 import "@/components/search/styles/SearchBox.css";
@@ -12,6 +13,7 @@ import "@/components/search/styles/DirectSearchStyles.css";
 
 
 export default function ScoutSearch() {
+  const navigate = useNavigate();
   const [searchType, setSearchType] = useState("player");
   const [searchInput, setSearchInput] = useState("");
 
@@ -35,6 +37,25 @@ export default function ScoutSearch() {
     isProfileOpen 
   } = useProfileNavigation();
 
+  // Function to navigate to public profile routes
+  const handleNavigateToPublicProfile = (profileType, profileId) => {
+    console.log('Navigating to public profile:', { profileType, profileId });
+    
+    let profilePath;
+    if (profileType === 'player') {
+      profilePath = `/player/profile/${profileId}`;
+    } else if (profileType === 'scout') {
+      profilePath = `/scout/profile/${profileId}`;
+    } else if (profileType === 'team') {
+      profilePath = `/team/profile/${profileId}`;
+    } else {
+      console.error('Unknown profile type:', profileType);
+      return;
+    }
+    
+    navigate(profilePath);
+  };
+
   // Render current profile
   const renderProfile = () => {
     if (!currentProfile) return null;
@@ -55,6 +76,14 @@ export default function ScoutSearch() {
             onBack={goBack}
             onNavigateToProfile={navigateToProfile}
           />
+        );
+        case 'player': 
+        return (
+          <PlayerProfile
+            userId={currentProfile.id}
+            onBack={goBack}
+            onNavigateToProfile={navigateToProfile}
+            />
         );
       default:
         return (
@@ -206,7 +235,7 @@ export default function ScoutSearch() {
         loading={loading}
         hasSearched={hasSearched}
         searchType={searchType}
-        onNavigateToProfile={navigateToProfile}
+        onNavigateToProfile={handleNavigateToPublicProfile}
       />
     </div>
       )}

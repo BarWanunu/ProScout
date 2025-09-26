@@ -9,6 +9,7 @@ import { TeamProfile } from '@/components/profile';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
 import useProfileNavigation from '@/hooks/useProfileNavigation';
+import defaultTeamImg from '@/assets/teamPhoto.jpg';
 import '../../team/styles/ShortlistTab.css';
 
 const PlayerRecommendationsTab = ({ player }) => {
@@ -190,7 +191,7 @@ const PlayerRecommendationsTab = ({ player }) => {
   // Get team logo with fallback
   const getTeamLogo = (teamId) => {
     const team = teamDetails[teamId];
-    if (!team) return '/assets/default-team.png';
+    if (!team) return defaultTeamImg;
     
     if (team.logo) {
       if (team.logo.startsWith('http')) {
@@ -199,7 +200,7 @@ const PlayerRecommendationsTab = ({ player }) => {
       return `${import.meta.env.VITE_API_BASE_URL}/${team.logo}`;
     }
     
-    return '/assets/default-team.png';
+    return defaultTeamImg;
   };
 
   // Format date
@@ -279,7 +280,7 @@ const PlayerRecommendationsTab = ({ player }) => {
                     alt={getTeamDetail(recommendation.teams_id, 'team_name')} 
                     className="player-avatar-large team-logo-large"
                     onError={(e) => {
-                      e.target.src = '/assets/default-team.png';
+                      e.target.src = defaultTeamImg;
                     }}
                   />
                 )}

@@ -6,6 +6,7 @@ import recommendationService from '@/api/services/recommendationService';
 import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
 import './styles/RecommendationsManager.css';
 
 const RecommendationsManager = ({ 
@@ -143,7 +144,7 @@ const RecommendationsManager = ({
     }
     
     // Default fallback
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   if (loading && !recommendations.length) {
@@ -187,7 +188,7 @@ const RecommendationsManager = ({
                     alt={player?.name || 'Player'} 
                     className="player-avatar-large"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                 </div>
@@ -213,7 +214,7 @@ const RecommendationsManager = ({
                     onClick={() => {
                       if (scout?.scout?.id) {
                         console.log('Navigating to scout profile:', scout.scout.id);
-                        navigate(`/profile/scout/${scout.scout.id}`);
+                        navigate(`/scout/profile/${scout.scout.id}`);
                       } else {
                         const scoutName = scout?.scout.first_name && scout?.scout.last_name ? 
                           `${scout.scout.first_name} ${scout.scout.last_name}` : 
@@ -286,9 +287,10 @@ const RecommendationsManager = ({
                       size="sm" 
                       className="action-btn profile-btn"
                       onClick={() => {
-                        if (player?.id) {
-                          console.log('Navigating to player profile:', player.id);
-                          navigate(`/profile/player/${player.id}`);
+                        
+                         if (player?.id) {
+                          console.log('Navigating to player profile with id (fallback):', player.id);
+                          navigate(`/player/profile/${player.id}`);
                         } else {
                           console.log('Player not found:', player);
                           alert(`Player profile not available`);

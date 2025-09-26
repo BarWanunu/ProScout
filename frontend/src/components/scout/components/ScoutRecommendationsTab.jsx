@@ -7,6 +7,8 @@ import teamService from '@/api/services/teamService';
 import playerService from '@/api/services/playerService';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
+import defaultTeamImg from '@/assets/teamPhoto.jpg';
 import '../styles/ScoutRecommendationsTab.css';
 
 const ScoutRecommendationsTab = () => {
@@ -48,12 +50,12 @@ const ScoutRecommendationsTab = () => {
 
   const getTeamLogo = (teamId) => {
     const team = teamDetails[teamId];
-    if (!team) return '/assets/default-team.png';
+    if (!team) return defaultTeamImg;
     if (team.logo) {
       if (team.logo.startsWith('http')) return team.logo;
       return `${import.meta.env.VITE_API_BASE_URL}/${team.logo}`;
     }
-    return '/assets/default-team.png';
+    return defaultTeamImg;
   };
 
   // Fetch team and player details lazily
@@ -108,12 +110,12 @@ const ScoutRecommendationsTab = () => {
 
   const getPlayerImage = (playerId) => {
     const p = playerDetails[playerId];
-    if (!p) return '/assets/default-player.png';
+    if (!p) return defaultPlayerImg;
     if (p.photo) {
       if (p.photo.startsWith('http')) return p.photo;
       return `${import.meta.env.VITE_API_BASE_URL}/${p.photo}`;
     }
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   const handleDelete = (id) => {
@@ -196,7 +198,7 @@ const ScoutRecommendationsTab = () => {
                   src={getTeamLogo(rec.teams_id)} 
                   alt={getTeamDetail(rec.teams_id, 'team_name')} 
                   className="team-logo" 
-                  onError={(e)=>e.target.src='/assets/default-team.png'} 
+                  onError={(e)=>e.target.src=defaultTeamImg} 
                 />
               </div>
               <div className="recommendation-main-info">
@@ -209,7 +211,7 @@ const ScoutRecommendationsTab = () => {
                     alt={getPlayerName(rec.player_id)} 
                     className="player-avatar"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                   <div className="player-details">

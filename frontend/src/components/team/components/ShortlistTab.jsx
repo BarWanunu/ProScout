@@ -6,6 +6,7 @@ import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
 import '../styles/ShortlistTab.css';
 
 const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch, onRefreshShortlist }) => {
@@ -120,8 +121,13 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
   // צפייה בפרופיל השחקן
   const handleViewProfile = (playerId) => {
     console.log(`Viewing profile of player with ID: ${playerId}`);
-    // כאן יהיה הקוד בהמשך - ניווט לפרופיל
-    alert(`Opening profile for player ${playerId}`);
+    
+    // Try to get user_id from player details
+    const playerDetail = playerDetails[playerId];
+    if (playerDetail?.player?.id) {
+      console.log(`Navigating to player profile with user_id: ${playerDetail.player.id}`);
+      navigate(`/player/profile/${playerDetail.player.id}`);
+    } 
   };
 
   const getPlayerDetail = (playerId, field) => {
@@ -150,7 +156,7 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     }
     
     // Default fallback
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   return (
@@ -175,7 +181,7 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
                     alt={player.name || getPlayerDetail(player.player_id, 'name')} 
                     className="player-avatar-large"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                 )}

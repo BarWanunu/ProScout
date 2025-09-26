@@ -83,21 +83,15 @@ export const AllRoutes = () => (
     {/* Profile routes */}
     <Route
       path="/player/profile/:playerId"
-      element={
-          <PlayerProfilePage />
-      }
+      element={<PlayerProfilePage />}
     />
     <Route
       path="/scout/profile/:scoutId"
-      element={
-          <ScoutProfilePage />
-      }
+      element={<ScoutProfilePage />}
     />
     <Route
       path="/team/profile/:teamId"
-      element={
-          <TeamProfilePage />
-      }
+      element={<TeamProfilePage />}
     />
   </Routes>
 );

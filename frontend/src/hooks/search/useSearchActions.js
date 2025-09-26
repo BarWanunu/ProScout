@@ -176,15 +176,20 @@ export const useSearchActions = ({
       // Use profile navigation if available
       onNavigateToProfile(user.type, user.id);
     } else {
-      // Fallback to navigation
-      const profilePath =
-        user.type === "team"
-          ? `/team/profile/${user.id}`
-          : user.type === "player"
-          ? `/player/profile/${user.id}`
-          : user.type === "scout"
-          ? `/scout/profile/${user.id}`
-          : "/";
+      // Fallback to navigation - all profiles use the entity ID, not user_id
+      let profilePath;
+
+      if (user.type === "team") {
+        profilePath = `/team/profile/${user.id}`;
+      } else if (user.type === "player") {
+        profilePath = `/player/profile/${user.id}`;
+      } else if (user.type === "scout") {
+        profilePath = `/scout/profile/${user.id}`;
+      } else {
+        profilePath = "/";
+      }
+
+      console.log("Navigating to:", profilePath);
       navigate(profilePath);
     }
   };

@@ -1,4 +1,4 @@
-import { useAuth } from '../../auth/AuthContext';
+import { useAuth } from '../../../auth/AuthContext';
 import PlayerProfileEdit from './PlayerProfileEdit';
 import ScoutProfileEdit from './ScoutProfileEdit';
 import TeamProfileEdit from './TeamProfileEdit';

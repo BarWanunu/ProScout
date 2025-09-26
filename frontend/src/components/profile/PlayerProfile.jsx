@@ -5,7 +5,8 @@ import playerService from '@/api/services/playerService';
 import { getToken } from '@/api/tokenStore';
 import PlayerStatsTab from '../player/components/PlayerStatsTab';
 import PlayerHighlightsTab from '../player/components/PlayerHighlightsTab';
-import './PlayerProfile.css';
+import defaultPlayerImg from '@/assets/default-player.png';
+import './styles/PlayerProfile.css';
 
 const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
   const [player, setPlayer] = useState(null);
@@ -58,7 +59,7 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
       }
       return `http://localhost:3000/uploads/players/${player.photo}`;
     }
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   if (loading) {
@@ -135,7 +136,7 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
                     alt={player.name || 'Player'}
                     className="profile-image player-image-square"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                 </div>
@@ -144,7 +145,7 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
                 </h2>
                 <Badge bg="info" className="role-badge">Player</Badge>
                 <p className="profile-subtitle mt-3 mb-0">
-                  Hello, this is {player.name || 'Player'} profile. Here is everything to know about me. You can see here my stats and highlight video.
+                  Hello, this is {player.name || 'Player'}'s profile. Here is everything to know about me. You can see here my stats and highlight video.
                 </p>
               </div>
 

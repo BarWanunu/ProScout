@@ -40,7 +40,7 @@ export default function PlayerInfo({ player }) {
               </div>
               <div className="player-info-content">
                 <h6>Club</h6>
-                <div className="player-info-value">{player.club || 'N/A'}</div>
+                <div className="player-info-value">{player.club || 'Free Agent'}</div>
               </div>
             </Card.Body>
           </Card>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, CheckSquare, XSquare, User, Building, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthContext';
 import trialService from '@/api/services/trialService';
 import scoutService from '@/api/services/scoutService';
@@ -14,6 +15,7 @@ import './TrialInvitationsList.css';
  */
 const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
   const { id, role } = useAuth();
+  const navigate = useNavigate();
   const [trials, setTrials] = useState([]);
   const [loading, setLoading] = useState(!skipInitialFetch);
   const [error, setError] = useState('');
@@ -252,6 +254,23 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
       default: return 'secondary';
     }
   };
+
+  // Navigate to profile based on trial and current user role
+  const handleViewProfile = (trial) => {
+    if (role === 'player') {
+      // Player viewing team profile
+      if (trial.team_id) {
+        navigate(`/team/profile/${trial.team_id}`);
+      }
+    } else if (role === 'team') {
+      // Team viewing player profile - always use player_id for PlayerProfile
+      navigate(`/player/profile/${trial.player_id}`);
+    } else if (role === 'scout') {
+      // Scout can view both team and player profiles
+      // Default to player profile - always use player_id for PlayerProfile
+      navigate(`/player/profile/${trial.player_id}`);
+    }
+  };
   
   // Check if user can update the status based on role and sender
   const canUpdateStatus = (trial) => {
@@ -323,7 +342,10 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
                 <div className="player-meta">{trial.player_club || trial.team_name}</div>
                 <div className="player-meta">{trial.player_nationality || 'Country'}</div>
               </div>
-              <button className="view-profile-btn">
+              <button 
+                className="view-profile-btn"
+                onClick={() => handleViewProfile(trial)}
+              >
                 VIEW PROFILE
               </button>
             </div>
