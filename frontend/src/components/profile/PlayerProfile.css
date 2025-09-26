@@ -1,0 +1,244 @@
+/* Player Profile Styles */
+.player-profile-container {
+  max-width: 1100px;
+}
+
+/* Compact back button at top-left */
+.pp-back-btn {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 30px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb; /* blue-600 */
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pp-back-btn:hover {
+  transform: translateX(-1px);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.35);
+}
+
+.back-button {
+  border-radius: 8px;
+  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  transform: translateX(-2px);
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.15);
+}
+
+.player-profile-card {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  background: #1e293b;
+}
+
+.profile-header {
+  padding: 2rem 0;
+}
+
+.profile-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.profile-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.player-image-square {
+  border-radius: 8px;
+}
+
+.profile-name {
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.role-badge {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 500;
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+}
+
+.profile-subtitle {
+  font-size: 0.95rem;
+  color: rgba(226, 232, 240, 0.8);
+  font-weight: 400;
+  line-height: 1.4;
+  font-style: italic;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile-details {
+  margin-top: 2rem;
+}
+
+.section-title {
+  color: #e2e8f0;
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(27, 37, 59, 0.6) 0%,
+    rgba(27, 37, 59, 0.45) 100%
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  transition: all 0.2s ease;
+  height: 100%;
+  text-align: center;
+  min-height: 100px;
+}
+
+.info-item:hover {
+  background: rgba(27, 37, 59, 0.7);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Icons removed from layout */
+.info-icon {
+  display: none;
+}
+
+.info-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.info-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  margin: 0 0 6px 0; /* stack above, centered */
+  /* allow normal wrapping but avoid breaking words mid-letter */
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  display: block;
+  text-align: center;
+}
+
+.info-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  word-break: break-word;
+}
+
+/* Stack label above value and center */
+.info-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .player-profile-container {
+    margin-top: 1rem;
+    padding: 0 1rem;
+  }
+
+  .profile-name {
+    font-size: 1.6rem;
+  }
+
+  .profile-image,
+  .profile-placeholder {
+    width: 100px;
+    height: 100px;
+  }
+
+  .profile-header {
+    padding: 1rem 0;
+  }
+
+  .info-item {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-name {
+    font-size: 1.4rem;
+  }
+
+  .profile-image,
+  .profile-placeholder {
+    width: 80px;
+    height: 80px;
+  }
+
+  .info-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .info-icon {
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+}

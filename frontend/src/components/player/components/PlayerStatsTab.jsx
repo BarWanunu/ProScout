@@ -266,7 +266,7 @@ const PlayerStatsTab = ({ player }) => {
     <div className="player-stats-tab">
       <div className="shortlist-header">
         <h4 className="text-white">Player Statistics</h4>
-        <p className="text-muted mb-0">Detailed performance data and season analysis</p>
+        <p className="text-white mb-0">Detailed performance data and season analysis</p>
       </div>
 
       {renderFilterControls()}

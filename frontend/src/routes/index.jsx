@@ -8,6 +8,9 @@ import ScoutDashboard from '../components/scout/pages/ScoutDashboard.jsx';
 import TeamDashboard from '../components/team/pages/TeamDashboard.jsx';
 import CreateTrialPage from '../components/trials/CreateTrialPage.jsx';
 import CreateRecommendationPage from '../components/recommendations/CreateRecommendationPage.jsx';
+import PlayerProfilePage from '../components/profile/pages/PlayerProfilePage.jsx';
+import ScoutProfilePage from '../components/profile/pages/ScoutProfilePage.jsx';
+import TeamProfilePage from '../components/profile/pages/TeamProfilePage.jsx';
 import { RequireAuth, RequireFullProfile } from "../auth/RouteGuards.jsx";
 
 // All routes combined in a single Routes component
@@ -74,6 +77,26 @@ export const AllRoutes = () => (
             <CreateRecommendationPage />
           </RequireFullProfile>
         </RequireAuth>
+      }
+    />
+    
+    {/* Profile routes */}
+    <Route
+      path="/player/profile/:playerId"
+      element={
+          <PlayerProfilePage />
+      }
+    />
+    <Route
+      path="/scout/profile/:scoutId"
+      element={
+          <ScoutProfilePage />
+      }
+    />
+    <Route
+      path="/team/profile/:teamId"
+      element={
+          <TeamProfilePage />
       }
     />
   </Routes>

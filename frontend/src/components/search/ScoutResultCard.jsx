@@ -6,9 +6,9 @@ import { MoreVertical } from 'lucide-react';
 import './styles/SearchResultCard.css';
 import './styles/PlayerComponents.css';
 
-const ScoutResultCard = ({ scout, index, searchActions }) => {
+const ScoutResultCard = ({ scout, index, searchActions, onNavigateToProfile }) => {
   // Only create hook if searchActions is not provided
-  const hookActions = searchActions ? null : useSearchActions({});
+  const hookActions = searchActions ? null : useSearchActions({ onNavigateToProfile });
   const { getActionsForUser } = searchActions || hookActions;
   const normalizedResult = normalizeSearchResult(scout);
   const actions = getActionsForUser(normalizedResult);

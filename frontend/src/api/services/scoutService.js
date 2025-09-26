@@ -65,7 +65,7 @@ async function getScoutById(id, token) {
 
 async function getScoutByScoutId(id) {
   const response = await http.get(`${endpoint}/scout-id/${id}`);
-  return response.data.scout;
+  return response.data;
 }
 
 const scoutService = {

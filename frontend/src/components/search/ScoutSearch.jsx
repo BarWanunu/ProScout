@@ -3,7 +3,9 @@ import { Form, Button } from "react-bootstrap";
 import DirectTeamSearch from "@/components/search/DirectTeamSearch";
 import PlayerSearchPanel from "@/components/search/PlayerSearchPanel";
 import { SearchResultsList } from "@/components/search";
-import searchService from "@/api/services/searchService";  
+import { ScoutProfile, TeamProfile } from "@/components/profile";
+import searchService from "@/api/services/searchService";
+import useProfileNavigation from "@/hooks/useProfileNavigation";
 import "@/components/search/styles/SearchBox.css";
 import "@/components/search/styles/SearchFixGlobal.css";
 import "@/components/search/styles/DirectSearchStyles.css";
@@ -24,6 +26,47 @@ export default function ScoutSearch() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+
+  // Profile navigation
+  const { 
+    currentProfile,
+    navigateToProfile,
+    goBack,
+    isProfileOpen 
+  } = useProfileNavigation();
+
+  // Render current profile
+  const renderProfile = () => {
+    if (!currentProfile) return null;
+
+    switch (currentProfile.type) {
+      case 'scout':
+        return (
+          <ScoutProfile
+            scoutId={currentProfile.id}
+            onBack={goBack}
+            onNavigateToProfile={navigateToProfile}
+          />
+        );
+      case 'team':
+        return (
+          <TeamProfile
+            teamId={currentProfile.id}
+            onBack={goBack}
+            onNavigateToProfile={navigateToProfile}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-4">
+            <h3>Profile type not supported</h3>
+            <Button variant="primary" onClick={goBack}>
+              Go Back
+            </Button>
+          </div>
+        );
+    }
+  };
 
   // Reset all filters when searchType changes
   useEffect(() => {
@@ -90,7 +133,13 @@ export default function ScoutSearch() {
   };
 
   return (
-    <div className="scout-search-box search-component-wrapper">
+    <>
+      {/* Show profile if one is open */}
+      {isProfileOpen && renderProfile()}
+      
+      {/* Show search interface when no profile is open */}
+      {!isProfileOpen && (
+        <div className="scout-search-box search-component-wrapper">
       <div className="search-header">
         <select
           className="search-select"
@@ -157,7 +206,10 @@ export default function ScoutSearch() {
         loading={loading}
         hasSearched={hasSearched}
         searchType={searchType}
+        onNavigateToProfile={navigateToProfile}
       />
     </div>
+      )}
+    </>
   );
 }

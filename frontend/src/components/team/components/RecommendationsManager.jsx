@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { Star, MessageCircle, User, Trash2 } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';
 import playerService from '@/api/services/playerService';
@@ -11,11 +12,12 @@ const RecommendationsManager = ({
   recommendations = [], 
   userRole, 
   onRecommendationUpdate, 
-  showActions = true 
+  showActions = true
 }) => {
   const [loading, setLoading] = useState(false);
   const [playerDetails, setPlayerDetails] = useState({});
   const [scoutDetails, setScoutDetails] = useState({});
+  const navigate = useNavigate();
 
   console.log("RecommendationsManager props:", { 
     recommendations, 
@@ -174,6 +176,7 @@ const RecommendationsManager = ({
           console.log(`👤 Player data for ID ${recommendation.player_id}:`, player);
           console.log(`🔍 Scout data for ID ${recommendation.scout_id}:`, scout);
           
+          
           return (
             <div key={recommendation.id} className="player-card-extended recommendation-card">
               {/* Player Header Section */}
@@ -205,12 +208,26 @@ const RecommendationsManager = ({
               <div className="scout-info-section">
                 <div className="scout-info-card">
                   <span className="scout-label">Recommended by:</span>
-                  <span className="scout-name">
-                    {scout?.first_name && scout?.last_name ? 
-                      `${scout.first_name} ${scout.last_name}` : 
+                  <button 
+                    className="scout-name-button"
+                    onClick={() => {
+                      if (scout?.scout?.id) {
+                        console.log('Navigating to scout profile:', scout.scout.id);
+                        navigate(`/profile/scout/${scout.scout.id}`);
+                      } else {
+                        const scoutName = scout?.scout.first_name && scout?.scout.last_name ? 
+                          `${scout.scout.first_name} ${scout.scout.last_name}` : 
+                          scout?.name || `Scout #${recommendation.scout_id}`;
+                        alert(`Scout profile not available for ${scoutName}`);
+                      }
+                    }}
+                    title="Click to view scout profile"
+                  >
+                    {scout?.scout.first_name && scout?.scout.last_name ? 
+                      `${scout.scout.first_name} ${scout.scout.last_name}` : 
                       scout?.name || `Scout #${recommendation.scout_id}`
                     }
-                  </span>
+                  </button>
                 </div>
               </div>
 
@@ -269,8 +286,13 @@ const RecommendationsManager = ({
                       size="sm" 
                       className="action-btn profile-btn"
                       onClick={() => {
-                        console.log('View player:', player);
-                        alert(`Viewing ${player?.name || 'Player'} profile - Feature coming soon!`);
+                        if (player?.id) {
+                          console.log('Navigating to player profile:', player.id);
+                          navigate(`/profile/player/${player.id}`);
+                        } else {
+                          console.log('Player not found:', player);
+                          alert(`Player profile not available`);
+                        }
                       }}
                     >
                       <User size={16} className="action-icon" />

@@ -149,6 +149,24 @@
   font-size: 0.95rem;
 }
 
+.scout-name-button {
+  background: none;
+  border: none;
+  color: #60a5fa;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.scout-name-button:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
 /* Player Stats Grid - Same as Shortlist */
 .player-stats-grid {
   display: grid;

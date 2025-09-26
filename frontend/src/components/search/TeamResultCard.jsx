@@ -4,9 +4,9 @@ import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import './styles/SearchResultCard.css';
 
-const TeamResultCard = ({ team, index, searchActions }) => {
+const TeamResultCard = ({ team, index, searchActions, onNavigateToProfile }) => {
   // Only create hook if searchActions is not provided
-  const hookActions = searchActions ? null : useSearchActions({});
+  const hookActions = searchActions ? null : useSearchActions({ onNavigateToProfile });
   const { 
     getActionsForUser
   } = searchActions || hookActions;

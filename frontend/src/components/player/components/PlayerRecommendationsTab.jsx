@@ -5,8 +5,10 @@ import { Users, User, MessageCircle, Calendar } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';
 import teamService from '@/api/services/teamService';
 import scoutService from '@/api/services/scoutService';
+import { TeamProfile } from '@/components/profile';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
+import useProfileNavigation from '@/hooks/useProfileNavigation';
 import '../../team/styles/ShortlistTab.css';
 
 const PlayerRecommendationsTab = ({ player }) => {
@@ -18,6 +20,39 @@ const PlayerRecommendationsTab = ({ player }) => {
   const [teamDetails, setTeamDetails] = useState({});
   const [scoutDetails, setScoutDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
+
+  // Profile navigation
+  const { 
+    currentProfile,
+    navigateToProfile,
+    goBack,
+    isProfileOpen 
+  } = useProfileNavigation();
+
+  // Render current profile
+  const renderProfile = () => {
+    if (!currentProfile) return null;
+
+    switch (currentProfile.type) {
+      case 'team':
+        return (
+          <TeamProfile
+            teamId={currentProfile.id}
+            onBack={goBack}
+            onNavigateToProfile={navigateToProfile}
+          />
+        );
+      default:
+        return (
+          <div className="text-center p-4">
+            <h3>Profile type not supported</h3>
+            <Button variant="primary" onClick={goBack}>
+              Go Back
+            </Button>
+          </div>
+        );
+    }
+  };
 
   // Load recommendations for this player
   const loadRecommendations = async () => {
@@ -63,9 +98,10 @@ const PlayerRecommendationsTab = ({ player }) => {
           if (recommendation.scout_id && !scoutDetails[recommendation.scout_id]) {
             setFetchingDetails(prev => ({ ...prev, [`scout_${recommendation.scout_id}`]: true }));
             const scoutData = await scoutService.getScoutByScoutId(recommendation.scout_id);
+            console.log('Scout data loaded:', scoutData);
             setScoutDetails(prev => ({ 
               ...prev, 
-              [recommendation.scout_id]: scoutData
+              [recommendation.scout_id]: scoutData.scout || scoutData
             }));
           }
         } catch (error) {
@@ -102,10 +138,10 @@ const PlayerRecommendationsTab = ({ player }) => {
     navigate(`/trial/create?playerId=${player.id}&playerName=${encodeURIComponent(playerName)}&teamId=${teamId}&teamName=${encodeURIComponent(teamName)}`);
   };
 
-  // View team profile (placeholder)
+  // View team profile
   const handleViewProfile = (teamId) => {
-    console.log(`Viewing profile of team with ID: ${teamId}`);
-    alert(`Opening profile for team ${teamId}`);
+    console.log(`Navigating to team profile: ${teamId}`);
+    navigate(`/team/profile/${teamId}`);
   };
 
   // Send message to team (placeholder)
@@ -139,6 +175,16 @@ const PlayerRecommendationsTab = ({ player }) => {
       return `${scout.first_name} ${scout.last_name}`;
     }
     return scout.username || 'Unknown Scout';
+  };
+
+  const getScoutExperience = (scoutId) => {
+    const scout = scoutDetails[scoutId];
+    if (!scout) return 'N/A years';
+    
+    if (scout.experience_years) {
+      return `${scout.experience_years} years`;
+    }
+    return 'N/A years';
   };
 
   // Get team logo with fallback
@@ -204,7 +250,13 @@ const PlayerRecommendationsTab = ({ player }) => {
   }
 
   return (
-    <div className="player-recommendations-tab">
+    <>
+      {/* Show profile if one is open */}
+      {isProfileOpen && renderProfile()}
+      
+      {/* Show recommendations when no profile is open */}
+      {!isProfileOpen && (
+        <div className="player-recommendations-tab">
       <div className="shortlist-header mb-3">
         <h4 className="text-white">Scout Recommendations</h4>
         <p className="text-muted mb-0">
@@ -311,21 +363,13 @@ const PlayerRecommendationsTab = ({ player }) => {
                 <User size={16} className="action-icon" />
                 Profile
               </Button>
-              
-              <Button 
-                variant="success" 
-                size="sm" 
-                className="action-btn message-btn"
-                onClick={() => handleSendMessage(recommendation.teams_id)}
-              >
-                <MessageCircle size={16} className="action-icon" />
-                Message
-              </Button>
             </div>
           </div>
         ))}
       </div>
     </div>
+      )}
+    </>
   );
 };
 

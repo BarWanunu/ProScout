@@ -17,10 +17,11 @@ const SearchResultsList = ({
   searchType,
   className = '',
   onRefreshShortlist,
-  teamData
+  teamData,
+  onNavigateToProfile
 }) => {
   // Get global modals state and handlers
-  const searchActionsHook = useSearchActions({ onRefreshShortlist, teamData });
+  const searchActionsHook = useSearchActions({ onRefreshShortlist, teamData, onNavigateToProfile });
   const { 
     playerSelectModal, 
     closePlayerSelectModal, 
@@ -97,6 +98,7 @@ const SearchResultsList = ({
                   index={index}
                   onRefreshShortlist={onRefreshShortlist}
                   teamData={teamData}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,
@@ -114,6 +116,7 @@ const SearchResultsList = ({
                   key={`team-${result.id || index}`} 
                   team={result} 
                   index={index}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,
@@ -131,6 +134,7 @@ const SearchResultsList = ({
                   key={`scout-${result.id || index}`} 
                   scout={result} 
                   index={index}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,

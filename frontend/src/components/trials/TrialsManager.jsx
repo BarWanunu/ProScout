@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Card, Button, Badge, Row, Col, Alert, Spinner } from 'react-bootstrap';
-import { Calendar, Check, X, Trash2, User, MessageCircle } from 'lucide-react';
+import { Calendar, Check, X, Trash2, User } from 'lucide-react';
 import trialService from '@/api/services/trialService';
 import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import teamService from '@/api/services/teamService';
 import { getToken } from '@/api/tokenStore';
+import './styles/TrialsManager.css';
 import './styles/TrialsManager.css';
 
 const TrialsManager = ({ 
@@ -134,9 +135,9 @@ const TrialsManager = ({
     
     
     switch (trial.sender_role) {
-      case 'scout':
-        return senderData.first_name && senderData.last_name 
-          ? `${senderData.first_name} ${senderData.last_name}` 
+      case 'scout':        
+        return senderData.scout.first_name && senderData.scout.last_name 
+          ? `${senderData.scout.first_name} ${senderData.scout.last_name}` 
           : senderData.username || 'Unknown Scout';
       case 'team':
         return senderData.team_name || senderData.name || 'Unknown Team';
@@ -213,21 +214,6 @@ const TrialsManager = ({
     } finally {
       setLoading(prev => ({ ...prev, [trialId]: false }));
     }
-  };
-
-  // Handle sending message to trial sender
-  const handleSendMessage = (trial) => {
-    const senderName = getSenderName(trial);
-    
-    // TODO: Implement messaging functionality
-    alert(`Send message to: ${senderName} (${trial.sender_role})`);
-    console.log('Sending message to:', {
-      senderRole: trial.sender_role,
-      scoutId: trial.scout_id,
-      teamId: trial.team_id,
-      playerId: trial.player_id,
-      senderName: senderName
-    });
   };
 
   // Get status badge variant
@@ -370,14 +356,6 @@ const TrialsManager = ({
                       <span className="recipient-role">({getRecipientInfo(trial).role})</span>
                     </div>
                   </div>
-                  <button 
-                    className="message-sender-btn"
-                    onClick={() => handleSendMessage(trial)}
-                    title={`Send message to ${getSenderName(trial)}`}
-                  >
-                    <MessageCircle size={16} />
-                    Message
-                  </button>
                 </div>
                 
                 <div className="trial-row">
@@ -403,12 +381,14 @@ const TrialsManager = ({
                           }}
                         />
                       )}
-                      <button 
-                        className="view-profile-btn"
-                        onClick={() => {/* TODO: Navigate to player profile */}}
-                      >
-                        View Profile
-                      </button>
+                      {userRole !== 'player' && (
+                        <button 
+                          className="view-profile-btn"
+                          onClick={() => {/* TODO: Navigate to player profile */}}
+                        >
+                          View Profile
+                        </button>
+                      )}
                     </div>
                     
                     {/* Player Info */}

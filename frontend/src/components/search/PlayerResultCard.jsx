@@ -5,9 +5,9 @@ import { PlayerInfo, PlayerStats, PlayerProfile } from './player';
 import './styles/SearchResultCard.css';
 import './styles/PlayerComponents.css';
 
-const PlayerResultCard = ({ result, index, onRefreshShortlist, teamData, searchActions }) => {
+const PlayerResultCard = ({ result, index, onRefreshShortlist, teamData, searchActions, onNavigateToProfile }) => {
   // Only create hook if searchActions is not provided
-  const hookActions = searchActions ? null : useSearchActions({ onRefreshShortlist, teamData });
+  const hookActions = searchActions ? null : useSearchActions({ onRefreshShortlist, teamData, onNavigateToProfile });
   const { 
     getActionsForUser,
     userRole,

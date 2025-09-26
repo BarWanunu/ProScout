@@ -6,7 +6,11 @@ import { getToken } from "@/api/tokenStore";
 import PlayerSelectModal from "@/components/trials/PlayerSelectModal";
 import TeamSelectModal from "@/components/trials/TeamSelectModal";
 
-export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
+export const useSearchActions = ({
+  onRefreshShortlist,
+  teamData,
+  onNavigateToProfile,
+} = {}) => {
   const { role, id: currentUserId } = useAuth();
   const navigate = useNavigate();
 
@@ -167,17 +171,22 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
   // פונקציות הטיפול בפעולות
   const handleViewProfile = (user) => {
     console.log("Viewing profile of:", user);
-    // Navigate to user profile based on user type
-    const profilePath =
-      user.type === "team"
-        ? `/team/profile/${user.id}`
-        : user.type === "player"
-        ? `/player/profile/${user.id}`
-        : user.type === "scout"
-        ? `/scout/profile/${user.id}`
-        : "/";
-    // navigate(profilePath);
-    alert(`Navigating to profile: ${user.name} (${user.type})`);
+
+    if (onNavigateToProfile) {
+      // Use profile navigation if available
+      onNavigateToProfile(user.type, user.id);
+    } else {
+      // Fallback to navigation
+      const profilePath =
+        user.type === "team"
+          ? `/team/profile/${user.id}`
+          : user.type === "player"
+          ? `/player/profile/${user.id}`
+          : user.type === "scout"
+          ? `/scout/profile/${user.id}`
+          : "/";
+      navigate(profilePath);
+    }
   };
 
   const handleSendMessage = (user) => {
