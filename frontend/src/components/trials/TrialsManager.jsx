@@ -289,6 +289,10 @@ const TrialsManager = ({
         if (status === 'pending') {
           actions.push('accept', 'decline');
         }
+        // Player can delete trials they declined
+        if (status === 'declined') {
+          actions.push('delete');
+        }
       }
       // Team can only delete declined trials they sent
       else if (userRole === 'team') {
@@ -326,8 +330,8 @@ const TrialsManager = ({
     return (
       <Container className="py-4">
         <Card className="text-center p-5">
-          <h4 className="mb-3">No Trial Invitations</h4>
-          <p>
+          <h4 className="mb-3 text-white">No Trial Invitations</h4>
+          <p className='text-white mb-0'>
             {userRole === 'team' && 'No trial invitations have been sent to your team yet.'}
             {userRole === 'player' && 'You have no trial invitations at the moment.'}
             {userRole === 'scout' && 'You haven\'t sent any trial invitations yet.'}

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Search, Users, User, BarChart3 } from "lucide-react";
+import { Search, Users, User, Calendar } from "lucide-react";
 import PlayerSearchTab from "./PlayerSearchTab";
+import PlayerTrialsTab from "./PlayerTrialsTab";
+import PlayerRecommendationsTab from "./PlayerRecommendationsTab";
 import "../styles/PlayerDashboardTabs.css";
 
-export default function PlayerDashboardTabs({ player, summary }) {
+export default function PlayerDashboardTabs({ player }) {
   const [activeTab, setActiveTab] = useState("search");
 
   const switchToTab = (tabId) => {
@@ -17,18 +19,13 @@ export default function PlayerDashboardTabs({ player, summary }) {
       icon: <Search size={18} /> 
     },
     { 
-      id: "stats", 
-      label: "My Stats", 
-      icon: <BarChart3 size={18} /> 
+      id: "trials", 
+      label: "Trials", 
+      icon: <Calendar size={18} /> 
     },
     { 
-      id: "messages", 
-      label: "Messages", 
-      icon: <User size={18} /> 
-    },
-    { 
-      id: "profile", 
-      label: "Profile", 
+      id: "recommendations", 
+      label: "Recommendations", 
       icon: <Users size={18} /> 
     },
   ];
@@ -37,33 +34,10 @@ export default function PlayerDashboardTabs({ player, summary }) {
     switch(activeTab) {
       case "search":
         return <PlayerSearchTab player={player} />;
-      case "stats":
-        return (
-          <div className="stats-content">
-            <h3>Stats Summary (2022 - 2024)</h3>
-            {summary ? (
-              <div className="stats-display">
-                <pre>{JSON.stringify(summary, null, 2)}</pre>
-              </div>
-            ) : (
-              <p>Loading stats summary...</p>
-            )}
-          </div>
-        );
-      case "messages":
-        return (
-          <div className="messages-content">
-            <h3>Messages</h3>
-            <p>Messages functionality coming soon...</p>
-          </div>
-        );
-      case "profile":
-        return (
-          <div className="profile-content">
-            <h3>Profile Settings</h3>
-            <p>Profile management coming soon...</p>
-          </div>
-        );
+      case "recommendations":
+        return <PlayerRecommendationsTab player={player} />;
+      case "trials":
+        return <PlayerTrialsTab player={player} />;
       default:
         return null;
     }

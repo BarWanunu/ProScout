@@ -79,3 +79,27 @@ exports.getShortlistedPlayers = async (req, res) => {
     res.status(500).json({ message: "Internal server error while retrieving shortlisted players.", error: err.message });
   }
 };
+
+// Get teams that have shortlisted the current player
+exports.getTeamsByPlayer = async (req, res) => {
+  try {
+    if (
+      !checkUserRole(res, req.user, "player", "get teams that shortlisted you.")
+    )
+      return;
+
+    const profile = await fetchUserProfile(req.user);
+    const player_id = profile.id;
+
+    //prettier-ignore
+    const shortlistingTeams = await shortlistModel.getTeamsByPlayer(player_id);
+
+    res.status(200).json({
+      message: "Teams that shortlisted you retrieved successfully.",
+      teams: shortlistingTeams.success ? shortlistingTeams.data : [],
+    });
+  } catch (err) {
+    //prettier-ignore
+    res.status(500).json({ message: "Internal server error while retrieving teams that shortlisted you.", error: err.message });
+  }
+};

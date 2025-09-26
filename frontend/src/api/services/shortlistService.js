@@ -32,5 +32,22 @@ async function getShortlist(token) {
   return response.data.players;
 }
 
-const shortlistService = { addPlayer, removePlayer, getShortlist };
+// Get teams that have shortlisted the current player
+async function getTeamsByPlayer(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const response = await http.get(`${endpoint}/my-teams`, config);
+  return response.data.teams;
+}
+
+const shortlistService = {
+  addPlayer,
+  removePlayer,
+  getShortlist,
+  getTeamsByPlayer,
+};
 export default shortlistService;
