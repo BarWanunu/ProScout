@@ -5,6 +5,7 @@ const auth = require("../middleware/auth");
 
 router.post("/", auth, recommendationController.createRecommendation);
 router.delete("/:id", auth, recommendationController.deleteRecommendation);
+router.put("/:id", auth, recommendationController.updateRecommendation);
 router.get(
   "/player/:player_id",
   auth,

@@ -1,0 +1,56 @@
+.player-card-extended {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+}
+.player-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.player-avatar-large {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.player-name-large {
+  margin: 0;
+  font-size: 1.05rem;
+}
+.player-nationality {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+.player-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+.action-buttons-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 10px;
+}
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.shortlist-container {
+  margin-top: 8px;
+}
+.shortlist-header h4 {
+  margin: 0;
+}
+.scout-recommendations-tab {
+  padding: 8px 0;
+}
