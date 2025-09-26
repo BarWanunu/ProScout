@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Search, Users, User, Calendar } from "lucide-react";
+import { Search, Users, User, Calendar, Video, BarChart3 } from "lucide-react";
 import PlayerSearchTab from "./PlayerSearchTab";
 import PlayerTrialsTab from "./PlayerTrialsTab";
 import PlayerRecommendationsTab from "./PlayerRecommendationsTab";
+import PlayerHighlightsTab from "./PlayerHighlightsTab";
+import PlayerStatsTab from "./PlayerStatsTab";
 import "../styles/PlayerDashboardTabs.css";
 
 export default function PlayerDashboardTabs({ player }) {
@@ -19,6 +21,11 @@ export default function PlayerDashboardTabs({ player }) {
       icon: <Search size={18} /> 
     },
     { 
+      id: "stats", 
+      label: "Stats", 
+      icon: <BarChart3 size={18} /> 
+    },
+    { 
       id: "trials", 
       label: "Trials", 
       icon: <Calendar size={18} /> 
@@ -28,18 +35,27 @@ export default function PlayerDashboardTabs({ player }) {
       label: "Recommendations", 
       icon: <Users size={18} /> 
     },
+     { 
+      id: "highlights", 
+      label: "Highlights", 
+      icon: <Video size={18} /> 
+    },
   ];
 
   const renderTabContent = () => {
     switch(activeTab) {
       case "search":
         return <PlayerSearchTab player={player} />;
+      case "stats":
+        return <PlayerStatsTab player={player} />;
       case "recommendations":
         return <PlayerRecommendationsTab player={player} />;
       case "trials":
         return <PlayerTrialsTab player={player} />;
+      case "highlights":
+        return <PlayerHighlightsTab player={player} />;
       default:
-        return null;
+        return <PlayerSearchTab player={player} />;
     }
   };
 

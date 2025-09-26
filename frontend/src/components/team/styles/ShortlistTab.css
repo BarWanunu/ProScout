@@ -65,8 +65,9 @@
 }
 
 .team-logo-large {
-  width: 100px !important;
-  height: 100px !important;
+  width: 120px !important;
+  height: 120px !important;
+  border-radius: 15px !important;
 }
 
 .player-main-info {
@@ -119,7 +120,7 @@
 }
 
 .stat-label {
-  font-size: 0.8rem;
+  font-size: 0.4rem;
   color: #94a3b8;
   font-weight: 600;
   text-transform: uppercase;
@@ -128,7 +129,7 @@
 }
 
 .stat-value {
-  font-size: 1rem;
+  font-size: 0.25rem;
   color: #f8fafc;
   font-weight: 700;
 }

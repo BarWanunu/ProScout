@@ -1,0 +1,154 @@
+.player-highlights-tab {
+  padding: 0;
+}
+
+.highlights-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.highlights-header h2 {
+  color: #666;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.highlights-header p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.highlights-content {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Video Container */
+.video-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-wrapper iframe,
+.video-wrapper .video-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.video-player {
+  object-fit: cover;
+}
+
+.video-info {
+  padding: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.video-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #1a237e;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.play-icon {
+  color: #3f51b5;
+}
+
+.video-description {
+  color: #666;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* No Highlights State */
+.no-highlights {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.no-highlights-icon {
+  color: #bbb;
+  margin-bottom: 1rem;
+}
+
+.no-highlights h3 {
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.no-highlights p {
+  color: #666;
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .highlights-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .highlights-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .video-info {
+    padding: 1rem;
+  }
+
+  .video-title {
+    font-size: 1.2rem;
+  }
+
+  .no-highlights {
+    padding: 3rem 1.5rem;
+  }
+
+  .no-highlights h3 {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .highlights-header h2 {
+    font-size: 1.3rem;
+  }
+
+  .video-title {
+    font-size: 1.1rem;
+  }
+
+  .video-description {
+    font-size: 0.9rem;
+  }
+}

@@ -34,6 +34,17 @@ const CreateTrialPage = () => {
   const [success, setSuccess] = useState(false);
   const [currentPlayerData, setCurrentPlayerData] = useState(null);
 
+  // Prefer URL param playerName when available, otherwise fall back to loaded currentPlayerData
+  const getDisplayPlayerName = () => {
+    if (playerName) return playerName;
+    if (!currentPlayerData) return 'Current Player';
+    if (currentPlayerData.name) return currentPlayerData.name;
+    const first = currentPlayerData.first_name ?? currentPlayerData.firstName ?? '';
+    const last = currentPlayerData.last_name ?? currentPlayerData.lastName ?? '';
+    const full = `${first} ${last}`.trim();
+    return full || 'Current Player';
+  };
+
   useEffect(() => {
     // Scroll to top when page loads
     window.scrollTo({
@@ -228,7 +239,7 @@ const CreateTrialPage = () => {
                 <div>
                   <strong>{role === 'player' ? 'Requesting Trial' : 'Inviting to Trial'}</strong>
                   <div className="team-info">
-                    {currentPlayerData?.name || currentPlayerData?.first_name + ' ' + currentPlayerData?.last_name || 'Current Player'} → {teamName}
+                    {getDisplayPlayerName()} → {teamName}
                   </div>
                 </div>
               </div>
