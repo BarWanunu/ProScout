@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Spinner } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { Star, MessageCircle, User, Trash2 } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';
 import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import './styles/RecommendationsManager.css';
 
 const RecommendationsManager = ({ 
   recommendations = [], 
   userRole, 
   onRecommendationUpdate, 
-  showActions = true 
+  showActions = true
 }) => {
   const [loading, setLoading] = useState(false);
   const [playerDetails, setPlayerDetails] = useState({});
   const [scoutDetails, setScoutDetails] = useState({});
+  const [messageModal, setMessageModal] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: '',
+    recipientType: ''
+  });
+  const navigate = useNavigate();
 
   console.log("RecommendationsManager props:", { 
     recommendations, 
@@ -131,6 +141,28 @@ const RecommendationsManager = ({
     }
   };
 
+  const handleSendMessage = (player) => {
+    if (player?.user_id && player?.name) {
+      setMessageModal({
+        show: true,
+        recipientId: player.user_id,
+        recipientName: player.name,
+        recipientType: 'Player'
+      });
+    } else {
+      alert('Unable to send message - player information not available');
+    }
+  };
+
+  const handleCloseModal = () => {
+    setMessageModal({
+      show: false,
+      recipientId: null,
+      recipientName: '',
+      recipientType: ''
+    });
+  };
+
   const getPlayerImage = (player) => {
     // Check player object for photo
     if (player?.photo) {
@@ -141,7 +173,7 @@ const RecommendationsManager = ({
     }
     
     // Default fallback
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   if (loading && !recommendations.length) {
@@ -174,6 +206,7 @@ const RecommendationsManager = ({
           console.log(`👤 Player data for ID ${recommendation.player_id}:`, player);
           console.log(`🔍 Scout data for ID ${recommendation.scout_id}:`, scout);
           
+          
           return (
             <div key={recommendation.id} className="player-card-extended recommendation-card">
               {/* Player Header Section */}
@@ -184,7 +217,7 @@ const RecommendationsManager = ({
                     alt={player?.name || 'Player'} 
                     className="player-avatar-large"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                 </div>
@@ -204,13 +237,27 @@ const RecommendationsManager = ({
               {/* Scout Info Section */}
               <div className="scout-info-section">
                 <div className="scout-info-card">
-                  <span className="scout-label">Recommended by:</span>
-                  <span className="scout-name">
-                    {scout?.first_name && scout?.last_name ? 
-                      `${scout.first_name} ${scout.last_name}` : 
+                  <button 
+                    className="scout-name-button"
+                    onClick={() => {
+                      if (scout?.scout?.id) {
+                        console.log('Navigating to scout profile:', scout.scout.id);
+                        navigate(`/scout/profile/${scout.scout.id}`);
+                      } else {
+                        const scoutName = scout?.scout.first_name && scout?.scout.last_name ? 
+                          `${scout.scout.first_name} ${scout.scout.last_name}` : 
+                          scout?.name || `Scout #${recommendation.scout_id}`;
+                        alert(`Scout profile not available for ${scoutName}`);
+                      }
+                    }}
+                    title="Click to view scout profile"
+                  >
+                    <span className="scout-label">Recommended by: </span>
+                    {scout?.scout.first_name && scout?.scout.last_name ? 
+                      `${scout.scout.first_name} ${scout.scout.last_name}` : 
                       scout?.name || `Scout #${recommendation.scout_id}`
                     }
-                  </span>
+                  </button>
                 </div>
               </div>
 
@@ -269,12 +316,28 @@ const RecommendationsManager = ({
                       size="sm" 
                       className="action-btn profile-btn"
                       onClick={() => {
-                        console.log('View player:', player);
-                        alert(`Viewing ${player?.name || 'Player'} profile - Feature coming soon!`);
+                        
+                         if (player?.id) {
+                          console.log('Navigating to player profile with id (fallback):', player.id);
+                          navigate(`/player/profile/${player.id}`);
+                        } else {
+                          console.log('Player not found:', player);
+                          alert(`Player profile not available`);
+                        }
                       }}
                     >
                       <User size={16} className="action-icon" />
                       View Profile
+                    </Button>
+                    
+                    <Button 
+                      variant="success" 
+                      size="sm" 
+                      className="action-btn message-btn"
+                      onClick={() => handleSendMessage(player)}
+                    >
+                      <MessageCircle size={16} className="action-icon" />
+                      Message
                     </Button>
                     
                     <Button 
@@ -294,6 +357,15 @@ const RecommendationsManager = ({
           );
         })}
       </div>
+      
+      {/* Quick Message Modal */}
+      <QuickMessageModal
+        show={messageModal.show}
+        onHide={handleCloseModal}
+        recipientId={messageModal.recipientId}
+        recipientName={messageModal.recipientName}
+        recipientType={messageModal.recipientType}
+      />
     </div>
   );
 };

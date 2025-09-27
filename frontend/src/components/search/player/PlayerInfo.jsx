@@ -1,5 +1,6 @@
 import React from 'react';
 import ActionMenu from '@/components/actionMenu';
+import defaultPlayerImg from '@/assets/default-player.png';
 
 const PlayerInfo = ({ result, actions }) => {
   return (
@@ -11,12 +12,12 @@ const PlayerInfo = ({ result, actions }) => {
               ? result.player.photo.startsWith('http') 
                 ? result.player.photo
                 : `${import.meta.env.VITE_API_BASE_URL}/${result.player.photo}`
-              : '/assets/default-player.png'
+              : defaultPlayerImg
           }
           alt={result.player?.name || result.name}
           className="player-photo"
           onError={(e) => {
-            e.target.src = '/assets/default-player.png';
+            e.target.src = defaultPlayerImg;
           }}
         />
       </div>
@@ -38,7 +39,7 @@ const PlayerInfo = ({ result, actions }) => {
           </div>
           <div className="player-meta">
             <span className="position">{result.player?.position}</span>
-            <span className="club">{result.player?.club || result.club}</span>
+            <span className="club">{result.player?.club || "Free Agent"}</span>
             <span className="age">{result.player?.age} years</span>
             <span className="nationality">{result.player?.nationality}</span>
             {result.player?.number && <span className="number">#{result.player.number}</span>}

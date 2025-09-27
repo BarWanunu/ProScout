@@ -365,19 +365,17 @@
 }
 
 /* Empty state */
-.trials-manager .card.text-center {
-  background: linear-gradient(145deg, #2d3748 0%, #4a5568 100%) !important;
-  border: 1px solid #4a5568 !important;
-  color: #e2e8f0 !important;
+.trials-manager .card.text-center,
+/* Also style top-level empty when TrialsManager returns only the empty card */
+.player-trials-tab > .container .card.text-center {
+  background: rgba(30, 41, 59, 0.75) !important;
+  border: 1px solid rgba(148, 163, 184, 0.2) !important;
+  color: #ffffff !important;
 }
 
-.trials-manager .card.text-center h4 {
-  color: #f1f5f9 !important;
-  margin-bottom: 16px !important;
-}
-
-.trials-manager .card.text-center p {
-  color: #cbd5e1 !important;
+.trials-manager .card.text-center p,
+.player-trials-tab > .container .card.text-center p {
+  color: #ffffff !important;
   font-size: 16px !important;
   line-height: 1.6 !important;
 }

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react"
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
 import WelcomeSection from "@/components/common/WelcomeSection";
+import PlayerInfo from "../components/PlayerInfo.jsx";
 import PlayerDashboardTabs from "../components/PlayerDashboardTabs";
 import "../styles/PlayerDashboard.css";
 
@@ -55,6 +56,9 @@ export default function PlayerDashboard() {
       <div className={`pd-wrapper ${fadeIn ? "fade-in" : "fade-out"}`}>
         {/* ---------- WELCOME SECTION ---------- */}
         <WelcomeSection user={player} userType="player" imageStyle="circle" />
+        
+        {/* ---------- PLAYER INFO ---------- */}
+        <PlayerInfo player={player} />
         
         {/* ---------- DASHBOARD TABS ---------- */}
         <div className="player-dashboard-container">

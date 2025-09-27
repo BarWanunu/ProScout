@@ -56,3 +56,20 @@ exports.isPlayerShortlisted = async (team_id, player_id) => {
     return { success: false, error: err.message };
   }
 };
+
+// Get teams that have shortlisted a specific player
+exports.getTeamsByPlayer = async (player_id) => {
+  try {
+    const query = `
+      SELECT sp.team_id, sp.shortlisted_at, t.team_name, t.league, t.country, t.formation
+      FROM shortlisted_players sp
+      JOIN teams t ON sp.team_id = t.id
+      WHERE sp.player_id = $1
+      ORDER BY sp.shortlisted_at DESC
+    `;
+    const { rows } = await db.query(query, [player_id]);
+    return { success: true, data: rows };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+};

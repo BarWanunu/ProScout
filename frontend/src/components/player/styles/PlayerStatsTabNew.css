@@ -1,0 +1,292 @@
+/* Player Stats Tab - Custom Styles */
+.player-stats-tab {
+  padding: 0.5rem 0;
+}
+
+/* Filter Controls Container */
+.player-stats-tab .player-card-extended {
+  /* Expand filters/cards container so filters and grid share the same wide layout */
+  max-width: 1200px;
+  margin: 0 auto 0.75rem auto;
+  padding: 0.75rem 1rem;
+  min-height: auto;
+  /* keep overflow visible so inner shadows/rounded corners are not clipped */
+  overflow: visible;
+}
+
+/* Filter Controls Styles */
+.player-stats-tab .filter-type-selector {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.player-stats-tab .filter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 38px;
+  line-height: 1.2;
+}
+
+.player-stats-tab .filter-btn:hover {
+  border-color: #3f51b5;
+  color: #3f51b5;
+  background: rgba(63, 81, 181, 0.1);
+}
+
+.player-stats-tab .filter-btn.active {
+  background: #3f51b5;
+  border-color: #3f51b5;
+  color: #fff;
+}
+
+.player-stats-tab .year-selector,
+.player-stats-tab .range-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.player-stats-tab .year-select,
+.player-stats-tab .range-select {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  min-width: 110px;
+  height: 40px;
+  line-height: 1.2;
+  text-align: center;
+  margin-top: 0.7rem;
+}
+
+.player-stats-tab .year-select:focus,
+.player-stats-tab .range-select:focus {
+  outline: none;
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.25);
+}
+
+/* Fix select text visibility */
+.player-stats-tab .year-select option,
+.player-stats-tab .range-select option {
+  background-color: #1e293b;
+  color: white;
+  font-size: 1rem;
+}
+
+.player-stats-tab .range-separator {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Stats Grid - 5 columns layout with center alignment */
+.player-stats-tab .shortlist-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  /* allow inner shadows / rounded edges to overflow slightly without being clipped */
+  overflow: visible;
+}
+
+/* Center last row if not full (5 items per row) */
+
+.player-stats-tab .player-stats-grid.stats-center-last-row {
+  display: grid;
+  /* Desktop: exactly 4 columns */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.4rem;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  place-content: center;
+  min-height: 360px;
+}
+
+/* Ensure grid is active for other selectors and keep consistent gaps */
+.player-stats-tab .player-stats-grid {
+  display: grid;
+  gap: 1.2rem;
+  justify-items: center;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+/* When the grid is inside the card wrapper, allow it to expand and keep inner padding so cards won't be cut by rounded container corners */
+.player-stats-tab .player-card-extended > .player-stats-grid,
+.player-stats-tab .player-card-extended .player-stats-grid {
+  max-width: 100%;
+  padding: 0.4rem 0.8rem; /* small inner padding to avoid clipping */
+  box-sizing: border-box;
+}
+
+/* Uniform card styling for each stat */
+.player-stats-tab .player-stats-grid > .stat-item {
+  width: 100%;
+  max-width: 200px;
+  min-width: 140px;
+  min-height: 120px; /* consistent height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.02) 0%,
+    rgba(255, 255, 255, 0.01) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  box-shadow: 0 6px 18px rgba(2, 6, 23, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.player-stats-tab .player-stats-grid > .stat-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.55);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Label and value styling inside a stat card */
+.player-stats-tab .stat-item .stat-label {
+  display: block;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.45rem;
+  text-align: center;
+}
+
+.player-stats-tab .stat-item .stat-value {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Slightly smaller value for percentage-like fields (if needed) */
+.player-stats-tab .stat-item.small-value .stat-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+@media (min-width: 769px) {
+  .player-stats-grid {
+    grid-auto-rows: 1fr;
+  }
+}
+
+/* Responsive breakpoints: 4 -> 3 -> 2 -> 1 columns */
+@media (max-width: 1200px) {
+  .player-stats-tab .player-stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 950px;
+  }
+
+  .player-stats-tab .shortlist-container {
+    max-width: 1200px;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 968px) {
+  .player-stats-tab .player-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+  }
+
+  .player-stats-tab .shortlist-container {
+    max-width: 900px;
+    padding: 0 1.2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .player-stats-tab .filter-type-selector {
+    flex-direction: column;
+  }
+
+  .player-stats-tab .filter-btn {
+    justify-content: center;
+  }
+
+  .player-stats-tab .year-selector,
+  .player-stats-tab .range-selector {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .player-stats-tab .year-select,
+  .player-stats-tab .range-select {
+    min-width: unset;
+  }
+
+  .player-stats-tab .player-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 450px;
+    gap: 1rem;
+  }
+
+  .player-stats-tab .player-card-extended {
+    max-width: 90%;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .player-stats-tab .shortlist-container {
+    max-width: 600px;
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .player-stats-tab .filter-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    height: 34px;
+  }
+
+  .player-stats-tab .year-select,
+  .player-stats-tab .range-select {
+    font-size: 0.9rem;
+  }
+
+  .player-stats-tab .player-stats-grid {
+    grid-template-columns: 1fr;
+    max-width: 350px;
+    gap: 0.8rem;
+  }
+
+  .player-stats-tab .shortlist-container {
+    padding: 0 0.5rem;
+    max-width: 450px;
+  }
+
+  .player-stats-tab .player-card-extended {
+    padding: 0.3rem 0.6rem;
+  }
+}

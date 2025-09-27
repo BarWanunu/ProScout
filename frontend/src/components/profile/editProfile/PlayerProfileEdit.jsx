@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import playerService from '../../api/services/playerService';
-import './ProfileEdit.css';
+import playerService from '../../../api/services/playerService';
+import '../styles/ProfileEdit.css';
 
 const POSITIONS = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 

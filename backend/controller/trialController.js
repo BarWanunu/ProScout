@@ -10,21 +10,29 @@ exports.createTrial = async (req, res) => {
     //prettier-ignore
     const {player_id, team_id,scout_id,invitation_message,trial_date} = req.body;
 
-    // Convert user_id to actual player_id from players table
-    const playerData = await playerModel.findPlayerBy("user_id", player_id);
+    // First try to find player by ID directly (new approach)
+    let playerData = await playerModel.findPlayerBy("id", player_id);
+
+    // If not found, try by user_id (backward compatibility)
     if (!playerData.success || !playerData.data) {
-      console.error("❌ Player not found for user_id:", player_id);
-      return res
-        .status(404)
-        .json({ message: "Player not found for this user ID." });
+      console.log(
+        "🔄 Player not found by ID, trying user_id lookup:",
+        player_id
+      );
+      playerData = await playerModel.findPlayerBy("user_id", player_id);
+    }
+
+    if (!playerData.success || !playerData.data) {
+      console.error("❌ Player not found for ID:", player_id);
+      return res.status(404).json({ message: "Player not found for this ID." });
     }
 
     const actualPlayerId = playerData.data.id;
     console.log(
-      "🔄 Converted user_id",
-      player_id,
-      "to player_id",
-      actualPlayerId
+      "🔄 Using player_id:",
+      actualPlayerId,
+      "for player:",
+      playerData.data.name || playerData.data.first_name
     );
 
     const sender_role = req.user.role;

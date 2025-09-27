@@ -428,3 +428,11 @@
     transform: translateY(0);
   }
 }
+
+/* Player Shortlist Tab - Team Logo Enhancement */
+.player-shortlist-tab .team-logo-large {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain;
+  border-radius: 8px;
+}

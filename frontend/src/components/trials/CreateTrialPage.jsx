@@ -34,6 +34,17 @@ const CreateTrialPage = () => {
   const [success, setSuccess] = useState(false);
   const [currentPlayerData, setCurrentPlayerData] = useState(null);
 
+  // Prefer URL param playerName when available, otherwise fall back to loaded currentPlayerData
+  const getDisplayPlayerName = () => {
+    if (playerName) return playerName;
+    if (!currentPlayerData) return 'Current Player';
+    if (currentPlayerData.name) return currentPlayerData.name;
+    const first = currentPlayerData.first_name ?? currentPlayerData.firstName ?? '';
+    const last = currentPlayerData.last_name ?? currentPlayerData.lastName ?? '';
+    const full = `${first} ${last}`.trim();
+    return full || 'Current Player';
+  };
+
   useEffect(() => {
     // Scroll to top when page loads
     window.scrollTo({
@@ -80,6 +91,11 @@ const CreateTrialPage = () => {
       setError('Please fill in all required fields');
       return;
     }
+    
+    if (role === 'player' && !currentUserId) {
+      setError('User data is still loading. Please wait and try again.');
+      return;
+    }
 
     try {
       setLoading(true);
@@ -124,8 +140,10 @@ const CreateTrialPage = () => {
         'Effective scout ID (from scouts table)': effectiveScoutId
       });
       
+      console.log('🔍 Current player data:', currentPlayerData);
+      
       const trialData = {
-        player_id: parseInt(playerId, 10),
+        player_id: role === 'player' ? currentUserId : parseInt(playerId, 10),
         team_id: parseInt(teamId, 10),
         scout_id: effectiveScoutId, // Use scout_id instead of user_id
         invitation_message: formData.invitationMessage.trim(),
@@ -171,9 +189,9 @@ const CreateTrialPage = () => {
             <div className="scout-container">
               <div className="success-container">
                 <div className="success-icon">✅</div>
-                <h3 className="success-title">Trial Invitation Sent!</h3>
+                <h3 className="success-title">{role === 'player' ? 'Trial Request Sent!' : 'Trial Invitation Sent!'}</h3>
                 <p className="success-message">
-                  Your trial invitation has been sent to <strong>{playerName}</strong> successfully.
+                  Your {role === 'player' ? 'trial request' : 'trial invitation'} has been sent to <strong>{role === 'player' ? teamName : playerName}</strong> successfully.
                 </p>
                 <Button variant="primary" onClick={handleGoBack} className="px-4">
                   <ArrowLeft size={16} className="me-2" />
@@ -208,7 +226,7 @@ const CreateTrialPage = () => {
                   </Button>
                   <h4 className="mb-0 text-white d-flex align-items-center">
                     <Send size={20} className="me-2" />
-                    Send Trial Invitation
+                    {role === 'player' ? 'Request Trial' : 'Send Trial Invitation'}
                   </h4>
                 </div>
               </div>
@@ -219,9 +237,9 @@ const CreateTrialPage = () => {
               <div className="d-flex align-items-center">
                 <User size={20} className="me-2 text-primary" />
                 <div>
-                  <strong>Requesting Trial</strong>
+                  <strong>{role === 'player' ? 'Requesting Trial' : 'Inviting to Trial'}</strong>
                   <div className="team-info">
-                    {currentPlayerData?.name || currentPlayerData?.first_name + ' ' + currentPlayerData?.last_name || 'Current Player'} → {teamName}
+                    {getDisplayPlayerName()} → {teamName}
                   </div>
                 </div>
               </div>
@@ -272,14 +290,17 @@ const CreateTrialPage = () => {
             <Form.Group className="mb-4">
               <Form.Label className="text-white">
                 <MessageSquare size={16} className="me-2" />
-                Trial Message *
+                {role === 'player' ? 'Request Message *' : 'Trial Message *'}
               </Form.Label>
               <Form.Control
                 as="textarea"
                 rows={4}
                 value={formData.invitationMessage}
                 onChange={(e) => handleInputChange('invitationMessage', e.target.value)}
-                placeholder={`Invite ${playerName} to a trial with ${teamName}. Provide details about the trial...`}
+                placeholder={role === 'player' 
+                  ? `Request a trial with ${teamName}. Explain why you'd be a good fit for the team...` 
+                  : `Invite ${playerName} to a trial with ${teamName}. Provide details about the trial...`
+                }
                 maxLength={500}
                 disabled={loading}
               />
@@ -309,12 +330,12 @@ const CreateTrialPage = () => {
                 {loading ? (
                   <span>
                     <Spinner size="sm" className="me-2" />
-                    Sending Invitation...
+                    {role === 'player' ? 'Sending Request...' : 'Sending Invitation...'}
                   </span>
                 ) : (
                   <span>
                     <Send size={16} className="me-2" />
-                    Send Trial Invitation
+                    {role === 'player' ? 'Send Trial Request' : 'Send Trial Invitation'}
                   </span>
                 )}
               </Button>

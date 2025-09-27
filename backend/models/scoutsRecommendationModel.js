@@ -1,5 +1,24 @@
 const db = require("../startup/db");
 
+exports.updateRecommendation = async (id, scout_id, recommendation_note) => {
+  try {
+    const query = `
+      UPDATE scouts_recommendation
+      SET recommendation_note = $1
+      WHERE id = $2 AND scout_id = $3
+      RETURNING *;
+    `;
+    const values = [recommendation_note, id, scout_id];
+    const result = await db.query(query, values);
+    return { success: true, data: result.rows[0] };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to update recommendation: ${err.message}`,
+    };
+  }
+};
+
 //prettier-ignore
 exports.createRecommendation = async (scout_id, player_id, teams_id, recommendation_note) => {
   try {

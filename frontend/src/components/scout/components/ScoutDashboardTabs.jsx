@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ScoutSearch } from "@/components/search";
 import ScoutTrials from "./ScoutTrials";
+import ScoutRecommendationsTab from "./ScoutRecommendationsTab";
+import { Search, Calendar, Users } from 'lucide-react';
 import "../styles/ScoutDashboardTabs.css";
 import "../styles/ScoutContainer.css";
 
@@ -15,8 +17,9 @@ export default function ScoutDashboardTabs({ scout }) {
   };
 
   const tabs = [
-    { id: "search", label: "Search 🔍", icon: "search" },
-    { id: "trials", label: "Trials Invitations 📋", icon: "trials" },
+    { id: "search", label: "Search", icon: <Search size={18} style={{marginBottom:-2}} /> },
+    { id: "trials", label: "Trials", icon: <Calendar size={18} style={{marginBottom:-2}} /> },
+    { id: "recommendations", label: "Recommendations", icon: <Users size={18} style={{marginBottom:-2}} /> },
   ];
 
   const renderTabContent = () => {
@@ -25,6 +28,8 @@ export default function ScoutDashboardTabs({ scout }) {
         return <ScoutSearch key={`search-${refreshKey}`} />;
       case "trials":
         return <ScoutTrials key={`trials-${refreshKey}`} scout={scout} />;
+      case "recommendations":
+        return <ScoutRecommendationsTab key={`recommendations-${refreshKey}`} />;
       default:
         return <ScoutSearch key={`search-${refreshKey}`} />;
     }
@@ -41,6 +46,7 @@ export default function ScoutDashboardTabs({ scout }) {
               className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
               onClick={() => handleTabSwitch(tab.id)}
             >
+              {tab.icon && <span className="tab-icon me-1">{tab.icon}</span>}
               <span className="tab-label">{tab.label}</span>
             </button>
           ))}

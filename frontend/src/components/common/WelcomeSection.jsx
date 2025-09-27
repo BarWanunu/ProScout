@@ -1,4 +1,4 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Row, Col } from "react-bootstrap";
 import scoutDefaultImage from "../../assets/scout.jpeg";
 import "./WelcomeSection.css";
@@ -26,7 +26,7 @@ export default function WelcomeSection({
       imgShape: "rounded-circle",
     }
   };
-  
+
   // Determine which default values to use
   const currentDefaults = defaults[userType] || defaults.scout;
   
@@ -61,6 +61,12 @@ export default function WelcomeSection({
   // Image shape class based on user type or override
   const imageShapeClass = imageStyle === "circle" ? "rounded-circle" : "rounded";
 
+    const navigate = useNavigate();
+
+    const handleMessagesButton = () => {
+      navigate('/messages')
+    }
+
   return (
     <div className="welcome-section-container">
       <Row className="align-items-center">
@@ -84,7 +90,7 @@ export default function WelcomeSection({
             variant="primary" 
             size="lg" 
             className="px-4 py-2"
-          >
+          onClick={handleMessagesButton} >
             Open Messages
           </Button>
         </Col>

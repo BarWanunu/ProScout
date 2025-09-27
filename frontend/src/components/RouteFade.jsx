@@ -8,7 +8,9 @@ export default function RouteFade({ children }) {
 
   useEffect(() => {
     setReady(false);
-    const id = setTimeout(() => setReady(true), 0);
+    
+    // Small delay to let ScrollToTop component work first
+    const id = setTimeout(() => setReady(true), 150);
     return () => clearTimeout(id);
   }, [location.pathname]);
 

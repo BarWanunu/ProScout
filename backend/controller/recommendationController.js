@@ -2,6 +2,55 @@ const recommendationModel = require("../models/scoutsRecommendationModel");
 const playerModel = require("../models/playerModel");
 const { fetchUserProfile } = require("../utils/fetchUserProfile");
 
+exports.updateRecommendation = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { recommendation_note } = req.body;
+
+    const profile = await fetchUserProfile(req.user);
+    if (!profile)
+      return res.status(403).json({ message: "Profile not found." });
+
+    if (req.user.role !== "scout") {
+      return res
+        .status(403)
+        .json({ message: "Only scouts can update their recommendations." });
+    }
+
+    const recommendation = await recommendationModel.getRecommendationsById(id);
+    if (!recommendation.success || !recommendation.data) {
+      return res.status(404).json({ message: "Recommendation not found." });
+    }
+
+    if (recommendation.data.scout_id !== profile.id) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized to update this recommendation." });
+    }
+
+    const updated = await recommendationModel.updateRecommendation(
+      id,
+      profile.id,
+      recommendation_note
+    );
+    if (!updated.success || !updated.data) {
+      return res
+        .status(500)
+        .json({ message: "Failed to update recommendation." });
+    }
+
+    res.status(200).json({
+      message: "Recommendation updated successfully.",
+      recommendation: updated.data,
+    });
+  } catch (err) {
+    res.status(500).json({
+      message: "Server error during recommendation update.",
+      error: err.message,
+    });
+  }
+};
+
 exports.createRecommendation = async (req, res) => {
   try {
     const { player_id, teams_id, recommendation_note } = req.body;

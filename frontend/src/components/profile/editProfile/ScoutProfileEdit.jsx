@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import scoutService from '../../api/services/scoutService';
-import './ProfileEdit.css';
+import scoutService from '../../../api/services/scoutService';
+import '../styles/ProfileEdit.css';
 
 export default function ScoutProfileEdit({ onClose, onSuccess }) {
   const [fieldToEdit, setFieldToEdit] = useState('');

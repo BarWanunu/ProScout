@@ -32,13 +32,24 @@ const TeamSelectModal = ({
       setSelectedTeamId(null);
       setSelectedTeamName('');
       
+      // Don't prevent body scrolling
+      document.body.style.overflow = 'auto';
+      
       // Scroll to top of page when modal opens
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth'
       });
+    } else {
+      // Ensure body scrolling is restored
+      document.body.style.overflow = 'auto';
     }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [show]);
 
   const handleSearch = async (e) => {
@@ -101,6 +112,8 @@ const TeamSelectModal = ({
       onHide={onHide}
       className="team-select-modal"
       size="lg"
+      backdrop={false}
+      keyboard={true}
     >
       <Modal.Header closeButton>
         <Modal.Title>

@@ -1,0 +1,264 @@
+/* Scout Recommendations Tab Styles */
+.scout-recommendations-tab {
+  padding: 8px 0;
+}
+
+.scout-recommendation-card {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 20px;
+  margin-bottom: 16px;
+  border-radius: 12px;
+  transition: border-color 0.2s ease;
+}
+
+.scout-recommendation-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.recommendation-header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.team-logo-section {
+  flex-shrink: 0;
+}
+
+.team-logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.recommendation-main-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.team-name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 600;
+}
+
+.recommendation-date {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+.player-info-section {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.player-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  flex-shrink: 0;
+}
+
+.player-details {
+  flex: 1;
+}
+
+.player-name {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.player-club {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2px;
+}
+
+.player-id {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.8rem;
+}
+
+.recommendation-note {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(59, 130, 246, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.recommendation-note-text {
+  color: white;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 0;
+}
+
+.edit-form {
+  margin-bottom: 16px;
+}
+
+.edit-textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: white;
+  border-radius: 6px;
+}
+
+.edit-textarea:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: white;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.15);
+}
+
+.edit-buttons {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.edit-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.delete-btn {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: rgba(239, 68, 68, 0.9);
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: rgb(239, 68, 68);
+}
+
+.save-btn {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: rgb(96, 165, 250);
+}
+
+.save-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.5);
+  color: white;
+}
+
+.cancel-btn {
+  background: rgba(107, 114, 128, 0.2);
+  border: 1px solid rgba(107, 114, 128, 0.4);
+  color: rgba(156, 163, 175, 0.9);
+}
+
+.cancel-btn:hover {
+  background: rgba(107, 114, 128, 0.3);
+  border-color: rgba(107, 114, 128, 0.5);
+  color: rgb(156, 163, 175);
+}
+
+.shortlist-empty {
+  padding: 40px 20px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.empty-icon {
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 16px;
+}
+
+.empty-text {
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  font-size: 1rem;
+}
+
+.shortlist-header {
+  margin-bottom: 20px;
+}
+
+.shortlist-header h4 {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.shortlist-counter {
+  color: rgba(255, 255, 255, 0.6);
+  margin: 4px 0 0 0;
+  font-size: 0.9rem;
+}
+
+.shortlist-container {
+  margin-top: 16px;
+}
+
+/* Loading states */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.loading-spinner {
+  color: rgba(59, 130, 246, 0.8);
+}
+
+/* Error states */
+.error-alert {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  color: rgb(239, 68, 68);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}

@@ -1,3 +1,28 @@
+/* Modal positioning and background styles */
+.player-select-modal .modal-dialog,
+.team-select-modal .modal-dialog {
+  position: relative;
+  z-index: 1055;
+  margin: 30px auto;
+}
+
+.player-select-modal.modal,
+.team-select-modal.modal {
+  z-index: 1050;
+}
+
+/* Ensure background scrolling is allowed */
+.player-select-modal .modal-backdrop,
+.team-select-modal .modal-backdrop {
+  display: none !important;
+}
+
+/* Allow scrolling behind modal */
+body.modal-open {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+
 /* Custom scrollbar styles for select modals */
 .team-list::-webkit-scrollbar,
 .player-list::-webkit-scrollbar {

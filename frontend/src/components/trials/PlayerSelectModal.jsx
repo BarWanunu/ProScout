@@ -3,6 +3,7 @@ import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, User } from 'lucide-react';
 import searchService from '@/api/services/searchService';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
 import './styles/SelectModals.css';
 
 /**
@@ -32,13 +33,24 @@ const PlayerSelectModal = ({
       setSelectedPlayerId(null);
       setSelectedPlayerName('');
       
+      // Don't prevent body scrolling
+      document.body.style.overflow = 'auto';
+      
       // Scroll to top of page when modal opens
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth'
       });
+    } else {
+      // Ensure body scrolling is restored
+      document.body.style.overflow = 'auto';
     }
+    
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
   }, [show]);
 
   const handleSearch = async (e) => {
@@ -130,6 +142,8 @@ const PlayerSelectModal = ({
       onHide={onHide}
       className="player-select-modal"
       size="lg"
+      backdrop={false}
+      keyboard={true}
     >
       <Modal.Header closeButton>
         <Modal.Title>
@@ -206,15 +220,12 @@ const PlayerSelectModal = ({
                     style={{ cursor: 'pointer', borderRadius: '8px', border: '1px solid #ddd' }}
                   >
                     <div className="player-avatar me-3">
-                      {photoUrl ? (
-                        <img 
-                          src={photoUrl} 
-                          alt={playerName}
-                          style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} 
-                        />
-                      ) : (
-                        <User size={40} />
-                      )}
+                      <img 
+                        src={photoUrl || defaultPlayerImg} 
+                        alt={playerName}
+                        style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} 
+                        onError={(e) => { e.target.src = defaultPlayerImg; }}
+                      />
                     </div>
                     <div className="player-info">
                       <h6 className="mb-0">{playerName}</h6>

@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import teamService from '../../api/services/teamService';
-import './ProfileEdit.css';
+import teamService from '../../../api/services/teamService';
+import '../styles/ProfileEdit.css';
 
 export default function TeamProfileEdit({ onClose, onSuccess }) {
   const [fieldToEdit, setFieldToEdit] = useState('');

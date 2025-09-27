@@ -6,6 +6,8 @@ import shortlistService from '@/api/services/shortlistService';
 import playerService from '@/api/services/playerService';
 import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
+import defaultPlayerImg from '@/assets/default-player.png';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import '../styles/ShortlistTab.css';
 
 const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch, onRefreshShortlist }) => {
@@ -15,6 +17,12 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
   const [loading, setLoading] = useState({});
   const [playerDetails, setPlayerDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
+  const [messageModal, setMessageModal] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: '',
+    recipientType: ''
+  });
   
   // Update local shortlist when initialShortlist prop changes
   useEffect(() => {
@@ -111,17 +119,46 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     navigate(`/trial/create?${params.toString()}`);
   };
 
-  // שליחת הודעה לשחקן (לא מיושם עדיין)
+  // שליחת הודעה לשחקן - פתיחת Modal
   const handleSendMessage = (playerId) => {
-    console.log(`Sending message to player with ID: ${playerId}`);
-    // כאן יהיה הקוד בהמשך
+    console.log(`Opening message modal for player with ID: ${playerId}`);
+    
+    // Get player details
+    const playerDetail = playerDetails[playerId];
+    const playerName = playerDetail?.player?.name || getPlayerDetail(playerId, 'name') || 'Player';
+    const userId = playerDetail?.player?.user_id || playerDetail?.player?.id;
+    
+    if (userId) {
+      setMessageModal({
+        show: true,
+        recipientId: userId,
+        recipientName: playerName,
+        recipientType: 'Player'
+      });
+    } else {
+      alert('Unable to send message - player information not available');
+    }
+  };
+
+  const handleCloseMessageModal = () => {
+    setMessageModal({
+      show: false,
+      recipientId: null,
+      recipientName: '',
+      recipientType: ''
+    });
   };
 
   // צפייה בפרופיל השחקן
   const handleViewProfile = (playerId) => {
     console.log(`Viewing profile of player with ID: ${playerId}`);
-    // כאן יהיה הקוד בהמשך - ניווט לפרופיל
-    alert(`Opening profile for player ${playerId}`);
+    
+    // Try to get user_id from player details
+    const playerDetail = playerDetails[playerId];
+    if (playerDetail?.player?.id) {
+      console.log(`Navigating to player profile with user_id: ${playerDetail.player.id}`);
+      navigate(`/player/profile/${playerDetail.player.id}`);
+    } 
   };
 
   const getPlayerDetail = (playerId, field) => {
@@ -150,7 +187,7 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     }
     
     // Default fallback
-    return '/assets/default-player.png';
+    return defaultPlayerImg;
   };
 
   return (
@@ -175,7 +212,7 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
                     alt={player.name || getPlayerDetail(player.player_id, 'name')} 
                     className="player-avatar-large"
                     onError={(e) => {
-                      e.target.src = '/assets/default-player.png';
+                      e.target.src = defaultPlayerImg;
                     }}
                   />
                 )}
@@ -283,6 +320,15 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
           </div>
         ))}
       </div>
+      
+      {/* Quick Message Modal */}
+      <QuickMessageModal
+        show={messageModal.show}
+        onHide={handleCloseMessageModal}
+        recipientId={messageModal.recipientId}
+        recipientName={messageModal.recipientName}
+        recipientType={messageModal.recipientType}
+      />
     </div>
   );
 };

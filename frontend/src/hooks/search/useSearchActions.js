@@ -6,7 +6,11 @@ import { getToken } from "@/api/tokenStore";
 import PlayerSelectModal from "@/components/trials/PlayerSelectModal";
 import TeamSelectModal from "@/components/trials/TeamSelectModal";
 
-export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
+export const useSearchActions = ({
+  onRefreshShortlist,
+  teamData,
+  onNavigateToProfile,
+} = {}) => {
   const { role, id: currentUserId } = useAuth();
   const navigate = useNavigate();
 
@@ -23,6 +27,14 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     playerId: null,
     playerName: null,
     isForTrial: false,
+  });
+
+  // State for quick message modal
+  const [messageModalState, setMessageModalState] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: "",
+    recipientType: "",
   });
 
   // פעולות כלליות שזמינות לכל המשתמשים
@@ -167,23 +179,91 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
   // פונקציות הטיפול בפעולות
   const handleViewProfile = (user) => {
     console.log("Viewing profile of:", user);
-    // Navigate to user profile based on user type
-    const profilePath =
-      user.type === "team"
-        ? `/team/profile/${user.id}`
-        : user.type === "player"
-        ? `/player/profile/${user.id}`
-        : user.type === "scout"
-        ? `/scout/profile/${user.id}`
-        : "/";
-    // navigate(profilePath);
-    alert(`Navigating to profile: ${user.name} (${user.type})`);
+
+    if (onNavigateToProfile) {
+      // Use profile navigation if available
+      onNavigateToProfile(user.type, user.id);
+    } else {
+      // Fallback to navigation - all profiles use the entity ID, not user_id
+      let profilePath;
+
+      if (user.type === "team") {
+        profilePath = `/team/profile/${user.id}`;
+      } else if (user.type === "player") {
+        profilePath = `/player/profile/${user.id}`;
+      } else if (user.type === "scout") {
+        profilePath = `/scout/profile/${user.id}`;
+      } else {
+        profilePath = "/";
+      }
+
+      console.log("Navigating to:", profilePath);
+      navigate(profilePath);
+    }
   };
 
   const handleSendMessage = (user) => {
-    console.log("Sending message to:", user);
-    // TODO: פתח חלון שליחת הודעה או נווט לדף ההודעות
-    alert(`Opening message dialog for: ${user.name}`);
+    console.log("Opening message modal for:", user);
+
+    // Extract user info based on user type
+    let recipientId = null;
+    let recipientName = "";
+    let recipientType = "";
+
+    if (user.type === "player") {
+      // For players, check multiple possible sources for user_id
+      recipientId =
+        user.originalResult?.player?.user_id ||
+        user.originalResult?.user_id ||
+        user.userId ||
+        user.user_id;
+
+      // If we still don't have user_id, we might have player_id, so we'll need to resolve it
+      if (!recipientId) {
+        recipientId = user.id; // This might be player_id, will be resolved in QuickMessageModal
+      }
+
+      recipientName = user.player?.name || user.name || "Player";
+      recipientType = "Player";
+    } else if (user.type === "team") {
+      // For teams, check multiple possible sources for user_id
+      recipientId =
+        user.originalResult?.team?.user_id ||
+        user.originalResult?.user_id ||
+        user.userId ||
+        user.user_id;
+
+      // If we still don't have user_id, we might have team_id, so we'll need to resolve it
+      if (!recipientId) {
+        recipientId = user.id; // This might be team_id, will be resolved in QuickMessageModal
+      }
+
+      recipientName =
+        user.team?.team_name || user.team_name || user.name || "Team";
+      recipientType = "Team";
+    } else if (user.type === "scout") {
+      // For scouts, we already have userId in the normalized result
+      recipientId = user.userId || user.originalResult?.user_id || user.user_id;
+      recipientName =
+        user.scout?.first_name && user.scout?.last_name
+          ? `${user.scout.first_name} ${user.scout.last_name}`
+          : user.name || "Scout";
+      recipientType = "Scout";
+    }
+
+    console.log("Resolved recipientId:", recipientId, "from user:", user);
+
+    if (recipientId) {
+      setMessageModalState({
+        show: true,
+        recipientId,
+        recipientName,
+        recipientType,
+      });
+    } else {
+      console.error("Could not find user_id for:", user);
+      alert("Unable to send message - user information not available");
+    }
   };
 
   const handleRecommendPlayer = (team) => {
@@ -477,6 +557,16 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     });
   };
 
+  // Handler for closing message modal
+  const closeMessageModal = () => {
+    setMessageModalState({
+      show: false,
+      recipientId: null,
+      recipientName: "",
+      recipientType: "",
+    });
+  };
+
   return {
     getActionsForUser,
     currentUserId,
@@ -490,5 +580,8 @@ export const useSearchActions = ({ onRefreshShortlist, teamData } = {}) => {
     teamSelectModal: teamSelectModalState,
     closeTeamSelectModal,
     handleTeamSelected,
+    // Message modal state and handlers
+    messageModal: messageModalState,
+    closeMessageModal,
   };
 };

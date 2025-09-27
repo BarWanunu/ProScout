@@ -6,6 +6,7 @@ import { getUserTypeFromResult } from '@/utils/searchResultUtils';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import PlayerSelectModal from '@/components/trials/PlayerSelectModal';
 import TeamSelectModal from '@/components/trials/TeamSelectModal';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import './styles/SearchResultsList.css';
 import './styles/SearchFixGlobal.css';
 import './styles/SearchResultWrapper.css';
@@ -17,10 +18,11 @@ const SearchResultsList = ({
   searchType,
   className = '',
   onRefreshShortlist,
-  teamData
+  teamData,
+  onNavigateToProfile
 }) => {
   // Get global modals state and handlers
-  const searchActionsHook = useSearchActions({ onRefreshShortlist, teamData });
+  const searchActionsHook = useSearchActions({ onRefreshShortlist, teamData, onNavigateToProfile });
   const { 
     playerSelectModal, 
     closePlayerSelectModal, 
@@ -31,7 +33,9 @@ const SearchResultsList = ({
     currentUserId,
     getActionsForUser,
     userRole,
-    teamId
+    teamId,
+    messageModal,
+    closeMessageModal
   } = searchActionsHook;
   
   if (loading) {
@@ -97,12 +101,15 @@ const SearchResultsList = ({
                   index={index}
                   onRefreshShortlist={onRefreshShortlist}
                   teamData={teamData}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -114,12 +121,15 @@ const SearchResultsList = ({
                   key={`team-${result.id || index}`} 
                   team={result} 
                   index={index}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -131,12 +141,15 @@ const SearchResultsList = ({
                   key={`scout-${result.id || index}`} 
                   scout={result} 
                   index={index}
+                  onNavigateToProfile={onNavigateToProfile}
                   // Pass shared actions to avoid creating new hook instance
                   searchActions={{
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -179,6 +192,17 @@ const SearchResultsList = ({
             ? `Select a Team for ${teamSelectModal.playerName || 'Player'}'s Trial`
             : `Select a Team to Recommend ${teamSelectModal.playerName || 'Player'} To`
           }
+        />
+      )}
+      
+      {/* Global Quick Message Modal */}
+      {messageModal && (
+        <QuickMessageModal
+          show={messageModal.show}
+          onHide={closeMessageModal}
+          recipientId={messageModal.recipientId}
+          recipientName={messageModal.recipientName}
+          recipientType={messageModal.recipientType}
         />
       )}
     </div>

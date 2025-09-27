@@ -2,6 +2,12 @@ import { http } from "../http";
 
 const endpoint = "/recommendation";
 
+async function updateRecommendation(id, data, token) {
+  const config = { headers: { Authorization: `Bearer ${token}` } };
+  const response = await http.put(`${endpoint}/${id}`, data, config);
+  return response.data;
+}
+
 async function createRecommendation(data, token) {
   const config = { headers: { Authorization: `Bearer ${token}` } };
   const response = await http.post(endpoint, data, config);
@@ -36,4 +42,5 @@ export default {
   getRecommendationsByPlayer,
   getRecommendationsByScout,
   getRecommendationsByTeam,
+  updateRecommendation,
 };
