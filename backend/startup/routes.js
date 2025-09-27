@@ -10,6 +10,7 @@ const message = require("../routes/message");
 const trial = require("../routes/trial");
 const recommendation = require("../routes/recommendation");
 const search = require("../routes/search");
+const recommendationsSystem = require("../routes/recommendationsSystem");
 
 module.exports = function (app) {
   app.use(express.json());
@@ -24,4 +25,5 @@ module.exports = function (app) {
   app.use("/api/trial", trial);
   app.use("/api/recommendation", recommendation);
   app.use("/api/search", search);
+  app.use("/api/recommendations-system", recommendationsSystem);
 };
