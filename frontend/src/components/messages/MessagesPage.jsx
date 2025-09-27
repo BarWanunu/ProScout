@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Container } from 'react-bootstrap';
 import { MessageSquare, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,7 @@ const MessagesPage = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const conversationsRef = useRef(null);
   const navigate = useNavigate();
   const { role } = useAuth();
 
@@ -22,7 +23,9 @@ const MessagesPage = () => {
 
   const handleMessageSent = () => {
     // Trigger refresh of conversations when a message is sent
-    setRefreshTrigger(prev => prev + 1);
+    if (conversationsRef.current && conversationsRef.current.refreshConversations) {
+      conversationsRef.current.refreshConversations();
+    }
     console.log('Message sent, refreshing conversations');
   };
 
@@ -65,7 +68,7 @@ const MessagesPage = () => {
           {/* Messages Layout */}
           <div className="messages-layout">
             <ConversationsList 
-              key={refreshTrigger} // Refresh when a message is sent
+              ref={conversationsRef}
               onSelectConversation={handleSelectConversation}
               selectedConversation={selectedConversation}
               onUnreadCountChange={handleUnreadCountChange}

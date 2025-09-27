@@ -29,7 +29,12 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
   }, [selectedConversation]);
 
   useEffect(() => {
+    // Scroll to bottom immediately and after a short delay
     scrollToBottom();
+    setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+    
     // Also try to focus after messages load
     if (selectedConversation && messageInputRef.current) {
       setTimeout(() => {
@@ -41,7 +46,13 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
   }, [messages]);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest'
+      });
+    }
   };
 
   const fetchMessages = async () => {
@@ -102,6 +113,11 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
       if (onMessageSent) {
         onMessageSent();
       }
+      
+      // Scroll to bottom after adding new message
+      setTimeout(() => {
+        scrollToBottom();
+      }, 50);
       
     } catch (err) {
       console.error('Failed to send message:', err);

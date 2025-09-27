@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Users, MessageCircle, Clock } from 'lucide-react';
 import messageService from '@/api/services/messageService';
 import { getToken } from '@/api/tokenStore';
@@ -6,14 +6,22 @@ import { getUserImageUrl, getUserInitials } from '@/utils/userImageUtils';
 import { useAuth } from '@/auth/AuthContext';
 import './styles/Messages.css';
 
-const ConversationsList = ({ onSelectConversation, selectedConversation, onUnreadCountChange }) => {
+const ConversationsList = forwardRef(({ onSelectConversation, selectedConversation, onUnreadCountChange }, ref) => {
   const { id: currentUserId } = useAuth();
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Expose fetchConversations method to parent
+  useImperativeHandle(ref, () => ({
+    refreshConversations: fetchConversations
+  }));
+
   useEffect(() => {
     fetchConversations();
+    // Set up polling to refresh conversations every 30 seconds
+    const interval = setInterval(fetchConversations, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const fetchConversations = async () => {
@@ -270,6 +278,6 @@ const ConversationsList = ({ onSelectConversation, selectedConversation, onUnrea
       </div>
     </div>
   );
-};
+});
 
 export default ConversationsList;

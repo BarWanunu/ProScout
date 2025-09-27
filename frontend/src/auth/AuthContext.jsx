@@ -5,6 +5,13 @@ const AuthContext = createContext(null);
 
 const FULL_KEY = "hasFullProfile";
 
+// Dashboard routes by role
+const DASHBOARD_BY_ROLE = {
+  player: "/player-dashboard",
+  scout: "/scout-dashboard", 
+  team: "/team-dashboard"
+};
+
 export function AuthProvider({ children }) {
   const [id, setId] = useState(() => localStorage.getItem("id") || null);
   const [token, setToken] = useState(
@@ -52,8 +59,17 @@ export function AuthProvider({ children }) {
   }, [logout]);
 
   const value = useMemo(
-    () => ({ token, role,id,  hasFullProfile, login, logout, markFullProfile }),
-    [token, role,id, hasFullProfile,  login, logout, markFullProfile]
+    () => ({ 
+      token, 
+      role, 
+      id, 
+      hasFullProfile, 
+      login, 
+      logout, 
+      markFullProfile,
+      DASHBOARD_BY_ROLE
+    }),
+    [token, role, id, hasFullProfile, login, logout, markFullProfile]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -1,0 +1,175 @@
+.access-denied-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 0, 0, 0.5); /* Red background for debugging */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999; /* Even higher z-index */
+  backdrop-filter: blur(4px);
+}
+
+.access-denied-message {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border: 5px solid;
+  border-radius: 16px;
+  top: 25rem;
+  padding: 0;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: slideIn 0.3s ease-out;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+  position: relative;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.message-header {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 14px 14px 0 0;
+  position: relative;
+}
+
+.warning-icon {
+  color: white;
+  flex-shrink: 0;
+}
+
+.message-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  flex: 1;
+}
+
+.close-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.message-body {
+  padding: 20px;
+  line-height: 1.6;
+}
+
+.message-body p {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.message-body p:last-child {
+  margin-bottom: 0;
+}
+
+.message-body strong {
+  color: #fbbf24;
+  font-weight: 600;
+}
+
+.countdown-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.9rem !important;
+  font-style: italic;
+  margin-top: 16px !important;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.countdown-text strong {
+  color: #60a5fa !important;
+  font-size: 1.1em;
+}
+
+.message-footer {
+  padding: 16px 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ok-button {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.ok-button:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.ok-button:active {
+  transform: translateY(0);
+}
+
+/* RTL Support */
+[dir="rtl"] .access-denied-message {
+  direction: rtl;
+  text-align: right;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .access-denied-message {
+    margin: 20px;
+    width: calc(100% - 40px);
+  }
+
+  .message-header {
+    padding: 14px 16px;
+  }
+
+  .message-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .message-body {
+    padding: 16px;
+  }
+
+  .message-footer {
+    padding: 12px 16px 16px;
+  }
+}

@@ -1,5 +1,4 @@
-// All routes in a single file
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import LandingPage from '../components/pages/LandingPage'
 import LoginPage from '../components/pages/LoginPage';
 import { InitialSignup, PlayerSignup, ScoutSignup, TeamSignup } from '../components/pages/SignupPages'
@@ -13,9 +12,8 @@ import PlayerProfilePage from '../components/profile/pages/PlayerProfilePage.jsx
 import ScoutProfilePage from '../components/profile/pages/ScoutProfilePage.jsx';
 import TeamProfilePage from '../components/profile/pages/TeamProfilePage.jsx';
 import { RequireAuth, RequireFullProfile, RoleGuard } from "../auth/RouteGuards.jsx";
-import { useAuth } from '@/auth/AuthContext';
+import { useAuth } from "../auth/AuthContext";
 
-// All routes combined in a single Routes component
 export const AllRoutes = () => (
   <Routes>
     {/* Auth routes */}
@@ -32,7 +30,9 @@ export const AllRoutes = () => (
       element={
         <RequireAuth>
           <RequireFullProfile>
-            <PlayerDashboard />
+            <RoleGuard allow={['player']}>
+              <PlayerDashboard />
+            </RoleGuard>
           </RequireFullProfile>
         </RequireAuth>
       }
@@ -42,7 +42,9 @@ export const AllRoutes = () => (
       element={
         <RequireAuth>
           <RequireFullProfile>
-            <ScoutDashboard />
+            <RoleGuard allow={['scout']}>
+              <ScoutDashboard />
+            </RoleGuard>
           </RequireFullProfile>
         </RequireAuth>
       }
@@ -52,13 +54,15 @@ export const AllRoutes = () => (
       element={
         <RequireAuth>
           <RequireFullProfile>
-            <TeamDashboard />
+            <RoleGuard allow={['team']}>
+              <TeamDashboard />
+            </RoleGuard>
           </RequireFullProfile>
         </RequireAuth>
       }
     />
     
-    {/* Trial routes */}
+    {/* Trial routes - accessible to all roles */}
     <Route
       path="/trial/create"
       element={
@@ -70,13 +74,15 @@ export const AllRoutes = () => (
       }
     />
     
-    {/* Recommendation routes */}
+    {/* Recommendation routes - primarily for scouts but teams can also access */}
     <Route
       path="/recommendation/create"
       element={
         <RequireAuth>
           <RequireFullProfile>
-            <CreateRecommendationPage />
+            <RoleGuard allow={['scout', 'team']}>
+              <CreateRecommendationPage />
+            </RoleGuard>
           </RequireFullProfile>
         </RequireAuth>
       }
@@ -107,5 +113,24 @@ export const AllRoutes = () => (
       path="/team/profile/:teamId"
       element={<TeamProfilePage />}
     />
+    
+    {/* Catch-all route - redirect to appropriate dashboard */}
+    <Route
+      path="*"
+      element={
+        <RequireAuth>
+          <RequireFullProfile>
+            <DashboardRedirect />
+          </RequireFullProfile>
+        </RequireAuth>
+      }
+    />
   </Routes>
 );
+
+// Component to redirect users to their appropriate dashboard
+const DashboardRedirect = () => {
+  const { role, DASHBOARD_BY_ROLE } = useAuth();
+  const target = DASHBOARD_BY_ROLE[role] || "/";
+  return <Navigate to={target} replace />;
+};

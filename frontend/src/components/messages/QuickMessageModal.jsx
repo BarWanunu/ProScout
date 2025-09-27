@@ -64,12 +64,14 @@ const QuickMessageModal = ({ show, onHide, recipientId, recipientName, recipient
       show={show} 
       onHide={handleClose}
       onEntered={() => {
-        // Scroll to top when modal opens
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: 'smooth'
-        });
+        // Only scroll to top if we're not on the messages page
+        if (!window.location.pathname.includes('/messages')) {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        }
       }}
     >
       <Modal.Header closeButton>
