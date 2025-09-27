@@ -1,15 +1,28 @@
 const db = require("../startup/db");
 
 exports.createMessage = async (sender_id, receiver_id, message) => {
+  console.log("=== messageModel.createMessage ===");
+  console.log(
+    `Parameters: sender_id=${sender_id}, receiver_id=${receiver_id}, message="${message}"`
+  );
+
   try {
     const query = `
       INSERT INTO messages (sender_id, receiver_id, message, sent_at)
       VALUES ($1, $2, $3, NOW())
       RETURNING id, sender_id, receiver_id, message, read, sent_at
     `;
+
+    console.log("Executing query:", query);
+    console.log("Query parameters:", [sender_id, receiver_id, message]);
+
     const { rows } = await db.query(query, [sender_id, receiver_id, message]);
+
+    console.log("Query result rows:", rows);
+
     return { success: true, data: rows[0] };
   } catch (err) {
+    console.error("Database error in createMessage:", err);
     return {
       success: false,
       error: `Failed to create message: ${err.message}`,

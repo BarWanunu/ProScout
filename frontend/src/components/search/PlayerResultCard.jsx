@@ -18,6 +18,7 @@ const PlayerResultCard = ({ result, index, onRefreshShortlist, teamData, searchA
     closeMessageModal
   } = searchActions || hookActions;
   
+  
   const normalizedResult = normalizeSearchResult(result);
   const actions = getActionsForUser(normalizedResult);
 

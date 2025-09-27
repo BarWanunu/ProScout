@@ -211,22 +211,47 @@ export const useSearchActions = ({
     let recipientType = "";
 
     if (user.type === "player") {
-      recipientId = user.player?.user_id || user.user_id || user.id;
+      // For players, check multiple possible sources for user_id
+      recipientId =
+        user.originalResult?.player?.user_id ||
+        user.originalResult?.user_id ||
+        user.userId ||
+        user.user_id;
+
+      // If we still don't have user_id, we might have player_id, so we'll need to resolve it
+      if (!recipientId) {
+        recipientId = user.id; // This might be player_id, will be resolved in QuickMessageModal
+      }
+
       recipientName = user.player?.name || user.name || "Player";
       recipientType = "Player";
     } else if (user.type === "team") {
-      recipientId = user.team?.user_id || user.user_id || user.id;
+      // For teams, check multiple possible sources for user_id
+      recipientId =
+        user.originalResult?.team?.user_id ||
+        user.originalResult?.user_id ||
+        user.userId ||
+        user.user_id;
+
+      // If we still don't have user_id, we might have team_id, so we'll need to resolve it
+      if (!recipientId) {
+        recipientId = user.id; // This might be team_id, will be resolved in QuickMessageModal
+      }
+
       recipientName =
         user.team?.team_name || user.team_name || user.name || "Team";
       recipientType = "Team";
     } else if (user.type === "scout") {
-      recipientId = user.scout?.user_id || user.user_id || user.id;
+      // For scouts, we already have userId in the normalized result
+      recipientId = user.userId || user.originalResult?.user_id || user.user_id;
       recipientName =
         user.scout?.first_name && user.scout?.last_name
           ? `${user.scout.first_name} ${user.scout.last_name}`
           : user.name || "Scout";
       recipientType = "Scout";
     }
+
+    console.log("Resolved recipientId:", recipientId, "from user:", user);
 
     if (recipientId) {
       setMessageModalState({
@@ -236,6 +261,7 @@ export const useSearchActions = ({
         recipientType,
       });
     } else {
+      console.error("Could not find user_id for:", user);
       alert("Unable to send message - user information not available");
     }
   };

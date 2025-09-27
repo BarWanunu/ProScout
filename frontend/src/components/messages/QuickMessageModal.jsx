@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { Send, X } from 'lucide-react';
 import messageService from '@/api/services/messageService';
+import playerService from '@/api/services/playerService';
+import scoutService from '@/api/services/scoutService';
+import teamService from '@/api/services/teamService';
 import { getToken } from '@/api/tokenStore';
 
 const QuickMessageModal = ({ show, onHide, recipientId, recipientName, recipientType = "User" }) => {
@@ -20,26 +23,69 @@ const QuickMessageModal = ({ show, onHide, recipientId, recipientName, recipient
       setSending(true);
       setError('');
       
-      const token = getToken();
-      const response = await messageService.sendMessage(
-        recipientId,
-        message.trim(),
-        token
-      );
-
-      console.log('Message sent successfully:', response);
-      setSuccess(true);
-      setMessage('');
+      // Prevent ScrollToTop from scrolling when we send a message
+      sessionStorage.setItem('preventMessageScroll', 'true');
       
-      // Close modal after short delay
-      setTimeout(() => {
-        setSuccess(false);
-        onHide();
-      }, 1500);
+      console.log('Sending message to:', { recipientId, recipientType });
+      
+      const token = getToken();
+      
+      // Try to send the message directly first
+      try {
+        const response = await messageService.sendMessage(
+          recipientId, // Try with recipientId as-is first
+          message.trim(),
+          token
+        );
+
+        console.log('Message sent successfully:', response);
+        setSuccess(true);
+        setMessage('');
+        
+        // Close modal after short delay
+        setTimeout(() => {
+          setSuccess(false);
+          onHide();
+        }, 1500);
+
+      } catch (directError) {
+        console.log('Direct send failed, trying to resolve user_id:', directError);
+        
+        // If direct send failed, try to resolve the user_id
+        if (recipientType.toLowerCase() === 'player') {
+          try {
+            const playerData = await playerService.getPlayerFull(recipientId, token);
+            const userId = playerData.player.user_id; // Access user_id from player object
+            console.log('Resolved player user_id:', userId);
+            
+            const response = await messageService.sendMessage(
+              userId,
+              message.trim(),
+              token
+            );
+
+            console.log('Message sent successfully after resolution:', response);
+            setSuccess(true);
+            setMessage('');
+            
+            setTimeout(() => {
+              setSuccess(false);
+              onHide();
+            }, 1500);
+            
+          } catch (resolutionError) {
+            console.error('Resolution error:', resolutionError);
+            throw new Error('Failed to resolve player information or send message');
+          }
+        } else {
+          // For non-player types, just throw the original error
+          throw directError;
+        }
+      }
 
     } catch (err) {
       console.error('Failed to send message:', err);
-      setError('Failed to send message. Please try again.');
+      setError(err.message || 'Failed to send message. Please try again.');
     } finally {
       setSending(false);
     }

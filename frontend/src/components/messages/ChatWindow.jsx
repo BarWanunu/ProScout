@@ -106,6 +106,9 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         read: false,
       };
 
+      // Prevent ScrollToTop from scrolling when we add a message
+      sessionStorage.setItem('preventMessageScroll', 'true');
+      
       setMessages(prev => [...prev, sentMessage]);
       setNewMessage('');
       
