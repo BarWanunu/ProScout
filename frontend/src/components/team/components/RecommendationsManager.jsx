@@ -208,7 +208,6 @@ const RecommendationsManager = ({
               {/* Scout Info Section */}
               <div className="scout-info-section">
                 <div className="scout-info-card">
-                  <span className="scout-label">Recommended by:</span>
                   <button 
                     className="scout-name-button"
                     onClick={() => {
@@ -224,6 +223,7 @@ const RecommendationsManager = ({
                     }}
                     title="Click to view scout profile"
                   >
+                    <span className="scout-label">Recommended by: </span>
                     {scout?.scout.first_name && scout?.scout.last_name ? 
                       `${scout.scout.first_name} ${scout.scout.last_name}` : 
                       scout?.name || `Scout #${recommendation.scout_id}`

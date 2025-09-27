@@ -13,6 +13,31 @@
   margin-bottom: 24px;
   text-align: center;
   box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+  position: relative;
+}
+
+.back-to-dashboard-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.back-to-dashboard-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .messages-header h2 {
@@ -471,6 +496,14 @@
 
   .messages-header {
     padding: 20px 16px;
+    padding-top: 60px; /* Make room for back button */
+  }
+
+  .back-to-dashboard-button {
+    top: 16px;
+    left: 16px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 
   .messages-header h2 {

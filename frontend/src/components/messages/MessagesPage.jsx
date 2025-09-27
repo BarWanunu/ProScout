@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import ConversationsList from './ConversationsList';
 import ChatWindow from './ChatWindow';
 import { Header, Footer } from '@/layout/overallLayout';
+import { useAuth } from '@/auth/AuthContext';
 import './styles/Messages.css';
 
 const MessagesPage = () => {
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [unreadCount, setUnreadCount] = useState(0);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
+  const navigate = useNavigate();
+  const { role } = useAuth();
 
   const handleSelectConversation = (conversation) => {
     console.log('Selected conversation:', conversation);
@@ -26,6 +30,11 @@ const MessagesPage = () => {
     setUnreadCount(count);
   };
 
+  const handleBackToDashboard = () => {
+    const dashboardPath = `/${role}-dashboard`;
+    navigate(dashboardPath);
+  };
+
   return (
     <>
       <Header />
@@ -33,6 +42,14 @@ const MessagesPage = () => {
         <Container fluid>
           {/* Messages Header */}
           <div className="messages-header">
+            <button 
+              className="back-to-dashboard-button"
+              onClick={handleBackToDashboard}
+              title="Back to Dashboard"
+            >
+              <ArrowLeft size={24} />
+              Back to Dashboard
+            </button>
             <h2>
               <MessageSquare size={32} />
               Messages
