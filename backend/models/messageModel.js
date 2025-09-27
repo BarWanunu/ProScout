@@ -88,3 +88,98 @@ exports.getMessageById = async (message_id) => {
     return { success: false, error: `Failed to get message: ${err.message}` };
   }
 };
+
+// Get all messages where user is involved (either sender or receiver)
+exports.getUserMessages = async (user_id) => {
+  try {
+    const query = `
+      SELECT m.*, 
+             sender.username as sender_username, sender.role as sender_role,
+             receiver.username as receiver_username, receiver.role as receiver_role
+      FROM messages m
+      LEFT JOIN users sender ON m.sender_id = sender.id
+      LEFT JOIN users receiver ON m.receiver_id = receiver.id
+      WHERE m.sender_id = $1 OR m.receiver_id = $1
+      ORDER BY m.sent_at DESC
+    `;
+    const { rows } = await db.query(query, [user_id]);
+    return { success: true, data: rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to get user messages: ${err.message}`,
+    };
+  }
+};
+
+// Keep the old function for backward compatibility but simplified
+exports.getUserConversations = async (user_id) => {
+  try {
+    const query = `
+      SELECT DISTINCT
+        CASE 
+          WHEN sender_id = $1 THEN receiver_id 
+          ELSE sender_id 
+        END AS other_user_id,
+        u.username,
+        u.role,
+        p.photo,
+        s.image,
+        t.logo
+      FROM messages m
+      JOIN users u ON u.id = CASE 
+        WHEN m.sender_id = $1 THEN m.receiver_id 
+        ELSE m.sender_id 
+      END
+      LEFT JOIN players p ON u.id = p.user_id AND u.role = 'player'
+      LEFT JOIN scouts s ON u.id = s.user_id AND u.role = 'scout'
+      LEFT JOIN teams t ON u.id = t.user_id AND u.role = 'team'
+      WHERE sender_id = $1 OR receiver_id = $1
+      ORDER BY u.username
+    `;
+    const { rows } = await db.query(query, [user_id]);
+    return { success: true, data: rows };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to get conversations: ${err.message}`,
+    };
+  }
+};
+
+// Get unread message count for a user
+exports.getUnreadMessageCount = async (user_id) => {
+  try {
+    const query = `
+      SELECT COUNT(*) AS unread_count
+      FROM messages
+      WHERE receiver_id = $1 AND read = FALSE
+    `;
+    const { rows } = await db.query(query, [user_id]);
+    return { success: true, data: parseInt(rows[0].unread_count) };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to get unread count: ${err.message}`,
+    };
+  }
+};
+
+// Mark all messages in a conversation as read
+exports.markConversationAsRead = async (user_id, other_user_id) => {
+  try {
+    const query = `
+      UPDATE messages
+      SET read = TRUE
+      WHERE receiver_id = $1 AND sender_id = $2 AND read = FALSE
+      RETURNING id
+    `;
+    const { rows } = await db.query(query, [user_id, other_user_id]);
+    return { success: true, data: { marked_count: rows.length } };
+  } catch (err) {
+    return {
+      success: false,
+      error: `Failed to mark conversation as read: ${err.message}`,
+    };
+  }
+};

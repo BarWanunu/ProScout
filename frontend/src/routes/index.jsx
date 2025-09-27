@@ -8,6 +8,7 @@ import ScoutDashboard from '../components/scout/pages/ScoutDashboard.jsx';
 import TeamDashboard from '../components/team/pages/TeamDashboard.jsx';
 import CreateTrialPage from '../components/trials/CreateTrialPage.jsx';
 import CreateRecommendationPage from '../components/recommendations/CreateRecommendationPage.jsx';
+import { MessagesPage } from '../components/messages';
 import PlayerProfilePage from '../components/profile/pages/PlayerProfilePage.jsx';
 import ScoutProfilePage from '../components/profile/pages/ScoutProfilePage.jsx';
 import TeamProfilePage from '../components/profile/pages/TeamProfilePage.jsx';
@@ -75,6 +76,18 @@ export const AllRoutes = () => (
         <RequireAuth>
           <RequireFullProfile>
             <CreateRecommendationPage />
+          </RequireFullProfile>
+        </RequireAuth>
+      }
+    />
+    
+    {/* Messages routes */}
+    <Route
+      path="/messages"
+      element={
+        <RequireAuth>
+          <RequireFullProfile>
+            <MessagesPage />
           </RequireFullProfile>
         </RequireAuth>
       }
