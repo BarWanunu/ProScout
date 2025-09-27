@@ -10,6 +10,7 @@ import { useAuth } from '@/auth/AuthContext';
 import { getToken } from '@/api/tokenStore';
 import useProfileNavigation from '@/hooks/useProfileNavigation';
 import defaultTeamImg from '@/assets/teamPhoto.jpg';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import '../../team/styles/ShortlistTab.css';
 
 const PlayerRecommendationsTab = ({ player }) => {
@@ -21,6 +22,12 @@ const PlayerRecommendationsTab = ({ player }) => {
   const [teamDetails, setTeamDetails] = useState({});
   const [scoutDetails, setScoutDetails] = useState({});
   const [fetchingDetails, setFetchingDetails] = useState({});
+  const [messageModal, setMessageModal] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: '',
+    recipientType: ''
+  });
 
   // Profile navigation
   const { 
@@ -145,10 +152,34 @@ const PlayerRecommendationsTab = ({ player }) => {
     navigate(`/team/profile/${teamId}`);
   };
 
-  // Send message to team (placeholder)
+  // Send message to team - פתיחת Modal
   const handleSendMessage = (teamId) => {
-    console.log(`Sending message to team with ID: ${teamId}`);
-    alert(`Sending message to team ${teamId}`);
+    console.log(`Opening message modal for team with ID: ${teamId}`);
+    
+    // Get team details
+    const team = teamDetails[teamId];
+    const teamName = team?.team_name || team?.name || 'Team';
+    const userId = team?.user_id || team?.id;
+    
+    if (userId) {
+      setMessageModal({
+        show: true,
+        recipientId: userId,
+        recipientName: teamName,
+        recipientType: 'Team'
+      });
+    } else {
+      alert('Unable to send message - team information not available');
+    }
+  };
+
+  const handleCloseMessageModal = () => {
+    setMessageModal({
+      show: false,
+      recipientId: null,
+      recipientName: '',
+      recipientType: ''
+    });
   };
 
   // Get team detail from fetched data
@@ -356,6 +387,16 @@ const PlayerRecommendationsTab = ({ player }) => {
               </Button>
               
               <Button 
+                variant="success" 
+                size="sm" 
+                className="action-btn message-btn"
+                onClick={() => handleSendMessage(recommendation.teams_id)}
+              >
+                <MessageCircle size={16} className="action-icon" />
+                Message
+              </Button>
+              
+              <Button 
                 variant="info" 
                 size="sm" 
                 className="action-btn profile-btn"
@@ -368,6 +409,15 @@ const PlayerRecommendationsTab = ({ player }) => {
           </div>
         ))}
       </div>
+      
+      {/* Quick Message Modal */}
+      <QuickMessageModal
+        show={messageModal.show}
+        onHide={handleCloseMessageModal}
+        recipientId={messageModal.recipientId}
+        recipientName={messageModal.recipientName}
+        recipientType={messageModal.recipientType}
+      />
     </div>
       )}
     </>

@@ -12,7 +12,8 @@ import { MessagesPage } from '../components/messages';
 import PlayerProfilePage from '../components/profile/pages/PlayerProfilePage.jsx';
 import ScoutProfilePage from '../components/profile/pages/ScoutProfilePage.jsx';
 import TeamProfilePage from '../components/profile/pages/TeamProfilePage.jsx';
-import { RequireAuth, RequireFullProfile } from "../auth/RouteGuards.jsx";
+import { RequireAuth, RequireFullProfile, RoleGuard } from "../auth/RouteGuards.jsx";
+import { useAuth } from '@/auth/AuthContext';
 
 // All routes combined in a single Routes component
 export const AllRoutes = () => (

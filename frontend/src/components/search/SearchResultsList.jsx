@@ -6,6 +6,7 @@ import { getUserTypeFromResult } from '@/utils/searchResultUtils';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import PlayerSelectModal from '@/components/trials/PlayerSelectModal';
 import TeamSelectModal from '@/components/trials/TeamSelectModal';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import './styles/SearchResultsList.css';
 import './styles/SearchFixGlobal.css';
 import './styles/SearchResultWrapper.css';
@@ -32,7 +33,9 @@ const SearchResultsList = ({
     currentUserId,
     getActionsForUser,
     userRole,
-    teamId
+    teamId,
+    messageModal,
+    closeMessageModal
   } = searchActionsHook;
   
   if (loading) {
@@ -104,7 +107,9 @@ const SearchResultsList = ({
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -122,7 +127,9 @@ const SearchResultsList = ({
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -140,7 +147,9 @@ const SearchResultsList = ({
                     getActionsForUser,
                     userRole,
                     currentUserId,
-                    teamId
+                    teamId,
+                    messageModal,
+                    closeMessageModal
                   }}
                 />
               </div>
@@ -183,6 +192,17 @@ const SearchResultsList = ({
             ? `Select a Team for ${teamSelectModal.playerName || 'Player'}'s Trial`
             : `Select a Team to Recommend ${teamSelectModal.playerName || 'Player'} To`
           }
+        />
+      )}
+      
+      {/* Global Quick Message Modal */}
+      {messageModal && (
+        <QuickMessageModal
+          show={messageModal.show}
+          onHide={closeMessageModal}
+          recipientId={messageModal.recipientId}
+          recipientName={messageModal.recipientName}
+          recipientType={messageModal.recipientType}
         />
       )}
     </div>

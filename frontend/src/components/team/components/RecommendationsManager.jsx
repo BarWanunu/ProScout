@@ -7,6 +7,7 @@ import playerService from '@/api/services/playerService';
 import scoutService from '@/api/services/scoutService';
 import { getToken } from '@/api/tokenStore';
 import defaultPlayerImg from '@/assets/default-player.png';
+import QuickMessageModal from '@/components/messages/QuickMessageModal';
 import './styles/RecommendationsManager.css';
 
 const RecommendationsManager = ({ 
@@ -18,6 +19,12 @@ const RecommendationsManager = ({
   const [loading, setLoading] = useState(false);
   const [playerDetails, setPlayerDetails] = useState({});
   const [scoutDetails, setScoutDetails] = useState({});
+  const [messageModal, setMessageModal] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: '',
+    recipientType: ''
+  });
   const navigate = useNavigate();
 
   console.log("RecommendationsManager props:", { 
@@ -132,6 +139,28 @@ const RecommendationsManager = ({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSendMessage = (player) => {
+    if (player?.user_id && player?.name) {
+      setMessageModal({
+        show: true,
+        recipientId: player.user_id,
+        recipientName: player.name,
+        recipientType: 'Player'
+      });
+    } else {
+      alert('Unable to send message - player information not available');
+    }
+  };
+
+  const handleCloseModal = () => {
+    setMessageModal({
+      show: false,
+      recipientId: null,
+      recipientName: '',
+      recipientType: ''
+    });
   };
 
   const getPlayerImage = (player) => {
@@ -302,6 +331,16 @@ const RecommendationsManager = ({
                     </Button>
                     
                     <Button 
+                      variant="success" 
+                      size="sm" 
+                      className="action-btn message-btn"
+                      onClick={() => handleSendMessage(player)}
+                    >
+                      <MessageCircle size={16} className="action-icon" />
+                      Message
+                    </Button>
+                    
+                    <Button 
                       variant="outline-danger"
                       size="sm"
                       className="action-btn remove-btn" 
@@ -318,6 +357,15 @@ const RecommendationsManager = ({
           );
         })}
       </div>
+      
+      {/* Quick Message Modal */}
+      <QuickMessageModal
+        show={messageModal.show}
+        onHide={handleCloseModal}
+        recipientId={messageModal.recipientId}
+        recipientName={messageModal.recipientName}
+        recipientType={messageModal.recipientType}
+      />
     </div>
   );
 };

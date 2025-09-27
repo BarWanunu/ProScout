@@ -29,6 +29,14 @@ export const useSearchActions = ({
     isForTrial: false,
   });
 
+  // State for quick message modal
+  const [messageModalState, setMessageModalState] = useState({
+    show: false,
+    recipientId: null,
+    recipientName: "",
+    recipientType: "",
+  });
+
   // פעולות כלליות שזמינות לכל המשתמשים
   const getCommonActions = (targetUser) => [
     {
@@ -195,9 +203,41 @@ export const useSearchActions = ({
   };
 
   const handleSendMessage = (user) => {
-    console.log("Sending message to:", user);
-    // TODO: פתח חלון שליחת הודעה או נווט לדף ההודעות
-    alert(`Opening message dialog for: ${user.name}`);
+    console.log("Opening message modal for:", user);
+
+    // Extract user info based on user type
+    let recipientId = null;
+    let recipientName = "";
+    let recipientType = "";
+
+    if (user.type === "player") {
+      recipientId = user.player?.user_id || user.user_id || user.id;
+      recipientName = user.player?.name || user.name || "Player";
+      recipientType = "Player";
+    } else if (user.type === "team") {
+      recipientId = user.team?.user_id || user.user_id || user.id;
+      recipientName =
+        user.team?.team_name || user.team_name || user.name || "Team";
+      recipientType = "Team";
+    } else if (user.type === "scout") {
+      recipientId = user.scout?.user_id || user.user_id || user.id;
+      recipientName =
+        user.scout?.first_name && user.scout?.last_name
+          ? `${user.scout.first_name} ${user.scout.last_name}`
+          : user.name || "Scout";
+      recipientType = "Scout";
+    }
+
+    if (recipientId) {
+      setMessageModalState({
+        show: true,
+        recipientId,
+        recipientName,
+        recipientType,
+      });
+    } else {
+      alert("Unable to send message - user information not available");
+    }
   };
 
   const handleRecommendPlayer = (team) => {
@@ -491,6 +531,16 @@ export const useSearchActions = ({
     });
   };
 
+  // Handler for closing message modal
+  const closeMessageModal = () => {
+    setMessageModalState({
+      show: false,
+      recipientId: null,
+      recipientName: "",
+      recipientType: "",
+    });
+  };
+
   return {
     getActionsForUser,
     currentUserId,
@@ -504,5 +554,8 @@ export const useSearchActions = ({
     teamSelectModal: teamSelectModalState,
     closeTeamSelectModal,
     handleTeamSelected,
+    // Message modal state and handlers
+    messageModal: messageModalState,
+    closeMessageModal,
   };
 };
