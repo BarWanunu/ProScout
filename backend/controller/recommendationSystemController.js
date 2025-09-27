@@ -119,9 +119,111 @@ exports.getSimilarPlayers = async (req, res) => {
     // 3. Sort by similarity and take the top 10
     const top10 = similarPlayers.sort((a, b) => b.similarity - a.similarity).slice(0, 10);
 
-    // 4. Convert numeric position codes back to readable labels for UI
-  const selectedPlayerReadable = injectRadarScaledMetrics(withReadablePosition(targetPlayer));
-  const recommendationsReadable = top10.map(p => injectRadarScaledMetrics(withReadablePosition(p)));
+    // 4. Convert numeric position codes back to readable labels for UI & inject radar metrics
+    const selectedPlayerReadable = injectRadarScaledMetrics(withReadablePosition(targetPlayer));
+    const recommendationsReadable = top10.map(p => injectRadarScaledMetrics(withReadablePosition(p)));
+
+    // 5. Robust enrichment from players + latest player_stats using fuzzy name matching
+    try {
+      // Pull ALL players with their latest stats once (allows fuzzy matching like Mbappé vs Mbappe Lottin)
+      const allPlayersWithStatsRes = await db.query(`
+        SELECT p.id, p.name, p.photo, p.club, p.nationality, p.position, p.number, p.age,
+               ps_latest.season as latest_season,
+               ps_latest.goals, ps_latest.assists, ps_latest.yellow_cards, ps_latest.red_cards,
+               ps_latest.passes_completed, ps_latest.key_passes, ps_latest.shots_on_target,
+               ps_latest.dribbles_attempted, ps_latest.dribbles_success, ps_latest.dribble_success_rate,
+               ps_latest.tackles, ps_latest.interceptions, ps_latest.duels, ps_latest.duels_won,
+               ps_latest.rating
+        FROM players p
+        LEFT JOIN LATERAL (
+          SELECT * FROM player_stats s WHERE s.player_id = p.id ORDER BY season DESC LIMIT 1
+        ) ps_latest ON TRUE
+      `);
+      const allPlayersData = allPlayersWithStatsRes.rows;
+
+      const normalizeName = (str='') => str
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu,'')
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g,'')
+        .replace(/\s+/g,' ') // collapse spaces
+        .trim();
+
+      const tokenize = (str='') => normalizeName(str).split(' ').filter(Boolean);
+
+      const nameScore = (target, candidate) => {
+        if (!target || !candidate) return 0;
+        const tTokens = tokenize(target);
+        const cTokens = tokenize(candidate);
+        if (!tTokens.length || !cTokens.length) return 0;
+        const setT = new Set(tTokens);
+        let intersect = 0; cTokens.forEach(tok => { if (setT.has(tok)) intersect++; });
+        const jaccard = intersect / new Set([...tTokens, ...cTokens]).size; // 0..1
+        // Prefix match weight
+        let prefix = 0;
+        if (cTokens[0] && tTokens[0]) {
+          const minLen = Math.min(cTokens[0].length, tTokens[0].length);
+            let lcp = 0; while (lcp < minLen && cTokens[0][lcp] === tTokens[0][lcp]) lcp++;
+          prefix = lcp / Math.max(cTokens[0].length, tTokens[0].length);
+        }
+        // Last token presence weight (help for compound names like Mbappe Lottin)
+        let lastTokenBonus = 0;
+        const lastT = tTokens[tTokens.length - 1];
+        if (lastT && cTokens.some(ct => ct === lastT)) lastTokenBonus = 0.2;
+        return jaccard * 0.55 + prefix * 0.25 + lastTokenBonus; // weighted sum (<=1)
+      };
+
+      function normalizeDisplayPosition(pos) {
+        if (!pos) return undefined;
+        const p = pos.toLowerCase();
+        if (p.includes('goal')) return 'Goalkeeper';
+        if (p.includes('def')) return 'Defender';
+        if (p.includes('mid')) return 'Midfielder';
+        if (p.includes('forward') || p.includes('att') || p.includes('striker') || p.includes('fw')) return 'Forward';
+        return pos; // fallback raw
+      }
+
+      const attach = (row) => {
+        if (!row || !row.player) return;
+        let best = null; let bestScore = 0;
+        for (const cand of allPlayersData) {
+          const sc = nameScore(row.player, cand.name);
+          if (sc > bestScore) { bestScore = sc; best = cand; }
+        }
+        // Threshold to avoid random mismatches
+        if (best && bestScore >= 0.25) {
+          row.photo = best.photo || row.photo;
+          row.club = best.club || row.squad || row.club;
+            row.nationality = best.nationality || row.nation || row.nationality;
+            row.position = normalizeDisplayPosition(best.position) || row.position || row.pos;
+            row.number = best.number ?? row.number;
+            if (best.age) row.age = best.age;
+            row.statsLatest = {
+              season: best.latest_season,
+              goals: best.goals,
+              assists: best.assists,
+              yellow_cards: best.yellow_cards,
+              red_cards: best.red_cards,
+              passes_completed: best.passes_completed,
+              key_passes: best.key_passes,
+              shots_on_target: best.shots_on_target,
+              dribbles_attempted: best.dribbles_attempted,
+              dribbles_success: best.dribbles_success,
+              dribble_success_rate: best.dribble_success_rate,
+              tackles: best.tackles,
+              interceptions: best.interceptions,
+              duels: best.duels,
+              duels_won: best.duels_won,
+              rating: best.rating,
+            };
+        }
+      };
+
+      attach(selectedPlayerReadable);
+      recommendationsReadable.forEach(attach);
+    } catch (enrichErr) {
+      console.warn('Fuzzy enrichment failed:', enrichErr.message);
+    }
 
     res.json({
       selectedPlayer: selectedPlayerReadable,
