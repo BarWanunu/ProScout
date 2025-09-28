@@ -25,9 +25,7 @@ export default function TeamProfile({ teamId, onBack }) {
   const fetchTeamProfile = async () => {
     try {
       setLoading(true);
-      console.log('Fetching team profile for ID:', teamId);
       const response = await teamService.getTeamByTeamId(teamId);
-      console.log('Team profile response:', response);
       // Accept responses that return { team: {...} } even without a success flag
       if (response && response.team) {
         setTeam(response.team);

@@ -64,8 +64,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
       
       const token = getToken();
       const response = await messageService.getConversation(selectedConversation.other_user_id, token);
-      
-      console.log('Messages response:', response);
       setMessages(response.messages || []);
     } catch (err) {
       console.error('Failed to fetch messages:', err);
@@ -93,9 +91,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         newMessage.trim(),
         token
       );
-
-      console.log('Send message response:', response);
-      
       // Add the new message to local state
       const sentMessage = {
         id: response.data?.id,
@@ -122,8 +117,8 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         scrollToBottom();
       }, 50);
       
-    } catch (err) {
-      console.error('Failed to send message:', err);
+    } catch (err) {   
+        console.error('Failed to send message:', err);
       setError('Failed to send message. Please try again.');
     } finally {
       setSending(false);

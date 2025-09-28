@@ -28,9 +28,6 @@ const Messages = () => {
       setLoading(true);
       const token = getToken();
       const response = await messageService.getConversations(token);
-      
-      console.log('Conversations response:', response);
-      
       if (response.conversations) {
         setConversations(response.conversations);
       } else {
@@ -58,7 +55,6 @@ const Messages = () => {
   };
 
   const handleConversationSelect = (conversation) => {
-    console.log('Selected conversation:', conversation);
     setSelectedConversation(conversation);
 
     // Mark conversation as read if it has unread messages

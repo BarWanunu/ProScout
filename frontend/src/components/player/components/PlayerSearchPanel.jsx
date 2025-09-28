@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 // This is a redirect component to point to the new search location
 export default function PlayerSearchPanelLegacy() {
   useEffect(() => {
-    console.warn("PlayerSearchPanel has been moved to @/components/search/PlayerSearchPanel");
   }, []);
   
   return (

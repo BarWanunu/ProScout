@@ -31,9 +31,6 @@ const ConversationsList = forwardRef(({ onSelectConversation, selectedConversati
       
       const token = getToken();
       const response = await messageService.getConversations(token);
-      
-      console.log('Conversations response:', response);
-      
       // Process conversations with additional data
       const conversationsWithDetails = await Promise.all(
         (response.conversations || []).map(async (conv) => {
@@ -49,12 +46,8 @@ const ConversationsList = forwardRef(({ onSelectConversation, selectedConversati
             const unreadCount = messages.filter(msg => {
               const isForCurrentUser = parseInt(msg.receiver_id) === parseInt(currentUserId);
               const isUnread = !msg.read;
-              console.log(`Message ${msg.id}: receiver_id=${msg.receiver_id}, currentUserId=${currentUserId}, isForCurrentUser=${isForCurrentUser}, read=${msg.read}, isUnread=${isUnread}`);
               return isForCurrentUser && isUnread;
             }).length;
-            
-            console.log(`User ${conv.other_user_id}: total messages=${messages.length}, unread count=${unreadCount}`);
-            
             return {
               ...conv,
               last_message: lastMessage?.message || null,
@@ -136,11 +129,8 @@ const ConversationsList = forwardRef(({ onSelectConversation, selectedConversati
 
   const markConversationAsRead = async (otherUserId) => {
     try {
-      console.log(`Marking conversation with user ${otherUserId} as read`);
       const token = getToken();
       const result = await messageService.markConversationAsRead(otherUserId, token);
-      console.log('Mark as read result:', result);
-      
       // Update local state immediately
       setConversations(prev => {
         const updated = prev.map(conv => 
@@ -151,7 +141,6 @@ const ConversationsList = forwardRef(({ onSelectConversation, selectedConversati
         
         // Update total unread count
         const totalUnread = updated.reduce((sum, conv) => sum + conv.unread_count, 0);
-        console.log(`Updated total unread count: ${totalUnread}`);
         if (onUnreadCountChange) {
           onUnreadCountChange(totalUnread);
         }

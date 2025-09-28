@@ -72,9 +72,6 @@ const PlayerRecommendationsTab = ({ player }) => {
       
       // Get recommendations for the current player using player_id
       const response = await recommendationService.getRecommendationsByPlayer(player.id, token);      
-      
-      console.log('Player recommendations loaded:', response);
-      
       setRecommendations(response.recommendations || []);
     } catch (error) {
       console.error('Error loading player recommendations:', error);
@@ -106,7 +103,6 @@ const PlayerRecommendationsTab = ({ player }) => {
           if (recommendation.scout_id && !scoutDetails[recommendation.scout_id]) {
             setFetchingDetails(prev => ({ ...prev, [`scout_${recommendation.scout_id}`]: true }));
             const scoutData = await scoutService.getScoutByScoutId(recommendation.scout_id);
-            console.log('Scout data loaded:', scoutData);
             setScoutDetails(prev => ({ 
               ...prev, 
               [recommendation.scout_id]: scoutData.scout || scoutData
@@ -148,14 +144,11 @@ const PlayerRecommendationsTab = ({ player }) => {
 
   // View team profile
   const handleViewProfile = (teamId) => {
-    console.log(`Navigating to team profile: ${teamId}`);
     navigate(`/team/profile/${teamId}`);
   };
 
   // Send message to team - פתיחת Modal
   const handleSendMessage = (teamId) => {
-    console.log(`Opening message modal for team with ID: ${teamId}`);
-    
     // Get team details
     const team = teamDetails[teamId];
     const teamName = team?.team_name || team?.name || 'Team';

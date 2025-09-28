@@ -25,9 +25,7 @@ export default function ScoutProfile({ scoutId, onBack }) {
   const fetchScoutProfile = async () => {
     try {
       setLoading(true);
-      console.log('Fetching scout profile for ID:', scoutId);
       const response = await scoutService.getScoutByScoutId(scoutId);
-      console.log('Scout profile response:', response);
       // Accept responses that return { scout: {...} } even without a success flag
       if (response && response.scout) {
         setScout(response.scout);
@@ -38,8 +36,8 @@ export default function ScoutProfile({ scoutId, onBack }) {
         setError('Scout with this ID does not exist');
       }
     } catch (err) {
-      console.error('Error loading scout profile:', err);
-      if (err.response && err.response.status === 404) {
+        console.error('Error loading scout profile:', err);
+        if (err.response && err.response.status === 404) {
         setError('Scout with this ID does not exist');
       } else {
         setError('Error loading scout profile');

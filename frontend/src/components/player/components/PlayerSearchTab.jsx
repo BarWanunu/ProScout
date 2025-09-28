@@ -68,9 +68,8 @@ export default function PlayerSearchTab({ player }) {
       }
 
       setSearchResults(results);
-      console.log(`✅ ${searchType} search results:`, results);
     } catch (err) {
-      console.error(`❌ Error searching ${searchType}s:`, err);
+        console.error(`Error searching ${searchType}s:`, err);
       setSearchResults([]);
     } finally {
       setLoading(false);
@@ -136,7 +135,6 @@ export default function PlayerSearchTab({ player }) {
         >
           {loading ? "Searching..." : "Search"}
         </Button>
-
 
         {/* Search Results */}
         <SearchResultsList 

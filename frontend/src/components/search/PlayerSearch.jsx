@@ -34,7 +34,7 @@ export default function PlayerSearch() {
         setResults(res.data || res);
       }
     } catch (err) {
-      console.error("❌ Search failed:", err);
+      console.error("Search failed:", err);
       setResults([]);
     } finally {
       setLoading(false);

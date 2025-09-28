@@ -23,7 +23,6 @@ export default function ScoutDashboard() {
     if (id && token) {
       fetchScout();
     } else {
-      console.warn("sNo userId or token found in AuthContext");
     }
   }, [id, token]);
 

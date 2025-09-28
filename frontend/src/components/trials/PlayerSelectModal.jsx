@@ -105,7 +105,7 @@ const PlayerSelectModal = ({
         setError('No players found matching your search');
       }
     } catch (err) {
-      console.error('❌ Player search failed:', err);
+      console.error('Player search failed:', err);
       setError(
         err.response?.data?.message || 
         'Failed to search players. Please try again.'

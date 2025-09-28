@@ -21,9 +21,6 @@ const PlayerTrialsTab = ({ player }) => {
       
       // Get trials for the current player using user_id
       const response = await trialService.getTrialsByPlayer(currentUserId, token);
-      
-      console.log('Player trials loaded:', response);
-      
       if (response.trials) {
         setTrials(response.trials);
       } else {

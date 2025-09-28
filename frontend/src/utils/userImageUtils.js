@@ -8,8 +8,6 @@ export const getUserImageUrl = (user) => {
 
   let imageField = null;
   let defaultImage = null;
-  console.log(user);
-
   switch (user.role) {
     case "player":
       imageField = user.photo;

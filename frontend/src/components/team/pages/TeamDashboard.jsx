@@ -28,15 +28,12 @@ export default function TeamDashboard() {
 
         const teamData = await teamService.getTeamById(userId, token);
         setTeam(teamData.team);
-        console.log(teamData);
-        
-        
         // Set document title with team name when available
         if (teamData.team?.team_name) {
           document.title = `${teamData.team.team_name} - ProScout`;
         }
       } catch (err) {
-        console.error("❌ Error fetching team:", err);
+        console.error("Error fetching team:", err);
       }
     };
 
@@ -56,7 +53,7 @@ export default function TeamDashboard() {
       const trialsData = await trialService.getTrialsByTeam(team.id, token);      
       setTrials(trialsData.trials);      
     } catch (err) {
-      console.error("❌ Error fetching trials:", err);
+      console.error("Error fetching trials:", err);
     }
   };
 
@@ -74,7 +71,7 @@ export default function TeamDashboard() {
       const players = await shortlistService.getShortlist(token);
       setShortlist(players);
     } catch (err) {
-      console.error("❌ Error fetching shortlist:", err);
+      console.error("Error fetching shortlist:", err);
     }
   };
 

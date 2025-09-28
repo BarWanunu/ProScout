@@ -87,7 +87,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
       setShortlist(prevShortlist => prevShortlist.filter(player => player.player_id !== playerId));
       // Refresh the parent shortlist data
       if (onRefreshShortlist) {
-        console.log('Refreshing shortlist after removing player...');
         await onRefreshShortlist();
       }
     } catch (error) {
@@ -121,8 +120,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
 
   // שליחת הודעה לשחקן - פתיחת Modal
   const handleSendMessage = (playerId) => {
-    console.log(`Opening message modal for player with ID: ${playerId}`);
-    
     // Get player details
     const playerDetail = playerDetails[playerId];
     const playerName = playerDetail?.player?.name || getPlayerDetail(playerId, 'name') || 'Player';
@@ -151,12 +148,9 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
 
   // צפייה בפרופיל השחקן
   const handleViewProfile = (playerId) => {
-    console.log(`Viewing profile of player with ID: ${playerId}`);
-    
     // Try to get user_id from player details
     const playerDetail = playerDetails[playerId];
     if (playerDetail?.player?.id) {
-      console.log(`Navigating to player profile with user_id: ${playerDetail.player.id}`);
       navigate(`/player/profile/${playerDetail.player.id}`);
     } 
   };

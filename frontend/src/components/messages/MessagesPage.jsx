@@ -17,7 +17,6 @@ const MessagesPage = () => {
   const { role } = useAuth();
 
   const handleSelectConversation = (conversation) => {
-    console.log('Selected conversation:', conversation);
     setSelectedConversation(conversation);
   };
 
@@ -26,7 +25,6 @@ const MessagesPage = () => {
     if (conversationsRef.current && conversationsRef.current.refreshConversations) {
       conversationsRef.current.refreshConversations();
     }
-    console.log('Message sent, refreshing conversations');
   };
 
   const handleUnreadCountChange = (count) => {

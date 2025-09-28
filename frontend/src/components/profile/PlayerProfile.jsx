@@ -12,9 +12,6 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
   const [player, setPlayer] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  console.log('PlayerProfile props:', { userId, onBack });
-
   useEffect(() => {
     const fetchPlayerProfile = async () => {
       try {
@@ -22,11 +19,7 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
         setError(null);
         
         const token = getToken();
-        console.log('Fetching player profile for ID:', userId);
-        
         const result = await playerService.getPlayerFull(userId, token);
-        console.log('Player profile response:', result);
-        
         const playerData = result.player;
         if (!playerData) {
           throw new Error('Player data not found');

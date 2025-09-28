@@ -28,7 +28,6 @@ async function getShortlist(token) {
   };
 
   const response = await http.get(endpoint, config);
-  console.log(response.data);
   return response.data.players;
 }
 

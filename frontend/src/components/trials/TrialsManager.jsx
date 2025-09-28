@@ -134,8 +134,7 @@ const TrialsManager = ({
     // Check if data is loading
     if (fetchingDetails[senderKey]) return 'Loading...';
     if (!senderData) return 'Loading...';
-    
-    
+
     switch (trial.sender_role) {
       case 'scout':        
         return senderData.scout.first_name && senderData.scout.last_name 
@@ -252,7 +251,6 @@ const TrialsManager = ({
     if (player && player.id) {
       navigate(`/player/profile/${player.id}`);
     } else {
-      console.warn('Player user_id not found for player:', playerId);
     }
   };
 
