@@ -52,8 +52,6 @@ ProScout/
 │   ├── startup/                   # DB init + data loading scripts
 │   ├── utils/                     # Token, validation, image & role utilities
 │   └── data/                      # CSV source assets
-├── database/ (optional future)    # Migration or schema assets (planned)
-└── uploads/                       # User / media assets (if enabled)
 ```
 
 Data Flow (Similarity):
