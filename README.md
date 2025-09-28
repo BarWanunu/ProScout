@@ -105,9 +105,6 @@ Data Flow (Similarity):
 | Filtering Layer     | Age brackets (Young, Promising, Experienced, Veteran) + preferred league prioritization |
 | Candidate Selection | Global re-ranking (not limited to initial UI page) → top 3 kept for AI reasoning        |
 
-**Why Cosine?**  
-Robust to magnitude variance after scaling; stable for multi-dimensional comparative ranking.
-
 ---
 
 ## 6. AI Scouting Report
