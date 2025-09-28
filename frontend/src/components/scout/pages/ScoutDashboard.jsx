@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../../layout/overallLayout/Header";
 import Footer from "../../../layout/overallLayout/Footer";
 import WelcomeSection from "@/components/common/WelcomeSection";

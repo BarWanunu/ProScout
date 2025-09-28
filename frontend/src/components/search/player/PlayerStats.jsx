@@ -1,5 +1,3 @@
-import React from 'react';
-
 const PlayerStats = ({ result }) => {
   if (result.searchType === 'statistics' && result.matchedCriteria) {
     return (

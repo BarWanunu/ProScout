@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Card, Button, Spinner, Alert, Form } from 'react-bootstrap';
 import { Trash2, Edit2, Users } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';
-import scoutService from '@/api/services/scoutService';
 import teamService from '@/api/services/teamService';
 import playerService from '@/api/services/playerService';
 import { useAuth } from '@/auth/AuthContext';
@@ -12,7 +11,6 @@ import defaultTeamImg from '@/assets/teamPhoto.jpg';
 import '../styles/ScoutRecommendationsTab.css';
 
 const ScoutRecommendationsTab = () => {
-  const { id: currentUserId } = useAuth();
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

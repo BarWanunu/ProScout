@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { SearchResultsList } from "@/components/search";
 import searchService from "@/api/services/searchService";

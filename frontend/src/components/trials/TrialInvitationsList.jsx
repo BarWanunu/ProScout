@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Calendar, CheckSquare, XSquare, User, Building, MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthContext';
@@ -230,16 +230,6 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
       });
     } catch (e) {
       return dateString || 'Date not specified';
-    }
-  };
-
-  // Get badge color based on trial status
-  const getStatusBadgeVariant = (status) => {
-    switch (status) {
-      case 'accepted': return 'success';
-      case 'declined': return 'danger';
-      case 'pending': return 'warning';
-      default: return 'secondary';
     }
   };
 

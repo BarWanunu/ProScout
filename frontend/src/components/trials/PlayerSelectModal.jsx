@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, User } from 'lucide-react';
 import searchService from '@/api/services/searchService';
@@ -14,7 +14,7 @@ const PlayerSelectModal = ({
   onHide,
   onPlayerSelected,
   teamName,
-  isForTrial = false, // New prop to indicate if modal is for trial or recommendation
+  isForTrial = false, 
 }) => {
   const [searchInput, setSearchInput] = useState('');
   const [results, setResults] = useState([]);

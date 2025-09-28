@@ -9,17 +9,14 @@ const TrialInvitationModal = ({
   show, 
   onHide, 
   // Target information
-  targetType, // 'player' or 'team'
+  targetType, 
   targetId,
   targetName,
-  // Sender information  
-  senderRole, // 'scout', 'team', 'player'
+  senderRole, 
   senderId,
-  // Additional context
-  playerName, // For scout->team scenario (player being recommended)
-  playerId,   // For scout->team scenario (player being recommended)
+  playerName, 
+  playerId,   
   onTrialCreated,
-  // Backward compatibility
   ...legacyProps
 }) => {
   const [formData, setFormData] = useState({

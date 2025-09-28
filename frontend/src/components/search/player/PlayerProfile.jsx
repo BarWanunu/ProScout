@@ -1,5 +1,3 @@
-import React from 'react';
-
 const PlayerProfile = ({ result }) => {
   if (!result.stats || result.stats.length === 0) {
     return <p>No statistics available</p>;

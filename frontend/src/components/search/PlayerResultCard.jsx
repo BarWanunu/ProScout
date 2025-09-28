@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSearchActions } from '@/hooks/search/useSearchActions';
 import { normalizeSearchResult } from '@/utils/searchResultUtils';
 import { PlayerInfo, PlayerStats, PlayerProfile } from './player';

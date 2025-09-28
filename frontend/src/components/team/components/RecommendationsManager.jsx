@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Button, Spinner } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Star, MessageCircle, User, Trash2 } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationService';

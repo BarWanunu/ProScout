@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Form, Row, Col } from 'react-bootstrap';
 import "@/components/search/styles/SearchBox.css";
 
 const DirectScoutSearch = ({ filters, setFilters, onSearch }) => {

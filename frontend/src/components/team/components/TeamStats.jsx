@@ -1,5 +1,4 @@
-import React from 'react';
-import { Card, Row, Col, Badge } from 'react-bootstrap';
+import { Card, Row, Col } from 'react-bootstrap';
 import { Trophy, Users, MapPin, Flag, Award } from 'lucide-react';
 import '../styles/TeamStats.css';
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ScoutSearch } from "@/components/search";
 import ScoutTrials from "./ScoutTrials";
 import ScoutRecommendationsTab from "./ScoutRecommendationsTab";
