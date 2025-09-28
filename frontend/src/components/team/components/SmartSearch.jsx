@@ -23,6 +23,7 @@ const ScouterAI = ({ data }) => {
     skills: [],
   });
   const [report, setReport] = useState('');
+  const [structured, setStructured] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGenerateReport = async () => {
@@ -39,9 +40,11 @@ const ScouterAI = ({ data }) => {
       };
       const result = await recommendationService.generateScoutReport(payload);
       setReport(result.report);
+      setStructured(result.structured || null);
     } catch (error) {
       console.error("Failed to generate AI report:", error);
       setReport("Error: Could not generate the report. Please try again.");
+      setStructured(null);
     } finally {
       setIsLoading(false);
     }
@@ -85,13 +88,45 @@ const ScouterAI = ({ data }) => {
         <div className="report-container">
           <h4>AI Scout Report</h4>
           {isLoading && <div className="loading-spinner">Generating report...</div>}
-          {report ? (
-            <div className="report-content">
-              <ReactMarkdown>{report}</ReactMarkdown>
+          {structured ? (
+            <div className="report-content fade-in">
+              <h5 style={{marginTop:0,fontSize:'0.9rem',letterSpacing:'.5px',textTransform:'uppercase',color:'#475569'}}>Suggested Players</h5>
+              <div style={{display:'grid',gap:'0.9rem'}}>
+                {structured.players.map(p => {
+                  const isRec = structured.recommended === p.name;
+                  return (
+                    <div key={p.name} style={{
+                      border:'1px solid '+(isRec?'#2563eb':'#e2e8f0'),
+                      background:isRec?'linear-gradient(135deg,#eff6ff,#ffffff)':'#fff',
+                      borderRadius:10,padding:'0.75rem 0.85rem',
+                      boxShadow:isRec?'0 4px 10px -2px rgba(37,99,235,.25)':'0 1px 2px rgba(15,23,42,.06)'
+                    }}>
+                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:4}}>
+                        <strong style={{fontSize:'.9rem',color:'#0f172a'}}>{p.name}</strong>
+                        <span style={{fontSize:'.65rem',fontWeight:600,background:'#1e293b',color:'#fff',padding:'2px 6px',borderRadius:6,letterSpacing:'.5px'}}>{p.similarity_pct}% SIM</span>
+                      </div>
+                      <div style={{fontSize:'.7rem',color:'#64748b',marginBottom:6}}>
+                        {p.league && <span style={{marginRight:8}}>{p.league}</span>}
+                        {p.age && <span>Age {p.age}</span>}
+                        {isRec && <span style={{marginLeft:8,color:'#1d4ed8',fontWeight:600}}>RECOMMENDED</span>}
+                      </div>
+                      <p style={{fontSize:'.78rem',color:'#334155',lineHeight:'1.15rem',margin:'0 0 6px'}}>{p.summary}</p>
+                      <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
+                        {p.strengths && p.strengths.slice(0,4).map(s => <span key={s} style={{background:'#dcfce7',color:'#166534',fontSize:'.6rem',padding:'3px 6px',borderRadius:6,fontWeight:600}}>{s}</span>)}
+                        {p.concerns && p.concerns.slice(0,2).map(c => <span key={c} style={{background:'#fee2e2',color:'#991b1b',fontSize:'.6rem',padding:'3px 6px',borderRadius:6,fontWeight:600}}>{c}</span>)}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              <div style={{marginTop:'1rem',padding:'0.75rem 0.9rem',background:'#f1f5f9',border:'1px solid #e2e8f0',borderRadius:10}}>
+                <strong style={{fontSize:'.75rem',letterSpacing:'.5px',textTransform:'uppercase',color:'#0f172a'}}>Most Suitable Player</strong>
+                <p style={{fontSize:'.78rem',lineHeight:'1.15rem',color:'#334155',margin:'6px 0 0'}}>{structured.reasoning}</p>
+              </div>
             </div>
-          ) : (
-            <div className="report-placeholder">Your generated report will appear here.</div>
-          )}
+          ) : report ? (
+            <div className="report-content"><ReactMarkdown>{report}</ReactMarkdown></div>
+          ) : <div className="report-placeholder">Your generated report will appear here.</div>}
         </div>
       </div>
     </div>

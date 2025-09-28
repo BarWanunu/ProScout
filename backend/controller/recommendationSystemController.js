@@ -284,80 +284,90 @@ exports.getSimilarPlayers = async (req, res) => {
 // Endpoint to generate the AI scout report (with pre-filtering + concise structured prompt)
 exports.generateScoutReport = async (req, res) => {
   try {
-    const { selectedPlayer, recommendations = [], teamRequirements } = req.body;
-    if (!selectedPlayer || !Array.isArray(recommendations) || !teamRequirements) {
+    const { selectedPlayer, teamRequirements } = req.body;
+    if (!selectedPlayer || !teamRequirements) {
       return res.status(400).json({ message: 'Missing payload fields.' });
     }
 
-    // --- Filtering / prioritization rules ---
+    // Re-fetch baseline player to ensure fresh embedding
+    const baseRes = await db.query('SELECT * FROM proscout_player_stats WHERE rk = $1', [selectedPlayer.rk]);
+    if (!baseRes.rows.length) return res.status(404).json({ message: 'Baseline player not found.' });
+    const base = baseRes.rows[0];
+
+    // Fetch all other players
+    const othersRes = await db.query('SELECT * FROM proscout_player_stats WHERE rk != $1', [base.rk]);
+    const others = othersRes.rows.map(o => ({ ...o, similarity: cosineSimilarity(base.embedding, o.embedding) }));
+
+    // Attach league & age from raw table (batch)
+    const names = others.map(p => p.player);
+    const rawRes = await db.query('SELECT player, comp, age FROM proscout_player_stats_raw WHERE player = ANY($1)', [names]);
+    const rawMap = Object.fromEntries(rawRes.rows.map(r => [r.player, r]));
+    others.forEach(p => {
+      const rw = rawMap[p.player];
+      if (rw) { p.comp = rw.comp; if (rw.age) p.age = rw.age; }
+    });
+
+    // Filtering rules
     const { experience, league: preferredLeague, skills = [], style, formation } = teamRequirements;
-
-    // Age constraints mapping (can be refined later)
-    const AGE_RULES = {
-      Young: { max: 25 },
-      Promising: { max: 22 },
-      Experienced: { min: 26, max: 31 },
-      Veteran: { min: 32 }
-    };
+    const AGE_RULES = { Young: { max: 25 }, Promising: { max: 22 }, Experienced: { min: 26, max: 31 }, Veteran: { min: 32 } };
     const rule = AGE_RULES[experience] || {};
-
-    // Normalize age field (could come as string)
-    function toNum(v) { const n = Number(v); return Number.isFinite(n) ? n : undefined; }
-
-    let filtered = recommendations.map(r => ({ ...r, age: toNum(r.age) }));
-
-    filtered = filtered.filter(p => {
+    const withinAge = p => {
       if (rule.max && p.age && p.age > rule.max) return false;
       if (rule.min && p.age && p.age < rule.min) return false;
       return true;
-    });
+    };
 
-    // Prioritize preferred league to top (stable sort technique)
-    filtered.sort((a,b) => {
-      const aPref = (a.comp || a.league || '').toLowerCase() === preferredLeague.toLowerCase();
-      const bPref = (b.comp || b.league || '').toLowerCase() === preferredLeague.toLowerCase();
-      if (aPref === bPref) return 0;
-      return aPref ? -1 : 1;
-    });
+    const leagueNorm = (preferredLeague || '').toLowerCase();
+    const matchingLeague = others.filter(p => withinAge(p) && (p.comp || '').toLowerCase() === leagueNorm);
+    const ageOnly = others.filter(p => withinAge(p) && (p.comp || '').toLowerCase() !== leagueNorm);
 
-    // Trim to a manageable subset for LLM context (first 8 after filtering)
-    const LIMITED = filtered.slice(0, 8);
+    // Sort both buckets by similarity desc
+    matchingLeague.sort((a,b)=>b.similarity-a.similarity);
+    ageOnly.sort((a,b)=>b.similarity-a.similarity);
 
-    // Build a compact JSON-safe projection (avoid huge payload)
-    const projectionFields = [
-      'player','age','pos','squad','comp','gls','ast','gca','kp','int','tackles_tkl_w','aerial_won','minutes','similarity'
-    ];
-    const projectedSimilar = LIMITED.map(p => {
-      const out = {}; projectionFields.forEach(f => { if (p[f] !== undefined) out[f] = p[f]; }); return out; });
-    const projectedOriginal = (() => { const out = {}; projectionFields.forEach(f => { if (selectedPlayer[f] !== undefined) out[f] = selectedPlayer[f]; }); return out; })();
+    let candidates = [...matchingLeague, ...ageOnly];
+    if (!candidates.length) {
+      // fallback: ignore filters, just top similarity
+      candidates = [...others].sort((a,b)=>b.similarity-a.similarity);
+    }
+    const top3 = candidates.slice(0,3);
 
-    // Concise structured prompt
-    const userPrompt = `You are to produce a concise professional scouting report (<=220 words) selecting EXACTLY ONE recommended player.\n\n` +
-      `TEAM REQUIREMENTS (strict): experience=${experience}; preferred_league=${preferredLeague}; style=${style}; formation=${formation}; key_skills=${skills.join('|') || 'none'}.\n` +
-      `AGE RULE applied: ${rule.min ? 'min '+rule.min : ''}${rule.min && rule.max ? ', ' : ''}${rule.max ? 'max '+rule.max : '' || 'none'}. Exclude any player outside bounds.\n` +
-      `Original Player (baseline): ${JSON.stringify(projectedOriginal)}\n` +
-      `Filtered Similar Players (${projectedSimilar.length}):\n${projectedSimilar.map(p => JSON.stringify(p)).join('\n')}\n\n` +
-      `INSTRUCTIONS:\n` +
-      `1. Briefly profile 2-3 top candidates (one line each) prioritizing preferred_league first.\n` +
-      `2. Compare them to baseline focusing only on differentiating strengths / weaknesses tied to key_skills + role fit.\n` +
-      `3. Recommend one player (must be from list) with a short rationale referencing requirements.\n` +
-      `4. Output markdown with sections: ### Shortlist, ### Analysis, ### Recommendation.\n` +
-      `5. Final line MUST be: Recommended Player: <Name>.`;
+    // Projection for prompt
+    const fields = ['player','age','pos','comp','squad','similarity'];
+    const proj = p => { const o={}; fields.forEach(f=>{ if(p[f]!==undefined) o[f]=p[f];}); o.similarity = Number((p.similarity*100).toFixed(2)); return o;};
+    const baselineProj = proj(base);
+    const candidateProj = top3.map(proj);
+
+    const userPrompt = `You are an elite scout. You will receive a baseline player and 3 candidate players already filtered & similarity-ranked. OUTPUT STRICT VALID JSON ONLY (no markdown, no commentary) with this schema: {"players":[{"name":"string","similarity_pct":number,"league":"string","age":number,"summary":"1-2 sentences","strengths":["phrase"...],"concerns":["phrase"...],"fit_score":number}],"recommended":"name of best player","reasoning":"2 concise sentences referencing requirements & differentiators"}.\n`+
+      `Rules: 1) Do NOT invent players or fields. 2) strengths & concerns each 2-4 short phrases. 3) fit_score 0-100 (integer) reflecting holistic fit (higher=better). 4) recommended MUST match one of players.name. 5) Keep summary under 220 total words across whole JSON. 6) Consider similarity_pct, league preference (${preferredLeague}), age rule ${rule.min?`min ${rule.min}`:''}${rule.min&&rule.max?', ':''}${rule.max?`max ${rule.max}`:''}, style ${style}, formation ${formation}, key_skills ${skills.join('|')||'none'}.\n`+
+      `BASELINE: ${JSON.stringify(baselineProj)}\nCANDIDATES:\n${candidateProj.map(c=>JSON.stringify(c)).join('\n')}`;
 
     const response = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
-      temperature: 0.25,
+      temperature: 0.22,
       messages: [
-        { role: 'system', content: 'You are an elite professional football scout. Be precise, data-grounded, unbiased and concise.' },
+        { role: 'system', content: 'You are an elite professional football scout. Be precise, data-grounded, concise, and never fabricate players or data.' },
         { role: 'user', content: userPrompt }
       ]
     });
+    const raw = response.choices[0].message.content || '';
+    let structured = null;
+    try {
+      structured = JSON.parse(raw);
+      // Basic validation
+      if (!structured.players || !Array.isArray(structured.players) || structured.players.length !== 3) throw new Error('players length != 3');
+      if (!structured.recommended) throw new Error('missing recommended');
+    } catch (e) {
+      structured = null; // fallback if parsing fails
+    }
 
     return res.json({
-      report: response.choices[0].message.content,
-      filteredCount: filtered.length,
-      usedPlayers: projectedSimilar.length,
-      appliedAgeRule: rule
+      report: raw,
+      structured,
+      candidates: candidateProj,
+      appliedAgeRule: rule,
+      preferredLeague,
+      totalPlayersConsidered: others.length
     });
   } catch (error) {
     res.status(500).json({ message: 'Error generating AI scout report.', error: error.message });
