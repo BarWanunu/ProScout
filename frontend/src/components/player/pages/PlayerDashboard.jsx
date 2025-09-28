@@ -1,5 +1,4 @@
 "use client"
-
 import { useAuth } from "@/auth/AuthContext"
 import playerService from "@/api/services/playerService"
 import { useState, useEffect } from "react"
@@ -21,11 +20,9 @@ export default function PlayerDashboard() {
   useEffect(() => {
     const fetchPlayerData = async () => {
       try {
-        // קודם שולפים את השחקן כדי לדעת את ה-id שלו
         const playerData = await playerService.getPlayerById(userId, token)
         setPlayer(playerData)
         
-        // Set document title with player name when available
         if (playerData?.name) {
           document.title = `${playerData.name} - ProScout`;
         }
@@ -33,10 +30,9 @@ export default function PlayerDashboard() {
         if (playerData?.id) {
           const data = await playerService.getPlayerStatsSummary(playerData.id, 2022, 2024)
           setSummary(data)
-          console.log("✅ Player stats summary:", data)
         }
       } catch (err) {
-        console.error("❌ Failed to fetch stats summary:", err)
+        console.error("Failed to fetch stats summary:", err)
       }
     }
 
@@ -44,7 +40,6 @@ export default function PlayerDashboard() {
       fetchPlayerData()
     }
     
-    // Reset document title when component unmounts
     return () => {
       document.title = "ProScout";
     };

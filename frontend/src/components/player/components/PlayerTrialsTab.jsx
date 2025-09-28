@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import { useAuth } from '@/auth/AuthContext';
 import TrialsManager from '@/components/trials/TrialsManager';
@@ -42,9 +42,8 @@ const PlayerTrialsTab = ({ player }) => {
     }
   }, [currentUserId]);
 
-  // Handle trial update (accept/decline/delete)
   const handleTrialUpdate = async () => {
-    await loadTrials(); // Reload trials after any update
+    await loadTrials(); 
   };
 
   if (loading) {

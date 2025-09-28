@@ -1,6 +1,5 @@
-import React from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
-import { User, Hash, MapPin, Flag, Calendar, Ruler, Weight, Target } from 'lucide-react';
+import { User, Hash, Flag, Calendar, Ruler, Weight, Target } from 'lucide-react';
 import '../styles/PlayerInfo.css';
 
 export default function PlayerInfo({ player }) {
