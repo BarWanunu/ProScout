@@ -3,19 +3,16 @@ import playerService from "./playerService";
 
 const endpoint = "/search";
 
-// Helper function to get full player data
 const enrichPlayerData = async (players, searchType, matchedCriteria) => {
   const enrichedPlayers = await Promise.all(
     players.map(async (player) => {
       try {
-        // Get full player data using the existing playerService
         const fullPlayerData = await playerService.getPlayerFull(player.id);
 
-        // For stats search, preserve the matched stats and don't use full stats
         if (searchType === "statistics") {
           return {
             player: fullPlayerData.player,
-            stats: null, // Don't use full stats for statistics search
+            stats: null,
             searchType: searchType,
             matchedCriteria: matchedCriteria,
             matchedStats: player.matchedStats || null,

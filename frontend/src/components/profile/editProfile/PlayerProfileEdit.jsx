@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import playerService from '../../../api/services/playerService';
+import { POSITIONS } from '../../../data/positions';
 import '../styles/ProfileEdit.css';
-
-const POSITIONS = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
 export default function PlayerProfileEdit({ onClose, onSuccess }) {
   const [formData, setFormData] = useState({

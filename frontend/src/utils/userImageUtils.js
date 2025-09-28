@@ -35,7 +35,6 @@ export const getUserImageUrl = (user) => {
   return defaultImage;
 };
 
-// Get user initials as fallback
 export const getUserInitials = (user) => {
   if (!user) return "U";
 

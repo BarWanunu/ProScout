@@ -21,11 +21,6 @@ async function getConversation(otherUserId, token) {
   return response.data;
 }
 
-// Get messages between users (alias for getConversation for consistency)
-async function getMessagesBetweenUsers(otherUserId, token) {
-  return getConversation(otherUserId, token);
-}
-
 // Get all conversations for current user
 async function getConversations(token) {
   const config = {
@@ -81,7 +76,6 @@ async function deleteMessage(messageId, token) {
 const messageService = {
   sendMessage,
   getConversation,
-  getMessagesBetweenUsers,
   getConversations,
   getUnreadCount,
   markAsRead,
