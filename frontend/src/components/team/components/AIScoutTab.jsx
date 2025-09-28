@@ -276,7 +276,6 @@ export default function AIScoutTab() {
                       <th scope="col">Player</th>
                       <th scope="col">Nation</th>
                       <th scope="col">Squad</th>
-                      <th scope="col">Pos</th>
                       <th scope="col">Age</th>
                       <th scope="col">Similarity</th>
                     </tr>
@@ -292,7 +291,6 @@ export default function AIScoutTab() {
                         </td>
                         <td>{p.nation}</td>
                         <td>{p.squad}</td>
-                        <td>{p.pos}</td>
                         <td>{p.age}</td>
                         <td><span className="sim-badge" title="Cosine similarity">{fmtSimilarity(p.similarity)}</span></td>
                       </tr>
