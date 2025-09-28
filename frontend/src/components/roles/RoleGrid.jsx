@@ -1,5 +1,3 @@
-// RoleGrid is a thin layout wrapper that renders three RoleCards in a responsive grid
-
 import PropTypes from "prop-types";
 import { ROLES } from "../../data/roles";
 import RoleCard from "./RoleCard/RoleCard";

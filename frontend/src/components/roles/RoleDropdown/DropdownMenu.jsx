@@ -1,5 +1,4 @@
 import "./RoleDropdown.css";
-
 // This component is a dropdown menu that displays a list of roles. When a role is selected, it triggers the onSelect function passed as a prop. The menu is only visible when the open prop is true.
 export default function DropdownMenu({ open, roleMeta, onSelect}){
     return (

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Card, Button, Spinner, Alert, Row, Col, Badge } from 'react-bootstrap';
-import { ArrowLeft, User, Calendar, MapPin, Activity } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import playerService from '@/api/services/playerService';
 import { getToken } from '@/api/tokenStore';
 import PlayerStatsTab from '../player/components/PlayerStatsTab';
@@ -113,7 +113,7 @@ const PlayerProfile = ({ userId, onBack, navigateToProfile }) => {
       
       {/* Header with Back Button */}
       <Row className="mb-2">
-        <Col>{/* spacing retained */}</Col>
+        <Col>{/* spacing */}</Col>
       </Row>
 
       {/* Player Profile Card */}

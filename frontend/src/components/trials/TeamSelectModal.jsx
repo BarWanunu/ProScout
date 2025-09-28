@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Spinner, Alert } from 'react-bootstrap';
 import { Search, Building } from 'lucide-react';
 import searchService from '@/api/services/searchService';

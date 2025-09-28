@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Container, Card, Button, Form, Spinner, Alert } from "react-bootstrap";
+import { Container, Button, Form, Spinner, Alert } from "react-bootstrap";
 import { ArrowLeft, Send, MessageSquare, User } from "lucide-react";
 import Header from "@/layout/overallLayout/Header";
 import Footer from "@/layout/overallLayout/Footer";

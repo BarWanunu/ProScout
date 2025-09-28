@@ -6,14 +6,11 @@ import TeamProfileEdit from './TeamProfileEdit';
 export default function ProfileEditModal({ isOpen, onClose, onSuccess }) {
   const { role } = useAuth();
 
-  // פונקציה לטיפול בעדכון מוצלח
   const handleSuccess = () => {
-    // קריאה לפונקציה שהתקבלה מההורה (אם קיימת)
     if (onSuccess) {
       onSuccess();
     }
     
-    // רענון הדף כדי לעדכן את הנתונים
     window.location.reload();
   };
 

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { Spinner, Alert } from "react-bootstrap";
+import { useState, useEffect } from "react";
 import trialService from "../../../api/services/trialService";
 import { useAuth } from "../../../auth/AuthContext";
 import TrialsManager from '@/components/trials/TrialsManager';
@@ -55,7 +54,7 @@ export default function ScoutTrials({ scout }) {
       trials={trials}
       userRole="scout"
       onTrialUpdate={fetchTrials}
-      showActions={false} // Scouts can only view, no actions
+      showActions={false}
     />
   );
 }

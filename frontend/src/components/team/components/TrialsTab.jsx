@@ -1,4 +1,3 @@
-import React from 'react';
 import TrialsManager from '@/components/trials/TrialsManager';
 
 const TrialsTab = ({ trials = [], onTrialUpdate }) => {

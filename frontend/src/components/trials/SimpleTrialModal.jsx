@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Modal, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, MessageSquare, Send, User } from 'lucide-react';
 import trialService from '@/api/services/trialService';

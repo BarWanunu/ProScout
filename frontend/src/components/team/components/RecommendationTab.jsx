@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Spinner, Alert } from 'react-bootstrap';
 import RecommendationsManager from './RecommendationsManager';
 import recommendationService from '@/api/services/recommendationService';
-import { getToken } from '@/api/tokenStore';
 import { useAuth } from '@/auth/AuthContext';
 
 const RecommendationTab = ({ team }) => {

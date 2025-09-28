@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"  
+import { useEffect, useState } from "react"  
 import Header from "@/layout/overallLayout/Header.jsx";
 import Footer from "@/layout/overallLayout/Footer.jsx";
 import WelcomeSection from "@/components/common/WelcomeSection";
@@ -14,7 +14,7 @@ export default function TeamDashboard() {
   const [fadeIn, setFadeIn] = useState(false);
   const [team, setTeam] = useState(null);
   const [shortlist, setShortlist] = useState([]);
-  const [trials, setTrials] = useState([]); // ✅ סטייט למבחנים
+  const [trials, setTrials] = useState([]); 
 
   useEffect(() => setFadeIn(true), []);
 
@@ -57,12 +57,12 @@ export default function TeamDashboard() {
     }
   };
 
-  // --- Fetch Trials (רק אחרי שהקבוצה נטענת) ---
+  // --- Fetch Trials ---
   useEffect(() => {
     if (team) {
       fetchTrials();
     }
-  }, [team]); // נבצע fetch רק כאשר הקבוצה משתנה
+  }, [team]);
 
   // --- Fetch Shortlist ---
   const fetchShortlist = async () => {

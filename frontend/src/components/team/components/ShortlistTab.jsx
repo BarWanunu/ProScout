@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Card, Button, Spinner } from 'react-bootstrap';
 import { UserMinus, ClipboardList, Search, MessageCircle, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -29,8 +29,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     setShortlist(initialShortlist);
   }, [initialShortlist]);
   
-  // Removed the useEffect that was causing issues with tab switching
-
   // Fetch additional player details when component mounts or shortlist changes
   useEffect(() => {
     const fetchPlayerDetails = async () => {
@@ -58,7 +56,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     fetchPlayerDetails();
   }, [shortlist]);
   
-  // אם אין שחקנים ברשימת המועדפים
   if (!shortlist || shortlist.length === 0) {
     return (
       <Container className="py-4 shortlist-empty">
@@ -78,7 +75,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     );
   }
 
-  // הסרת שחקן מהרשימה
   const handleRemovePlayer = async (playerId) => {
     try {
       setLoading(prev => ({ ...prev, [playerId]: true }));
@@ -97,7 +93,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     }
   };
 
-  // שליחת הזמנה למבחן - ניווט לדף יצירת מבחן
   const handleSendTrialInvitation = (playerId) => {
     const playerName = getPlayerDetail(playerId, 'name');
     console.log(`Navigating to create trial page for player: ${playerName} (${playerId})`);
@@ -118,7 +113,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     navigate(`/trial/create?${params.toString()}`);
   };
 
-  // שליחת הודעה לשחקן - פתיחת Modal
   const handleSendMessage = (playerId) => {
     // Get player details
     const playerDetail = playerDetails[playerId];
@@ -146,7 +140,6 @@ const ShortlistTab = ({ shortlist: initialShortlist = [], team, onSwitchToSearch
     });
   };
 
-  // צפייה בפרופיל השחקן
   const handleViewProfile = (playerId) => {
     // Try to get user_id from player details
     const playerDetail = playerDetails[playerId];

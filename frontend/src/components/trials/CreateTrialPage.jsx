@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
 import { Calendar, MessageSquare, Send, ArrowLeft, User } from 'lucide-react';
@@ -134,7 +134,7 @@ const CreateTrialPage = () => {
       const trialData = {
         player_id: role === 'player' ? currentUserId : parseInt(playerId, 10),
         team_id: parseInt(teamId, 10),
-        scout_id: effectiveScoutId, // Use scout_id instead of user_id
+        scout_id: effectiveScoutId, 
         invitation_message: formData.invitationMessage.trim(),
         trial_date: trialDateTime,
         sender_role: role
@@ -144,7 +144,7 @@ const CreateTrialPage = () => {
       
       // Navigate back after 2 seconds
       setTimeout(() => {
-        navigate(`/${role}-dashboard`); // Go back to role-specific dashboard
+        navigate(`/${role}-dashboard`);
       }, 2000);
       
     } catch (err) {

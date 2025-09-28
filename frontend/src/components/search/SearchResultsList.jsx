@@ -1,4 +1,3 @@
-import React from 'react';
 import PlayerResultCard from './PlayerResultCard';
 import TeamResultCard from './TeamResultCard';
 import ScoutResultCard from './ScoutResultCard';

@@ -1,6 +1,3 @@
-// This component is used to display a role card in the roles selection page.
-// It shows the role's title, description, and an icon. When clicked, it calls the onSelect function with the role's id.
-
 import PropTypes from "prop-types";
 import "./RoleCard.css"
 
