@@ -281,58 +281,84 @@ exports.getSimilarPlayers = async (req, res) => {
   }
 };
 
-// Endpoint to generate the AI scout report
+// Endpoint to generate the AI scout report (with pre-filtering + concise structured prompt)
 exports.generateScoutReport = async (req, res) => {
-  const { selectedPlayer, recommendations, teamRequirements } = req.body;
-
-  // Convert recommendations array to a string format for the prompt
-  const recommendationsText = recommendations.map(p => JSON.stringify(p)).join('\n');
-
-  const human_template = `
-    Generate a Football Talent Scout report based on the DATA PROVIDED (maximum 250 words) written in a formal tone FOLLOWING THE EXAMPLE.
-    It is essential to compare player attributes and select the most suitable candidate from the available options from among similar players, based on the TEAM REQUIREMENTS provided.
-    THE PLAYER CHOSEN MUST NECESSARILY BE AMONG THE POSSIBLE PLAYERS CONSIDERED IN THE FOOTBALL SCOUT REPORT.
-    INDICATE the player chosen at the end of the REPORT.
-
-    DATA:
-    Original Player: ${JSON.stringify(selectedPlayer)}
-    Similar Players:
-    ------------------------------------
-    ${recommendationsText}
-    ------------------------------------ 
-
-    TEAM REQUIREMENTS:
-    Style of play: ${teamRequirements.style}
-    Player type required: ${teamRequirements.experience}
-    Preferred league: ${teamRequirements.league}
-    Key ability: ${teamRequirements.skills.join(', ')}
-    Ideal formation: ${teamRequirements.formation}
-
-    EXAMPLE TO FOLLOW:
-    ### Football Scout Report
-    After a detailed analysis of the data, we have identified candidates who best meet the requirements of your team. Below, we present three potential candidates:
-
-    **[Player X]**: Highlights strengths and addresses weaknesses based on data on the essential attributes for a player in his specific age group.
-    **[Player Y]**: Highlights strengths and addresses weaknesses based on data regarding the attributes a player must necessarily possess in his specific age group.
-    **[Player Z]**: Highlighting strengths and addressing weaknesses based on attribute data that a player must necessarily possess in his specific age group.
-    
-    [Provide the reasons for choosing the recommended player over the others].
-    
-    The recommended player:
-    [INDICATE Name of player recommended].
-  `;
-
   try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        { role: "system", content: "You are a soccer scout and you must be good at finding the best talents for your team from the players provided." },
-        { role: "user", content: human_template }
-      ],
-      temperature: 0.1,
+    const { selectedPlayer, recommendations = [], teamRequirements } = req.body;
+    if (!selectedPlayer || !Array.isArray(recommendations) || !teamRequirements) {
+      return res.status(400).json({ message: 'Missing payload fields.' });
+    }
+
+    // --- Filtering / prioritization rules ---
+    const { experience, league: preferredLeague, skills = [], style, formation } = teamRequirements;
+
+    // Age constraints mapping (can be refined later)
+    const AGE_RULES = {
+      Young: { max: 25 },
+      Promising: { max: 22 },
+      Experienced: { min: 26, max: 31 },
+      Veteran: { min: 32 }
+    };
+    const rule = AGE_RULES[experience] || {};
+
+    // Normalize age field (could come as string)
+    function toNum(v) { const n = Number(v); return Number.isFinite(n) ? n : undefined; }
+
+    let filtered = recommendations.map(r => ({ ...r, age: toNum(r.age) }));
+
+    filtered = filtered.filter(p => {
+      if (rule.max && p.age && p.age > rule.max) return false;
+      if (rule.min && p.age && p.age < rule.min) return false;
+      return true;
     });
 
-    res.json({ report: response.choices[0].message.content });
+    // Prioritize preferred league to top (stable sort technique)
+    filtered.sort((a,b) => {
+      const aPref = (a.comp || a.league || '').toLowerCase() === preferredLeague.toLowerCase();
+      const bPref = (b.comp || b.league || '').toLowerCase() === preferredLeague.toLowerCase();
+      if (aPref === bPref) return 0;
+      return aPref ? -1 : 1;
+    });
+
+    // Trim to a manageable subset for LLM context (first 8 after filtering)
+    const LIMITED = filtered.slice(0, 8);
+
+    // Build a compact JSON-safe projection (avoid huge payload)
+    const projectionFields = [
+      'player','age','pos','squad','comp','gls','ast','gca','kp','int','tackles_tkl_w','aerial_won','minutes','similarity'
+    ];
+    const projectedSimilar = LIMITED.map(p => {
+      const out = {}; projectionFields.forEach(f => { if (p[f] !== undefined) out[f] = p[f]; }); return out; });
+    const projectedOriginal = (() => { const out = {}; projectionFields.forEach(f => { if (selectedPlayer[f] !== undefined) out[f] = selectedPlayer[f]; }); return out; })();
+
+    // Concise structured prompt
+    const userPrompt = `You are to produce a concise professional scouting report (<=220 words) selecting EXACTLY ONE recommended player.\n\n` +
+      `TEAM REQUIREMENTS (strict): experience=${experience}; preferred_league=${preferredLeague}; style=${style}; formation=${formation}; key_skills=${skills.join('|') || 'none'}.\n` +
+      `AGE RULE applied: ${rule.min ? 'min '+rule.min : ''}${rule.min && rule.max ? ', ' : ''}${rule.max ? 'max '+rule.max : '' || 'none'}. Exclude any player outside bounds.\n` +
+      `Original Player (baseline): ${JSON.stringify(projectedOriginal)}\n` +
+      `Filtered Similar Players (${projectedSimilar.length}):\n${projectedSimilar.map(p => JSON.stringify(p)).join('\n')}\n\n` +
+      `INSTRUCTIONS:\n` +
+      `1. Briefly profile 2-3 top candidates (one line each) prioritizing preferred_league first.\n` +
+      `2. Compare them to baseline focusing only on differentiating strengths / weaknesses tied to key_skills + role fit.\n` +
+      `3. Recommend one player (must be from list) with a short rationale referencing requirements.\n` +
+      `4. Output markdown with sections: ### Shortlist, ### Analysis, ### Recommendation.\n` +
+      `5. Final line MUST be: Recommended Player: <Name>.`;
+
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      temperature: 0.25,
+      messages: [
+        { role: 'system', content: 'You are an elite professional football scout. Be precise, data-grounded, unbiased and concise.' },
+        { role: 'user', content: userPrompt }
+      ]
+    });
+
+    return res.json({
+      report: response.choices[0].message.content,
+      filteredCount: filtered.length,
+      usedPlayers: projectedSimilar.length,
+      appliedAgeRule: rule
+    });
   } catch (error) {
     res.status(500).json({ message: 'Error generating AI scout report.', error: error.message });
   }

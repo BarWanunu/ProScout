@@ -69,6 +69,15 @@ const ScouterAI = ({ data }) => {
           <label>Key Skills</label>
           <Select isMulti options={playerSkills} onChange={opts => setRequirements(prev => ({ ...prev, skills: opts }))} />
 
+          <div className="constraints-badge fade-in">
+            <span>{requirements.experience}</span>
+            <span>{requirements.league}</span>
+            <span>{requirements.style}</span>
+            <span>{requirements.formation}</span>
+            {requirements.skills.slice(0,2).map(s => <span key={s.value}>{s.value}</span>)}
+            {requirements.skills.length > 2 && <span>+{requirements.skills.length - 2}</span>}
+          </div>
+
           <button onClick={handleGenerateReport} disabled={isLoading} className="generate-button">
             {isLoading ? 'Generating...' : 'Generate Report'}
           </button>
