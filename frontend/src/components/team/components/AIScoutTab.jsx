@@ -8,20 +8,21 @@ import ScouterAI from './SmartSearch';
 import defaultAvatar from '@/assets/default-player.png';
 import '../styles/AIScoutTab.css';
 
-// Radar categories
-const RADAR_CATEGORIES = [
-  'performance_gls',
-  'performance_ast',
-  'kp',
-  'gca_gca',
-  'aerial_duels_won',
-  'int',
-  'tackles_tklw',
-  'performance_saves',
-  'performance_cs',
-  'performance_ga',
-  'performance_sota',
+// Radar metrics (ordered starting at top then clockwise)
+const RADAR_METRICS = [
+  { field: 'g_c_a_g_c_a', label: 'GCA' },
+  { field: 'k_p', label: 'KP' },
+  { field: 'performance_ast', label: 'Assists' },
+  { field: 'performance_gls', label: 'Goals' },
+  { field: 'performance_so_t_a', label: 'SoTA' },
+  { field: 'performance_g_a', label: 'GA' },
+  { field: 'performance_c_s', label: 'CS' },
+  { field: 'performance_saves', label: 'Saves' },
+  { field: 'tackles_tkl_w', label: 'Tackles Won' },
+  { field: 'int', label: 'INT' },
+  { field: 'aerial_duels_won', label: 'Aerial' },
 ];
+const RADAR_MAX = 60; // fixed outer scale required (0,10,...,60)
 
 // Local helper to format similarity percentage
 const fmtSimilarity = (s) => typeof s === 'number' ? (s * 100).toFixed(1) + '%' : '—';
@@ -45,9 +46,14 @@ export default function AIScoutTab() {
 
   const radarData = useMemo(() => {
     if (!data?.recommendations) return [];
-    return RADAR_CATEGORIES.map(metric => {
-      const row = { metric };
-      data.recommendations.forEach(p => { if(!hiddenPlayers.has(p.player)) row[p.player] = Number(p[metric]) || 0; });
+    const visiblePlayers = data.recommendations.filter(p => !hiddenPlayers.has(p.player));
+    return RADAR_METRICS.map(m => {
+      const row = { metric: m.label };
+      visiblePlayers.forEach(p => {
+        const val = Number(p[m.field]) || 0;
+        // cap to RADAR_MAX so very large SoTA or Saves values don't blow the scale
+        row[p.player] = Math.min(val, RADAR_MAX);
+      });
       return row;
     });
   }, [data, hiddenPlayers]);
@@ -183,7 +189,7 @@ export default function AIScoutTab() {
                               <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(sp.performance_ast)}</span></div>
                               <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(sp.performance_gls)}</span></div>
                               <div className="stat"><span className="label">Aerial Duels</span><span className="value">{formatValue(sp.aerial_duels_won)}</span></div>
-                              <div className="stat"><span className="label">Tackles</span><span className="value">{formatValue(sp.tackles_tkl)}</span></div>
+                              <div className="stat"><span className="label">Tackles Won</span><span className="value">{formatValue(sp.tackles_tkl_w)}</span></div>
                               <div className="stat"><span className="label">Interceptions</span><span className="value">{formatValue(sp.int)}</span></div>
                               <div className="stat"><span className="label">Key Passes</span><span className="value">{formatValue(sp.k_p)}</span></div>
                             </>
@@ -275,10 +281,10 @@ export default function AIScoutTab() {
                 </div>
                 <div className="radar-shell">
                   <ResponsiveContainer width="100%" height={360}>
-                    <RadarChart cx="50%" cy="52%" outerRadius="70%" data={radarData}>
+                    <RadarChart cx="50%" cy="52%" outerRadius="70%" data={radarData} startAngle={90} endAngle={-270}>
                       <PolarGrid radialLines={false} stroke="#e2e8f0" />
                       <PolarAngleAxis dataKey="metric" tick={{ fill: '#334155', fontSize: 11 }} />
-                      <PolarRadiusAxis angle={18} domain={[0, 1]} tick={{ fill: '#64748b', fontSize: 10 }} stroke="#cbd5e1" />
+                      <PolarRadiusAxis angle={18} domain={[0, RADAR_MAX]} ticks={[0,10,20,30,40,50,60]} tick={{ fill: '#64748b', fontSize: 10 }} stroke="#cbd5e1" />
                       {data.recommendations.map((p, i) => {
                         const color = `hsl(${(i * 28) % 360}, 70%, 47%)`;
                         if(hiddenPlayers.has(p.player)) return null;

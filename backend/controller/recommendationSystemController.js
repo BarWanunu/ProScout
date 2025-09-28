@@ -247,6 +247,7 @@ exports.getSimilarPlayers = async (req, res) => {
                  "performance_gls",
                  "aerial_duels_won",
                  "tackles_tkl",
+       "tackles_tkl_w",
                  "int",
                  "k_p",
                  "g_c_a_g_c_a",
