@@ -280,7 +280,7 @@ Visualization: Fixed-domain radar (0–60) with deterministic color palette; leg
 
 ## 15. Attribution & Ownership
 
-**Author:** Bar Wanunu and Michael Afraimov
+**Authors:** Bar Wanunu and Michael Afraimov
 
 ---
 
