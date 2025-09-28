@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart3, TrendingUp, Calendar, Filter, Trophy, Target, Activity, Zap, Shield, Award, Users, Eye } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BarChart3, TrendingUp, Calendar, Filter } from 'lucide-react';
 import playerService from '@/api/services/playerService';
 import { useAuth } from '@/auth/AuthContext';
 import '../../team/styles/ShortlistTab.css';
 import '../styles/PlayerStatsTabNew.css';
 
 const PlayerStatsTab = ({ player }) => {
-  const { token } = useAuth();
   const [stats, setStats] = useState([]);
   const [filteredStats, setFilteredStats] = useState([]);
   const [loading, setLoading] = useState(true);
