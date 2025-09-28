@@ -211,6 +211,9 @@ const PlayerSelectModal = ({
                 const nationality = playerData.nationality || playerData.country || player.nationality || player.country || 'Country N/A';
                 const age = playerData.age || player.age || 'N/A';
                 const photoUrl = playerData.photo_url || playerData.photo || player.photo_url;
+                const imageUrl = photoUrl 
+                  ? (photoUrl.startsWith('http') ? photoUrl : `${import.meta.env.VITE_API_BASE_URL}/${photoUrl}`)
+                  : defaultPlayerImg;
                 
                 return (
                   <div 
@@ -221,7 +224,7 @@ const PlayerSelectModal = ({
                   >
                     <div className="player-avatar me-3">
                       <img 
-                        src={photoUrl || defaultPlayerImg} 
+                        src={imageUrl} 
                         alt={playerName}
                         style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }} 
                         onError={(e) => { e.target.src = defaultPlayerImg; }}

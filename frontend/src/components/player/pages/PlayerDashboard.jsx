@@ -47,7 +47,7 @@ export default function PlayerDashboard() {
 
   return (
     <>
-      <Header />
+      <Header profileId={player?.id} />
       <div className={`pd-wrapper ${fadeIn ? "fade-in" : "fade-out"}`}>
         {/* ---------- WELCOME SECTION ---------- */}
         <WelcomeSection user={player} userType="player" imageStyle="circle" />

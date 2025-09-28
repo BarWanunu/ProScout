@@ -179,7 +179,11 @@ const TeamSelectModal = ({
                   <div className="team-avatar me-3">
                     {team.logo || team.team?.logo ? (
                       <img 
-                        src={team.logo || team.team?.logo} 
+                        src={
+                          (team.logo || team.team?.logo).startsWith('http') 
+                            ? (team.logo || team.team?.logo)
+                            : `${import.meta.env.VITE_API_BASE_URL}/${team.logo || team.team?.logo}`
+                        }
                         alt={`${team.team_name || team.name} logo`}
                         style={{ 
                           width: '32px', 

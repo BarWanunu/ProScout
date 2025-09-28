@@ -1,33 +1,22 @@
 const messagesModel = require("../models/messageModel");
 
 exports.createMessage = async (req, res) => {
-  console.log("=== Starting createMessage ===");
-  console.log("Request body:", req.body);
-  console.log("User from token:", req.user);
-
   const { receiver_id, message } = req.body;
   const sender_id = req.user.id;
 
   try {
     // Validate input
-    console.log("Validating input...");
     if (!receiver_id || !message || message.trim().length === 0) {
-      console.log("Validation failed: missing data");
       return res.status(400).json({
         message: "Receiver ID and message content are required.",
       });
     }
 
     if (sender_id === receiver_id) {
-      console.log("Validation failed: self-message");
       return res
         .status(400)
         .json({ message: "You cannot send a message to yourself." });
     }
-
-    console.log(
-      `Creating message from ${sender_id} to ${receiver_id}: "${message.trim()}"`
-    );
 
     const newMessage = await messagesModel.createMessage(
       sender_id,
@@ -35,14 +24,10 @@ exports.createMessage = async (req, res) => {
       message.trim()
     );
 
-    console.log("Message creation result:", newMessage);
-
     if (!newMessage.success) {
-      console.log("Message creation failed:", newMessage.error);
       return res.status(500).json({ message: "Failed to send message." });
     }
 
-    console.log("Message sent successfully");
     res.status(201).json({
       message: "Message sent successfully",
       data: newMessage.data,

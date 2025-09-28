@@ -9,7 +9,6 @@ exports.registerTeam = async (req, res) => {
   try {
     const user_id = req.user.id;
     let value = { ...req.body };
-
     value.logo = req.file ? getMediaPath(req.file) : "";
 
     ["team_name", "league", "country", "formation", "stadium"].forEach(
@@ -24,7 +23,6 @@ exports.registerTeam = async (req, res) => {
         return res.status(400).json({ message: "Trophies must be a number" });
       }
     }
-
     const { error } = registerTeamSchema.validate(value);
     if (error) {
       return res.status(400).json({ message: error.details[0].message });
@@ -49,7 +47,6 @@ exports.registerTeam = async (req, res) => {
     if (!newTeam.success) {
       return res.status(500).json({message: "Failed to create team profile.", error: newTeam.error});
     }
-
     res.status(201).json({
       message: "Team profile created successfully.",
       team: newTeam.data,

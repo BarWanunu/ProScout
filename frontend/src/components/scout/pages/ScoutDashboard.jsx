@@ -28,7 +28,7 @@ export default function ScoutDashboard() {
 
   return (
     <div className="d-flex flex-column min-vh-100">
-      <Header />
+      <Header profileId={scout?.id} />
       <WelcomeSection user={scout} userType="scout" imageStyle="circle" />
       <ScoutDashboardTabs scout={scout} />
       <Footer />

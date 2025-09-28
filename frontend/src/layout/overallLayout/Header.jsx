@@ -7,12 +7,12 @@ import { useAuth } from "../../auth/AuthContext"
 import {http} from "../../api/http"
 import { ProfileEditModal } from "../../components/profile";
 
-export default function Header() {
+export default function Header({ profileId }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileEdit, setShowProfileEdit] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { logout} = useAuth(); 
+  const { logout, role, id, token } = useAuth(); 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -63,6 +63,23 @@ export default function Header() {
     }
   };
 
+  // ניווט לפרופיל עצמי
+  const handleViewProfile = () => {
+    setShowMenu(false);
+    
+    if (!role) {
+      console.error('❌ Cannot navigate - missing role');
+      return;
+    }
+
+    if (profileId) {
+      const profilePath = `/${role}/profile/${profileId}`;
+      navigate(profilePath);
+    } else {
+      console.error('❌ Cannot navigate - missing profileId');
+    }
+  };
+
   return (
     <header className="header">
       <div className="logo-section">
@@ -79,6 +96,7 @@ export default function Header() {
           />
           {showMenu && (
             <div className="dropdown-menu">
+              <div onClick={handleViewProfile}>👤 View Profile</div>
               <div onClick={handleEditProfile}>✏️ Edit Profile</div>
               <div onClick={handleLogout}>🚪 Logout</div>
               <div onClick={handleDeleteAccount}>🗑️ Delete Account</div>

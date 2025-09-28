@@ -17,7 +17,6 @@ async function registerTeam(data, token) {
       Authorization: `Bearer ${token}`,
     },
   };
-
   const response = await http.post(endpoint, formData, config);
   return response.data;
 }

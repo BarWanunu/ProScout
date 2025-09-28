@@ -306,7 +306,13 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
             {/* Player Info Section */}
             <div className="trial-player-info">
               <img 
-                src={trial.player_photo || '/default-player.jpg'} 
+                src={
+                  trial.player_photo 
+                    ? (trial.player_photo.startsWith('http') 
+                        ? trial.player_photo 
+                        : `${import.meta.env.VITE_API_BASE_URL}/${trial.player_photo}`)
+                    : '/default-player.jpg'
+                } 
                 alt={getOtherPartyName(trial)}
                 className="player-avatar"
                 onError={(e) => {

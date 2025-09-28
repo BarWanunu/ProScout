@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const getUploadPath = (role) => {
   switch (role) {
@@ -9,6 +10,8 @@ const getUploadPath = (role) => {
       return "uploads/teams";
     case "scout":
       return "uploads/scouts";
+    default:
+      return "uploads";
   }
 };
 
@@ -16,6 +19,13 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const role = req.user.role;
     const uploadPath = getUploadPath(role);
+
+    // Create directory if it doesn't exist
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+      console.log(`Created directory: ${uploadPath}`);
+    }
+
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
