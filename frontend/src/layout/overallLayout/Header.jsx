@@ -6,13 +6,16 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/AuthContext"
 import {http} from "../../api/http"
 import { ProfileEditModal } from "../../components/profile";
+import scoutService from "../../api/services/scoutService";
+import playerService from "../../api/services/playerService";
+import teamService from "../../api/services/teamService";
 
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileEdit, setShowProfileEdit] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { logout} = useAuth(); 
+  const { logout, role, id } = useAuth(); 
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -33,6 +36,44 @@ export default function Header() {
   // סגירת עריכת פרופיל
   const handleCloseProfileEdit = () => {
     setShowProfileEdit(false);
+  };
+
+  // הצגת פרופיל עצמי
+  const handleViewProfile = async () => {
+    setShowMenu(false);
+    if (role && id) {
+      try {
+        const token = localStorage.getItem('token');
+        let entityId;
+        
+        switch(role) {
+          case 'player':
+            const playerData = await playerService.getPlayerById(id, token);
+            entityId = playerData?.id;
+            break;
+          case 'scout':
+            const scoutData = await scoutService.getScoutById(id, token);
+            entityId = scoutData?.id;
+            break;
+          case 'team':
+            const teamData = await teamService.getTeamById(id);
+            entityId = teamData?.team?.id;
+            break;
+          default:
+            console.error('Unknown role:', role);
+            return;
+        }
+        
+        if (entityId) {
+          const profilePath = `/${role}/profile/${entityId}`;
+          navigate(profilePath);
+        } else {
+          console.error('Could not find entity ID for user');
+        }
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    }
   };
 
   // הצלחה בעדכון פרופיל
@@ -79,6 +120,7 @@ export default function Header() {
           />
           {showMenu && (
             <div className="dropdown-menu">
+              <div onClick={handleViewProfile}>👤 View Profile</div>
               <div onClick={handleEditProfile}>✏️ Edit Profile</div>
               <div onClick={handleLogout}>🚪 Logout</div>
               <div onClick={handleDeleteAccount}>🗑️ Delete Account</div>
