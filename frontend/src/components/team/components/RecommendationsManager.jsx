@@ -130,8 +130,11 @@ const RecommendationsManager = ({
     if (player?.photo) {
       if (player.photo.startsWith('http')) {
         return player.photo;
+      } else if (player.photo.startsWith('uploads/')) {
+        return `${import.meta.env.VITE_API_BASE_URL}/${player.photo}`;
+      } else {
+        return `${import.meta.env.VITE_API_BASE_URL}/uploads/${player.photo}`;
       }
-      return `http://localhost:3000/uploads/players/${player.photo}`;
     }
     
     // Default fallback

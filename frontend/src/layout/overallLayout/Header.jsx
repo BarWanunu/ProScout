@@ -10,12 +10,12 @@ import scoutService from "../../api/services/scoutService";
 import playerService from "../../api/services/playerService";
 import teamService from "../../api/services/teamService";
 
-export default function Header() {
+export default function Header({ profileId }) {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileEdit, setShowProfileEdit] = useState(false);
   const menuRef = useRef(null);
   const navigate = useNavigate();
-  const { logout, role, id } = useAuth(); 
+  const { logout, role, id, token } = useAuth();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -101,6 +101,23 @@ export default function Header() {
     } catch (err) {
       console.error("Failed to delete account", err);
       alert("Something went wrong while deleting your account.");
+    }
+  };
+
+  // ניווט לפרופיל עצמי
+  const handleViewProfile = () => {
+    setShowMenu(false);
+    
+    if (!role) {
+      console.error('❌ Cannot navigate - missing role');
+      return;
+    }
+
+    if (profileId) {
+      const profilePath = `/${role}/profile/${profileId}`;
+      navigate(profilePath);
+    } else {
+      console.error('❌ Cannot navigate - missing profileId');
     }
   };
 

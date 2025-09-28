@@ -13,9 +13,14 @@ export default function ScoutProfile({ scoutId, onBack }) {
   const getScoutImage = (scout) => {
     const image = scout?.image;
     if (!image) return defaultScoutImg;
-    if (typeof image === 'string' && image.startsWith('http')) return image;
-    // If image looks like an upload path, prefix with server origin
-    return `http://localhost:3000${image.startsWith('/') ? image : `/${image}`}`;
+    
+    if (image.startsWith('http')) {
+      return image;
+    } else if (image.startsWith('uploads/')) {
+      return `${import.meta.env.VITE_API_BASE_URL}/${image}`;
+    } else {
+      return `${import.meta.env.VITE_API_BASE_URL}/uploads/${image}`;
+    }
   };
 
   useEffect(() => {

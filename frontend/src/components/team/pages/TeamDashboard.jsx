@@ -92,7 +92,7 @@ export default function TeamDashboard() {
 
   return (
     <>
-      <Header />
+      <Header profileId={team?.id} />
       <div className={`td-wrapper ${fadeIn ? "fade-in" : "fade-out"}`}>
         {/* ---------- WELCOME SECTION ---------- */}
         <WelcomeSection user={team} userType="team" imageStyle="square" />

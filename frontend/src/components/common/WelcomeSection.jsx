@@ -47,11 +47,20 @@ export default function WelcomeSection({
 
   const welcomeSuffix = displayName ? `, ${displayName}` : "";
   
-  const profileImage = user?.image || user?.logo || user?.photo
-    ? (user.image || user.logo || user.photo).startsWith('http')
-      ? (user.image || user.logo || user.photo)
-      : `${import.meta.env.VITE_API_BASE_URL}/${user.image || user.logo}`
-    : currentDefaults.image;
+  const userImageField = user?.image || user?.logo || user?.photo;
+  let profileImage;
+  
+  if (userImageField) {
+    if (userImageField.startsWith('http')) {
+      profileImage = userImageField;
+    } else if (userImageField.startsWith('uploads/')) {
+      profileImage = `${import.meta.env.VITE_API_BASE_URL}/${userImageField}`;
+    } else {
+      profileImage = `${import.meta.env.VITE_API_BASE_URL}/uploads/${userImageField}`;
+    }
+  } else {
+    profileImage = currentDefaults.image;
+  }
 
   const imageShapeClass = imageStyle === "circle" ? "rounded-circle" : "rounded";
 

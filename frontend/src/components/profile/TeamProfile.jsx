@@ -13,9 +13,14 @@ export default function TeamProfile({ teamId, onBack }) {
   const getTeamLogo = (team) => {
     const logo = team?.logo;
     if (!logo) return defaultTeamImg;
-    if (typeof logo === 'string' && logo.startsWith('http')) return logo;
-    // If logo looks like an upload path, prefix with server origin
-    return `http://localhost:3000${logo.startsWith('/') ? logo : `/${logo}`}`;
+    
+    if (logo.startsWith('http')) {
+      return logo;
+    } else if (logo.startsWith('uploads/')) {
+      return `${import.meta.env.VITE_API_BASE_URL}/${logo}`;
+    } else {
+      return `${import.meta.env.VITE_API_BASE_URL}/uploads/${logo}`;
+    }
   };
 
   useEffect(() => {

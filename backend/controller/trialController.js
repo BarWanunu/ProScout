@@ -4,9 +4,6 @@ const { fetchUserProfile } = require("../utils/fetchUserProfile");
 
 exports.createTrial = async (req, res) => {
   try {
-    console.log("📥 Trial creation request received:", req.body);
-    console.log("👤 User from token:", req.user);
-
     //prettier-ignore
     const {player_id, team_id,scout_id,invitation_message,trial_date} = req.body;
 
@@ -15,36 +12,22 @@ exports.createTrial = async (req, res) => {
 
     // If not found, try by user_id (backward compatibility)
     if (!playerData.success || !playerData.data) {
-      console.log(
-        "🔄 Player not found by ID, trying user_id lookup:",
-        player_id
-      );
       playerData = await playerModel.findPlayerBy("user_id", player_id);
     }
 
     if (!playerData.success || !playerData.data) {
-      console.error("❌ Player not found for ID:", player_id);
       return res.status(404).json({ message: "Player not found for this ID." });
     }
 
     const actualPlayerId = playerData.data.id;
-    console.log(
-      "🔄 Using player_id:",
-      actualPlayerId,
-      "for player:",
-      playerData.data.name || playerData.data.first_name
-    );
 
     const sender_role = req.user.role;
 
     //prettier-ignore
     const trial = await trialModel.createTrial(actualPlayerId,team_id,scout_id,invitation_message,trial_date,sender_role);
 
-    console.log("✅ Trial model result:", trial);
-
     //prettier-ignore
     if (!trial.success) {
-      console.error('❌ Trial creation failed:', trial.error);
       return res.status(500).json({ message: "Failed to create trial.", error: trial.error });
     }
 
