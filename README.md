@@ -1,6 +1,4 @@
-# ProScout - Football Scouting Platform 🏈
-
-![ProScout Logo](./frontend/src/assets/logo.png)
+# ProScout - Football Scouting Platform
 
 ## Overview
 
