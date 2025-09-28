@@ -4,7 +4,6 @@
 import PropTypes from "prop-types";
 import "./RoleCard.css"
 
-
 const RoleCard = ({ role, onSelect }) => {
   const { id, title, description, icon: Icon, colorClass } = role;
 

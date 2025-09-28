@@ -34,10 +34,6 @@ const TrialInvitationModal = ({
   // Reset modal scroll position when modal opens and handle modal properties
   useEffect(() => {
     // Log modal properties to help debug
-    console.log('TrialInvitationModal show status:', show, {
-      targetType, targetId, targetName, senderRole, senderId, playerId, playerName, isForTrial: legacyProps.isForTrial
-    });
-    
     if (show) {
       // Reset form data when modal opens
       setFormData({
@@ -97,11 +93,6 @@ const TrialInvitationModal = ({
   // Determine the scenario and setup dynamic content
   const getScenarioInfo = () => {
     // Log the current modal parameters for debugging
-    console.log('TrialInvitationModal params:', { 
-      senderRole, targetType, targetId, targetName, 
-      playerId, playerName, isForTrial: legacyProps.isForTrial 
-    });
-
     // Backward compatibility - if old props are used
     if (playerId && !targetId) {
       return {
@@ -264,16 +255,7 @@ const TrialInvitationModal = ({
       }
 
       // Add metadata about the scenario
-      console.log('Creating trial with data:', {
-        ...trialData,
-        scenario: scenarioInfo.scenario,
-        isForTrial: legacyProps.isForTrial
-      });
-      
       const response = await trialService.createTrial(trialData, token);
-      
-      console.log('✅ Trial created successfully:', response);
-      
       // Reset form
       setFormData({
         trialDate: '',
@@ -290,7 +272,7 @@ const TrialInvitationModal = ({
       onHide();
       
     } catch (err) {
-      console.error('❌ Failed to create trial:', err);
+      console.error('Failed to create trial:', err);
       setError(
         err.response?.data?.message || 
         'Failed to create trial invitation. Please try again.'
@@ -325,7 +307,6 @@ const TrialInvitationModal = ({
       animation={true} // Enable animation
       enforceFocus={true} // Force focus to stay inside modal
       onEntered={() => {
-        console.log('TrialInvitationModal entered DOM, applying scroll reset');
         if (modalBodyRef.current) {
           modalBodyRef.current.scrollTop = 0;
           modalBodyRef.current.scrollTo({ top: 0, behavior: 'instant' });

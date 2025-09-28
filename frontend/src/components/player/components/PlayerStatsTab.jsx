@@ -22,8 +22,8 @@ const PlayerStatsTab = ({ player }) => {
       setLoading(true);
       const response = await playerService.getPlayerStats(player.id);
       setStats(response?.stats || []);
-    } catch (error) {
-      console.error('Error fetching player stats:', error);
+    } catch (error) {      
+        console.error('Error fetching player stats:', error);
       setStats([]);
     } finally {
       setLoading(false);
@@ -125,7 +125,6 @@ const PlayerStatsTab = ({ player }) => {
       duelSuccessRate: duelSuccessRate
     };
   };
-
 
   const renderFilterControls = () => (
     <div className="player-card-extended">

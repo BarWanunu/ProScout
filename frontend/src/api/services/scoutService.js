@@ -59,7 +59,6 @@ async function getScoutById(id, token) {
   };
 
   const response = await http.get(`${endpoint}/${id}`, config);
-  console.log("⬅️ Raw response from backend:", response.data);
   return response.data.scout;
 }
 

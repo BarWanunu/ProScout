@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
+import { POSITIONS } from "../../data/positions";
 import "@/components/search/styles/PlayerSearch.css";
 
 export default function PlayerProfileSearch({ onFiltersChange, onSearch }) {
-  const positions = ["Goalkeeper", "Defender", "Midfielder", "Attacker"];
 
   const [filters, setFilters] = useState({
     position: "",
@@ -45,7 +45,7 @@ return (
           onKeyDown={handleKeyDown}
         >
           <option value="">Select Position</option>
-          {positions.map((pos) => (
+          {POSITIONS.map((pos) => (
             <option key={pos} value={pos}>{pos}</option>
           ))}
         </select>

@@ -57,22 +57,19 @@ export default function TeamSearch({ onRefreshShortlist, team }) {
           const filters = { ...statsFilters, name: searchInput };
           const res = await searchService.searchPlayersWithStats(filters);
           setResults(res.data || res);
-          console.log(res.data);
         } else {
           const filters = { ...playerFilters, name: searchInput };
           const res = await searchService.advancedSearchPlayers(filters);
           setResults(res.data || res);
-          console.log(res.data);
         }
       } else if (searchType === "scout") {
         // Scout search
         const filters = { ...scoutFilters, name: searchInput };
         const res = await searchService.advancedSearchScouts(filters);
         setResults(res.data || res);
-        console.log(res.data);
       }
     } catch (err) {
-      console.error("❌ Search failed:", err);
+      console.error("Search failed:", err);
       setResults([]);
     } finally {
       setLoading(false);

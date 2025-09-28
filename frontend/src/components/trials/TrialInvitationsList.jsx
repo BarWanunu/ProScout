@@ -28,7 +28,6 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
   useEffect(() => {
     // Don't fetch on initial render if skipInitialFetch is true
     if (skipInitialFetch && !hasInitialFetch) {
-      console.log('TrialInvitationsList: Skipping initial fetch');
       setLoading(false);
       setHasInitialFetch(true);
       return;
@@ -49,8 +48,6 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
       setLoading(false);
       return;
     }
-    
-    console.log('TrialInvitationsList: Fetching trials for', { role, id });
     fetchTrials();
   }, [id, role, onRefresh, hasInitialFetch]);
 
@@ -114,8 +111,6 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
       if (!id) {
         throw new Error('User ID not available');
       }
-      
-      console.log('TrialInvitationsList: Fetching trials with', { role, id });
       let response;
       
       // Get trials based on user role
@@ -126,13 +121,9 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
       } else if (role === 'scout') {
         response = await trialService.getTrialsByScout(id, token);
       } else {
-        console.warn(`TrialInvitationsList: Unsupported role: ${role}`);
         setTrials([]);
         return;
       }
-      
-      console.log('TrialInvitationsList: API response:', response);
-      
       if (response?.trials) {
         // Sort trials by date (most recent first) and status (pending first)
         const sortedTrials = response.trials.sort((a, b) => {
@@ -143,11 +134,8 @@ const TrialInvitationsList = ({ onRefresh, skipInitialFetch = false }) => {
           // Then sort by date (newer first)
           return new Date(b.trial_date) - new Date(a.trial_date);
         });
-        
-        console.log(`TrialInvitationsList: Found ${sortedTrials.length} trials`);
         setTrials(sortedTrials);
       } else {
-        console.log('TrialInvitationsList: No trials found in response');
         setTrials([]);
       }
     } catch (err) {

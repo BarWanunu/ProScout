@@ -13,24 +13,18 @@ const RecommendationTab = ({ team }) => {
 
   const fetchRecommendations = async () => {
     if (!team || !token) {
-      console.log("Missing team or token:", { team, token });
       return;
     }
 
     try {
       setLoading(true);
       setError(null);
-      console.log("Fetching recommendations with token:", token);
       const response = await recommendationService.getRecommendationsByTeam(token);
-      console.log("Team recommendations response:", response);
-      console.log("Team data:", team);
-      
       // The API returns the recommendations array directly or in a wrapper
       const recommendationsData = response?.recommendations || response || [];
-      console.log("Processed recommendations data:", recommendationsData);
       setRecommendations(recommendationsData);
     } catch (err) {
-      console.error("Failed to fetch recommendations:", err);
+console.error("Failed to fetch recommendations:", err);
       console.error("Error details:", {
         message: err.message,
         status: err.response?.status,

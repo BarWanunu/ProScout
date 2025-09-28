@@ -1,8 +1,3 @@
-// פונקציות עזר לזיהוי וטיפול בתוצאות חיפוש
-
-/**
- * מזהה את סוג המשתמש בהתבסס על המבנה של תוצאת החיפוש
- */
 export const getUserTypeFromResult = (result) => {
   if (result.player) {
     return "player";
@@ -19,9 +14,6 @@ export const getUserTypeFromResult = (result) => {
   return "unknown";
 };
 
-/**
- * מנרמל תוצאת חיפוש למבנה אחיד
- */
 export const normalizeSearchResult = (result) => {
   const userType = getUserTypeFromResult(result);
 
@@ -59,7 +51,6 @@ export const normalizeSearchResult = (result) => {
       };
 
     case "scout":
-      // Scout fields from DB: id, user_id, first_name, last_name, phone, nationality, experience_years, image
       return {
         type: "scout",
         id: result.scout?.id || result.id,
@@ -82,9 +73,6 @@ export const normalizeSearchResult = (result) => {
   }
 };
 
-/**
- * מחזיר את האייקון המתאים לסוג המשתמש
- */
 export const getUserTypeIcon = (userType) => {
   switch (userType) {
     case "player":
@@ -98,18 +86,15 @@ export const getUserTypeIcon = (userType) => {
   }
 };
 
-/**
- * מחזיר את הצבע המתאים לסוג המשתמש
- */
 export const getUserTypeColor = (userType) => {
   switch (userType) {
     case "player":
-      return "#28a745"; // ירוק
+      return "#28a745";
     case "team":
-      return "#007bff"; // כחול
+      return "#007bff";
     case "scout":
-      return "#6f42c1"; // סגול
+      return "#6f42c1";
     default:
-      return "#6c757d"; // אפור
+      return "#6c757d";
   }
 };

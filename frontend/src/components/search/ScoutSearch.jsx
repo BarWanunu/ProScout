@@ -11,7 +11,6 @@ import "@/components/search/styles/SearchBox.css";
 import "@/components/search/styles/SearchFixGlobal.css";
 import "@/components/search/styles/DirectSearchStyles.css";
 
-
 export default function ScoutSearch() {
   const navigate = useNavigate();
   const [searchType, setSearchType] = useState("player");
@@ -39,8 +38,6 @@ export default function ScoutSearch() {
 
   // Function to navigate to public profile routes
   const handleNavigateToPublicProfile = (profileType, profileId) => {
-    console.log('Navigating to public profile:', { profileType, profileId });
-    
     let profilePath;
     if (profileType === 'player') {
       profilePath = `/player/profile/${profileId}`;
@@ -132,12 +129,10 @@ export default function ScoutSearch() {
           const filters = { team_name: searchInput, league, country, formation };
           const res = await searchService.advancedSearchTeams(filters);
           setResults(res.data || res);
-          console.log(res.data);
         } else {
           // simple search by name
           const res = await searchService.searchTeamsByName(searchInput);
           setResults(res.data || res);
-          console.log(res.data);
         }
       } else {
         // --- player search ---
@@ -145,16 +140,14 @@ export default function ScoutSearch() {
           const filters = { ...statsFilters, name: searchInput };
           const res = await searchService.searchPlayersWithStats(filters);
           setResults(res.data || res);
-          console.log(res.data);
         } else {
           const filters = { ...playerFilters, name: searchInput };
           const res = await searchService.advancedSearchPlayers(filters);
           setResults(res.data || res);
-          console.log(res.data);
         }
       }
     } catch (err) {
-      console.error("❌ Search failed:", err);
+      console.error("Search failed:", err);
       setResults([]);
     } finally {
       setLoading(false);

@@ -7,7 +7,6 @@ import { useAuth } from "../../auth/AuthContext"
 import {http} from "../../api/http"
 import { ProfileEditModal } from "../../components/profile";
 
-
 export default function Header() {
   const [showMenu, setShowMenu] = useState(false);
   const [showProfileEdit, setShowProfileEdit] = useState(false);
@@ -39,7 +38,6 @@ export default function Header() {
   // הצלחה בעדכון פרופיל
   const handleProfileUpdateSuccess = () => {
     // אפשר להוסיף כאן רענון נתונים או הודעה
-    console.log('Profile updated successfully');
   };
 
   // התנתקות

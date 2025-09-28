@@ -56,7 +56,6 @@ const ActionMenu = ({
           className={`action-menu ${position}`}
         >
           {actions.map((action, index) => {
-            // Handle separator items
             if (action.type === 'separator') {
               return <div key={`separator-${index}`} className="action-menu-separator" />;
             }

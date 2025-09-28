@@ -1,6 +1,5 @@
 import "./PasswordStrengthIndicator.css";
 
-
 // This component is used to display the strength of a password. It shows a visual representation of the password strength based on its length and complexity.
 export default function PasswordStrengthIndicator({value}) {
   return (

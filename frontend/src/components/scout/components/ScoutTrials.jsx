@@ -17,7 +17,6 @@ export default function ScoutTrials({ scout }) {
     try {
       setLoading(true);
       const response = await trialService.getTrialsByScout(scout.id, token);
-      console.log("Scout trials response:", response);
       const trialsData = response?.trials || [];
       setTrials(trialsData);
     } catch (err) {

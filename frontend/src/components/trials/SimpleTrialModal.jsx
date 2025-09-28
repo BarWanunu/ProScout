@@ -82,13 +82,7 @@ const SimpleTrialModal = ({
         trial_date: trialDateTime,
         sender_role: 'scout'
       };
-
-      console.log('📤 Creating trial with data:', trialData);
-      
       const response = await trialService.createTrial(trialData, token);
-      
-      console.log('✅ Trial created successfully:', response);
-      
       // Reset form
       setFormData({
         trialDate: '',
@@ -104,7 +98,7 @@ const SimpleTrialModal = ({
       onHide();
       
     } catch (err) {
-      console.error('❌ Failed to create trial:', err);
+      console.error('Failed to create trial:', err);
       setError(
         err.response?.data?.message || 
         'Failed to create trial invitation. Please try again.'

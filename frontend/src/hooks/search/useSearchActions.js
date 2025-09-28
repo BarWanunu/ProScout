@@ -90,7 +90,6 @@ export const useSearchActions = ({
         icon: "⚽",
         className: "primary",
         onClick: () => {
-          console.log("🎯 Invite action clicked for player:", targetUser);
           handleInviteToTrial(targetUser);
         },
         tooltip: "Invite player to a trial",
@@ -178,8 +177,6 @@ export const useSearchActions = ({
 
   // פונקציות הטיפול בפעולות
   const handleViewProfile = (user) => {
-    console.log("Viewing profile of:", user);
-
     if (onNavigateToProfile) {
       // Use profile navigation if available
       onNavigateToProfile(user.type, user.id);
@@ -197,14 +194,11 @@ export const useSearchActions = ({
         profilePath = "/";
       }
 
-      console.log("Navigating to:", profilePath);
       navigate(profilePath);
     }
   };
 
   const handleSendMessage = (user) => {
-    console.log("Opening message modal for:", user);
-
     // Extract user info based on user type
     let recipientId = null;
     let recipientName = "";
@@ -250,9 +244,6 @@ export const useSearchActions = ({
           : user.name || "Scout";
       recipientType = "Scout";
     }
-
-    console.log("Resolved recipientId:", recipientId, "from user:", user);
-
     if (recipientId) {
       setMessageModalState({
         show: true,
@@ -267,8 +258,6 @@ export const useSearchActions = ({
   };
 
   const handleRecommendPlayer = (team) => {
-    console.log("Recommending player to team:", team);
-
     // Extract the team ID from the team object
     const teamId = team.team?.id || team.id;
     const teamName =
@@ -285,22 +274,10 @@ export const useSearchActions = ({
 
   // Handle when a player is selected from the PlayerSelectModal
   const handlePlayerSelected = (player) => {
-    console.log("🔄 Player selected:", player);
-
     // Save team information before closing the modal
     const teamId = playerSelectModalState.teamId;
     const teamName = playerSelectModalState.teamName;
     const isForTrial = playerSelectModalState.isForTrial;
-
-    console.log("📋 Data for action:", {
-      teamId,
-      teamName,
-      playerId: player.id,
-      playerName: player.name,
-      isForTrial,
-      currentState: playerSelectModalState,
-    });
-
     // Close the player selection modal
     setPlayerSelectModalState({
       show: false,
@@ -318,8 +295,6 @@ export const useSearchActions = ({
       )}&teamId=${teamId}&teamName=${encodeURIComponent(
         teamName
       )}&scoutId=${currentUserId}`;
-      console.log("🚀 Navigating to trial page:", trialUrl);
-
       // Scroll to top automatically
       window.scrollTo({
         top: 0,
@@ -337,8 +312,6 @@ export const useSearchActions = ({
       )}&teamId=${teamId}&teamName=${encodeURIComponent(
         teamName
       )}&scoutId=${currentUserId}`;
-      console.log("🚀 Navigating to recommendation page:", recommendationUrl);
-
       // Scroll to top automatically
       window.scrollTo({
         top: 0,
@@ -351,8 +324,6 @@ export const useSearchActions = ({
   };
 
   const handleRecommendToTeam = (player) => {
-    console.log("Recommending player to team:", player);
-
     // Extract player ID and name
     const playerId = player.player?.id || player.id;
     const playerName =
@@ -372,22 +343,12 @@ export const useSearchActions = ({
 
   // Handle when a team is selected from the TeamSelectModal
   const handleTeamSelected = (team) => {
-    console.log("Team selected:", team);
-
     // Save player information before closing the modal
     const playerId = teamSelectModalState.playerId;
     const playerName = teamSelectModalState.playerName;
     const isForTrial = teamSelectModalState.isForTrial;
 
     // Log the data we're working with
-    console.log("handleTeamSelected data:", {
-      teamId: team.id,
-      teamName: team.name,
-      playerId: playerId,
-      playerName: playerName,
-      isForTrial: isForTrial,
-    });
-
     // Close the team selection modal
     setTeamSelectModalState({
       show: false,
@@ -403,8 +364,6 @@ export const useSearchActions = ({
       )}&teamId=${team.id}&teamName=${encodeURIComponent(
         team.name
       )}&scoutId=${currentUserId}`;
-      console.log("🚀 Navigating to trial page:", trialUrl);
-
       // Scroll to top automatically
       window.scrollTo({
         top: 0,
@@ -420,8 +379,6 @@ export const useSearchActions = ({
       )}&teamId=${team.id}&teamName=${encodeURIComponent(
         team.name
       )}&scoutId=${currentUserId}`;
-      console.log("� Navigating to recommendation page:", recommendationUrl);
-
       // Scroll to top automatically
       window.scrollTo({
         top: 0,
@@ -434,9 +391,6 @@ export const useSearchActions = ({
   };
 
   const handleInviteToTrial = (user) => {
-    console.log("🎯 Opening trial invitation for:", user);
-    console.log("🔍 User type:", user.type);
-
     if (user.type === "player") {
       // When inviting a player - first open team selection modal
       const playerId = user.player?.id || user.id;
@@ -445,12 +399,6 @@ export const useSearchActions = ({
         user.name ||
         user.full_name ||
         `Player ${playerId}`;
-
-      console.log("🏃 Opening team selection modal for player trial:", {
-        playerId,
-        playerName,
-      });
-
       // Show team selection modal for choosing a team for the player trial
       setTeamSelectModalState({
         show: true,
@@ -458,24 +406,11 @@ export const useSearchActions = ({
         playerName: playerName,
         isForTrial: true, // Flag to indicate this is for a trial, not recommendation
       });
-
-      console.log("📊 Team modal state after setting:", {
-        show: true,
-        playerId: playerId,
-        playerName: playerName,
-        isForTrial: true,
-      });
     } else if (user.type === "team") {
       // When scout invites a team
       const teamId = user.team?.id || user.id;
       const teamName =
         user.team?.team_name || user.team_name || user.name || `Team ${teamId}`;
-
-      console.log(
-        "🏆 Opening player selection modal for team trial:",
-        teamName
-      );
-
       // Open player selection modal for choosing a player for the team trial
       setPlayerSelectModalState({
         show: true,
@@ -493,8 +428,6 @@ export const useSearchActions = ({
   };
 
   const handleRequestTrial = (user) => {
-    console.log("Requesting trial from:", user);
-
     // Check if the target is a team
     if (user.type !== "team") {
       console.error("Can only request trials from teams");
@@ -511,20 +444,17 @@ export const useSearchActions = ({
     const trialUrl = `/trial/create?playerId=${currentUserId}&teamId=${teamId}&teamName=${encodeURIComponent(
       teamName
     )}`;
-    console.log("🚀 Navigating to trial request page:", trialUrl);
     navigate(trialUrl);
   };
 
   const handleAddToShortlist = async (player) => {
     try {
-      console.log("Adding to shortlist:", player);
       const token = getToken();
       const playerId = player.player_id || player.id;
       await shortlistService.addPlayer(playerId, token);
       alert(`${player.name} has been added to your shortlist successfully!`);
       // Refresh the shortlist if callback is provided
       if (onRefreshShortlist) {
-        console.log("Refreshing shortlist after adding player...");
         await onRefreshShortlist();
       }
     } catch (error) {

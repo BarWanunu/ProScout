@@ -28,7 +28,6 @@ const ScoutRecommendationsTab = () => {
       setLoading(true);
       setError('');
       const response = await recommendationService.getRecommendationsByScout(token);
-      console.log('🔍 Recommendations response:', response);
       setRecommendations(response.recommendations || []);
     } catch (err) {
       console.error('Failed to load scout recommendations:', err);
@@ -69,7 +68,6 @@ const ScoutRecommendationsTab = () => {
             const data = await teamService.getTeamByTeamId(teamId);
             setTeamDetails(prev => ({ ...prev, [teamId]: data.team || data }));
           } catch (err) {
-            console.warn('Failed to fetch team', teamId, err);
           }
         }
       }
@@ -82,7 +80,6 @@ const ScoutRecommendationsTab = () => {
             const data = res.player;
             setPlayerDetails(prev => ({ ...prev, [playerId]: data }));
           } catch (err) {
-            console.warn('Failed to fetch player', playerId, err);
             // Set placeholder data for missing player
             setPlayerDetails(prev => ({ 
               ...prev, 

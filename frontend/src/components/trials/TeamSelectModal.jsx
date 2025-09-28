@@ -75,7 +75,7 @@ const TeamSelectModal = ({
         setError('No teams found matching your search');
       }
     } catch (err) {
-      console.error('❌ Team search failed:', err);
+      console.error('Team search failed:', err);
       setError(
         err.response?.data?.message || 
         'Failed to search teams. Please try again.'

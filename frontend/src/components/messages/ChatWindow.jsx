@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, MessageSquare, User } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Send, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/auth/AuthContext';
 import messageService from '@/api/services/messageService';
 import { getToken } from '@/api/tokenStore';
@@ -64,8 +64,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
       
       const token = getToken();
       const response = await messageService.getConversation(selectedConversation.other_user_id, token);
-      
-      console.log('Messages response:', response);
       setMessages(response.messages || []);
     } catch (err) {
       console.error('Failed to fetch messages:', err);
@@ -93,9 +91,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         newMessage.trim(),
         token
       );
-
-      console.log('Send message response:', response);
-      
       // Add the new message to local state
       const sentMessage = {
         id: response.data?.id,
@@ -105,9 +100,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         sent_at: new Date().toISOString(),
         read: false,
       };
-
-      // Prevent ScrollToTop from scrolling when we add a message
-      sessionStorage.setItem('preventMessageScroll', 'true');
       
       setMessages(prev => [...prev, sentMessage]);
       setNewMessage('');
@@ -122,17 +114,11 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         scrollToBottom();
       }, 50);
       
-    } catch (err) {
-      console.error('Failed to send message:', err);
+    } catch (err) {   
+        console.error('Failed to send message:', err);
       setError('Failed to send message. Please try again.');
     } finally {
       setSending(false);
-      // Keep focus on input after sending (whether success or error)
-      setTimeout(() => {
-        if (messageInputRef.current) {
-          messageInputRef.current.focus();
-        }
-      }, 50);
     }
   };
 

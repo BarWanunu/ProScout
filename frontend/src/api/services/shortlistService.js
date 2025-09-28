@@ -28,11 +28,9 @@ async function getShortlist(token) {
   };
 
   const response = await http.get(endpoint, config);
-  console.log(response.data);
   return response.data.players;
 }
 
-// Get teams that have shortlisted the current player
 async function getTeamsByPlayer(token) {
   const config = {
     headers: {

@@ -11,7 +11,6 @@ const AccessDeniedMessage = ({ show, allowedRoles, currentRole, onClose, autoClo
       setIsVisible(true);
       setCountdown(autoCloseTime);
       
-      // Countdown timer
       const countdownInterval = setInterval(() => {
         setCountdown(prev => {
           if (prev <= 1) {
@@ -30,7 +29,7 @@ const AccessDeniedMessage = ({ show, allowedRoles, currentRole, onClose, autoClo
   const handleClose = () => {
     setIsVisible(false);
     if (onClose) {
-      setTimeout(onClose, 300); // Wait for animation to complete
+      setTimeout(onClose, 300);
     }
   };
 
