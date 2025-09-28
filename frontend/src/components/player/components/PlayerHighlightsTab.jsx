@@ -9,6 +9,9 @@ const PlayerHighlightsTab = ({ player }) => {
     // Check for YouTube URL patterns
     const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
     
+    // Check for local uploaded files
+    if (url.startsWith('uploads/')) return true;
+    
     // Check for other video formats
     const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm)$/i;
     
@@ -22,6 +25,11 @@ const PlayerHighlightsTab = ({ player }) => {
     const youtubeMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
     if (youtubeMatch) {
       return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+    }
+    
+    // Handle local uploaded files (relative paths)
+    if (url.startsWith('uploads/')) {
+      return `http://localhost:3000/${url}`;
     }
     
     // Return original URL for other formats
@@ -67,12 +75,20 @@ const PlayerHighlightsTab = ({ player }) => {
       );
     }
 
-    // For other video formats
+    // For other video formats (including local files)
     return (
       <div className="video-container">
         <div className="video-wrapper">
-          <video controls className="video-player">
-            <source src={player.video} type="video/mp4" />
+          <video 
+            controls 
+            className="video-player"
+            onError={(e) => {
+              console.error('Video failed to load:', embedUrl, e);
+            }}
+          >
+            <source src={embedUrl} type="video/mp4" />
+            <source src={embedUrl} type="video/webm" />
+            <source src={embedUrl} type="video/ogg" />
             Your browser does not support the video tag.
           </video>
         </div>
