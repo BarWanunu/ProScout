@@ -5,18 +5,12 @@ import "@/components/search/styles/SearchFixGlobal.css";
 import TrialsTab from "./TrialsTab";
 import ShortlistTab from "./ShortlistTab";
 import RecommendationTab from "./RecommendationTab";
+import AIScoutTab from "./AIScoutTab"
 import "../styles/TeamDashboardTabs.css";
 import "../styles/TeamContainer.css";
 
 export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshShortlist, onRefreshTrials }) {
   const [activeTab, setActiveTab] = useState("search");
-  // Remove single refreshKey and create separate flags for each tab to track refreshes
-  const [forceRefresh, setForceRefresh] = useState({
-    search: false,
-    trials: false,
-    recommendations: false,
-    shortlist: false
-  });
 
   // Update to refresh data when switching tabs
   const switchToTab = (tabId) => {
@@ -35,11 +29,6 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
         onRefreshShortlist();
       }
       
-      // Update the force refresh flag for this tab
-      setForceRefresh(prev => ({
-        ...prev,
-        [tabId]: !prev[tabId]
-      }));
     }
   };
 
@@ -63,6 +52,11 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
       id: "shortlist", 
       label: "Shortlist", 
       icon: <Star size={18} /> 
+    },
+        { 
+      id: "recommendationSystem", 
+      label: "AI Scout", 
+      icon: <User size={18} /> 
     },
   ];
 
@@ -115,6 +109,10 @@ export default function TeamDashboardTabs({ team, trials, shortlist, onRefreshSh
             onSwitchToSearch={() => switchToTab("search")}
             onRefreshShortlist={onRefreshShortlist}
           />
+        )}
+
+        {activeTab === "recommendationSystem" && (
+          <AIScoutTab />
         )}
       </div>
     </div>
