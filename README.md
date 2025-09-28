@@ -255,35 +255,7 @@ Visualization: Fixed-domain radar (0–60) with deterministic color palette; leg
 
 ---
 
-## 13. Performance Considerations
-
-- O(N) similarity scan acceptable for current dataset size; future: precomputed ANN index (e.g., Faiss / pgvector).
-- Batch inserts for raw imports (500 row chunks).
-- JSON output trimmed to essential fields to reduce token cost in AI requests.
-- Potential next step: caching similarity results keyed by (player_rk, filter_signature).
-
----
-
-## 14. Security Notes
-
-- Rotate any published API keys immediately.
-- Enforce HTTPS + secure cookie flags in production.
-- Add rate limiting to AI and similarity endpoints for abuse mitigation.
-- Consider separating AI key usage behind server-only microservice.
-
----
-
-## 15. Testing (Planned / Suggested)
-
-Recommended layers:
-
-- Unit: cosine similarity pure function; age bracket filtering; league prioritization sort.
-- Integration: generate-report endpoint returns valid JSON schema.
-- UI: snapshot of 3-card shortlist layout.
-
----
-
-## 16. Roadmap / Future Enhancements
+## 13. Roadmap / Future Enhancements
 
 - 🔍 Advanced vector indexing (pgvector or external ANN)
 - 📹 Video event tagging & highlight linkage
@@ -294,7 +266,7 @@ Recommended layers:
 
 ---
 
-## 17. Developer Workflow
+## 14. Developer Workflow
 
 | Step | Action                                  |
 | ---- | --------------------------------------- |
@@ -306,27 +278,9 @@ Recommended layers:
 
 ---
 
-## 18. Troubleshooting
+## 15. Attribution & Ownership
 
-| Symptom                         | Likely Cause                                | Fix                                           |
-| ------------------------------- | ------------------------------------------- | --------------------------------------------- |
-| `MODULE_NOT_FOUND` when seeding | Wrong relative path                         | Run `node startup/...` inside backend folder  |
-| Empty AI report / parse fail    | LLM returned markdown or truncated JSON     | Display fallback markdown; retry              |
-| Similarity all ~0               | Embedding scaling mismatch or empty vectors | Re-run load scripts; inspect DB row counts    |
-| Player missing league in report | Not found in raw table                      | Confirm consistent `player` naming in raw CSV |
-
----
-
-## 19. Attribution & Ownership
-
-**Author:** Bar Wanunu – Full Stack Development, Data Modeling, AI Integration, System Architecture.  
-Project built as a comprehensive demonstration of applied football analytics engineering.
-
----
-
-## 20. License / Usage
-
-Educational & portfolio demonstration. Not production‑hardened. External redistribution of proprietary datasets or model outputs may require source licensing confirmation.
+**Author:** Bar Wanunu and Michael Afraimov
 
 ---
 
