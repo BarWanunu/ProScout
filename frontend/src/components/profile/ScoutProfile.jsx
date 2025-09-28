@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Badge, Spinner, Alert } from 'react-bootstrap';
-import { ArrowLeft, User, Phone, Globe, Award, Calendar } from 'lucide-react';
+import { ArrowLeft, User } from 'lucide-react';
 import scoutService from '@/api/services/scoutService';
 import defaultScoutImg from '@/assets/scout.jpeg';
 import './styles/ScoutProfile.css';
@@ -26,7 +26,6 @@ export default function ScoutProfile({ scoutId, onBack }) {
     try {
       setLoading(true);
       const response = await scoutService.getScoutByScoutId(scoutId);
-      // Accept responses that return { scout: {...} } even without a success flag
       if (response && response.scout) {
         setScout(response.scout);
       } else if (response.success) {

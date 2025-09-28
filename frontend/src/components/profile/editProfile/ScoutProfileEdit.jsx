@@ -30,7 +30,6 @@ export default function ScoutProfileEdit({ onClose, onSuccess }) {
       setFieldValue(value);
     }
     
-    // Clear errors when user starts changing
     setErrors({});
   };
 

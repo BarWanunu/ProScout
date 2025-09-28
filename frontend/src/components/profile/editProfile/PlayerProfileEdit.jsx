@@ -18,8 +18,7 @@ export default function PlayerProfileEdit({ onClose, onSuccess }) {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
-  const [videoInputType, setVideoInputType] = useState('url'); // 'url' or 'file'
-
+  const [videoInputType, setVideoInputType] = useState('url'); 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
     
@@ -102,7 +101,7 @@ export default function PlayerProfileEdit({ onClose, onSuccess }) {
     const hasData = Object.entries(formData).some(([key, value]) => {
       if (['photo', 'videoFile'].includes(key)) return value && value !== '';
       if (key === 'video' && videoInputType === 'url') return value.trim() !== '';
-      if (key === 'video' || key === 'videoFile') return false; // Skip these in this check
+      if (key === 'video' || key === 'videoFile') return false; 
       return value.trim() !== '';
     });
     
@@ -122,7 +121,7 @@ export default function PlayerProfileEdit({ onClose, onSuccess }) {
         if (key === 'photo' && value && value !== '') {
           updateData[key] = value;
         } else if (key === 'videoFile' && value && value !== '' && videoInputType === 'file') {
-          updateData.video = value; // Send video file as 'video' field
+          updateData.video = value; 
         } else if (key === 'video' && value.trim() !== '' && videoInputType === 'url') {
           updateData[key] = value;
         } else if (!['photo', 'video', 'videoFile'].includes(key) && value.trim() !== '') {

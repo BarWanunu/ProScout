@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Card, Container, Row, Col, Button, Badge, Spinner, Alert } from 'react-bootstrap';
-import { ArrowLeft, Users } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import teamService from '@/api/services/teamService';
 import defaultTeamImg from '@/assets/teamPhoto.jpg';
 import './styles/TeamProfile.css';
@@ -26,7 +26,6 @@ export default function TeamProfile({ teamId, onBack }) {
     try {
       setLoading(true);
       const response = await teamService.getTeamByTeamId(teamId);
-      // Accept responses that return { team: {...} } even without a success flag
       if (response && response.team) {
         setTeam(response.team);
       } else {

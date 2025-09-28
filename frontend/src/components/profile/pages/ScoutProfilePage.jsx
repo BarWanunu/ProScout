@@ -8,7 +8,8 @@ const ScoutProfilePage = () => {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    navigate(-1); // Go back to previous page
+    // Go back to previous page
+    navigate(-1); 
   };
 
   return (
