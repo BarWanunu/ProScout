@@ -225,6 +225,52 @@ exports.getSimilarPlayers = async (req, res) => {
       console.warn('Fuzzy enrichment failed:', enrichErr.message);
     }
 
+    // 6. Attach PRESENTATION data strictly from proscout_player_stats_raw (league, squad, raw pos, raw metrics)
+    try {
+      const displayNames = [selectedPlayerReadable.player, ...recommendationsReadable.map(r => r.player)].filter(Boolean);
+      const uniqueDisplay = [...new Set(displayNames)];
+      if (uniqueDisplay.length) {
+        const rawRes = await db.query(`
+          SELECT player,
+                 nation,
+                 pos,
+                 comp,
+                 squad,
+                 born,
+                 playing_time_m_p,
+                 age,
+                 "performance_saves",
+                 "performance_c_s",
+                 "performance_g_a",
+                 "performance_so_t_a",
+                 "performance_ast",
+                 "performance_gls",
+                 "aerial_duels_won",
+                 "tackles_tkl",
+                 "int",
+                 "k_p",
+                 "g_c_a_g_c_a",
+                 "progression_prg_p",
+                 "s_c_a_s_c_a",
+                 "expected_x_g",
+                 "expected_x_a"
+            FROM proscout_player_stats_raw
+           WHERE player = ANY($1)
+        `, [uniqueDisplay]);
+        const rawMap = Object.fromEntries(rawRes.rows.map(r => [r.player, r]));
+        const mergeRaw = (row) => {
+          const raw = rawMap[row.player];
+          if (!raw) return;
+          // Add/overwrite only presentation fields
+          Object.assign(row, raw);
+        };
+        mergeRaw(selectedPlayerReadable);
+        recommendationsReadable.forEach(mergeRaw);
+      }
+    } catch (rawErr) {
+      console.warn('Raw presentation enrichment failed:', rawErr.message);
+    }
+
     res.json({
       selectedPlayer: selectedPlayerReadable,
       recommendations: recommendationsReadable,

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import Select from 'react-select';
 import { useQuery } from '@tanstack/react-query';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend, ResponsiveContainer } from 'recharts';
-import { Info, Target, ChevronUp, ChevronDown, Users } from 'lucide-react';
+import { Info, ChevronUp, ChevronDown } from 'lucide-react';
 import recommendationService from '@/api/services/recommendationSystemService';
 import ScouterAI from './SmartSearch';
 import defaultAvatar from '@/assets/default-player.png';
@@ -151,81 +151,75 @@ export default function AIScoutTab() {
                   <div className="identity-meta">
                     <h3 className="player-name" title={selectedPlayer.player}>{selectedPlayer.player}</h3>
                     <div className="mini-tags">
-                      <span className="tag">Pos: {selectedPlayer.position || selectedPlayer.pos}</span>
-                      <span className="tag">Age: {formatValue(selectedPlayer.age)}</span>
-                      <span className="tag">Nation: {formatValue(selectedPlayer.nationality || selectedPlayer.nation)}</span>
-                      <span className="tag">Club: {formatValue(selectedPlayer.club || selectedPlayer.squad)}</span>
+                      <span className="tag">Nation: {formatValue(selectedPlayer.nation || selectedPlayer.nationality)}</span>
+                      <span className="tag">Position: {formatValue(selectedPlayer.pos || selectedPlayer.position)}</span>
+                      <span className="tag">League: {formatValue(selectedPlayer.comp)}</span>
+                      <span className="tag">Team: {formatValue(selectedPlayer.squad || selectedPlayer.club)}</span>
+                      <span className="tag">Born: {formatValue(selectedPlayer.born)}</span>
+                      <span className="tag">Matches: {formatValue(selectedPlayer.playing_time_m_p)}</span>
                     </div>
                   </div>
                 </div>
                 <div className="player-stats-groups">
-                  {selectedPlayer?.statsLatest && (
-                    <div className="group">
-                      <div className="group-heading"><Info size={14} /> <span>Latest Season</span></div>
-                      <div className="stats-grid four-col">
-                        {/* Position specific blocks mirroring TeamSearch PlayerProfile */}
-                        {(() => {
-                          const latest = selectedPlayer.statsLatest;
-                          const pos = (selectedPlayer.position || selectedPlayer.pos || '').toLowerCase();
-                          if (pos.includes('goalkeeper') || pos === 'gk') {
-                            return (
-                              <>
-                                <div className="stat"><span className="label">Rating</span><span className="value">{formatValue(latest.rating)}</span></div>
-                                <div className="stat"><span className="label">Passes Completed</span><span className="value">{formatValue(latest.passes_completed)}</span></div>
-                                <div className="stat"><span className="label">Yellow Cards</span><span className="value">{formatValue(latest.yellow_cards)}</span></div>
-                                <div className="stat"><span className="label">Red Cards</span><span className="value">{formatValue(latest.red_cards)}</span></div>
-                              </>
-                            );
-                          }
-                          if (pos.includes('defender') || pos.startsWith('df')) {
-                            return (
-                              <>
-                                <div className="stat"><span className="label">Rating</span><span className="value">{formatValue(latest.rating)}</span></div>
-                                <div className="stat"><span className="label">Tackles</span><span className="value">{formatValue(latest.tackles)}</span></div>
-                                <div className="stat"><span className="label">Interceptions</span><span className="value">{formatValue(latest.interceptions)}</span></div>
-                                <div className="stat"><span className="label">Duels</span><span className="value">{formatValue(latest.duels_won)}/{formatValue(latest.duels)}</span></div>
-                                <div className="stat"><span className="label">Yellow Cards</span><span className="value">{formatValue(latest.yellow_cards)}</span></div>
-                                <div className="stat"><span className="label">Red Cards</span><span className="value">{formatValue(latest.red_cards)}</span></div>
-                              </>
-                            );
-                          }
-                          if (pos.includes('midfielder') || pos.startsWith('mf')) {
-                            return (
-                              <>
-                                <div className="stat"><span className="label">Rating</span><span className="value">{formatValue(latest.rating)}</span></div>
-                                <div className="stat"><span className="label">Passes</span><span className="value">{formatValue(latest.passes_completed)}</span></div>
-                                <div className="stat"><span className="label">Key Passes</span><span className="value">{formatValue(latest.key_passes)}</span></div>
-                                <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(latest.assists)}</span></div>
-                                <div className="stat"><span className="label">Dribbles</span><span className="value">{formatValue(latest.dribbles_success)}/{formatValue(latest.dribbles_attempted)}</span></div>
-                                <div className="stat"><span className="label">Yellow Cards</span><span className="value">{formatValue(latest.yellow_cards)}</span></div>
-                              </>
-                            );
-                          }
-                          if (pos.includes('forward') || pos.includes('attacker') || pos.startsWith('fw')) {
-                            return (
-                              <>
-                                <div className="stat"><span className="label">Rating</span><span className="value">{formatValue(latest.rating)}</span></div>
-                                <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(latest.goals)}</span></div>
-                                <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(latest.assists)}</span></div>
-                                <div className="stat"><span className="label">Shots on Target</span><span className="value">{formatValue(latest.shots_on_target)}</span></div>
-                                <div className="stat"><span className="label">Dribbles</span><span className="value">{formatValue(latest.dribbles_success)}/{formatValue(latest.dribbles_attempted)}</span></div>
-                                <div className="stat"><span className="label">Yellow Cards</span><span className="value">{formatValue(latest.yellow_cards)}</span></div>
-                              </>
-                            );
-                          }
-                          // fallback: show a minimal generic subset
+                  <div className="group">
+                    <div className="group-heading"><Info size={14} /> <span>Role Metrics</span></div>
+                    <div className="stats-grid four-col">
+                      {(() => {
+                        const pos = (selectedPlayer.pos || selectedPlayer.position || '').toUpperCase();
+                        const sp = selectedPlayer; // alias
+                        if (pos.includes('GK')) {
                           return (
                             <>
-                              <div className="stat"><span className="label">Rating</span><span className="value">{formatValue(latest.rating)}</span></div>
-                              <div className="stat"><span className="label">Yellow Cards</span><span className="value">{formatValue(latest.yellow_cards)}</span></div>
-                              <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(latest.goals)}</span></div>
-                              <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(latest.assists)}</span></div>
+                              <div className="stat"><span className="label">Saves</span><span className="value">{formatValue(sp.performance_saves)}</span></div>
+                              <div className="stat"><span className="label">Clean Sheet</span><span className="value">{formatValue(sp.performance_c_s)}</span></div>
+                              <div className="stat"><span className="label">Goals Against</span><span className="value">{formatValue(sp.performance_g_a)}</span></div>
+                              <div className="stat"><span className="label">ShoTA</span><span className="value">{formatValue(sp.performance_so_t_a)}</span></div>
                             </>
                           );
-                        })()}
-                      </div>
+                        }
+                        if (pos.includes('DF')) {
+                          return (
+                            <>
+                              <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(sp.performance_ast)}</span></div>
+                              <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(sp.performance_gls)}</span></div>
+                              <div className="stat"><span className="label">Aerial Duels</span><span className="value">{formatValue(sp.aerial_duels_won)}</span></div>
+                              <div className="stat"><span className="label">Tackles</span><span className="value">{formatValue(sp.tackles_tkl)}</span></div>
+                              <div className="stat"><span className="label">Interceptions</span><span className="value">{formatValue(sp.int)}</span></div>
+                              <div className="stat"><span className="label">Key Passes</span><span className="value">{formatValue(sp.k_p)}</span></div>
+                            </>
+                          );
+                        }
+                        if (pos.includes('MF')) {
+                          return (
+                            <>
+                              <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(sp.performance_ast)}</span></div>
+                              <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(sp.performance_gls)}</span></div>
+                              <div className="stat"><span className="label">Aerial Duels</span><span className="value">{formatValue(sp.aerial_duels_won)}</span></div>
+                              <div className="stat"><span className="label">GCA</span><span className="value">{formatValue(sp.g_c_a_g_c_a)}</span></div>
+                              <div className="stat"><span className="label">Prog Carries</span><span className="value">{formatValue(sp.progression_prg_p)}</span></div>
+                              <div className="stat"><span className="label">SCA</span><span className="value">{formatValue(sp.s_c_a_s_c_a)}</span></div>
+                              <div className="stat"><span className="label">Key Passes</span><span className="value">{formatValue(sp.k_p)}</span></div>
+                            </>
+                          );
+                        }
+                        if (pos.includes('FW')) {
+                          return (
+                            <>
+                              <div className="stat"><span className="label">Assists</span><span className="value">{formatValue(sp.performance_ast)}</span></div>
+                              <div className="stat"><span className="label">Goals</span><span className="value">{formatValue(sp.performance_gls)}</span></div>
+                              <div className="stat"><span className="label">Aerial Duels</span><span className="value">{formatValue(sp.aerial_duels_won)}</span></div>
+                              <div className="stat"><span className="label">GCA</span><span className="value">{formatValue(sp.g_c_a_g_c_a)}</span></div>
+                              <div className="stat"><span className="label">xG</span><span className="value">{formatValue(sp.expected_x_g)}</span></div>
+                              <div className="stat"><span className="label">xA</span><span className="value">{formatValue(sp.expected_x_a)}</span></div>
+                              <div className="stat"><span className="label">SCA</span><span className="value">{formatValue(sp.s_c_a_s_c_a)}</span></div>
+                              <div className="stat"><span className="label">Key Passes</span><span className="value">{formatValue(sp.k_p)}</span></div>
+                            </>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
-                  )}
+                  </div>
                 </div>
               </div>
             )}
@@ -264,9 +258,9 @@ export default function AIScoutTab() {
                             <span className="truncate">{p.player}</span>
                           </div>
                         </td>
-                        <td>{p.nationality || p.nation}</td>
-                        <td>{p.club || p.squad}</td>
-                        <td>{p.position || p.pos}</td>
+                        <td>{p.nation}</td>
+                        <td>{p.squad}</td>
+                        <td>{p.pos}</td>
                         <td>{p.age}</td>
                         <td><span className="sim-badge" title="Cosine similarity">{fmtSimilarity(p.similarity)}</span></td>
                       </tr>
