@@ -24,6 +24,22 @@ const RADAR_METRICS = [
 ];
 const RADAR_MAX = 60; // fixed outer scale required (0,10,...,60)
 
+// Distinct, colorblind-friendly palette (10+ colors)
+const PLAYER_PALETTE = [
+  '#1b9e77', // teal-green
+  '#d95f02', // orange
+  '#7570b3', // purple
+  '#e7298a', // pink
+  '#66a61e', // green
+  '#e6ab02', // yellow ochre
+  '#a6761d', // brown
+  '#1f78b4', // blue
+  '#b15928', // rust
+  '#6a3d9a', // deep violet
+  '#fb9a99', // light salmon
+  '#b2df8a', // light green
+];
+
 // Local helper to format similarity percentage
 const fmtSimilarity = (s) => typeof s === 'number' ? (s * 100).toFixed(1) + '%' : '—';
 
@@ -65,6 +81,16 @@ export default function AIScoutTab() {
     // Attempt pattern: if a numeric id embedded in rk or a separate id property (not provided here) you could adapt
     return '';
   };
+
+  // Stable color map per recommendation set
+  const colorMap = useMemo(() => {
+    if (!data?.recommendations) return {};
+    const map = {};
+    data.recommendations.forEach((p, idx) => {
+      map[p.player] = PLAYER_PALETTE[idx % PLAYER_PALETTE.length];
+    });
+    return map;
+  }, [data]);
 
   const onSelect = async (opt) => {
     setSelected(opt);
@@ -285,8 +311,8 @@ export default function AIScoutTab() {
                       <PolarGrid radialLines={false} stroke="#e2e8f0" />
                       <PolarAngleAxis dataKey="metric" tick={{ fill: '#334155', fontSize: 11 }} />
                       <PolarRadiusAxis angle={18} domain={[0, RADAR_MAX]} ticks={[0,10,20,30,40,50,60]} tick={{ fill: '#64748b', fontSize: 10 }} stroke="#cbd5e1" />
-                      {data.recommendations.map((p, i) => {
-                        const color = `hsl(${(i * 28) % 360}, 70%, 47%)`;
+                      {data.recommendations.map((p) => {
+                        const color = colorMap[p.player] || '#2563eb';
                         if(hiddenPlayers.has(p.player)) return null;
                         return (
                           <Radar
