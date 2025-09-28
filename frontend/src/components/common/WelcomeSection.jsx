@@ -5,10 +5,9 @@ import "./WelcomeSection.css";
 
 export default function WelcomeSection({ 
   user, 
-  userType = "scout", // "scout", "team", "player"
-  imageStyle = "circle", // "circle" or "square"
+  userType = "scout", 
+  imageStyle = "circle",
 }) {
-  // Default values based on user type
   const defaults = {
     scout: {
       image: scoutDefaultImage,
@@ -27,10 +26,8 @@ export default function WelcomeSection({
     }
   };
 
-  // Determine which default values to use
   const currentDefaults = defaults[userType] || defaults.scout;
   
-  // Determine name/display based on user type
   let displayName = "";
   if (user) {
     switch (userType) {
@@ -48,17 +45,14 @@ export default function WelcomeSection({
     }
   }
 
-  // Add comma only if there's a name to display
   const welcomeSuffix = displayName ? `, ${displayName}` : "";
   
-  // Determine profile image
   const profileImage = user?.image || user?.logo || user?.photo
     ? (user.image || user.logo || user.photo).startsWith('http')
       ? (user.image || user.logo || user.photo)
       : `${import.meta.env.VITE_API_BASE_URL}/${user.image || user.logo}`
     : currentDefaults.image;
 
-  // Image shape class based on user type or override
   const imageShapeClass = imageStyle === "circle" ? "rounded-circle" : "rounded";
 
     const navigate = useNavigate();

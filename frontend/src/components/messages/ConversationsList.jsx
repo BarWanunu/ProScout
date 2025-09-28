@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { Users, MessageCircle, Clock } from 'lucide-react';
 import messageService from '@/api/services/messageService';
 import { getToken } from '@/api/tokenStore';

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Send, MessageSquare, User } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Send, MessageSquare } from 'lucide-react';
 import { useAuth } from '@/auth/AuthContext';
 import messageService from '@/api/services/messageService';
 import { getToken } from '@/api/tokenStore';
@@ -100,9 +100,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
         sent_at: new Date().toISOString(),
         read: false,
       };
-
-      // Prevent ScrollToTop from scrolling when we add a message
-      sessionStorage.setItem('preventMessageScroll', 'true');
       
       setMessages(prev => [...prev, sentMessage]);
       setNewMessage('');
@@ -122,12 +119,6 @@ const ChatWindow = ({ selectedConversation, onMessageSent }) => {
       setError('Failed to send message. Please try again.');
     } finally {
       setSending(false);
-      // Keep focus on input after sending (whether success or error)
-      setTimeout(() => {
-        if (messageInputRef.current) {
-          messageInputRef.current.focus();
-        }
-      }, 50);
     }
   };
 

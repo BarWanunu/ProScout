@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
 import { useAuth } from '@/auth/AuthContext';
 import ConversationsList from './ConversationsList';
